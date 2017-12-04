@@ -23,10 +23,12 @@ The result of the damping
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-36-13.png)
 
 Or simulate vibration by first measure the vibration.
+
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2021-23-55.png)
 
 
 The results of simulating the same impulse response
+
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2021-23-01.png)
 
 
