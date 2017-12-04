@@ -28,3 +28,14 @@ Estimating a linear function
 The result
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-50-03.png)
 
+# Install
+To install Matavecontrol, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
+
+```matlab
+path('path/to/the/sourcecode/folder/where/all/matave/files/are', path)
+savepath
+```
+
+# Requirements 
+* Installation of Matavecontrol package
+
