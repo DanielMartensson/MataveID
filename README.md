@@ -18,3 +18,10 @@ Model reduction to reduce noise from the model
 The result
 
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-36-13.png)
+
+Estimating a linear function
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-48-02.png)
+
+The result
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-50-03.png)
+
