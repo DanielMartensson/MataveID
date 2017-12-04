@@ -37,5 +37,5 @@ savepath
 ```
 
 # Requirements 
-* Installation of Matavecontrol package
+* Installation of Matavecontrol package https://github.com/DanielMartensson/matavecontrol
 
