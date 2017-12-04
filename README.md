@@ -1,5 +1,5 @@
 # Mataveid V1.0
-Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Subspace identification(under development), realization theory and least square is main focus in this project.
+Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Subspace identification(under development), realization theory and least square are main focus in this project.
 
 # Litterature: 
 * System Modeling & Identification, Rolf Johansson, 2nd 2017, Lund University, Sverige, ISBN 0-13-482308-7
