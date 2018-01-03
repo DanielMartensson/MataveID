@@ -1,9 +1,10 @@
-% Eigensystem Realization Algorithm 
-% Input: g, h, nu, delay(optional)
-% Example [sysd] = era(g, h, nu, delay);
-% Author: Daniel Mårtensson, November 2017
+% Ho-Kalman algorithm which was extended by Kung
+% Identify the discrete state space model from a impulse response.
+% Input: g, nu, h, delay(optional)
+% Example [sysd] = hokalman(g, nu, h, delay);
+% Author: Daniel Mårtensson, December 2017
 
-function [sysd] = era(varargin)
+function [sysd] = hokalman(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -16,18 +17,18 @@ function [sysd] = era(varargin)
     error('Missing impulse response')
   end
   
-  % Get the sample time
+  % Get number of inputs
   if(length(varargin) >= 2)
-    sampleTime = varargin{2};
+    nu = varargin{2};
   else
-    error('Missing sample time');
+    error('Missing number of inputs')
   end
   
-  % Get the number of input
+  % Get the sample time
   if(length(varargin) >= 3)
-    nu = varargin{3};
+    sampleTime = varargin{3};
   else
-    error('Missing number of input');
+    error('Missing sample time');
   end
   
   % Get the delay
@@ -41,30 +42,30 @@ function [sysd] = era(varargin)
   if mod(length(g), 2) > 0
     error('The output cannot be divided with 2')
   end
-
-  % Create hankel matrecies
-  H0 = hank(g, 1);
-  H1 = hank(g, 2);
   
-  % Do SVD on H0
-  [U,S,V] = svd(H0, 'econ');
+  % Create hankel matrix
+  H = hank(g, 1); 
+  
+  % Do singular value decomposition
+  [U, S, V] = svd(H, 'econ');
   
   % Do model reduction
-  [Un, En, Vn, nx] = modelReduction(U, S, V);
+  [Un, Sn, Vn, nx] = modelReduction(U, S, V);
   
-  % Create scalar for Bb, Cd
-  ny = size(g, 1); % Number of outputs, we already know the number of inputs
-  Ey = [eye(ny) zeros(ny,size(Un*En^(1/2),1) - size(eye(ny),1))]';
-  Eu = [eye(nu) zeros(nu,size(En^(1/2)*Vn',2) - size(eye(nu),2))]';
+  % Create extended matrices
+  OBSV = Un*sqrtm(Sn);
+  CTRB = sqrtm(Sn)*Vn';
   
-  % Create matrix
-  Ad = En^(-1/2)*Un'*H1*Vn*En^(-1/2);
-  Bd = En^(1/2)*Vn'*Eu;
-  Cd = Ey'*Un*En^(1/2);
-  Dd = zeros(ny, nu);
+  % Get numbers of outputs, we already know nx and nu
+  ny = size(g, 1); 
+  
+  % Get matrices
+  Cd = OBSV(1:ny, :);
+  Ad = pinv(OBSV(1:end-ny, :))*OBSV((1+ny):end, :);
+  Bd = CTRB(:, 1:nu);
   
   % Create state space model now
-  sysd = ss(delay, Ad, Bd, Cd, Dd);
+  sysd = ss(delay, Ad, Bd, Cd); % Dn will be 0
   sysd.sampleTime = sampleTime;
 end
 

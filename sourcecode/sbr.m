@@ -1,9 +1,9 @@
-% Eigensystem Realization Algorithm 
+% Step-Based Realization Algorithm
 % Input: g, h, nu, delay(optional)
-% Example [sysd] = era(g, h, nu, delay);
-% Author: Daniel Mårtensson, November 2017
+% Example [sysd] = sbr(g, h, nu, delay);
+% Author: Daniel Mårtensson, December 2017
 
-function [sysd] = era(varargin)
+function [sysd] = sbr(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -27,7 +27,7 @@ function [sysd] = era(varargin)
   if(length(varargin) >= 3)
     nu = varargin{3};
   else
-    error('Missing number of input');
+    error('Missing sample time');
   end
   
   % Get the delay
@@ -46,19 +46,31 @@ function [sysd] = era(varargin)
   H0 = hank(g, 1);
   H1 = hank(g, 2);
   
+  % Create step response hankel matrecies
+  ny = size(g, 1); % Number of outputs, we already know the number of inputs
+  [r, c] = size(H0); 
+  Y1 = H0(:, 1);
+  Y0 = H0(1:(end-ny), 1);
+  Y0 = [zeros(ny, 1); Y0];
+  M0 = repmat(Y0, 1, c);
+  M1 = repmat(Y1, 1, c);
+  
+  % Create the step reponse matricies
+  R0 = H0 - M0;
+  R1 = H1 - M1;
+  
   % Do SVD on H0
-  [U,S,V] = svd(H0, 'econ');
+  [U,S,V] = svd(R0, 'econ');
   
   % Do model reduction
   [Un, En, Vn, nx] = modelReduction(U, S, V);
   
   % Create scalar for Bb, Cd
-  ny = size(g, 1); % Number of outputs, we already know the number of inputs
   Ey = [eye(ny) zeros(ny,size(Un*En^(1/2),1) - size(eye(ny),1))]';
   Eu = [eye(nu) zeros(nu,size(En^(1/2)*Vn',2) - size(eye(nu),2))]';
   
   % Create matrix
-  Ad = En^(-1/2)*Un'*H1*Vn*En^(-1/2);
+  Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
   Bd = En^(1/2)*Vn'*Eu;
   Cd = Ey'*Un*En^(1/2);
   Dd = zeros(ny, nu);
