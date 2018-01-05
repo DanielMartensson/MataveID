@@ -1,6 +1,8 @@
 % Past-Input Multivariable Output-Error State Space
-% Input: u, y, k, h delay(optional)
-% Example [sysd] = pimoesp(u, y, k, h delay);
+% Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = pimoesp(u, y, k, sampleTime, delay);
+% Example 2: [sysd] = pimoesp(u, y, k, sampleTime);
 % Author: Daniel Mårtensson, December 2017
 
 function [sysd] = pimoesp(varargin)
@@ -146,7 +148,7 @@ function [U1, U2, S1, V1, nx] = modelReduction(U, S, V)
   [sm, sn] = size(S);
   
   if mod(un, 2) > 0
-    error('Need to incresse number of measurements')
+    error('Try another k - Hankel row length')
   end
   
   % Split U into U1 and U2

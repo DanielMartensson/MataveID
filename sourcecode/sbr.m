@@ -1,7 +1,8 @@
 % Step-Based Realization Algorithm
-% Input: g, h, nu, delay(optional)
-% Example [sysd] = sbr(g, h, nu, delay);
-% Author: Daniel Mårtensson, December 2017
+% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = sbr(g, nu, sampleTime, delay);
+% Author: Daniel Mårtensson, November 2017
 
 function [sysd] = sbr(varargin)
   % Check if there is any input
@@ -16,16 +17,16 @@ function [sysd] = sbr(varargin)
     error('Missing impulse response')
   end
   
-  % Get the sample time
+  % Get the number of input
   if(length(varargin) >= 2)
-    sampleTime = varargin{2};
+    nu = varargin{2};
   else
-    error('Missing sample time');
+    error('Missing number of inputs');
   end
   
-  % Get the number of input
+  % Get the sample time
   if(length(varargin) >= 3)
-    nu = varargin{3};
+    sampleTime = varargin{3};
   else
     error('Missing sample time');
   end

@@ -1,6 +1,7 @@
 % Eigensystem Realization Algorithm 
-% Input: g, h, nu, delay(optional)
-% Example [sysd] = era(g, h, nu, delay);
+% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = era(g, nu, sampleTime, delay);
 % Author: Daniel Mårtensson, November 2017
 
 function [sysd] = era(varargin)

@@ -1,6 +1,8 @@
 % Use the mouse cursor to do a hand-made-curve fitting
 % Returns noise free y and the noise e
-% Example [t, y, e] = smoothing(t, y);
+% Input: t(time), y(output signal with noise)
+% Output: t(time), y(Noise free output signal), e(noise)
+% Example 1: [t, y, e] = smoothing(t, y);
 % Author: Daniel Mårtensson, November 2017
 
 function [t, y, e] = smoothing(varargin)

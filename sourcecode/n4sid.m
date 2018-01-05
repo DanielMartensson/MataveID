@@ -1,6 +1,8 @@
 % Numerical algorithms for Subspace State Space System IDentiﬁcation
-% Input: u, y, k, h delay(optional)
-% Example [sysd] = n4sid(u, y, k, h delay);
+% Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = n4sid(u, y, k, sampleTime, delay);
+% Example 2: [sysd] = n4sid(u, y, k, sampleTime);
 % Author: Daniel Mårtensson, December 2017
 
 function [sysd] = n4sid(varargin)

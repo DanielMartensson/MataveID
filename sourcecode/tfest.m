@@ -1,8 +1,11 @@
 % Estimate a transfer function of time doman data
-% Example [sysd] = tfest(u, y, p, z, sampleTime, delay);
+% Input: u(input signal), y(output signal), e(noise), np(number of poles), nz(number of zeros), sampleTime, delay(optional) 
+% Output: sysd(Discrete state space model with noise), Gd(Discrete transfer function)
+% Example 1: [sysd] = tfest(u, y, e, np, nz, sampleTime, delay);
+% Example 2: [sysd, Gd] = tfest(u, y, e, np, nz, sampleTime);
 % Author: Daniel Mårtensson, November 2017
 
-function [sysd] = tfest(varargin)
+function [sysd, Gd] = tfest(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')

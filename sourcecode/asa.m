@@ -1,6 +1,7 @@
 % Arbitrary Subspace Algorithm 
-% Input: u, y, h, delay(optional)
-% Example [sysd] = asa(u, y, h, delay);
+% Input: u(input signal), y(output signal), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = asa(u, y, sampleTime, delay);
 % Author: Daniel Mårtensson, December 2017
 
 function [sysd] = asa(varargin)

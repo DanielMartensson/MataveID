@@ -1,7 +1,8 @@
 % Eigensystem Realization Algorithm Data Correlation
-% Input: g, h, nu, delay(optional)
-% Example [sysd] = eradc(g, h, nu, delay);
-% Author: Daniel Mårtensson, December 2017
+% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = eradc(g, nu, sampleTime, delay);
+% Author: Daniel Mårtensson, November 2017
 
 function [sysd] = eradc(varargin)
   % Check if there is any input

@@ -1,9 +1,10 @@
 % Minimize the least square cost function
-% Input: output, input,
-% Example [K, y] = lineq(Y, X);
+% Input: X(input signal), Y(output signal),
+% Output: K(Slope), y(Straight line formula)
+% Example 1: [K, y] = lineq(Y, X);
 % Author: Daniel Mårtensson, November 2017
 
-function [K, y] = lineq(varargin)
+function [K, f] = lineq(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')

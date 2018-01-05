@@ -1,5 +1,7 @@
 % Plot bode spectral analysis plot using Fast Fourier Transform
-% Example [mag, phase, wout] = spa(y, t);
+% Input: y(frequency output), t(time)
+% Output: mag(magnitude), phase, wout(frequencies)
+% Example 1: [mag, phase, wout] = spa(y, t);
 % Author: Daniel Mårtensson, November 2017
 
 function [mag, phase, wout] = spa(varargin)

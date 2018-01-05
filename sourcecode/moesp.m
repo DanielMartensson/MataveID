@@ -1,6 +1,8 @@
 % Multivariable Output-Error State Space
-% Input: u, y, k, h delay(optional)
-% Example [sysd] = moesp(u, y, k, h delay);
+% Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = moesp(u, y, k, sampleTime, delay);
+% Example 2: [sysd] = moesp(u, y, k, sampleTime);
 % Author: Daniel Mårtensson, December 2017
 
 function [sysd] = moesp(varargin)

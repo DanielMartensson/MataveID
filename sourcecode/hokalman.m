@@ -1,7 +1,8 @@
 % Ho-Kalman algorithm which was extended by Kung
 % Identify the discrete state space model from a impulse response.
-% Input: g, nu, h, delay(optional)
-% Example [sysd] = hokalman(g, nu, h, delay);
+% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = hokalman(g, nu, sampleTime, delay);
 % Author: Daniel Mårtensson, December 2017
 
 function [sysd] = hokalman(varargin)

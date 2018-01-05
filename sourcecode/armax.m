@@ -1,5 +1,9 @@
 % Autoregressive Moving Average with Exogenous Input
-% Example [sysd] = armax(u, y, p, z, cz, sampleTime, delay(optional));
+% Input: u(input signal), y(output signal), e(noise), np(number of poles), nz(number of zeros), nzc(number of poles in C-poly), sampleTime, delay(optional) 
+% Output: sysd(Discrete state space model with noise), Gd(Discrete transfer function), Hd(Discrete transfer function for noise)
+% Example 1: [sysd] = armax(u, y, e, np, nz, nzc, sampleTime, delay);
+% Example 2: [sysd, Gd] = armax(u, y, e, np, nz, nzc, sampleTime);
+% Example 3: [sysd, Gd, Hd] = armax(u, y, e, np, nz, nzc, sampleTime);
 % Author: Daniel Mårtensson, November 2017
 
 function [sysd, Gd, Hd] = armax(varargin)

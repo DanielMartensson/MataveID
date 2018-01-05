@@ -1,6 +1,8 @@
 % Observer Kalman-Filter IDentification
-% Input: u, y, h, delay(optional)
-% Example [sysd] = okid(u, y, h, delay);
+% Input: u(input signal), y(output signal), sampleTime, delay(optional)
+% Output: sysd(Discrete state space model)
+% Example 1: [sysd] = okid(u, y, sampleTime, delay);
+% Example 2: [sysd] = okid(u, y, sampleTime);
 % Author: Daniel Mårtensson, December 2017
 
 function [sysd] = okid(varargin)

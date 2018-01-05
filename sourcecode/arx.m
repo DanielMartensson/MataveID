@@ -1,6 +1,9 @@
 % Autoregressive with exogenous input
-% Example [sysd] = arx(u, y, p, z, sampleTime, delay(optional));
-% Author: Daniel Mårtensson, November 2017
+% Input: u(input signal), y(output signal), e(noise) np(number of poles), nz(number of zeros), sampleTime, delay(optional) 
+% Output: sysd(Discrete state space model with noise), Gd(Discrete transfer function), Hd(Discrete transfer function for noise)
+% Example 1: [sysd] = arx(u, y, e, np, nz, nzc, sampleTime, delay);
+% Example 2: [sysd, Gd] = arx(u, y, e, np, nz, nzc, sampleTime);
+% Example 3: [sysd, Gd, Hd] = arx(u, y, e, np, nz, nzc, sampleTime);
 
 function [sysd, Gd, Hd] = arx(varargin)
   % Check if there is any input
