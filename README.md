@@ -23,26 +23,26 @@ Allways start with help command of each function
 ```
 
 # Typical use
-
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/hokalman.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/era.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/eradc.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/sbr.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid2.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/moesp.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/pimoesp.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/n4sid.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/MIMOn4sid.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/armax.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/asa.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/ort.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx2.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arxtf.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/asa.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/era.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/eradc.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/hokalman.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/leastsquare.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/moesp.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/movingaverage.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/n4sid.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid2.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/pimoesp.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/sbr.png)
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/smoothing.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/armax.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/spa.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/smoothing.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/movingaverage.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/leastsquare.png)
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
