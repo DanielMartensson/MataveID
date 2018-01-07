@@ -17,7 +17,7 @@ Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB
 
 Allways start with help command of each function
 
-'''
+'''matlab
 >> help era
 'era' is a function from the file /home/hp/Dokument/Reglerteknik/mataveid/era.m
 
