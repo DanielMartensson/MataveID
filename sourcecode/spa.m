@@ -1,10 +1,10 @@
 % Plot bode spectral analysis plot using Fast Fourier Transform
 % Input: y(frequency output), t(time)
-% Output: mag(magnitude), phase, wout(frequencies)
-% Example 1: [mag, phase, wout] = spa(y, t);
+% Output: amp(amplitude), wout(frequencies)
+% Example 1: [amp, wout] = spa(y, t);
 % Author: Daniel Mårtensson, November 2017
 
-function [mag, phase, wout] = spa(varargin)
+function [amp, wout] = spa(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -32,22 +32,16 @@ function [mag, phase, wout] = spa(varargin)
   Y = abs(F);
   
   % Compute the frequencies 
-  freq = (0:Fs-1)(1:end/2);
+  freq = (0:Fs-1)(1:end/2 +1);
   % Compute the amplitudes
   Y = Y(1:end/2)/length(Y)*2;
-  F = F(1:length(freq));
   
-  subplot(2, 1,1)
-  semilogx(freq, 20*log10(Y))
-  ylabel('Magnitude [dB]')
-  subplot(2,1,2)
-  semilogx(freq, angle(F)*180/pi);
-  ylabel('Phase [Deg]')
+  plot(freq, Y)
+  ylabel('Amplitude')
   xlabel('Frequency [rad/s]')
   
   % Return values
-  mag = 20*log10(Y);
-  phase = angle(F)*180/pi;
+  amp = 20*log10(Y);
   wout = freq;
 
 end

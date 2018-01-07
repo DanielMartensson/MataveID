@@ -124,7 +124,7 @@ function [sysd] = okid(varargin)
 
   % Create scalar for Bb, Cd
   ny = size(y, 1); % Number of outputs
-  nu = 1; % This model can only have on input
+  nu = m; % Size of input
   Ey = [eye(ny) zeros(ny,size(Un*En^(1/2),1) - size(eye(ny),1))]';
   Eu = [eye(nu) zeros(nu,size(En^(1/2)*Vn',2) - size(eye(nu),2))]';
   

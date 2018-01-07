@@ -4,6 +4,11 @@
 % Example 1: [sysd] = asa(u, y, sampleTime, delay);
 % Author: Daniel Mårtensson, December 2017
 
+% Notice that when you got the "Hankel singular values"-popup plot, choose 
+% number 6 or 12 then. Arbitrary Subspace Algorithm requires right state space model dimension.
+% Or else you will get a very bad model. Arbitrary Subspace Algorithm differ from the other subspace algorithms.
+% If number 6 or 12 won't work, try with an other number.
+
 function [sysd] = asa(varargin)
   % Check if there is any input
   if(isempty(varargin))

@@ -139,6 +139,13 @@ function [sysd, Gd] = oe(varargin)
   % Change the sampleTime
   Gd.sampleTime = sampleTime;
   
+  % Replace the delaytime to discrete delay time
+  Gd.tfdash = strrep(Gd.tfdash, 'e', 'z');
+  Gd.tfdash = strrep(Gd.tfdash, 's', '');
+  % Remove all s -> s
+  Gd.tfnum = strrep(Gd.tfnum, 's', 'z');
+  Gd.tfden = strrep(Gd.tfden, 's', 'z');
+  
   if delay > 0
     Hd = tf(1, 1, delay);
   else

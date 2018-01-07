@@ -17,18 +17,18 @@ function [sysd] = era(varargin)
     error('Missing impulse response')
   end
   
-  % Get the sample time
-  if(length(varargin) >= 2)
-    sampleTime = varargin{2};
-  else
-    error('Missing sample time');
-  end
-  
   % Get the number of input
-  if(length(varargin) >= 3)
-    nu = varargin{3};
+  if(length(varargin) >= 2)
+    nu = varargin{2};
   else
     error('Missing number of input');
+  end
+  
+  % Get the sample time
+  if(length(varargin) >= 3)
+    sampleTime = varargin{3};
+  else
+    error('Missing sample time');
   end
   
   % Get the delay

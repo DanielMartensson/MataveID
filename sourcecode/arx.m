@@ -1,9 +1,9 @@
 % Autoregressive with exogenous input
 % Input: u(input signal), y(output signal), e(noise) np(number of poles), nz(number of zeros), sampleTime, delay(optional) 
 % Output: sysd(Discrete state space model with noise), Gd(Discrete transfer function), Hd(Discrete transfer function for noise)
-% Example 1: [sysd] = arx(u, y, e, np, nz, nzc, sampleTime, delay);
-% Example 2: [sysd, Gd] = arx(u, y, e, np, nz, nzc, sampleTime);
-% Example 3: [sysd, Gd, Hd] = arx(u, y, e, np, nz, nzc, sampleTime);
+% Example 1: [sysd] = arx(u, y, e, np, nz, sampleTime, delay);
+% Example 2: [sysd, Gd] = arx(u, y, e, np, nz, sampleTime);
+% Example 3: [sysd, Gd, Hd] = arx(u, y, e, np, nz, sampleTime);
 
 function [sysd, Gd, Hd] = arx(varargin)
   % Check if there is any input
@@ -124,6 +124,13 @@ function [sysd, Gd, Hd] = arx(varargin)
   % Change the sampleTime
   Gd.sampleTime = sampleTime;
   
+  % Replace the delaytime to discrete delay time
+  Gd.tfdash = strrep(Gd.tfdash, 'e', 'z');
+  Gd.tfdash = strrep(Gd.tfdash, 's', '');
+  % Remove all s -> s
+  Gd.tfnum = strrep(Gd.tfnum, 's', 'z');
+  Gd.tfden = strrep(Gd.tfden, 's', 'z');
+  
   % Now create the 1/A(q^-1)*e(t) transfer function for noise
   if delay > 0
     Hd = tf(1, den, delay);
@@ -133,6 +140,13 @@ function [sysd, Gd, Hd] = arx(varargin)
   
   % Need to have the same sampling time
   Hd.sampleTime = sampleTime;
+  
+  % Replace the delaytime to discrete delay time
+  Hd.tfdash = strrep(Hd.tfdash, 'e', 'z');
+  Hd.tfdash = strrep(Hd.tfdash, 's', '');
+  % Remove all s -> s
+  Hd.tfnum = strrep(Hd.tfnum, 's', 'z');
+  Hd.tfden = strrep(Hd.tfden, 's', 'z');
   
   % Convert Gd and Hd into state space
   sysg = tf2ss(Gd, 'CCF');

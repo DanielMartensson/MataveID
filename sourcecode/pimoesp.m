@@ -99,33 +99,25 @@ function [sysd] = pimoesp(varargin)
   Ad = pinv(OBSV(1:l*(k-1), 1:nx))*OBSV((l+1):l*k, 1:nx);
 
   % Find D and B matrix
-  DB = U2'*L41/L11;
+  Z = U2'*L41/L11;
   
-  DB = DB(:,1:m);
+  % Create empty vectors
+  XX = []; 
+  RR = [];
   
-  % Collet CA^kB'S only
-  DB0 = DB(1:l,:);
-  DB1 = DB(l+1:2*l,:);
-  DB2 = DB(2*l+1:3*l,:);
-  DB3 = DB(3*l+1:4*l,:);
-  DB4 = DB(4*l+1:5*l,:);
+  % Do least square
+  for j = 1:k
+    XX = [XX; Z(:,m*(j-1)+1:m*j)];
+    OBSVj = OBSV(1:l*(k-j),:);
+    kj = [zeros(l*(j-1),l) zeros(l*(j-1),nx); eye(l) zeros(l,nx); zeros(l*(k-j),l) OBSVj];
+    RR = [RR; U2'*kj];
+  end
+  % Done - Extract
+  DB = pinv(RR)*XX;
   
-  % This is Db matrix
-  Dd = DB0;
-  
-  % We can call this CAB
-  CAB = [DB1 DB2;
-        DB2 DB3;
-        DB3 DB4];
-  
-  % Extract ony the CAB...CA^kB parts of DB  
-  CAB_OBSV = OBSV(1:3*l,:);
-  
-  % Create the controllability matrix
-  CTRB = pinv(CAB_OBSV)*CAB;
-  
-  % Find Bd matrix now
-  Bd = CTRB(:, 1:m);
+  % Find Db and Bd matrix
+  Dd = DB(1:l,:);
+  Bd = DB(l+1:size(DB,1),:);
   
   % Create the state space model
   sysd = ss(delay, Ad, Bd, Cd, Dd); 

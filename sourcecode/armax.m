@@ -149,6 +149,14 @@ function [sysd, Gd, Hd] = armax(varargin)
   % Change the sampleTime
   Gd.sampleTime = sampleTime;
   
+  % Replace the delaytime to discrete delay time
+  Gd.tfdash = strrep(Gd.tfdash, 'e', 'z');
+  Gd.tfdash = strrep(Gd.tfdash, 's', '');
+  % Remove all s -> s
+  Gd.tfnum = strrep(Gd.tfnum, 's', 'z');
+  Gd.tfden = strrep(Gd.tfden, 's', 'z');
+  
+  
   % Now create the C(q^-1)/A(q^-1)*e(t) transfer function for noise
   if delay > 0
     Hd = tf(enum, den, delay);
@@ -158,6 +166,13 @@ function [sysd, Gd, Hd] = armax(varargin)
   
   % Need to have the same sampling time
   Hd.sampleTime = sampleTime;
+  
+  % Replace the delaytime to discrete delay time
+  Hd.tfdash = strrep(Hd.tfdash, 'e', 'z');
+  Hd.tfdash = strrep(Hd.tfdash, 's', '');
+  % Remove all s -> s
+  Hd.tfnum = strrep(Hd.tfnum, 's', 'z');
+  Hd.tfden = strrep(Hd.tfden, 's', 'z');
   
   % Convert Gd and Hd into state space
   sysg = tf2ss(Gd, 'CCF');

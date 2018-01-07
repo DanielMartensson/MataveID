@@ -4,7 +4,7 @@
 % Example 1: [K, y] = lineq(Y, X);
 % Author: Daniel Mårtensson, November 2017
 
-function [K, f] = lineq(varargin)
+function [K, y] = lineq(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -29,11 +29,20 @@ function [K, f] = lineq(varargin)
     error('Input must have the same length as output');
   end
   
-  % Find K
-  K = sum(output.*input)./sum(input.^2);
-  y = sprintf('%ix + %i', K, output(end)-K*input(end));
+  % Find K and M - Least square
+  [m, n] = size(output);
+  b = output(:); % b as a vector
+  A = [input(:) ones(m, n)']; % ones() are for the M scalar
+  
+  % Ax = b formula
+  x = A\b;
+  % Get K and M now
+  K = x(1); 
+  M = x(2);
+  
+  y = sprintf('%ix + %i', K, M);
   % Plot
-  plot(input, output, input, K.*input);
+  plot(input, output, input, K.*input+M);
   title('Linear equation estimation');
   ylabel('Output');
   xlabel('Input');
