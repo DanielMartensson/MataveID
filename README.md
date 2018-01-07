@@ -32,33 +32,25 @@ Allways start with help command of each function
 
 # Typical use
 
-User input when using Eigensystem Realization Algorithm
-
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-41-18.png)
-
-Model reduction to reduce noise from the model
-
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-20-27.png)
-
-The result of the damping
-
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-36-13.png)
-
-Or simulate vibration by first measure the vibration.
-
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2021-23-55.png)
-
-
-The result of simulating the same impulse response - This took long time.
-
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2021-23-01.png)
-
-
-Estimating a linear function
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-48-02.png)
-
-The result
-![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/Sk%C3%A4rmbild%20fr%C3%A5n%202017-12-04%2019-50-03.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/MIMOn4sid.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/armax.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx2.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arxtf.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/asa.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/era.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/eradc.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/hokalman.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/leastsquare.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/moesp.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/movingaverage.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/n4sid.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid2.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/pimoesp.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/sbr.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/smoothing.png)
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/spa.png)
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
