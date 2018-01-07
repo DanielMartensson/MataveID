@@ -1,17 +1,9 @@
 # Mataveid V1.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Subspace identification(under development), realization theory and least square are main focus in this project.
 
-# Litterature: 
-* System Modeling & Identification, Rolf Johansson, 2nd 2017, Lund University, Sverige, ISBN 0-13-482308-7
-* Subspace Methods for System Identification, Tohru Katayama, Kyoto University, Japan, ISBN-10: 1852339810
-
 # Reports:
-* Recursive Form of the Eigensystem Realization Algorithm for System Identification, Jer-Nan Juang, NASA Langley Research Center, Hampton, Virginia, 1989
-* An On-Line Tracker for a Stochastic Chaotic SystemUsing Observer/Kalman Filter Identification Combined with Digital Redesign Method, Tseng-Hsu Chien 1 and Yeong-Chin Chen.
-* Comparison of several system identification methods for flexible structures, Jer-Nan Juang, NASA, USA.
-* Identification of Linear Time-Invariant Systems via Constrained Step-Based Realization, Daniel N. Miller and Raymond A. de Callafon, University of California.
-* On- and off-line identification of linear state-space models Marc Moonen ∗ ,Bart De Moor, Lieven Vandenberghe ∗ , Joos Vandewalle ESAT Katholieke Universiteit Leuven K.Mercierlaan 94, 3030 Heverlee, Belgium.
-* Subspace Identification Methods and Multivariable Control for a Doubly-fed Induction Generator, Danna L. Albarracín Ávila,  Electrical Engineering, Universidad Tecnológica de Pereira, Colombia.
+
+Mataveid contains subspace identification and realization identification algorithms. They can be quite hard to understand, compared to ARX, ARMAX, OE, TF models, so I highly recommend to read reports abouth the subspace identification and realization identification algorithm, to understand how the MATLAB/Octave functions code are written. The reports can be found in the folder "reports".
 
 # Starting
 
