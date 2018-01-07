@@ -13,7 +13,22 @@ Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB
 * On- and off-line identification of linear state-space models Marc Moonen ∗ ,Bart De Moor, Lieven Vandenberghe ∗ , Joos Vandewalle ESAT Katholieke Universiteit Leuven K.Mercierlaan 94, 3030 Heverlee, Belgium.
 * Subspace Identification Methods and Multivariable Control for a Doubly-fed Induction Generator, Danna L. Albarracín Ávila,  Electrical Engineering, Universidad Tecnológica de Pereira, Colombia.
 
+# Starting
 
+Allways start with help command of each function
+
+''''
+>> help era
+'era' is a function from the file /home/hp/Dokument/Reglerteknik/mataveid/era.m
+
+ Eigensystem Realization Algorithm
+ Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional)
+ Output: sysd(Discrete state space model)
+ Example 1: [sysd] = era(g, nu, sampleTime, delay);
+ Author: Daniel Mårtensson, November 2017
+
+>>
+''''
 
 # Typical use
 
