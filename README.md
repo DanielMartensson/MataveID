@@ -7,7 +7,7 @@ Mataveid contains subspace identification and realization identification algorit
 
 # Starting
 
-Allways start with help command of each function
+Always start with help command of each function
 
 ```matlab
 >> help era
