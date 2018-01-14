@@ -1,8 +1,8 @@
 % Estimate a transfer function of time doman data
-% Input: u(input signal), y(output signal), e(noise), np(number of poles), nz(number of zeros), sampleTime, delay(optional) 
-% Output: sysd(Discrete state space model with noise), Gd(Discrete transfer function)
-% Example 1: [sysd] = tfest(u, y, e, np, nz, sampleTime, delay);
-% Example 2: [sysd, Gd] = tfest(u, y, e, np, nz, sampleTime);
+% Input: u(input signal), y(output signal), np(number of poles), nz(number of zeros), sampleTime, delay(optional) 
+% Output: sysd(Discrete state space model), Gd(Discrete transfer function)
+% Example 1: [sysd] = tfest(u, y, np, nz, sampleTime, delay);
+% Example 2: [sysd, Gd] = tfest(u, y, np, nz, sampleTime);
 % Author: Daniel Mårtensson, November 2017
 
 function [sysd, Gd] = tfest(varargin)
