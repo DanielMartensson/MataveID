@@ -48,9 +48,26 @@ Always start with help command of each function
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
 
 ```matlab
-path('path/to/the/sourcecode/folder/where/all/mataveid/files/are', path)
+path('path/to/the/sourcecode/folder/where/all/matave/files/are/mataveid', path)
 savepath
 ```
+
+Example:
+```matlab
+path('/home/hp/Dokument/Reglerteknik/mataveid', path)
+savepath
+```
+
+Important! All the .m files need to be inside the folder mataveid if you want the update function to work.
+
+# Update
+Write this inside the terminal. Then Mataveid is going to download new .m files to mataveid from GitHub
+
+```matlab
+updatemataveid
+```
+
+
 
 # Requirements 
 * Installation of Matavecontrol package https://github.com/DanielMartensson/matavecontrol
