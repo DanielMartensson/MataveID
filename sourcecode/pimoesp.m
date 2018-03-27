@@ -40,8 +40,8 @@ function [sysd] = pimoesp(varargin)
   end
   
   % Get the delay
-  if(length(varargin) >= 4)
-    delay = varargin{4};
+  if(length(varargin) >= 5)
+    delay = varargin{5};
   else
     delay = 0; % If no delay was given
   end
