@@ -1,9 +1,9 @@
 % Use moving median average to filter the noise
 % Returns the filtered curve
-% Example [x, y] = movmedianavg(x, y, factor);
-% Author: Daniel Mårtensson, April 2018
+% Example [x_filter, y_filter] = movmedianavg(x, y, factor);
+% Author: Daniel MÃ¥rtensson, April 2018
 
-function [x, y] = movmedianavg (varargin)
+function [B1_s_filter, B1_f_filter] = movmedianavg (varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
