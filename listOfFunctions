@@ -7,6 +7,8 @@ hokalman.m
 lineq.m
 moavg.m
 moesp.m
+nlsim.m
+nlss.m
 n4sid.m
 oe.m
 okid.m
@@ -16,4 +18,4 @@ sbr.m
 smoothing.m
 spa.m
 tfest.m
-movmedianavg.m
+moavg2.m
