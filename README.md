@@ -23,25 +23,43 @@ Always start with help command of each function
 ```
 
 # Typical use
+# Ho-Kalman algorithm 
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/hokalman.png)
+# Eigensystem Realization Algorithm
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/era.png)
+# Eigensystem Realization Algorithm - Data Correlation
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/eradc.png)
+# Step Based Realization
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/sbr.png)
+# Observer/Kalman Filter Identification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/okid2.png)
+# Multivariable Subspace Identification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/moesp.png)
+# Past Input Multivariable Subspace Identification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/pimoesp.png)
+# Numerical Algorithms For Subspace State Space System IDentification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/n4sid.png)
+# Mutitvariable Numerical Algorithms For Subspace State Space System IDentification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/MIMOn4sid.png)
+# Arbitrary Subspace Algorithm  
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/asa.png)
+# Orthogonal Decomposition
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/ort.png)
+# Autoregressive Exogenous Model
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx.png)
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx2.png)
+# Transfer function estimation
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arxtf.png)
+# Autoregressive–moving-average
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/armax.png)
+# Spectral Analysis
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/spa.png)
+# Smoothing
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/smoothing.png)
+# Moving average
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/movingaverage.png)
+# Linear Least Square best fit
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/leastsquare.png)
 
 # Install
