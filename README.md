@@ -61,6 +61,9 @@ Always start with help command of each function
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/movingaverage.png)
 # Linear Least Square best fit
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/leastsquare.png)
+# Moving average 2
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/moavg2.png)
+
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
