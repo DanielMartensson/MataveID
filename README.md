@@ -40,7 +40,7 @@ Always start with help command of each function
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/pimoesp.png)
 # Numerical Algorithms For Subspace State Space System IDentification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/n4sid.png)
-# Mutitvariable Numerical Algorithms For Subspace State Space System IDentification
+# Multivariable Numerical Algorithms For Subspace State Space System IDentification
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/MIMOn4sid.png)
 # Arbitrary Subspace Algorithm  
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/asa.png)
