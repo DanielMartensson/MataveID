@@ -34,7 +34,7 @@ function [amp, wout] = spa(varargin)
   % Compute the frequencies 
   freq = (0:Fs-1)(1:end/2 +1);
   % Compute the amplitudes
-  Y = Y(1:end/2+1)/length(Y)*2;
+  Y = Y(1:end/2)/length(Y)*2;
   
   plot(freq, Y)
   ylabel('Amplitude')
