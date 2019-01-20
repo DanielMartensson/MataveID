@@ -70,19 +70,10 @@ function [sysd] = hokalman(varargin)
   sysd.sampleTime = sampleTime;
 end
 
+% Create the hankel matrix
 function [H] = hank(g, k)
-  % Create hankel matrix
-  H = cell(length(g)/2,length(g)/2); 
-  
-  for i = 1:length(g)/2
-    for j = 1:length(g)/2
-      H{i,j} = g(:,k+i+j-2);
-    end
-  end
-  
-  % Cell to matrix
-  H = cell2mat(H);
-end
+  H = hankel(g)(1:length(g)/2,1+k:length(g)/2+k);
+endfunction
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V)
   % Plot singular values 
