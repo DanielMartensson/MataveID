@@ -44,66 +44,13 @@ function [sysd] = okid(varargin)
   if(length(u) ~= length(y))
     error('Input(u) and output(y) has not the same length')
   end
-  
 
-  % Get the dimension of y and u
-  [q, p] = size(y);
-  [m, lu] = size(u);
-
-  % Get the markov parameters Ybar
-  V = zeros(m + (m+q)*p,p);
-  for i = 1:p
-      V(1:m,i) = u(1:m,i);
-  end
+  % Find impulse response
+  g = y*pinv(triu(toeplitz(u)));
   
-  for i = 2:p+1
-      for j = 1:p+1-i
-          temporaryV = [u(:,j);y(:,j)];
-          V(m+(i-2)*(m+q)+1:m+(i-1)*(m+q),i+j-1) = temporaryV;
-      end
-  end
-
-  % Use pseudo inverse  
-  Ybar = y*pinv(V, 1e-5);
-  
-  % Get the first markov parameter
-  YbarD = Ybar(:, 1:m);  
-  
-  % Use the rest of the markov parameter - Get rid of D 
-  Ybar = Ybar(:, m+1:end);
-
-  % Create Ybar1 and Ybar2 to fill upp with
-  Ybar1 = zeros(q, m, length(Ybar));
-  Ybar2 = zeros(q, q, length(Ybar));
-  
-  % Fill upp Ybar1 and Ybar2 with raw markov parameters
-  for i= 1:p
-      Ybar1(:, :, i) = Ybar(:, 1+(m+q)*(i-1):(m+q)*(i-1)+m);
-      Ybar2(:, :, i) = Ybar(:, (m+q)*(i-1)+m+1:(m+q)*(i-1)+m+q);
-  end
-
-  % Now create the almost last part of the markow parameters
-  Y(:, :, 1) = Ybar1(:, :, 1) + Ybar2(:, :, 1)*YbarD;
-  
-  % Use the summation just as in the formulas described inside the OKID report.
-  for k= 2:p
-      Y(:, :, k) = Ybar1(:, :, k) + Ybar2(:, :, k)*YbarD;
-      for i= 1:k-1
-          Y(:, :, k) = Y(:, :, k) + Ybar2(:, :, i)*Y(:, :, k-i);
-      end
-  end
-
-  
-  % Now - Create all markov parameters for estimation
-  H = YbarD;
-  for k= 1:p
-      H = [H Y(:, :, k)];
-  end
-  
-  
-  % Use ERA algorithm
-  H0 = hank(H, 1);
-  H1 = hank(H, 2);
+  % Half hankel
+  H0 = hank(g, 1);
+  H1 = hank(g, 2);
 
   % Do SVD on H
   [U,E,V] = svd(H0, 'econ');
@@ -117,7 +64,7 @@ function [sysd] = okid(varargin)
   % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
   nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
   nx = str2num(cell2mat(nx));
-  
+ 
   % Choose the dimension nx
   Un = U(:, 1:nx);
   En = E(1:nx, 1:nx);
@@ -125,7 +72,7 @@ function [sysd] = okid(varargin)
 
   % Create scalar for Bb, Cd
   ny = size(y, 1); % Number of outputs
-  nu = m; % Size of input
+  nu = size(u, 1); % Size of input
   Ey = [eye(ny) zeros(ny,size(Un*En^(1/2),1) - size(eye(ny),1))]';
   Eu = [eye(nu) zeros(nu,size(En^(1/2)*Vn',2) - size(eye(nu),2))]';
   
