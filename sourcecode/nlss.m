@@ -1,3 +1,10 @@
+% nlss is a function to create nonlinear state space models.
+% All you need is to include a function handle A = @(x,u) and B = @(x,u), or C = @(x,u) or D = @(x,u)
+% Input: A,B, C(optional), D(optional)
+% Example 1: [sys] = nlss(A,B,C,D);
+% Example 2: [sys] = nlss(A,B,C);
+% Example 3: [sys] = nlss(A,B);
+% Author: Daniel Mårtensson, June 2018
 
 function [sys] = nlss(varargin)
   MAXvector = 1000; % Maximum dimension of state vector and input vector
