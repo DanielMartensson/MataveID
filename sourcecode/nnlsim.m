@@ -1,3 +1,8 @@
+% nnlsim is a function to simulate nonlinear state space models.
+% Input: nlsys, u, t, x0(optional)
+% Example 1: [y,t,X] = nnlsim(nlsys, u, t, x0);
+% Example 1: [y,t,X] = nnlsim(nlsys, u, t);
+% Author: Daniel Mårtensson, June 2018
 
 function [y,t,X] = nnlsim (varargin)
   MAXvector = 1000; % Maximum dimension of state vector and input vector
