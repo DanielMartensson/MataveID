@@ -1,6 +1,10 @@
 # Mataveid V4.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Subspace identification, realization theory and least square polynomial models are main focus in this project.
 
+Update:
+Please check my software for loging values in real time via USB-port. Perfect for system identification.
+https://github.com/DanielMartensson/JUSBPlotter
+
 # Reports:
 
 Mataveid contains subspace identification and realization identification algorithms. They can be quite hard to understand, compared to ARX, ARMAX, OE, TF models, so I highly recommend to read reports about the subspace identification and realization identification algorithm, to understand how the MATLAB/Octave functions code are written. The reports can be found in the folder "reports".
