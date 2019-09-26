@@ -21,7 +21,7 @@ There are lots of different algorithms, even if they look very similar. I have b
 * SPA - If you got a signal with lots of noise, then you can seperate all noise and see each noise signal. Very clever tool. I like this function.
 * SMOOTHING - Here you can write your own signal by using the mouse clicker.
 * MOAVG - Simple filtering
-* MOAVG2 - This is an algorithm written by me. I normaly use this before MOAVG. 
+* MOAVG2 - This is an algorithm written by me. I normaly use this before MOAVG, but MOAVG is faster because it used internal C++ routines. 
 ```
 
 # Starting
