@@ -45,8 +45,11 @@ function [sysd] = okid(varargin)
     error('Input(u) and output(y) has not the same length')
   end
 
-  % Find impulse response
-  g = y*pinv(triu(toeplitz(u)));
+  % Check how many dimensions u is
+  for i = 1:size(u, 1)
+    % Find impulse response
+    g(i, :) = y(i,:)*pinv(triu(toeplitz(u(i,:))));
+  end
   
   % Half hankel
   H0 = hank(g, 1);
@@ -86,7 +89,11 @@ function [sysd] = okid(varargin)
   sysd.sampleTime = sampleTime;
 end
 
-% Create the hankel matrix
+% Create the hankel matrix - For MIMO now
 function [H] = hank(g, k)
-  H = hankel(g)(1:length(g)/2,1+k:length(g)/2+k);
+  for i = 1:size(g, 1)
+    A = hankel(g(i,:))(1:length(g(i,:))/2,1+k:length(g(i,:))/2+k);
+    H(i, :) = reshape(A, 1, size(A, 1)*size(A, 2));
+  end
+  H = reshape(H, size(g, 1)*size(A, 1), size(A, 2));
 endfunction
