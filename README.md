@@ -22,6 +22,9 @@ There are lots of different algorithms, even if they look very similar. I have b
 * SMOOTHING - Here you can write your own signal by using the mouse clicker.
 * MOAVG - Simple filtering
 * MOAVG2 - This is an algorithm written by me. I normaly use this before MOAVG, but MOAVG is faster because it used internal C++ routines. 
+
+Remeber that MataveControl have good tools for finish the model in system identification, such as referencegain.m function.
+It will add a reference gain to the model for better tracking.
 ```
 
 # Starting
