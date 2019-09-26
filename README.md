@@ -5,6 +5,11 @@ Update:
 Please check my software for loging values in real time via USB-port. Perfect for system identification.
 https://github.com/DanielMartensson/JUSBPlotter
 
+# Neural Networks
+If you want to estimate neural networks for nonlinear models, have a look at Deeplearning2C. It's a Java application that generates neural network in C code.
+
+https://github.com/DanielMartensson/Deeplearning2C
+
 # Reports:
 
 Mataveid contains subspace identification and realization identification algorithms. They can be quite hard to understand, compared to ARX, ARMAX, OE, TF models, so I highly recommend to read reports about the subspace identification and realization identification algorithm, to understand how the MATLAB/Octave functions code are written. The reports can be found in the folder "reports".
