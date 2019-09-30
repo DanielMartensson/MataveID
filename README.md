@@ -22,6 +22,7 @@ There are lots of different algorithms, even if they look very similar. I have b
 * MOESP - If you got noise inside your measurement. This is a good algorithm to choose. 
 * N4SID - If MOESP did not solve your problem. You can try this one. Requires more data. 
 * TFEST - Standard transferfunction estimation using least squares. Easy to use.
+* RLS - Recursive Least Square - Also estimates a Kalman Gain matrix without any further knowledge about noise.
 * ARX - If you need a transfer function with a noise model. This is a basic system idenfication method.
 * ARMAX - If you need a transfer function for stochastical systems
 * SPA - If you got a signal with lots of noise, then you can seperate all noise and see each noise signal. Very clever tool. I like this function.
