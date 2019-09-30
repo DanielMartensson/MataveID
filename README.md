@@ -80,6 +80,8 @@ Always start with help command of each function
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arx2.png)
 # Transfer function estimation
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/arxtf.png)
+# Recursive Least Square - Perfect to convert to C code for embedded systems
+![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/RecursiveLeastSquare.png)
 # Autoregressive–moving-average
 ![alt text](https://github.com/DanielMartensson/mataveid/blob/master/pictures/armax.png)
 # Spectral Analysis
