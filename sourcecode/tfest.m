@@ -119,7 +119,7 @@ function [sysd, Gd] = tfest(varargin)
   % Replace the delaytime to discrete delay time
   Gd.tfdash = strrep(Gd.tfdash, 'e', 'z');
   Gd.tfdash = strrep(Gd.tfdash, 's', '');
-  % Remove all s -> s
+  % Remove all s -> z
   Gd.tfnum = strrep(Gd.tfnum, 's', 'z');
   Gd.tfden = strrep(Gd.tfden, 's', 'z');
   
