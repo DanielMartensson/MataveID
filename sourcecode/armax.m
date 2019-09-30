@@ -170,7 +170,7 @@ function [sysd, Gd, Hd] = armax(varargin)
   % Replace the delaytime to discrete delay time
   Hd.tfdash = strrep(Hd.tfdash, 'e', 'z');
   Hd.tfdash = strrep(Hd.tfdash, 's', '');
-  % Remove all s -> s
+  % Remove all s -> z
   Hd.tfnum = strrep(Hd.tfnum, 's', 'z');
   Hd.tfden = strrep(Hd.tfden, 's', 'z');
   
