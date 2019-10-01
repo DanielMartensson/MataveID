@@ -1,8 +1,8 @@
 % Recursive Least Square
 % Input: u(input signal), y(output signal), np(number of poles), nz(number of zeros), nze(number of zeros for Hd), sampleTime, delay(optional), forgetting(optional) 
 % Output: Gd(Discrete transfer function), Hd(Discrete transfer function for noise), sysd(Discrete state space model with noise), K(Kalman filter)
-% Example 1: [Gd, Hd] = rls(u, y, e, np, nz, nze, sampleTime);
-% Example 2: [Gd, Hd, sysd, K] = arx(u, y, e, np, nz, nze, sampleTime, delay, forgetting);
+% Example 1: [Gd, Hd] = rls(u, y, np, nz, nze, sampleTime);
+% Example 2: [Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 % Author: Daniel Mårtensson, September 2019
 
 function [Gd, Hd, sysd, K] = rls(varargin)
