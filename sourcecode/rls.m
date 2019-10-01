@@ -82,9 +82,6 @@ function [Gd, Hd, sysd, K] = rls(varargin)
        phi(1+np) = u(k-1);
        phi(1+np+nz) = error;
               
-       % Call the recursive function - If need as C code, use call by reference
-       [error, P, Theta] = recursive(y(k), phi, Theta, P, l);
-       
     else
 
        % Shift 1 step for y
@@ -105,11 +102,11 @@ function [Gd, Hd, sysd, K] = rls(varargin)
        phi(1+np) = u(k-1);
        phi(1+np+nz) = error;
        
-       % Call the recursive function - If need as C code, use call by reference
-       [error, P, Theta] = recursive(y(k), phi, Theta, P, l);
-
     end
-    
+
+    % Call the recursive function - If need as C code, use call by reference
+    [error, P, Theta] = recursive(y(k), phi, Theta, P, l);
+       
   end
   
   % Create the discrete transfer function
