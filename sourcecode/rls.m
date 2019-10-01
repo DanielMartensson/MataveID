@@ -1,8 +1,8 @@
 % Recursive Least Square
-% Input: u(input signal), y(output signal), np(number of poles), nz(number of zeros), sampleTime, delay(optional), forgetting(optional) 
+% Input: u(input signal), y(output signal), np(number of poles), nz(number of zeros), nze(number of zeros for Hd), sampleTime, delay(optional), forgetting(optional) 
 % Output: Gd(Discrete transfer function), Hd(Discrete transfer function for noise), sysd(Discrete state space model with noise), K(Kalman filter)
-% Example 1: [Gd, Hd] = rls(u, y, e, np, nz, sampleTime);
-% Example 2: [Gd, Hd, sysd, K] = arx(u, y, e, np, nz, sampleTime, delay, forgetting);
+% Example 1: [Gd, Hd] = rls(u, y, e, np, nz, nze, sampleTime);
+% Example 2: [Gd, Hd, sysd, K] = arx(u, y, e, np, nz, nze, sampleTime, delay, forgetting);
 % Author: Daniel Mårtensson, September 2019
 
 function [Gd, Hd, sysd, K] = rls(varargin)
@@ -35,34 +35,56 @@ function [Gd, Hd, sysd, K] = rls(varargin)
   % Get number of zeros
   if(length(varargin) >= 4)
     nz = varargin{4};
+    if(nz > np)
+      error('nz > np');
+    end
   else
     error('Missing number of zeros');
   end
   
-  % Get the sample time
+  % Get number of zeros for Hd
   if(length(varargin) >= 5)
-    sampleTime = varargin{5};
+    nze = varargin{5};
+    if(nze > np)
+      error('nze > np');
+    end
+  else
+    error('Missing number of zeros for Hd');
+  end
+  
+  % Get the sample time
+  if(length(varargin) >= 6)
+    sampleTime = varargin{6};
+    if(sampleTime <= 0)
+      error('sampleTime <= 0');
+    end
   else
     error('Missing sample time');
   end
   
   % Get the delay
-  if(length(varargin) >= 6)
-    delay = varargin{6};
+  if(length(varargin) >= 7)
+    delay = varargin{7};
+    if(delay < 0)
+      error('delay < 0');
+    end
   else
     delay = 0; % If no delay was given
   end
   
   % Get the lambda factor
-  if(length(varargin) >= 7)
-    l = varargin{7};
+  if(length(varargin) >= 8)
+    l = varargin{8};
+    if(l <= 0)
+      error('forgetting <= 0');
+    end
   else
-    l = 1; % If no lambda was given
+    l = 1; % If no lambda forgetting factor was given
   end
   
   % Initials
-  Theta = [zeros(1, np) zeros(1, nz) zeros(1, np)]';
-  phi = [zeros(1, np) zeros(1, nz) zeros(1, np)]';
+  Theta = [zeros(1, np) zeros(1, nz) zeros(1, nze)]';
+  phi = [zeros(1, np) zeros(1, nz) zeros(1, nze)]';
   error = 0;
   
   % Initial P  
@@ -93,7 +115,7 @@ function [Gd, Hd, sysd, K] = rls(varargin)
          phi(i+np+1) = phi(i+np);
        end
        % Shift 1 step for e
-       for i = np-1:-1:1
+       for i = nze-1:-1:1
          phi(i+np+nz+1) = phi(i+np+nz);
        end
        
@@ -121,7 +143,7 @@ function [Gd, Hd, sysd, K] = rls(varargin)
   Gd.tfden = strrep(Gd.tfden, 's', 'z');
   
   % Create the discrete disturbance transfer function
-  Hd = tf([Theta(nz+np+1:np+nz+np)'],[1 Theta(1:np)']);
+  Hd = tf([Theta(nz+np+1:np+nz+nze)'],[1 Theta(1:np)']);
   Hd.sampleTime = sampleTime;
   
   % Replace the delaytime to discrete delay time
@@ -133,9 +155,14 @@ function [Gd, Hd, sysd, K] = rls(varargin)
   
   % Create the SS model
   sysd = tf2ss(Gd, 'OCF');
-  K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition
-  sysd.B = [sysd.B K];
-  sysd.D = [0 1]; 
+  if(np == nze)
+    K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition
+    sysd.B = [sysd.B K];
+    sysd.D = [0 1]; 
+  else
+    disp('No kalman filter estimation due to np =/= nze')
+    K = 0;  
+  end
   
 end
 
