@@ -2,8 +2,8 @@
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Subspace identification, realization theory and least square polynomial models are main focus in this project.
 
 Update:
-Please check my software for loging values in real time via USB-port. Perfect for system identification.
-https://github.com/DanielMartensson/JUSBPlotter
+Please check my IoT-software for loging values in real time via USB-port and over the internet. Perfect for system identification.
+https://github.com/DanielMartensson/JLogger
 
 # Neural Networks
 If you want to estimate neural networks for nonlinear models, have a look at Deeplearning2C. It's a Java application that generates neural network in C code.
