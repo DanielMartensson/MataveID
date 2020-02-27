@@ -96,4 +96,4 @@ function [H] = hank(g, k)
     H(i, :) = reshape(A, 1, size(A, 1)*size(A, 2));
   end
   H = reshape(H, size(g, 1)*size(A, 1), size(A, 2));
-endfunction
+end
