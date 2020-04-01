@@ -70,10 +70,14 @@ function [sysd] = era(varargin)
   sysd.sampleTime = sampleTime;
 end
 
-% Create the hankel matrix
+% Create the hankel matrix - For MIMO now
 function [H] = hank(g, k)
-  H = hankel(g)(1:length(g)/2,1+k:length(g)/2+k);
-endfunction
+  for i = 1:size(g, 1)
+    A = hankel(g(i,:))(1:length(g(i,:))/2,1+k:length(g(i,:))/2+k);
+    H(i, :) = reshape(A, 1, size(A, 1)*size(A, 2));
+  end
+  H = reshape(H, size(g, 1)*size(A, 1), size(A, 2));
+end
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V)
   % Plot singular values 
