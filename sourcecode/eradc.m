@@ -39,7 +39,7 @@ function [sysd] = eradc(varargin)
     delay = 0; % If no delay was given
   end
   
-  % Get the order if the system
+  % Get the order of the system
   if(length(varargin) >= 5)
     systemorder = varargin{5};
     if (systemorder <= 0)
