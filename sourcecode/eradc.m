@@ -3,6 +3,7 @@
 % Output: sysd(Discrete state space model)
 % Example 1: [sysd] = eradc(g, nu, sampleTime, delay);
 % Author: Daniel Mårtensson, November 2017
+% Update: Follows the NASA document ID 19870035963 
 
 function [sysd] = eradc(varargin)
   % Check if there is any input
@@ -46,44 +47,13 @@ function [sysd] = eradc(varargin)
   % Create hankel matrices 
   H0 = hank(g, 1);
   H1 = hank(g, 2);
-  H2 = hank(g, 3);
-  H3 = hank(g, 4);
-  H4 = hank(g, 5);
-  H5 = hank(g, 6);
-  H6 = hank(g, 7);
-  H7 = hank(g, 8);
-  H8 = hank(g, 9);
-  H9 = hank(g, 10);
   
-  % To add data correlation, we need to do this:
-  HH0 = H0*H0';
-  HH1 = H1*H0';
-  HH2 = H2*H0';
-  HH3 = H3*H0';
-  HH4 = H4*H0';
-  HH5 = H5*H0';
-  HH6 = H6*H0';
-  HH7 = H7*H0';
-  HH8 = H8*H0';
-  HH9 = H9*H0';
+  % Do data correlations
+  R0 = H0*H0';
+  R1 = H1*H0';
   
-  % Two big hankel matrices
-  HHH0 = [HH0 HH1 HH2 HH3 HH4; 
-          HH1 HH2 HH3 HH4 HH5;
-          HH2 HH3 HH4 HH5 HH6;
-          HH3 HH4 HH5 HH6 HH7;
-          HH4 HH5 HH6 HH7 HH8];
-  
-  HHH1 = [HH1 HH2 HH3 HH4 HH5; 
-          HH2 HH3 HH4 HH5 HH6;
-          HH3 HH4 HH5 HH6 HH7;
-          HH4 HH5 HH6 HH7 HH8;
-          HH5 HH6 HH7 HH8 HH9];
-  
-  
-  
-  % Do SVD on HH0
-  [U,S,V] = svd(HHH0, 'econ');
+  % Do SVD on R0
+  [U,S,V] = svd(R0, 'econ');
   
   % Do model reduction
   [Un, En, Vn, nx] = modelReduction(U, S, V);
@@ -96,28 +66,23 @@ function [sysd] = eradc(varargin)
   Eu = [eye(nu) zeros(nu,size(pinv(Er'*Un*En^(1/2))*H0,2) - size(eye(nu),2))]';
   
   % Create matrix - Notice the change
-  Ad = En^(-1/2)*Un'*HHH1*Vn*En^(-1/2);
+  Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
   Bd = pinv(Er'*Un*En^(1/2))*H0*Eu;
   Cd = Ey'*Un*En^(1/2);
-  Dd = zeros(ny, nu);
+  Dd = g(1:ny, 1:nu);
 
   % Create state space model now
   sysd = ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 end
 
+% Create the hankel matrix - For MIMO now
 function [H] = hank(g, k)
-  % Create hankel matrix
-  H = cell(length(g)/2 - 4, length(g)/2 - 4); 
-  
-  for i = 1:(length(g)/2 - 4)
-    for j = 1:(length(g)/2 - 4)
-      H{i,j} = g(:,k+i+j-2);
-    end
+  for i = 1:size(g, 1)
+    A = hankel(g(i,:))(1:length(g(i,:))/2,1+k:length(g(i,:))/2+k);
+    H(i, :) = reshape(A, 1, size(A, 1)*size(A, 2));
   end
-  
-  % Cell to matrix
-  H = cell2mat(H);
+  H = reshape(H, size(g, 1)*size(A, 1), size(A, 2));
 end
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V)
