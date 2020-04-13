@@ -1,7 +1,7 @@
 % Eigensystem Realization Algorithm 
-% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional)
+% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = era(g, nu, sampleTime, delay);
+% Example 1: [sysd] = era(g, nu, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, November 2017
 % Update January 2019 - Better hankel matrix that fix the 1 step delay.
 % Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19850022899
@@ -40,6 +40,16 @@ function [sysd] = era(varargin)
     delay = 0; % If no delay was given
   end
   
+  % Get the order if the system
+  if(length(varargin) >= 5)
+    systemorder = varargin{5};
+    if (systemorder <= 0)
+      systemorder = -1;
+    end
+  else
+    systemorder = -1; % If no delay was given
+  end
+  
   % Check if g can be diveded with 2
   if mod(length(g), 2) > 0
     error('The output cannot be divided with 2')
@@ -53,7 +63,7 @@ function [sysd] = era(varargin)
   [U,S,V] = svd(H0, 'econ');
   
   % Do model reduction
-  [Un, En, Vn, nx] = modelReduction(U, S, V);
+  [Un, En, Vn, nx] = modelReduction(U, S, V, systemorder);
   
   % Create scalar for Bb, Cd
   ny = size(g, 1); % Number of outputs, we already know the number of inputs
@@ -80,20 +90,23 @@ function [H] = hank(g, k)
   H = reshape(H, size(g, 1)*size(A, 1), size(A, 2));
 end
 
-function [U1, S1, V1, nx] = modelReduction(U, S, V)
+function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
   % Plot singular values 
   stem(1:length(S), diag(S));
   title('Hankel Singular values');
   xlabel('Amount of singular values');
   ylabel('Value');
   
-  % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
-  nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
-  nx = str2num(cell2mat(nx));
+  if(systemorder == -1)
+    % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
+    nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
+    nx = str2num(cell2mat(nx));
+  else
+    nx = systemorder;
+  end
   
   % Choose the dimension nx
   U1 = U(:, 1:nx);
   S1 = S(1:nx, 1:nx);
   V1 = V(:, 1:nx);
 end
-
