@@ -47,7 +47,7 @@ function [sysd] = era(varargin)
       systemorder = -1;
     end
   else
-    systemorder = -1; % If no delay was given
+    systemorder = -1; % If no order was given
   end
   
   % Check if g can be diveded with 2
