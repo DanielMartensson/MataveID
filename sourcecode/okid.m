@@ -7,7 +7,7 @@
 % Update January 2019 - Better hankel matrix that fix the 1 step delay.
 % Update 14 April 2020 - For MIMO data and follows NASA document ID 19910016123
 
-function [sysd, K] = okid5(varargin)
+function [sysd, K] = okid(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
