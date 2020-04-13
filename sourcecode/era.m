@@ -4,7 +4,7 @@
 % Example 1: [sysd] = era(g, nu, sampleTime, delay);
 % Author: Daniel Mårtensson, November 2017
 % Update January 2019 - Better hankel matrix that fix the 1 step delay.
-
+% Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19850022899
 
 function [sysd] = era(varargin)
   % Check if there is any input
@@ -64,7 +64,7 @@ function [sysd] = era(varargin)
   Ad = En^(-1/2)*Un'*H1*Vn*En^(-1/2);
   Bd = En^(1/2)*Vn'*Eu;
   Cd = Ey'*Un*En^(1/2);
-  Dd = zeros(ny, nu);
+  Dd = g(1:ny, 1:nu);
   
   % Create state space model now
   sysd = ss(delay, Ad, Bd, Cd, Dd);
@@ -96,3 +96,4 @@ function [U1, S1, V1, nx] = modelReduction(U, S, V)
   S1 = S(1:nx, 1:nx);
   V1 = V(:, 1:nx);
 end
+
