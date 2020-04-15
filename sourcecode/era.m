@@ -4,7 +4,7 @@
 % Example 1: [sysd] = era(g, nu, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, November 2017
 % Update January 2019 - Better hankel matrix that fix the 1 step delay.
-% Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19850022899
+% Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19850022899 and ID 19920015463 page 25.
 
 function [sysd] = era(varargin)
   % Check if there is any input
