@@ -30,7 +30,7 @@ low memory consuming algorithm. Used in adaptive systems.
 [Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 ```
 
-### Eigensystem Realization Algorithm Data Correlations
+### ERA-DC - Eigensystem Realization Algorithm Data Correlations
 Wants impulse response data. Will give back a discrete state space model. This algorithm is good for structural mechanics. This algorithm can handle noise.
 Can handle both MIMO and SISO data. 
 ```
@@ -38,12 +38,12 @@ Can handle both MIMO and SISO data.
 ```
 !Need some more work on MIMO case for ERA-DC. MIMO still works, but I assume that there are some error indexing in the hankel matrices. If you want to help, please read EigensystemRealization.pdf file in the reports folder!
 
-### State Space Frequency Domain
+### SSFD - State Space Frequency Domain
 Wants frequency response data. Will give back a state space model and a kalman gain matrix. This algorithm is good for fast mechanical systems such as servo systems. 
 
 - Under development
 
-### Observer Controller Identification
+### OCID - Observer Controller Identification
 Wants closed loop data. Will give back a state space model and a kalman gain matrix and a control law. Used in space engineering.
 
 - Under development
