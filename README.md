@@ -14,22 +14,13 @@ https://github.com/DanielMartensson/Deeplearning2C
 Mataveid contains subspace identification and realization identification algorithms. They can be quite hard to understand, compared to ARX, ARMAX, OE, TF models, so I highly recommend to read reports about the subspace identification and realization identification algorithm, to understand how the MATLAB/Octave functions code are written. The reports can be found in the folder "reports".
 
 # What should I use?
-There are lots of different algorithms, even if they look very similar. I have been using them all and lots of them are experimental. Here is my list of choise:
+There are lots of different algorithms, even if they look very similar. All of them works, but there are some that are more for practical use, rather than scientific research. I have been using them all and lots of them are experimental. Here is my list of choise of algorithms that are used in control enginnering and not control theory.
 
 ```
-* OKID - Use this to begin with. It's a good and easy algorithm that suits most cases. 
-* MOESP - If you got noise inside your measurement. This is a good algorithm to choose. 
-* N4SID - If MOESP did not solve your problem. You can try this one. Requires more data. 
-* TFEST - Standard transferfunction estimation using least squares. Easy to use.
-* RLS - Recursive Least Square - Also estimates a Kalman Gain matrix without any further knowledge about noise.
-* SPA - If you got a signal with lots of noise, then you can seperate all noise and see each noise signal. Very clever tool. I like this function.
-* SMOOTHING - Here you can write your own signal by using the mouse clicker.
-* MOAVG - Simple filtering
-* MOAVG2 - This is an algorithm written by me. I normaly use this before MOAVG, but MOAVG is faster because it used internal C++ routines. 
-
-Remeber that MataveControl have good tools for finish the model in system identification, such as referencegain.m function.
-It will add a reference gain to the model for better tracking.
+* OKID - Observer Kalman Filter Identification. Wants random MIMO data - Gives state space model and kalman gain matrix back.
+* RLS - Recursive Least Squares. For SISO modeling. Wants random data - Gives state space model and kalman gain matrix back. 
 ```
+
 
 # Starting
 
