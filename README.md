@@ -36,6 +36,7 @@ Can handle both MIMO and SISO data.
 ```
 [sysd] = eradc(g, nu, sampleTime, delay, systemorder);
 ```
+!Need some more work on MIMO case for ERA-DC. MIMO still works, but I assume that there are some error indexing in the hankel matrices. If you want to help, please read EigensystemRealization.pdf file in the reports folder!
 
 # Starting
 
