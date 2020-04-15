@@ -24,7 +24,7 @@ This algoritm is very good if you got some noise in the measuremens. Can handle 
 ```
 
 ### RLS - Recursive Least Squares
-Wants random input and output data. It will give back a ARMAX model and a discrete state space model with kalman gain matrix. This algoritm is very good if you got some noise in the measuremens. Can only handle SISO data but it a very fast and
+Wants random input and output data. It will give back a ARMAX model or a ARX model, depending on the order of zeros-numerator parameter 'nze' for the C-polynomial, and of course a discrete state space model with kalman gain matrix. This algoritm is very good if you got some noise in the measuremens. Can only handle SISO data but it a very fast and
 low memory consuming algorithm. Used in adaptive systems.
 ```
 [Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
