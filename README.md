@@ -14,7 +14,7 @@ https://github.com/DanielMartensson/Deeplearning2C
 Mataveid contains subspace identification and realization identification algorithms. They can be quite hard to understand, compared to ARX, ARMAX, OE, TF models, so I highly recommend to read reports about the subspace identification and realization identification algorithm, to understand how the MATLAB/Octave functions code are written. The reports can be found in the folder "reports".
 
 # What should I use?
-There are lots of different algorithms, even if they look very similar. All of them works, but there are some that are more for practical use, rather than scientific research. I have been using them all and lots of them are experimental. Here is my list of choise of algorithms that are used in control enginnering and not control theory.
+There are lots of different algorithms, even if they look very similar. All of them works, but there are some that are more for practical use, rather than scientific research. I have been using them all and lots of them are experimental. Here is my list of choise of algorithms that are used in control engineering and not control theory.
 
 ```
 * OKID - Observer Kalman Filter Identification. Wants random MIMO data - Gives state space model and kalman gain matrix back.
