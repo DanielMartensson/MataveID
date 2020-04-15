@@ -16,9 +16,18 @@ Mataveid contains subspace identification and realization identification algorit
 # What should I use?
 There are lots of different algorithms, even if they look very similar. All of them works, but there are some that are more for practical use, rather than scientific research. I have been using them all and lots of them are experimental. Here is my list of choise of algorithms that are used in control engineering and not control theory.
 
+### OKID - Observer Kalman Filter Identification
+Wants random input and output data. It will give back a discrete state space model and a kalman gain matrix.
+This algoritm is very good if you got some noise in the measuremens. Can handle both MIMO and SISO data.
 ```
-* OKID - Observer Kalman Filter Identification. Wants random MIMO data - Gives state space model and kalman gain matrix back.
-* RLS - Recursive Least Squares. For SISO modeling. Wants random data - Gives state space model and kalman gain matrix back. 
+[sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder)
+```
+
+### RLS - Recursive Least Squares
+Wants random input and output data. It will give back a ARMAX model and a discrete state space model with kalman gain matrix. This algoritm is very good if you got some noise in the measuremens. Can only handle SISO data but it a very fast and
+low memory consuming algorithm. 
+```
+[Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 ```
 
 
