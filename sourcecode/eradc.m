@@ -3,7 +3,7 @@
 % Output: sysd(Discrete state space model)
 % Example 1: [sysd] = eradc(g, nu, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, November 2017
-% Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963.
+% Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963 and ID 19920015463 page 26.
 
 function [sysd] = eradc(varargin)
   % Check if there is any input
