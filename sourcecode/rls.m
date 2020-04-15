@@ -3,7 +3,7 @@
 % Output: Gd(Discrete transfer function), Hd(Discrete transfer function for noise), sysd(Discrete state space model with noise), K(Kalman filter)
 % Example 1: [Gd, Hd] = rls(u, y, np, nz, nze, sampleTime);
 % Example 2: [Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
-% Author: Daniel Mårtensson, September 2019
+% Author: Daniel Mårtensson, September 2019. Follows the litterature Adaptive Control by Karl Johan Åström. Page 62. ISBN 9780486462783
 
 function [Gd, Hd, sysd, K] = rls(varargin)
    % Check if there is any input
