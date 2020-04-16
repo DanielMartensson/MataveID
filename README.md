@@ -43,6 +43,11 @@ Wants frequency response data. Will give back a state space model and a kalman g
 
 - Under development
 
+### OCID - Observer Controller Identification
+Wants random input and output data.  It will give back a discrete state space model and a kalman gain matrix and a control law. 
+
+- Under development
+
 # Starting
 
 Always start with help command of each function
