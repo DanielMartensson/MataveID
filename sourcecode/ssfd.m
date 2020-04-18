@@ -1,11 +1,11 @@
 % State Space Frequency Domain
-% Input: u(input signal), y(output signal), sampleTime, delay(optional), systemorder(optional)
+% Input: u(input signal), y(output signal), sampleTime, systemorderTF, delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = ssfd(u, y, sampleTime, delay, systemorder);
-% Example 2: [sysd] = ssfd(u, y, sampleTime);
+% Example 1: [sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, systemorder);
+% Example 2: [sysd] = ssfd(u, y, sampleTime, systemorderTF);
 % Author: Daniel Mårtensson, April 2020. Follows NASA documentat ID 19920023413 
 
-function [sysd] = ssfd(varargin)
+function [sysd] = ssfd2(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -32,16 +32,23 @@ function [sysd] = ssfd(varargin)
     error('Missing sample time');
   end
   
-  % Get the delay
+  % Get the model order for the transfer function
   if(length(varargin) >= 4)
-    delay = varargin{4};
+    p = varargin{4};
+  else
+     error('Missing model order');
+  end
+  
+  % Get the delay
+  if(length(varargin) >= 5)
+    delay = varargin{5};
   else
     delay = 0; % If no delay was given
   end
   
   % Get the order if the system
-  if(length(varargin) >= 5)
-    systemorder = varargin{5};
+  if(length(varargin) >= 6)
+    systemorder = varargin{6};
     if (systemorder <= 0)
       systemorder = -1;
     end
