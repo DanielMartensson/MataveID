@@ -5,7 +5,7 @@
 % Example 2: [sysd] = ssfd(u, y, sampleTime);
 % Author: Daniel Mårtensson, April 2020. Follows NASA documentat ID 19920023413 
 
-function [sysd] = ssfd2(varargin)
+function [sysd] = ssfd(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
