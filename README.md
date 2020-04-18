@@ -39,7 +39,7 @@ Can handle both MIMO and SISO data.
 !Need some more work on MIMO case for ERA-DC. MIMO still works, but I assume that there are some error indexing in the hankel matrices. If you want to help, please read EigensystemRealization.pdf file in the reports folder!
 
 ### SSFD - State Space Frequency Domain
-Wants frequency response data. Will give back a state space model. This algorithm is good for fast mechanical systems such as servo systems. This algorithm can also handle noise because it's using Recursive Least Square and then ERA/DC.
+Wants frequency response data. Will give back a state space model. This algorithm is good for fast mechanical systems such as servo systems. This algorithm can also handle noise because it's using Recursive Least Square and then ERA/DC. Can handle both MIMO and SISO data. 
 
 ```
 [sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, forgetting, systemorder);
