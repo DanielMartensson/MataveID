@@ -1,4 +1,4 @@
-# Mataveid V4.5
+# Mataveid V5.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Subspace identification, realization theory and least square polynomial models are main focus in this project.
 
 Please check my IoT-software for loging values in real time via USB-port and over the internet. Perfect for system identification.
@@ -39,9 +39,11 @@ Can handle both MIMO and SISO data.
 !Need some more work on MIMO case for ERA-DC. MIMO still works, but I assume that there are some error indexing in the hankel matrices. If you want to help, please read EigensystemRealization.pdf file in the reports folder!
 
 ### SSFD - State Space Frequency Domain
-Wants frequency response data. Will give back a state space model and a kalman gain matrix. This algorithm is good for fast mechanical systems such as servo systems. 
+Wants frequency response data. Will give back a state space model. This algorithm is good for fast mechanical systems such as servo systems. This algoritm can also handle noise. 
 
-- Under development
+```
+[sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, systemorder);
+```
 
 ### OCID - Observer Controller Identification
 Wants closed loop input and output data.  It will give back a discrete state space model and a kalman gain matrix and a control law. 
