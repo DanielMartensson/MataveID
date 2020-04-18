@@ -36,21 +36,19 @@ function idbode(varargin)
   l = n/2;
   
   % Do Fast Fourier Transform for every input signal
-  H = zeros(m, l); 
-  W = zeros(m, l);
   for i = 1:m
     % Do FFT
     fy = fft(y(i, 1:n));
     fu = fft(u(i, 1:n));
     
     % Cut the frequency into half too and multiply it with 4
-    W(i, 1:l) = w(i, 1:l)*4; 
+    W = w(i, 1:l)*4; 
     if(W(i, 1) <= 0)
-      W(i, 1) = W(i, 2); % Prevent zeros on the first index. In case if you used w = linspace(0,...
+      W(1) = W(2); % Prevent zeros on the first index. In case if you used w = linspace(0,...
     end
     
     % Create the complex magnitudes and cut it to half
-    H(i, 1:l) = (fy./fu)(1:l); 
+    H = (fy./fu)(1:l); 
     
     % Plot the bode diagram of measurement data
     figure('Name', sprintf(strcat('Transfer function: ', num2str(i))))
