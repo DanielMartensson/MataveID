@@ -50,6 +50,20 @@ Wants closed loop input and output data.  It will give back a discrete state spa
 
 - Under development
 
+### IDBode - Identification Bode
+This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
+
+```
+idbode(u, y, w);
+```
+
+### SPA - Spectral Analysis
+This plots all the amplitudes from noisy data over its frequencies. Very good to see what type of noise or signals you have. With this, you can determine what the real frequencies and amplitudes are.
+
+```
+[amp, wout] = spa(y, t);
+```
+
 # Starting
 
 Always start with help command of each function
