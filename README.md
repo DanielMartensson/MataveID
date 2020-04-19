@@ -46,9 +46,13 @@ Wants frequency response data. Will give back a state space model. This algorith
 ```
 
 ### OCID - Observer Controller Identification
-Wants closed loop input and output data.  It will give back a discrete state space model and a kalman gain matrix and a control law. 
+Wants closed loop input and output data.  It will give back a discrete state space model and a kalman gain matrix and a control law. Very good to use if your dynamical system is unstable for open loop data, or if you need to extract the control law, observer and dynamical system into a simulation problem when the system is already in run time.
 
-- Under development
+```
+[sysd, K, L] = ocid(r, uf, y, sampleTime, delay, regularization, systemorder);
+```
+
+! Need some work on this. I have made 90% of the this file. Work left on how to find the state space model!"
 
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
