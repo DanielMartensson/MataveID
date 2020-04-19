@@ -52,7 +52,7 @@ Wants closed loop input and output data.  It will give back a discrete state spa
 [sysd, K, L] = ocid(r, uf, y, sampleTime, delay, regularization, systemorder);
 ```
 
-! Need some work on this. I have made 90% of the this file. Work left on how to find the state space model! If you want to help. Please view the Applied System Identification - Lecture note 3.pdf and OCID.pdf files in the reports folder."
+! Need some work on this. I have made 90% of the this file. Work left on how to find the state space model! If you want to help. Please view the Applied System Identification - Lecture note 3.pdf and OCID.pdf files in the reports folder.
 
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
