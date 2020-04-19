@@ -20,7 +20,7 @@ There are lots of different algorithms, even if they look very similar. All of t
 Wants random input and output data. It will give back a discrete state space model and a kalman gain matrix.
 This algoritm is very good if you got some noise in the measurements. Can handle both MIMO and SISO data. Used in space engineering.
 ```
-[sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder)
+[sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder);
 ```
 
 ### RLS - Recursive Least Squares
