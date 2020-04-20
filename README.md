@@ -23,6 +23,8 @@ This algoritm is very good if you got some noise in the measurements. Can handle
 [sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder);
 ```
 
+!Need some more work on MIMO case!
+
 ### RLS - Recursive Least Squares
 Wants random input and output data. It will give back a ARMAX model or a ARX model, depending on the order of zeros-numerator parameter 'nze' for the C-polynomial, and of course a discrete state space model with kalman gain matrix. This algoritm is very good if you got some noise in the measurements. Can only handle SISO data but it a very fast and
 low memory consuming algorithm. Used in adaptive systems.
