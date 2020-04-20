@@ -3,9 +3,9 @@
 % Output: sysd(Discrete state space model)
 % Example 1: [sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, forgetting, systemorder);
 % Example 2: [sysd] = ssfd(u, y, sampleTime, systemorderTF);
-% Author: Daniel Mårtensson, April 2020. Follows NASA documentat ID 19920023413 
+% Author: Daniel Mårtensson, April 2020. Follows almost the same idea behind the NASA documentat ID 19920023413 
 
-function [sysd] = ssfd(varargin)
+function [sysd, Gdi] = ssfd(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -71,55 +71,23 @@ function [sysd] = ssfd(varargin)
   % Get the amout if signals and the length of markov parameters
   r = size(u, 1);
   m = size(y, 2);
-  N = 4*p;
   
-  % Get all the numerators and denominators from RLS in for of diagonal matrices
-  A = zeros(r, p*r);
-  B = zeros(r, p*r);
+  % Get the impulse response of Gdi
+  H = [];
   for i = 1:r
-    Gd = rls(u(i, 1:m), y(i, 1:m), p, p, p, sampleTime, delay, forgetting); % RLS is a perfect choice in this noisy case
-    A(i, i:r:p*r) = Gd.den(2:p+1); % Ignore the first 1*z^2
-    B(i, i:r:p*r) = Gd.num;
+    Gdi = rls(u(i, 1:m), y(i, 1:m), p, p, p, sampleTime, delay, forgetting); % RLS is a perfect choice in this noisy case
+    g = impulse(Gdi);
+    g = g(1:2:length(g)); % Remove the discrete shape - Only necessary for plotting! In this case...no.
+    close % A pop up plot will appear from impulse.m
+    H = [H;g];
   end
   
-  % Find the markov parameters of polynomals A and B
-  % This is the standard way to find a impulse response of a TF. Used since Ho-Kalman 1966
-  H = zeros(r, r*N);
-  for k = 0:N-1
-    if(k == 0)
-      Bk = getY_k(B, r, k);
-      H(:, 1 + k*r:k*r + r) = Bk; % B0
-    elseif(and(k > 0, k < p))
-      Bk = getY_k(B, r, k); 
-      AH = zeros(r, r);
-      for j = 0:k-1
-        Ak = getY_k(A, r, j);
-        Hk = getY_k(H, r, k-j);
-        AH = AH + Ak*Hk;
-      end
-      H(:, 1 + k*r:k*r + r) = Bk - AH;
-    elseif(k >= p)
-      AH = zeros(r, r);
-      for j = 0:p-1
-        Ak = getY_k(A, r, j);
-        Hk = getY_k(H, r, k-j);
-        AH = AH + Ak*Hk;
-      end
-      H(:, 1 + k*r:k*r + r) = -AH;
-    end
+  % If we can't divide the length in 2
+  if(mod(length(H), 2) > 0)
+    H = H(:, 1:end-1);
   end
   
   % Get our state space model by using ERA/DC algorithm
   sysd = eradc(H, r, sampleTime, delay, systemorder);
   
-end
-
-% Get the Y_k from Y
-function [Yk] = getY_k(Y, m, k)
-  Yk = zeros(m, m);
-  if(k >= 0)
-    for i = 1:m
-      Yk(i, 1:m) = Y(i, 1 + k*m:k*m + m);
-    end
-  end
 end
