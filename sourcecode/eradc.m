@@ -3,7 +3,7 @@
 % Output: sysd(Discrete state space model)
 % Example 1: [sysd] = eradc(g, nu, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, November 2017
-% Update 1 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963 and ID 19920015463 page 26.
+% Update 20 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963 and ID 19920015463 page 26.
 
 function [sysd] = eradc(varargin)
   % Check if there is any input
@@ -53,6 +53,16 @@ function [sysd] = eradc(varargin)
   if mod(length(g), 2) > 0
     error('The output cannot be divided with 2')
   end
+    
+  % Change g for MIMO to diagonal case
+  if(nu > 1)
+    l = length(g);
+    G = zeros(nu, l*nu);
+    for i = 1:nu
+      G(i, i:nu:l*nu-1+i) = g(i, 1:l);
+    end
+    g = G; 
+  end
 
   % Create hankel matrices 
   H0 = hank(g, 1);
@@ -70,7 +80,7 @@ function [sysd] = eradc(varargin)
   
   % Create scalar for Bb, Cd
   ny = size(g, 1); % Number of outputs, we already know the number of inputs
-  gamma = size(H0, 1); % Get the row size of H0 - This one is special case for ERA/DC
+  gamma = size(H0, 1); % Get the row size of H0 - This one is a special case for ERA/DC
   Er = [eye(gamma) zeros(gamma,size(En^(1/2)*Vn',2) - size(eye(gamma),2))]';
   Ey = [eye(ny) zeros(ny,size(Un*En^(1/2),1) - size(eye(ny),1))]';
   Eu = [eye(nu) zeros(nu,size(pinv(Er'*Un*En^(1/2))*H0,2) - size(eye(nu),2))]';
@@ -86,13 +96,23 @@ function [sysd] = eradc(varargin)
   sysd.sampleTime = sampleTime;
 end
 
-% Create the hankel matrix - For MIMO now
+% Create the half square hankel matrix
 function [H] = hank(g, k)
-  for i = 1:size(g, 1)
-    A = hankel(g(i,:))(1:length(g(i,:))/2,1+k:length(g(i,:))/2+k);
-    H(i, :) = reshape(A, 1, size(A, 1)*size(A, 2));
+  % We got markov parameters g = [g0 g1 g2 g2 g3 ... gl]; with size m*m. g0 = D
+  m = size(g, 1);
+  n = size(g, 2);
+  l = length(g)/(m*2);
+  H = zeros(l*m, l*m);
+  for i = 1:l
+    if(and(i == l, k == 2))
+      % This is a special case when g is out of index, just add zeros instead!
+      row = g(:, 1 + (k+i-1)*m:(k+i-2)*m + l*m);
+      H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = [row zeros(m, m)]; 
+   else
+      row = g(:, 1 + (k+i-1)*m:(k+i-1)*m + l*m);
+      H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = row;
+    end
   end
-  H = reshape(H, size(g, 1)*size(A, 1), size(A, 2));
 end
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
