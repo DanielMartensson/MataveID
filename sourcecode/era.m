@@ -52,7 +52,7 @@ function [sysd] = era(varargin)
   
   % Check if g can be diveded with 2
   if mod(length(g), 2) > 0
-    error('The output cannot be divided with 2')
+    g = g(:, 1:end-1);
   end
   
   % Change g for MIMO to diagonal case
