@@ -1,7 +1,7 @@
 % Eigensystem Realization Algorithm with Data Correlation
-% Input: g(markov parameters), nu(number of inputs), sampleTime, delay(optional), systemorder(optional)
+% Input: g(markov parameters), sampleTime, delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = eradc(g, nu, sampleTime, delay, systemorder);
+% Example 1: [sysd] = eradc(g, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, November 2017
 % Update 20 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963
 
@@ -18,30 +18,23 @@ function [sysd] = eradc(varargin)
     error('Missing impulse response')
   end
   
-  % Get the number of input
-  if(length(varargin) >= 2)
-    nu = varargin{2};
-  else
-    error('Missing number of input');
-  end
-  
   % Get the sample time
-  if(length(varargin) >= 3)
-    sampleTime = varargin{3};
+  if(length(varargin) >= 2)
+    sampleTime = varargin{2};
   else
     error('Missing sample time');
   end
   
   % Get the delay
-  if(length(varargin) >= 4)
-    delay = varargin{4};
+  if(length(varargin) >= 3)
+    delay = varargin{3};
   else
     delay = 0; % If no delay was given
   end
   
   % Get the order of the system
-  if(length(varargin) >= 5)
-    systemorder = varargin{5};
+  if(length(varargin) >= 4)
+    systemorder = varargin{4};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -53,6 +46,9 @@ function [sysd] = eradc(varargin)
   if mod(length(g), 2) > 0
     g = g(:, 1:end-1);
   end
+  
+  % Get the number of input
+  nu = size(g, 1);
     
   % Change g for MIMO to diagonal case
   if(nu > 1)
