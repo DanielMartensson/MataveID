@@ -88,6 +88,6 @@ function [sysd, Gdi] = ssfd(varargin)
   end
   
   % Get our state space model by using ERA/DC algorithm
-  sysd = eradc(H, r, sampleTime, delay, systemorder);
+  sysd = eradc(H, sampleTime, delay, systemorder);
   
 end
