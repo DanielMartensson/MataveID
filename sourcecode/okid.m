@@ -5,7 +5,7 @@
 % Example 2: [sysd, K] = okid(u, y, sampleTime);
 % Author: Daniel Mårtensson, December 2017
 % Update January 2019 - Better hankel matrix that fix the 1 step delay.
-% Update 14 April 2020 - For MIMO data and follows NASA document ID 19910016123
+% Update 22 April 2020 - For MIMO data and follows NASA document ID 19910016123
 
 function [sysd, K] = okid(varargin)
   % Check if there is any input
@@ -72,108 +72,92 @@ function [sysd, K] = okid(varargin)
   m = size(u, 1); % Dimension of input
   p = l/2-1; % We select half minus -1 else Ybar can be unstable for SISO noise free case
   
-  % Create V matrix
-  V = zeros((q+m)*p + m, l-p);
+  % Save the system markov parameters and observer markov parameters here
+  CAB = zeros(q, p);
+  CAM = zeros(q, p);
   
-  % Begin with the first m rows for V
-  for k = 1:m
-    V(k, 1:l-p) = u(k, p+1:l);
-  end
-  
-  % Now do the rest (q+m)*l rows for V. We want to implement v = [u;y] into V - This is equation 8
-  positionrow = 1;
-  for row = m:(q+m):(q+m)*p
-    % For u
-    for k = 1:m
-      V(row + k, 1:l-p) = u(k, p-positionrow+1:l-positionrow);
+  % This method computes markov parameters for every signal each. The reason where it's 1 everywhere is because we
+  % Assume that m = 1 and q = 1 for every signal. So q+m = 1+1 for every signal each.
+  for j = 1:q
+    % Create V matrix
+    V = zeros((1+1)*p + 1, l-p);
+    
+    % Begin with the first row for V
+    V(1, 1:l-p) = u(j, p+1:l);
+    
+    % Now do the rest (1+1)*p rows for V. We want to implement v = [u;y] into V - This is equation 8
+    positionrow = 1;
+    for row = 1:(1+1):(1+1)*p
+      % For u
+      V(row + 1, 1:l-p) = u(j, p-positionrow+1:l-positionrow);
+      % For y
+      V(row + 1 + 1, 1:l-p) = y(j, p-positionrow+1:l-positionrow);
+      positionrow = positionrow + 1;
     end
-    % For y
-    for k = 1:q
-      V(row + k + m, 1:l-p) = y(k, p-positionrow+1:l-positionrow);
-    end
-    positionrow = positionrow + 1;
+    
+    % Important to have part of y
+    y_part = zeros(1, 1:l-p);
+    y_part(1, 1:l-p) = y(j, p+1:l);
+    
+    % Solve for non-filtred markov parameters with tikhonov regularization
+    Ybar = y_part*inv(V'*V + regularization*eye(size(V'*V)))*V';
+    
+    % Get D matrix
+    D = zeros(1, 1);
+    D(1,1) = Ybar(1, 1:1); % This is YBar_{-1}
+    
+    % Remove D from Ybar
+    YbarNoD = zeros(1, (1+1)*p);
+    YbarNoD(1, 1:(1+1)*p) = Ybar(1, 1+1:(1+1)*p+1);
+    
+    % Split the signals 
+    Ybar1 = zeros(1, p);
+    Ybar2 = zeros(1, p);
+    Ybar1(1, 1:p) = YbarNoD(1, 1:1+1:(1+1)*p); % C(A+MC)^k(B+MD)
+    Ybar2(1, 1:p) = YbarNoD(1, (1+1):1+1:(1+1)*p); % -C(A+MC)^kM
+    
+    % Get the markov parameters from the signals
+    [Yk, Yo] = getMarkov(Ybar1, Ybar2, D, p);
+    
+    % Store the markov parameters
+    CAB(j, 1:p) = Yk(1, 1:p);
+    CAM(j, 1:p) = Yo(1, 1:p);
+    
   end
   
-  % Important to have part of y
-  y_part = zeros(q, 1:l-p);
-  for k = 1:q
-    y_part(k, 1:l-p) = y(k, p+1:l);
-  end
+  % Time to find A, B, C, D using ERA/DC
+  sysd = eradc(CAB, m, sampleTime, delay, systemorder);
   
-  % Solve for non-filtred markov parameters with tikhonov regularization
-  Ybar = y_part*inv(V'*V + regularization*eye(size(V'*V)))*V';
-  
-  % Get D matrix
-  D = zeros(q, m);
-  for k = 1:q
-    D(k, 1:m) = Ybar(k, 1:m); % This is YBar_{-1}
-  end
+  % Find the kalman gain matrix K
+  O = createO(sysd.A, sysd.C, p/m);
+  CAM = CAM(:, 1:size(O, 1));
+  K = inv(O'*O)*O'*CAM'; % Our kalman gain matrix
 
-  % Remove D from Ybar
-  YbarNoD = zeros(q, (q+m)*p);
-  for i = 1:q
-    YbarNoD(i, 1:(q+m)*p) = Ybar(i, m+1:(q+m)*p+m);
-  end
-  
-  % Time to find the impulse response: 
-  % Yk = Ybar1_k + sum_i_to_k-1(Y_k-i-1*Ybar2_i) + Ybar2_k*D
-  % Yo_k = -Ybar2_k + sum_i_to_k-1(Y_k-i-1*Ybar2_i); 
-  Y = zeros(m, p*m);
-  Yo = zeros(m, p*m);
-  for k = 0:p-1
-    [Ybar1_k, Ybar2_k] = getYbar1_2(YbarNoD, q, m, k);
-    
-    % Find the sum
-    Ysum = zeros(m, m);
-    Yosum = zeros(m, m);
-    for i = 0:k-1
-      [Ybar1_i, Ybar2_i] = getYbar1_2(YbarNoD, q, m, i);
-      [Yi] = getY_k(Y, m, k-i-1);
-      [Yoi] = getY_k(Yo, m, k-i-1);
-      Ysum = Ysum + Ybar2_i*Yi;
-      Yosum = Yosum + Ybar2_i*Yoi;
-    end
-    
-    % Save the markov parameters
-    Y(:, 1 + k*m:k*m + m) = Ybar1_k + Ysum + Ybar2_k*D; % This are the CA^kB system markov parameters
-    Yo(:, 1 + k*m:k*m + m) = -Ybar2_k + Yosum; % This are the CA^kM observer markov parameters
-    
-  end
- 
-  % Time to find A, B, C, D, K from measurement data by using ERA/DC
-  sysd = eradc([D Y], m, sampleTime, delay, systemorder)
-  O = createO(sysd.A, sysd.C, p);
-  K = inv(O'*O)*O'*Yo'; % Our kalman gain matrix
-  
 end
 
-% Get the Y_k from Y
-function [Yk] = getY_k(Y, m, k)
-  Yk = zeros(m, m);
-  if(k >= 0)
-    for i = 1:m
-      Yk(i, 1:m) = Y(i, 1 + k*m:k*m + m);
+% This function will find markov parameters Yk and Yo from Ybar1 and Ybar2
+% In this example, we indexing from 1, not 0.
+function [Yk, Yo] = getMarkov(Ybar1, Ybar2, D, p)
+  Yk = zeros(1, p);
+  Yo = zeros(1, p);
+  for k = 1:p
+    
+    % Find the Ybar1 and Ybar2
+    Ybar1_k = Ybar1(k);
+    Ybar2_k = Ybar2(k);
+    
+    % Sum
+    Ysum = 0;
+    Yosum = 0;
+    for i = 1:k-1
+      Ysum = Ysum + Ybar2(i)*Yk(k-i);
+      Yosum = Yosum + Ybar2(i)*Yo(k-i);
     end
+  
+    % Save for next iteration
+    Yk(k) = Ybar1_k + Ysum + Ybar2_k*D; % CA^kB
+    Yo(k) = -Ybar2_k + Yosum; % CA^kM
   end
-end
-
-% This will get [Ybar1, Ybar2]
-function [Ybar1, Ybar2] = getYbar1_2(YbarNoD, q, m, k)
-    Ybar1 = zeros(q, m); % C(A+MC)^k(B+MD)
-    Ybar2 = zeros(q, q); % -C(A+MC)^kM
-    Ybar1Ybar2 = zeros(q, m+q);
-    
-    % Do Ybar1Ybar2
-    for i = 1:q
-      Ybar1Ybar2(i, 1:m+q) = YbarNoD(i, 1+(q+m)*k: (q+m)*k + q+m);
-    end
-    
-    % Split Ybar1Ybar2 to Ybar1 and Ybar2
-    for i = 1:q
-      Ybar1(i, 1:m) = Ybar1Ybar2(i, 1:m);
-      Ybar2(i, 1:q) = Ybar1Ybar2(i, m+1:q+q);
-    end
-
 end
 
 % Create the special Observabillity matrix
