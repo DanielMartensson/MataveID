@@ -126,7 +126,7 @@ function [sysd, K] = okid(varargin)
   end
   
   % Time to find A, B, C, D using ERA/DC
-  sysd = eradc(CAB, m, sampleTime, delay, systemorder);
+  sysd = eradc(CAB, sampleTime, delay, systemorder);
   
   % Find the kalman gain matrix K
   O = createO(sysd.A, sysd.C, p/m);
