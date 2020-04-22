@@ -34,7 +34,7 @@ low memory consuming algorithm. Used in adaptive systems.
 Wants impulse response data. Will give back a discrete state space model. This algorithm is good for structural mechanics. This algorithm can handle noise.
 Can handle both MIMO and SISO data. 
 ```
-[sysd] = eradc(g, nu, sampleTime, delay, systemorder);
+[sysd] = eradc(g, sampleTime, delay, systemorder);
 ```
 
 ### SSFD - State Space Frequency Domain
