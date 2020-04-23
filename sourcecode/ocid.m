@@ -163,7 +163,7 @@ function [sysd, K, L] = eradcocid(D, g, sampleTime, delay, systemorder)
       columncount = 1;
       for j = 1:l
         
-        % Insert data into Y and count
+        % Insert data into G and count
         G(i, Gcolumn) = g(i, j);
         Gcolumn = Gcolumn + 1;
         columncount = columncount + 1;
