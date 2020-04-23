@@ -81,6 +81,7 @@ function [sysd, K] = okid(varargin)
   % Save the system markov parameters and observer markov parameters here
   CAB = zeros(q, p);
   CAM = zeros(q, p);
+  P = zeros(q, p+p);
   
   % This method computes markov parameters for every signal each. The reason where it's 1 everywhere is because we
   % Assume that m = 1 and q = 1 for every signal. So q+m = 1+1 for every signal each.
@@ -129,7 +130,17 @@ function [sysd, K] = okid(varargin)
     CAB(j, 1:p) = Yk(1, 1:p);
     CAM(j, 1:p) = Yo(1, 1:p);
     
+    % Save them into one markov parameter P - Experimental!
+    index = 1;
+    for i = 1:2:2*p
+      P(j, i:i+1) = [Yk(index) Yo(index)];
+      index = index + 1;
+    end
+    
   end
+  
+  % Experimental!
+  %[sysd, K] = eradcokid(P, sampleTime, delay, systemorder);
   
   % Time to find A, B, C, D using ERA/DC
   sysd = eradc(CAB, sampleTime, delay, systemorder);
@@ -138,7 +149,131 @@ function [sysd, K] = okid(varargin)
   O = createO(sysd.A, sysd.C, p/m);
   CAM = CAM(:, 1:size(O, 1));
   K = inv(O'*O)*O'*CAM'; % Our kalman gain matrix
+   
+end
 
+% Special ERA/DC for just OKID command - Do not work! I think is has to be that 
+% the markov parameter is not square Pk = [CA^kB CA^kM].
+% Try it out and make a pull request if you solved it!
+% This is equation 29 in OKID.pdf file. Read also ERADC.pdf file as well
+function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
+  % Get the number of input
+  nu = size(g, 1); 
+  
+  % Change g for MIMO to diagonal case
+  if(nu > 1) 
+    l = length(g);
+    G = zeros(nu, l*nu); 
+    beginning = 1;
+    for i = 1:nu
+      Gcolumn = beginning; % Where we should start. 1 to begin with
+      columncount = 1;
+      for j = 1:l
+        
+        % Insert data into G and count
+        G(i, Gcolumn) = g(i, j);
+        Gcolumn = Gcolumn + 1;
+        columncount = columncount + 1;
+        
+        % When we av inserted [CAB CAM] then jump two steps to right
+        if(columncount > 2)
+          columncount = 1;
+          Gcolumn = Gcolumn + 2;
+        end
+        
+      end
+      
+      % This counter is made for the shifting so G will be diagonal
+      beginning = beginning + 2;
+    end
+    g = G; 
+  end
+
+  % Create hankel matrices 
+  H0 = hank(g, 1);
+  H1 = hank(g, 2);
+  
+  % Do data correlations
+  R0 = H0*H0';
+  R1 = H1*H0';
+  
+  % Do SVD on R0
+  [U,S,V] = svd(R0, 'econ');
+  
+  % Do model reduction
+  [Un, En, Vn, nx] = modelReduction(U, S, V, systemorder);
+  
+  % Create the A matrix
+  Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
+  
+  % The reason why we are using 1:2:nx and 2:2:nx here is because how
+  %   P = [CAB CAM];
+  %   Is shaped. Try to understand how I have placed the data in P.
+  %   P(j, i:i+1) = [Yk(index) Yo(index)];
+  %  
+  %   Example for the impulse response
+  %         1     2     3    4     5   6   nx
+  %  1 g = [CAB1 CAM1   0    0     0   0
+  %  2       0     0   CAB2 CAM2   0   0
+  %  3       0     0    0    0   CAB3 CAM3];
+  %  nu
+  
+  % From X we can get Bd and K(Kalman gain M)
+  Pa = Un*En^(1/2);
+  X = pinv(Pa)*H0; 
+  Bd = X(1:nx, 1:2:nu)
+  K = X(1:nx, 2:2:nx);
+  
+  % From Pa we can find Cd
+  Cd = Pa(1:nu, 1:nx)
+  
+  % D matrix
+  Dd = g(1:nu, 1:2:nu*2)
+
+  % Create state space model now
+  sysd = ss(delay, Ad, Bd, Cd, Dd);
+  sysd.sampleTime = sampleTime;
+  
+end
+
+function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
+  % Plot singular values 
+  stem(1:length(S), diag(S));
+  title('Hankel Singular values');
+  xlabel('Amount of singular values');
+  ylabel('Value');
+  
+  if(systemorder == -1)
+    % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
+    nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
+    nx = str2num(cell2mat(nx));
+  else
+    nx = systemorder;
+  end
+  
+  % Choose the dimension nx
+  U1 = U(:, 1:nx);
+  S1 = S(1:nx, 1:nx);
+  V1 = V(:, 1:nx);
+end
+
+% Create the half square hankel matrix
+function [H] = hank(g, k)
+  % We got markov parameters g = [g0 g1 g2 g2 g3 ... gl]; with size m*m. g0 = D
+  m = size(g, 1);
+  n = size(g, 2);
+  l = length(g)/(m*2);
+  H = zeros(l*m, l*m);
+  for i = 1:l
+    if(and(i == l, k == 2))
+      % This is a special case when g is out of index, just add zeros instead!
+      row = g(:, 1 + (k+i-1)*m:(k+i-2)*m + l*m);
+      H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = [row zeros(m, m)]; 
+   else
+      row = g(:, 1 + (k+i-1)*m:(k+i-1)*m + l*m);
+      H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = row;
+    end
+  end
 end
 
 % This function will find markov parameters Yk and Yo from Ybar1 and Ybar2
