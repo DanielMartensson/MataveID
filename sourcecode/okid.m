@@ -66,6 +66,12 @@ function [sysd, K] = okid(varargin)
     error('Input(u) and output(y) has not the same length')
   end
   
+  % Check if y and u can be diveded with 2
+  if mod(length(u), 2) > 0
+    u = u(:, 1:end-1);
+    y = y(:, 1:end-1);
+  end
+  
   % Get the dimensions first
   q = size(y, 1); % Dimension of output
   l = size(y, 2); % Total length
