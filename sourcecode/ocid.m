@@ -168,7 +168,7 @@ function [sysd, K, L] = eradcocid(D, g, sampleTime, delay, systemorder)
         Gcolumn = Gcolumn + 1;
         columncount = columncount + 1;
         
-        % When we av inserted [CAB CAG] then jump three steps to right
+        % When we av inserted [CAB CAG] then jump two steps to right
         if(columncount > 2)
           columncount = 1;
           Gcolumn = Gcolumn + 2;
