@@ -222,7 +222,7 @@ function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
   Pa = Un*En^(1/2);
   X = pinv(Pa)*H0; 
   Bd = X(1:nx, 1:2:nu)
-  K = X(1:nx, 2:2:nx);
+  K = X(1:nx, 2:2:nu);
   
   % From Pa we can find Cd
   Cd = Pa(1:nu, 1:nx)
