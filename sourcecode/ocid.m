@@ -210,14 +210,14 @@ function [sysd, K, L] = eradcocid(D, g, sampleTime, delay, systemorder)
   %   Is shaped. Try to understand how I have placed the data in Y.
   %   Y(Yrow:Yrow+1, i:i+1) = [Y11(index) Y12(index); Y21(index) Y22(index)];
   %  
-  %   Example
-  %   Y = [CAB1 CAG1; 
-  %        FAB1 FAG1;
-  %        CAB2 CAG2; 
-  %        FAB2 FAG2;
-  %        CAB3 CAG3; 
-  %        FAB3 FAG3];
-       
+  %   Example for the impulse response
+  %         1    2      3    4     5   6
+  %  1 g = [CAB1 CAG1   0    0     0   0
+  %  2      FAB1 FAG1   0    0     0   0
+  %  3       0     0   CAB2 CAG2   0   0
+  %  4       0     0   FAB2 FAG2   0   0
+  %  5       0     0    0    0   CAB3 CAG3; 
+  %  6       0     0    0    0   FAB3 FAG3];
   
   % From X we can get Bd and K(Kalman gain G)
   Pa = Un*En^(1/2);
