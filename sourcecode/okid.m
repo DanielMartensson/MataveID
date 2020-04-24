@@ -154,7 +154,7 @@ end
 
 % Special ERA/DC for just OKID command - Do not work! I think is has to be that 
 % the markov parameter is not square Pk = [CA^kB CA^kM] = Rectangular.
-% For OCID, it works perfect, that's because Yk = [CA^kB CA^k; FA^kB FA^kG] = Rectangular.
+% For OCID, it works perfect, that's because Yk = [CA^kB CA^k; FA^kB FA^kG] = Square.
 % Try it out and make a pull request if you solved it! It should work according to the paper.
 % This is equation 29 in OKID.pdf file. Read also ERADC.pdf file as well
 function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
