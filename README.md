@@ -69,7 +69,7 @@ This plots all the amplitudes from noisy data over its frequencies. Very good to
 This filter away noise with a good old low pass filter that are being runned twice. Filtfilt2 is equal to the famous function filtfilt, but this is a regular .m file and not a C/C++ subroutine. Easy to use and recommended. 
 
 ```
-[y] = filtfilt2(y, t, K)
+[y] = filtfilt2(y, t, K);
 ```
 
 # Starting
