@@ -204,31 +204,31 @@ function [sysd, K, L] = eradcocid(D, g, sampleTime, delay, systemorder)
   % Create the A matrix
   Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
   
-  % The reason why we are using 1:2:nx and 2:2:nx here is because how
+  % The reason why we are using 1:2:nu and 2:2:nu here is because how
   %   Y = [CAB CAG; 
   %       FAB FAG];
   %   Is shaped. Try to understand how I have placed the data in Y.
   %   Y(Yrow:Yrow+1, i:i+1) = [Y11(index) Y12(index); Y21(index) Y22(index)];
   %  
   %   Example for the impulse response
-  %         1    2      3    4     5   6   nx
+  %         1    2      3    4     5   6   nu
   %  1 g = [CAB1 CAG1   0    0     0   0
   %  2      FAB1 FAG1   0    0     0   0
   %  3       0     0   CAB2 CAG2   0   0
   %  4       0     0   FAB2 FAG2   0   0
   %  5       0     0    0    0   CAB3 CAG3; 
   %  6       0     0    0    0   FAB3 FAG3];
-  %  nx
+  %  nu
   
   % From X we can get Bd and K(Kalman gain G)
   Pa = Un*En^(1/2);
   X = pinv(Pa)*H0; 
-  Bd = X(1:nx, 1:2:nx);
-  K = X(1:nx, 2:2:nx);
+  Bd = X(1:nx, 1:2:nu);
+  K = X(1:nx, 2:2:nu);
   
   % From Pa we can find Cd and L(Control law F)
-  Cd = Pa(1:2:nx, 1:nx);
-  L = Pa(2:2:nx, 1:nx);
+  Cd = Pa(1:2:nu, 1:nx);
+  L = Pa(2:2:nu, 1:nx);
   
   % D matrix
   Dd = D;
