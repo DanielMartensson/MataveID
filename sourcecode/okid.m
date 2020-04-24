@@ -153,8 +153,9 @@ function [sysd, K] = okid(varargin)
 end
 
 % Special ERA/DC for just OKID command - Do not work! I think is has to be that 
-% the markov parameter is not square Pk = [CA^kB CA^kM].
-% Try it out and make a pull request if you solved it!
+% the markov parameter is not square Pk = [CA^kB CA^kM] = Rectangular.
+% For OCID, it works perfect, that's because Yk = [CA^kB CA^k; FA^kB FA^kG] = Rectangular.
+% Try it out and make a pull request if you solved it! It should work according to the paper.
 % This is equation 29 in OKID.pdf file. Read also ERADC.pdf file as well
 function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
   % Get the number of input
@@ -206,13 +207,13 @@ function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
   % Create the A matrix
   Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
   
-  % The reason why we are using 1:2:nx and 2:2:nx here is because how
+  % The reason why we are using 1:2:nu and 2:2:nu here is because how
   %   P = [CAB CAM];
   %   Is shaped. Try to understand how I have placed the data in P.
   %   P(j, i:i+1) = [Yk(index) Yo(index)];
   %  
   %   Example for the impulse response
-  %         1     2     3    4     5   6   nx
+  %         1     2     3    4     5   6   nu
   %  1 g = [CAB1 CAM1   0    0     0   0
   %  2       0     0   CAB2 CAM2   0   0
   %  3       0     0    0    0   CAB3 CAM3];
@@ -221,14 +222,14 @@ function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
   % From X we can get Bd and K(Kalman gain M)
   Pa = Un*En^(1/2);
   X = pinv(Pa)*H0; 
-  Bd = X(1:nx, 1:2:nu)
+  Bd = X(1:nx, 1:2:nu);
   K = X(1:nx, 2:2:nu);
   
   % From Pa we can find Cd
-  Cd = Pa(1:nu, 1:nx)
+  Cd = Pa(1:nu, 1:nx);
   
   % D matrix
-  Dd = g(1:nu, 1:2:nu*2)
+  Dd = g(1:nu, 1:2:nu*2);
 
   % Create state space model now
   sysd = ss(delay, Ad, Bd, Cd, Dd);
