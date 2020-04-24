@@ -1,8 +1,8 @@
 % Filtfilt2 - A filter with no or less phase shifting. Very simple to use.
 % Input: y(noisy signal), t(time signal), K(optional filter factor)
 % Output: y(clean signal)
-% Example 1: [y] = filtfilt2(y, t)
-% Example 2: [y] = filtfilt2(y, t, K)
+% Example 1: [y] = filtfilt2(y, t);
+% Example 2: [y] = filtfilt2(y, t, K);
 % Author: Daniel Mårtensson, April 2020
 
 function [y] = filtfilt2(varargin)
