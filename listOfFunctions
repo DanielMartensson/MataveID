@@ -23,4 +23,5 @@ moavg2.m
 idbode.m
 rls.m
 ssfd.m
+filtfilt2.m
 updatemataveid.m
