@@ -343,6 +343,35 @@ This plots a bode diagram from measurement data. It can be very interesting to s
 idbode(u, y, w);
 ```
 
+### IDBode Example
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/IDBODE_System.png)
+
+```matlab
+%% Model of a mass spring damper system
+M = 5; % Kg
+K = 100; % Nm/m
+b = 52; % Nm/s^2
+G = tf([1], [M b K]);
+
+%% Frequency response
+t = linspace(0.0, 50, 3000);
+w = linspace(0, 100, 3000);
+u = 10*sin(2*pi*w.*t);
+
+%% Simulation
+y = lsim(G, u, t);
+close
+
+%% Identify bode diagram
+idbode(u, y, w);
+
+%% Check
+bode(G);
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/IDBODE_Result.png)
+
 ### SPA - Spectral Analysis
 This plots all the amplitudes from noisy data over its frequencies. Very good to see what type of noise or signals you have. With this, you can determine what the real frequencies and amplitudes are and therefore you can create your filtered frequency response that are clean.
 
@@ -350,12 +379,81 @@ This plots all the amplitudes from noisy data over its frequencies. Very good to
 [amp, wout] = spa(y, t);
 ```
 
+### SPA Example
+
+Assume that we are using the previous example with different parameters.
+
+```matlab
+%% Model of a mass spring damper system
+M = 1; % Kg
+K = 500; % Nm/m
+b = 3; % Nm/s^2
+G = tf([1], [M b K]);
+
+%% Frequency response
+t = linspace(0.0, 100, 30000);
+u1 = 10*sin(2*pi*5.*t); % 5 Hz
+u2 = 10*sin(2*pi*10.*t); % 10 Hz
+u3 = 10*sin(2*pi*20.*t); % 20 Hz
+u4 = 10*sin(2*pi*8.*t); % 8 Hz
+u = u1 + u2 + u3 + u4;
+
+%% Simulation
+y = lsim(G, u, t);
+figure
+
+%% Noise
+y = y + 0.001*randn(1, 30000); 
+
+%% Identify what frequencies we had!
+spa(y, t);
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SPA_Result.png)
+
 ### Filtfilt2 - Zero Phase Filter
 This filter away noise with a good old low pass filter that are being runned twice. Filtfilt2 is equal to the famous function filtfilt, but this is a regular .m file and not a C/C++ subroutine. Easy to use and recommended. 
 
 ```matlab
 [y] = filtfilt2(y, t, K);
 ```
+
+### Filtfilt2 Example
+
+We are using the previous example here as well.
+
+```matlab
+%% Model of a mass spring damper system
+M = 1; % Kg
+K = 500; % Nm/m
+b = 3; % Nm/s^2
+G = tf([1], [M b K]);
+
+%% Input signal
+t = linspace(0.0, 100, 3000);
+u = 10*sin(t);
+
+%% Simulation
+y = lsim(G, u, t);
+
+%% Add 10% noise
+load v
+for i = 1:length(y)
+  noiseSigma = 0.10*y(i);
+  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  y(i) = y(i) + noise;
+end
+
+%% Filter away the noise
+lowpass = 0.2;
+[yf] = filtfilt2(y, t, lowpass);
+
+%% Check
+plot(t, yf, t, y);
+legend("Filtered", "Noisy");
+```
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT2_Result.png)
+
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
