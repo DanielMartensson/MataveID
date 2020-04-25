@@ -54,7 +54,7 @@ u = [u;2*u]; % MIMO
 %% Simulation
 y = lsim(motor_ss, u, t);
 
-%% Add 15% noise
+%% Add 5% noise
 load v
 for i = 1:length(y)-1
   noiseSigma = 0.05*y(:, i);
