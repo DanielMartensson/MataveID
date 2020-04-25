@@ -17,7 +17,7 @@ Use this algorithm if you got regular data from a open loop system.
 
 ### Example OKID
 
-
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_System.png)
 
 ```matlab
 %% Parameters
@@ -68,7 +68,7 @@ plot(t, y, t, yt(:, 1:2:end))
 legend("Data", "Identified", 'location', 'northwest')
 grid on
 ```
-
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
 
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a state space model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821, but it was until 1950 when it got its attention in adaptive control.
