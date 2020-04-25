@@ -274,6 +274,68 @@ Use this algorithm if you want to extract a LQR control law, kalman observer and
 [sysd, K, L] = ocid(r, uf, y, sampleTime, delay, regularization, systemorder);
 ```
 
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_System.png)
+
+### OCID Example
+
+```matlab
+%% Matrix A
+A = [0 1  0  0; 
+    -7 -5 0  1; 
+     0 0  0  1;
+     0 1 -8 -5];
+  
+%% Matrix B
+B = [0 0; 
+     1 0; 
+     0 0; 
+     0 1];
+  
+%% Matrix C
+C = [1 0 0 0; 
+     0 0 0 1];
+  
+%% Model and signals
+sys = ss(0, A, B, C);
+t = linspace(0, 20, 1000);
+r = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
+r = [r;2*r]; % MIMO
+  
+%% Feedback
+Q = sys.C'*sys.C;
+R = [1 4; 1 5];
+L = lqr(sys, Q, R);
+[feedbacksys] = reg(sys, L);
+yf = lsim(feedbacksys, r, t);
+
+%% Add 10% noise
+load v
+for i = 1:length(yf)
+  noiseSigma = 0.10*yf(:, i);
+  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  yf(:, i) = yf(:, i) + noise;
+end
+
+%% Identification  
+uf = yf(3:4, :); % Input feedback signals
+y = yf(1:2, :); % Output feedback signals
+regularization = 600;
+modelorder = 4;
+[sysd, K, L] = ocid(r, uf, y, t(2) - t(1), delay, regularization, modelorder);
+    
+%% Validation
+u = -uf + r; % Input signal %u = -Lx + r = -uf + r
+yt = lsim(sysd, u, t);
+close
+    
+%% Check
+plot(t, yt(1:2, 1:2:end), t, yf(1:2, :))
+legend("Data", "Identified", 'location', 'northwest')
+grid on
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_Result.png)
+
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
 
