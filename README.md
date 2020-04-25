@@ -81,7 +81,7 @@ Use this algorithm if you have regular data from a open loop system and you want
 
 ### Example RLS
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_System.png)
 
 ```matlab
 %% Parameters
@@ -140,6 +140,63 @@ Use this algorithm if you got impulse data from e.g structural mechanics.
 ```matlab
 [sysd] = eradc(g, sampleTime, delay, systemorder);
 ```
+### Example ERA/DC
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ERADC_System.png)
+
+```matlab
+%% Parameters
+m1 = 2.3;
+m2 = 3.1;
+k1 = 8.5;
+k2 = 5.1;
+b1 = 3.3;
+b2 = 5.1;
+
+A=[0                 1   0                                              0
+  -(b1*b2)/(m1*m2)   0   ((b1/m1)*((b1/m1)+(b1/m2)+(b2/m2)))-(k1/m1)   -(b1/m1)
+   b2/m2             0  -((b1/m1)+(b1/m2)+(b2/m2))                      1
+   k2/m2             0  -((k1/m1)+(k1/m2)+(k2/m2))                      0];
+B=[0;                 
+   1/m1;              
+   0;                
+   (1/m1)+(1/m2)];
+C=[0 0 1 0];
+D=[0];
+delay = 0;
+
+%% Model
+buss = ss(delay,A,B,C,D);
+
+%% Simulation
+[g, t] = impulse(buss, 10);
+
+%% Add 15% noise
+load v
+for i = 1:length(g)-1
+  noiseSigma = 0.15*g(i);
+  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  g(i) = g(i) + noise;
+end
+
+%% Identification  
+systemorder = 4;
+[sysd] = eradc(g, t(2) - t(1), delay, systemorder);
+    
+%% Validation
+gt = impulse(sysd, 10);
+close
+    
+%% Check
+size(gt(:, 1:2:end))
+size(g)
+size(t)
+plot(t, g, t, gt(:, 1:2:end))
+legend("Data", "Identified", 'location', 'northwest')
+grid on
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ERADC_Result.png)
 
 ### SSFD - State Space Frequency Domain
 This is a very popular state space algorithm. The labeling for the name is quite wrong, because this algorithm cannot only handle frequency response data. This algorithm can handle noisy MIMO and SISO data as well. This algorihtm have its orgin from Ho-Kalman around 1966 and I have modify it. The idea is the same. Create a MIMO or SISO transfer function and estimate its impulse markov parameter from its polynomials. I have modify it by using RLS to create a SISO transfer function for every signal and then find its 
