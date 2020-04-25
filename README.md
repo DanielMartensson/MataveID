@@ -79,6 +79,59 @@ Use this algorithm if you have regular data from a open loop system and you want
 [Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 ```
 
+### Example RLS
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_Result.png)
+
+```matlab
+%% Parameters
+m = 1000; % Mass kg
+b = 50; % Friction 
+
+A = -b/m;
+B = 1/m;
+C = 1;
+D = 0; % Does not need. ss function will auto generate D
+delay = 0;
+
+%% Model
+cruise_ss = ss(delay,A,B,C,D);
+
+%% Input and time
+t = linspace(0, 20, 1000);
+u = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
+
+%% Simulation
+y = lsim(cruise_ss, u, t);
+
+%% Add 20% noise
+load v
+for i = 1:length(y)
+  noiseSigma = 0.20*y(i);
+  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  y(i) = y(i) + noise;
+end
+
+%% Identification - ARMAX  
+np = 5; % Number of poles for A polynomial
+nz = 5; % Number of zeros for B polynomial
+nze = np % Numer of zeros for C polynomial
+forgetting = 0.99;
+[Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, t(2) - t(1), delay, forgetting); % K will be included inside sysd
+close
+    
+%% Validation
+yt = lsim(Gd, u, t);
+close
+    
+%% Check
+plot(t, y, t, yt(:, 1:2:end))
+legend("Data", "Identified", 'location', 'northwest')
+grid on
+````
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_Result.png)
+
 ### ERA/DC - Eigensystem Realization Algorithm Data Correlations
 ERA/DC was invented 1987 and is a successor from ERA, that was invented 1985 at NASA. The difference between ERA/DC and ERA is that ERA/DC can handle noise much better than ERA. But both algorihtm works as the same. ERA/DC want an impulse response. e.g called markov parameters. You will get a state space model from this algorithm. This algorithm can handle both SISO and MISO data.
 
