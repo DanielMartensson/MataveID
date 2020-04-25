@@ -188,9 +188,6 @@ gt = impulse(sysd, 10);
 close
     
 %% Check
-size(gt(:, 1:2:end))
-size(g)
-size(t)
 plot(t, g, t, gt(:, 1:2:end))
 legend("Data", "Identified", 'location', 'northwest')
 grid on
@@ -207,6 +204,66 @@ Use this algorithm if you got noisy MIMO data.
 ```matlab
 [sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, forgetting, systemorder);
 ```
+
+### SSFD Example
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SSFD_System.png)
+
+```matlab
+%% Parameters
+Dm = 30;
+beta = 1*10^2;
+V1 = 10;
+V2 = 10;
+BL = 3000;
+Bm = 10;
+JL = 1000;
+Jm = 10;
+Ps = 100;
+
+%% State space for open valve
+A = [0 1;
+     0 -(BL+Bm)/(JL+Jm)];
+     
+B = [0 0;
+     (Ps*Dm)/(JL+Jm) -(1)/(JL+Jm)];
+
+%% Model
+hydraulicMotor = ss(delay,A,B);
+
+%% Input and time
+t = linspace(0, 20, 1000);
+u = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
+u = [u; 5*u]; % MIMO 
+
+%% Simulation
+y = lsim(hydraulicMotor, u, t);
+
+%% Add 5% noise
+load v
+for i = 1:length(y)
+  noiseSigma = 0.05*y(:, i);
+  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  y(:, i) = y(:, i) + noise;
+end
+
+%% Identification  
+systemorder = 6;
+modelorderTF = 9;
+forgetting = 1;
+[sysd] = ssfd(u, y, t(2) - t(1), modelorderTF, delay, forgetting, systemorder);
+    
+%% Validation
+yt = lsim(sysd, u, t);
+close
+    
+%% Check
+plot(t, y, t, yt(:, 1:2:end))
+legend("Data 1", "Data 1", "Identified 1", "Identified 2", 'location', 'northwest')
+grid on
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SSFD_Result.png)
 
 ### OCID - Observer Controller Identification
 This is an extention from OKID. The idea is the same, but OCID creates a LQR contol law as well. This algorithm works only for closed loop data. It have its orgin from NASA around 1994 when NASA wanted to identify a observer, model and a LQR control law from closed loop data that comes from an actively controlled aircraft wing in a wind tunnel at NASA Langley Research Center. This algorithm works for both SISO and MIMO models.
