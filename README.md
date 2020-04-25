@@ -15,6 +15,61 @@ Use this algorithm if you got regular data from a open loop system.
 [sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder);
 ```
 
+### Example OKID
+
+
+
+```matlab
+%% Parameters
+J = 0.01;
+b = 0.1;
+K = 0.01;
+R = 1;
+L = 0.5;
+
+A = [0 1 0
+    0 -b/J K/J
+    0 -K/L -R/L];
+B = [0 ; 0 ; 1/L];
+C = [1  0  0];
+D = [0];     
+delay = 0;
+
+%% Model
+motor_ss = ss(delay,A,B,C,D);
+
+%% Input and time
+t = linspace(0, 20, 1000);
+u = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
+
+%% Simulation
+y = lsim(motor_ss, u, t);
+
+%% Add 5% noise
+load v
+for i = 1:length(y)
+  noiseSigma = 0.05*y(i);
+  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  y(i) = y(i) + noise;
+end
+
+%% Identification 
+regularization = 838;
+modelorder = 3;
+[sysd, K] = okid(u, y, t(2) - t(1), 0, regularization, modelorder);
+close
+    
+%% Validation
+yt = lsim(sysd, u, t);
+close
+    
+%% Check
+plot(t, y, t, yt(:, 1:2:end))
+legend("Data", "Identified", 'location', 'northwest')
+grid on
+```
+
+
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a state space model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821, but it was until 1950 when it got its attention in adaptive control.
 
