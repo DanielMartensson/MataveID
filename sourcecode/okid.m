@@ -76,8 +76,7 @@ function [sysd, K] = okid(varargin)
   q = size(y, 1); % Dimension of output
   l = size(y, 2); % Total length
   m = size(u, 1); % Dimension of input
-  p = l/2-0; % We select half minus -1 else Ybar can be unstable for noise free case. Use regularization in noise free SISO.
-  % You can change 0 to -1 again if you are using P markov parameters as equation 29 do in OKID.pdf.
+  p = l/2-1; % We select half minus -1 else Ybar can be unstable for noise free case. 
   
   % Save the system markov parameters and observer markov parameters here
   CAB = zeros(q, p);
@@ -127,11 +126,11 @@ function [sysd, K] = okid(varargin)
     % Get the markov parameters from the signals
     [Yk, Yo] = getMarkov(Ybar1, Ybar2, D, p);
     
-    % Store the markov parameters
+    % Store the markov parameters - Experimental!
     CAB(j, 1:p) = Yk(1, 1:p);
     CAM(j, 1:p) = Yo(1, 1:p);
     
-    % Save them into one markov parameter P - Experimental!
+    % Save them into one markov parameter P 
     index = 1;
     for i = 1:2:2*p
       P(j, i:i+1) = [Yk(index) Yo(index)];
@@ -141,14 +140,14 @@ function [sysd, K] = okid(varargin)
   end
   
   % Experimental!
-  %[sysd, K] = eradcokid(P, sampleTime, delay, systemorder);
+  [sysd, K] = eradcokid(P, sampleTime, delay, systemorder);
   
-  % Time to find A, B, C, D using ERA/DC
-  sysd = eradc(CAB, sampleTime, delay, systemorder);
+  % Time to find A, B, C, D using ERA/DC - Experimental!
+  %sysd = eradc(CAB, sampleTime, delay, systemorder);
   
-  % Find the kalman gain matrix K
-  O = createO(sysd.A, sysd.C, p/m);
-  K = inv(O'*O)*O'*CAM'; % Our kalman gain matrix
+  % Find the kalman gain matrix K - Experimental!
+  %O = createO(sysd.A, sysd.C, p/m);
+  %K = inv(O'*O)*O'*CAM'; % Our kalman gain matrix
    
 end
 
@@ -189,7 +188,7 @@ function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
     end
     g = G; 
   end
-
+  
   % Create hankel matrices 
   H0 = hank(g, 1);
   H1 = hank(g, 2);
@@ -258,21 +257,31 @@ function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
   V1 = V(:, 1:nx);
 end
 
-% Create the half square hankel matrix
+% Create the half square hankel matrix - Special case for OKID: Pk = [CA^kB CA^k]; = Rectangular
 function [H] = hank(g, k)
   % We got markov parameters g = [g0 g1 g2 g2 g3 ... gl]; with size m*m. g0 = D
   m = size(g, 1);
-  n = size(g, 2);
-  l = length(g)/(m*2);
-  H = zeros(l*m, l*m);
-  for i = 1:l
-    if(and(i == l, k == 2))
-      % This is a special case when g is out of index, just add zeros instead!
-      row = g(:, 1 + (k+i-1)*m:(k+i-2)*m + l*m);
-      H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = [row zeros(m, m)]; 
-   else
-      row = g(:, 1 + (k+i-1)*m:(k+i-1)*m + l*m);
-      H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = row;
+  if(m == 1) %% SISO
+    l = length(g)/2;
+    H = zeros(l/2, l);
+    for i = 1:l/2
+        if(k*2 + (i-1)*2 + l > length(g))
+          empty = k*2 + (i-1)*2 + l - length(g)
+          H(i, 1:l) = [g(m, 1 + k*2 + (i-1)*2: k*2 + (i-1)*2 + l - empty) zeros(1, empty)]; % If k >= 2
+        else
+          H(i, 1:l) = g(m, 1 + k*2 + (i-1)*2: k*2 + (i-1)*2 + l);
+        end
+    end
+  else %% MIMO
+    l = length(g)/(m*2);
+    H = zeros(l/2, l*m);
+    for i = 1:l/2
+      if(k*2*m + (i-1)*2*m + l*m > length(g))
+        empty = k*2*m + (i-1)*2*m + l*m - length(g);
+        H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = [g(1:m, 1 + k*2*m + (i-1)*2*m: k*2*m + (i-1)*2*m + l*m - empty) zeros(m, empty)]; % If k >= 2
+      else
+        H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = g(1:m, 1 + k*2*m + (i-1)*2*m: k*2*m + (i-1)*2*m + l*m);
+      end
     end
   end
 end
