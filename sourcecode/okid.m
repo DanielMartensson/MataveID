@@ -140,7 +140,7 @@ function [sysd, K] = okid(varargin)
     
   end
   
-  % Experimental!
+  % Create A, B, C, D and K from one SVD computation. P = [CA^kB, CA^kM]; One markov parameter, even if it's rectangular.
   [sysd, K] = eradcokid(P, sampleTime, delay, systemorder);
   
   % Time to find A, B, C, D using ERA/DC - Experimental!
