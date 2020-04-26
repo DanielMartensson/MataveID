@@ -207,7 +207,7 @@ function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
   % Create the A matrix
   Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
   
-  % The reason why we are using 1:2:nu and 2:2:nu here is because how
+  % The reason why we are using 1:2:nu*2 and 2:2:nu*2 here is because how
   %   P = [CAB CAM];
   %   Is shaped. Try to understand how I have placed the data in P.
   %   P(j, i:i+1) = [Yk(index) Yo(index)];
