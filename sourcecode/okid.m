@@ -77,6 +77,7 @@ function [sysd, K] = okid(varargin)
   l = size(y, 2); % Total length
   m = size(u, 1); % Dimension of input
   p = l/2-0; % We select half minus -1 else Ybar can be unstable for noise free case. Use regularization in noise free SISO.
+  % You can change 0 to -1 again if you are using P markov parameters as equation 29 do in OKID.pdf.
   
   % Save the system markov parameters and observer markov parameters here
   CAB = zeros(q, p);
@@ -221,8 +222,8 @@ function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
   % From X we can get Bd and K(Kalman gain M)
   Pa = Un*En^(1/2);
   X = pinv(Pa)*H0; 
-  Bd = X(1:nx, 1:2:nu);
-  K = X(1:nx, 2:2:nu);
+  Bd = X(1:nx, 1:2:nu*2);
+  K = X(1:nx, 2:2:nu*2);
   
   % From Pa we can find Cd
   Cd = Pa(1:nu, 1:nx);
