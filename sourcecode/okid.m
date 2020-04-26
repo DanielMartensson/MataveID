@@ -76,7 +76,7 @@ function [sysd, K] = okid(varargin)
   q = size(y, 1); % Dimension of output
   l = size(y, 2); % Total length
   m = size(u, 1); % Dimension of input
-  p = l/2-0; % We select half minus -1 else Ybar can be unstable for noise free case
+  p = l/2-0; % We select half minus -1 else Ybar can be unstable for noise free case. Use regularization in noise free SISO.
   
   % Save the system markov parameters and observer markov parameters here
   CAB = zeros(q, p);
