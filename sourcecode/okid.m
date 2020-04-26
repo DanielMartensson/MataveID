@@ -266,7 +266,7 @@ function [H] = hank(g, k)
     H = zeros(l/2, l);
     for i = 1:l/2
         if(k*2 + (i-1)*2 + l > length(g))
-          empty = k*2 + (i-1)*2 + l - length(g)
+          empty = k*2 + (i-1)*2 + l - length(g);
           H(i, 1:l) = [g(m, 1 + k*2 + (i-1)*2: k*2 + (i-1)*2 + l - empty) zeros(1, empty)]; % If k >= 2
         else
           H(i, 1:l) = g(m, 1 + k*2 + (i-1)*2: k*2 + (i-1)*2 + l);
