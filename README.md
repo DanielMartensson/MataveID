@@ -34,38 +34,36 @@ A = [0 1  0  0;
      0 1 -(b+J) -5*(J+R*2)];
   
 % Matrix B
-B = [0 0; 
-     1 0; 
-     0 0; 
-     0 1];
+B = [0 ; 
+     0 ; 
+     0 ; 
+     1 ];
   
 % Matrix C
-C = [0 1 0 0; 
-     0 0 1 0];
+C = [0 0 0 1];
  
 %% Model 
 motor_ss = ss(0, A, B, C);
 
 %% Input and time
 t = linspace(0, 20, 1000);
-u = [linspace(1, 11, 100) linspace(7, 3, 100) linspace(6, 9, 100) linspace(-7, -1, 100) linspace(2, -10, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
-u = [u;2*u]; % MIMO
+u = [linspace(-1, 11, 100) linspace(-11, 11, 100) linspace(-11, 4, 100) linspace(-3, 8, 100) linspace(2, -10, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(-10, 17, 100) linspace(-30, 0, 100)];
 
 %% Simulation
 y = lsim(motor_ss, u, t);
 
-%% Add 5% noise
+%% Add 10% noise
 load v
 for i = 1:length(y)-1
-  noiseSigma = 0.05*y(:, i);
+  noiseSigma = 0.10*y(:, i);
   noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
   y(:, i) = y(:, i) + noise;
 end
 
 
 %% Identification 
-regularization = 838;
-modelorder = 10;
+regularization = 831;
+modelorder = 3;
 [sysd, K] = okid(u, y, t(2) - t(1), 0, regularization, modelorder);
 close
     
@@ -75,7 +73,7 @@ close
     
 %% Check
 plot(t, y, t, yt(:, 1:2:end))
-legend("Data 1", "Data 2", "Identified 1", "Identified 2", 'location', 'northwest')
+legend("Data 1", "Identified 1", 'location', 'southwest')
 grid on
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
