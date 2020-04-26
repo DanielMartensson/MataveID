@@ -259,7 +259,7 @@ end
 function [H] = hank(g, k)
   % We got markov parameters g = [g0 g1 g2 g2 g3 ... gl]; with size m*(2*m). g0 = D
   m = size(g, 1);
-  if(m == 1) %% SISO
+  if(m == 1) %% SISO 
     l = length(g)/2;
     H = zeros(l/2, l);
     for i = 1:l/2
