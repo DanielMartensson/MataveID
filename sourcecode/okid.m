@@ -76,7 +76,7 @@ function [sysd, K] = okid(varargin)
   q = size(y, 1); % Dimension of output
   l = size(y, 2); % Total length
   m = size(u, 1); % Dimension of input
-  p = l/2-1; % We select half minus -1 else Ybar can be unstable for noise free case
+  p = l/2-0; % We select half minus -1 else Ybar can be unstable for noise free case
   
   % Save the system markov parameters and observer markov parameters here
   CAB = zeros(q, p);
@@ -147,7 +147,6 @@ function [sysd, K] = okid(varargin)
   
   % Find the kalman gain matrix K
   O = createO(sysd.A, sysd.C, p/m);
-  CAM = CAM(:, 1:size(O, 1));
   K = inv(O'*O)*O'*CAM'; % Our kalman gain matrix
    
 end
@@ -305,7 +304,7 @@ end
 % Create the special Observabillity matrix
 function PHI = createO(A, C, N)
   PHI = [];
-  for i = 1:N
+  for i = 0:N-1
     PHI = vertcat(PHI, C*A^i);
   end
 end
