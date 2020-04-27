@@ -4,6 +4,7 @@
 % Example 1: [y] = filtfilt2(y, t);
 % Example 2: [y] = filtfilt2(y, t, K);
 % Author: Daniel Mårtensson, April 2020
+% Update: 27 April 2020 for MIMO signals
 
 function [y] = filtfilt2(varargin)
   % Check if there is any input
@@ -32,21 +33,30 @@ function [y] = filtfilt2(varargin)
     K = 0.1;
   end
   
+  % Find size of y
+  m = size(y, 1);
+  n = size(y, 2);
+  
   % Create transfer function model of a low pass filter
   G = tf(1, [K 1]);
   
-  % Simulate the noisy signal
-  y1 = lsim(G, y, t);
-  close % It will show a popup for lsim - Close it
+  for i = 1:m
+    % Simulate the noisy signal
+    y1 = lsim(G, y(i, 1:n), t);
+    close % It will show a popup for lsim - Close it
   
-  % Flip
-  y2 = flip(y1);
+    % Flip
+    y2 = flip(y1);
   
-  % Run the simulation again
-  y3 = lsim(G, y2, t);
-  close
+    % Run the simulation again
+    y3 = lsim(G, y2, t);
+    close
   
-  % Flip - Done
-  y = flip(y3);
+    % Flip - Done
+    y4 = flip(y3);
+    
+    % Save it
+    y(i, 1:n) = y4;
+  end
   
 end
