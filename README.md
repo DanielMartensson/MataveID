@@ -20,60 +20,52 @@ Use this algorithm if you got regular data from a open loop system.
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_System.png)
 
 ```matlab
-%% Parameters
-J = 0.01;
-b = 0.1;
-K = 0.01;
-R = 1;
-L = 0.5;
+%% Matrix A
+A =[0.00000   1.00000   0.00000   0.00000
+   -7.31547  -5.03460   0.05485   1.34659
+    0.00000   0.00000   0.00000   1.00000
+    0.06150   1.00457  -8.01097  -5.08969];
 
-% Matrix A
-A = [0 1  0  0; 
-    -K*R*L -(J+K+R*2) 0  1; 
-     0 0  0  1;
-     0 1 -(b+J) -5*(J+R*2)];
+%% Matrix B
+B = [0   0
+     1   0
+     0   0
+     0   1];
+     
+%% Matrix C
+C = [1.00000   0.00000   0.00000   0.00000
+     0.00000   0.00000   1.00000   0.00000];
+
+%% Model and signals
+sys = ss(0, A, B, C);
+t = linspace(0, 20, 2000);
+u = [linspace(5, -11, 200) linspace(7, 3, 200) linspace(-6, 9, 200) linspace(-7, 1, 200) linspace(2, 0, 200) linspace(6, -9, 200) linspace(4, 1, 200) linspace(0, 0, 200) linspace(10, 17, 200) linspace(-30, 0, 200)];
+u = [u;2*u]; % MIMO
+size(u)
   
-% Matrix B
-B = [0 ; 
-     0 ; 
-     0 ; 
-     1 ];
-  
-% Matrix C
-C = [0 0 0 1];
- 
-%% Model 
-motor_ss = ss(0, A, B, C);
-
-%% Input and time
-t = linspace(0, 20, 1000);
-u = [linspace(-1, 11, 100) linspace(-11, 11, 100) linspace(-11, 4, 100) linspace(-3, 8, 100) linspace(2, -10, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(-10, 17, 100) linspace(-30, 0, 100)];
-
 %% Simulation
-y = lsim(motor_ss, u, t);
+y = lsim(sys, u, t);
 
-%% Add 10% noise
+%% Add 5% noise
 load v
-for i = 1:length(y)-1
-  noiseSigma = 0.10*y(:, i);
+for i = 1:length(y)
+  noiseSigma = 0.05*y(:, i);
   noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
   y(:, i) = y(:, i) + noise;
 end
 
-
-%% Identification 
-regularization = 831;
-modelorder = 3;
+%% Identification  
+regularization = 30000; % We need large number due to the noise!
+modelorder = 4;
 [sysd, K] = okid(u, y, t(2) - t(1), 0, regularization, modelorder);
-close
     
 %% Validation
 yt = lsim(sysd, u, t);
 close
     
 %% Check
-plot(t, y, t, yt(:, 1:2:end))
-legend("Data 1", "Identified 1", 'location', 'southwest')
+plot(t, yt(1:2, 1:2:end), t, y(1:2, :))
+legend("Identified 1", "Identified 2", "Data 1", "Data 2", 'location', 'southwest')
 grid on
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
