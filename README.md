@@ -6,6 +6,11 @@ data. There are lots of subspace methods in the "old" folder and the reason why 
 
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
 
+# Literature:
+All of these methods can be found in Jer-Nan Juang's excellent and practical book Applied System Identification.
+There are many good books about system identification, but if you want to make it easy, study easy and apply practical for implementation, then this book is for you. 
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/AppliedSystemIdentification.png)
+
 ### OKID - Observer Kalman Filter Identification
 OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991.
 
