@@ -47,7 +47,6 @@ function [y] = filtfilt2(varargin)
   
     % Run the simulation again
     y3 = simulation(K, y2, t);
-    close
   
     % Flip - Done
     y4 = flip(y3);
