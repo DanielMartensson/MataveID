@@ -60,7 +60,7 @@ end
 % Euler method for simple ODE
 function [y] = simulation(K, y, t);
   h = t(2)-t(1); % Time step
-  x = 0;
+  x = y(1); % Initial state
   for i = 1:length(t)
     x = x + h*(-1/K*x + 1/K*y(i));
     y(i) = x; % Save
