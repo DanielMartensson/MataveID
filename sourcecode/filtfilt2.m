@@ -59,12 +59,11 @@ function [y] = filtfilt2(varargin)
 end
 
 % Euler method for simple ODE
-function [Y] = simulation(K, y, t);
+function [y] = simulation(K, y, t);
   h = t(2)-t(1); % Time step
   x = 0;
-  Y = zeros(1, length(t));
   for i = 1:length(t)
     x = x + h*(-1/K*x + 1/K*y(i));
-    Y(i) = x; % Save
+    y(i) = x; % Save
   end
 end
