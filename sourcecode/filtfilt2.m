@@ -5,6 +5,7 @@
 % Example 2: [y] = filtfilt2(y, t, K);
 % Author: Daniel Mårtensson, April 2020
 % Update: 27 April 2020 for MIMO signals
+% Update: 29 April 2020 for Euler method 
 
 function [y] = filtfilt2(varargin)
   % Check if there is any input
@@ -37,19 +38,15 @@ function [y] = filtfilt2(varargin)
   m = size(y, 1);
   n = size(y, 2);
   
-  % Create transfer function model of a low pass filter
-  G = tf(1, [K 1]);
-  
   for i = 1:m
     % Simulate the noisy signal
-    y1 = lsim(G, y(i, 1:n), t);
-    close % It will show a popup for lsim - Close it
+    y1 = simulation(K, y(i, 1:n), t);
   
     % Flip
     y2 = flip(y1);
   
     % Run the simulation again
-    y3 = lsim(G, y2, t);
+    y3 = simulation(K, y2, t);
     close
   
     % Flip - Done
@@ -59,4 +56,15 @@ function [y] = filtfilt2(varargin)
     y(i, 1:n) = y4;
   end
   
+end
+
+% Euler method for simple ODE
+function [Y] = simulation(K, y, t);
+  h = t(2)-t(1); % Time step
+  x = 0;
+  Y = zeros(1, length(t));
+  for i = 1:length(t)
+    x = x + h*(-1/K*x + 1/K*y(i));
+    Y(i) = x; % Save
+  end
 end
