@@ -348,6 +348,8 @@ This is a new identification technique made by Eurika Kaiser from University of 
 
 This is very usefull if you have heavy nonlinear systems such as a hydraulic orifice or a hanging load. 
 
+### SINDy Example
+
 ```
 function sindy_test()
   
