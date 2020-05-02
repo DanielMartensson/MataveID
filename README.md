@@ -420,6 +420,7 @@ function dx = fid(t, vars, u)
    
 end
 ```
+Left picture is the states of a noisy system. Right picture is the identified system from noisy data.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result.png)
 
