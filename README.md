@@ -342,6 +342,87 @@ grid on
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_Result.png)
 
+
+### SINDy - Sparse Identification of Nonlinear Dynamics
+This is a new identification technique made by Eurika Kaiser from University of Washington. It extends the identification methods of grey-box modeling to a much simplier way. This is a very easy to use method, but still powerful because it use least squares with sequentially thresholded least squares procedure. I have made it much simpler because now it also creates the formula for the system. In more practical words, this method identify a nonlinear ordinary differential equations from time domain data.
+
+This is very usefull if you have heavy nonlinear systems such as a hydraulic orifice or a hanging load. 
+
+```
+function sindy_test()
+  
+  % Simulate our unknown system and collect data
+  tsim = linspace(0, 10, 1000);
+  xyz0 = [0; 0; 0];
+  [t, x] = ode45(@(t, vars) f(t, vars, 10), tsim, xyz0);
+  
+  % Add noise to x - This is heavy noise!
+  x = x + 2*randn(1000, 3);
+  
+  % Get the derivatives by calling the same function again
+  dx = zeros(3, 1000);
+  for i = 1:1000
+    dx(:, i) = f(t, x(i, :), 10); % This will also contain noise
+  end
+  
+  % Plot the noise and the system states
+  plot3(x(:, 1), x(:, 2), x(:, 3)); % x, y, z
+  
+  % Selection list for candidate functions
+  % E.g: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
+  activations = [0 1 1 1 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 1];
+  
+  % Our variables
+  variables = ["x"; "y"; "z"; "u"];
+  
+  % Inputs
+  inputs = linspace(10, 10, 1000);
+
+  % Identify
+  sindy(inputs, x', dx', activations, variables, 0.005);
+  
+  % Simulate the identified model
+  [t, x_id] = ode45(@(t, vars) fid(t, vars, 10), tsim, xyz0);
+  
+  figure(2)
+  plot3(x_id(:, 1), x_id(:, 2), x_id(:, 3)); % x, y, z
+  
+  
+end
+
+% Unknow system model
+function dx = f(t, vars, u)
+
+    x = vars(1);
+    y = vars(2);
+    z = vars(3);
+    
+    % Our model
+    A = [-10*x + 10*y; 28*x - y - z*x + 0.1*sin(x); x*y - 8/3*z];
+    B = [u; 0; 0];
+    dx = A + B;
+
+end
+
+% Identified system model - Printed out from sindy.m
+function dx = fid(t, vars, u)
+  
+  x = vars(1);
+  y = vars(2);
+  z = vars(3);
+  
+  % Identified model
+  d1 =      -10.000000*x     +       10.000000*y      +       1.000000*u;
+  d2 =      28.000000*x             -1.000000*y             -1.000000*x*z     +      0.100000*sin(x);
+  d3 =      -2.666667*z      +       1.000000*x*y;
+   
+   dx = [d1;d2;d3];
+   
+end
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result.png)
+
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
 
