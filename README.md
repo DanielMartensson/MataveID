@@ -411,7 +411,7 @@ plot(t, output, t, y)
 legend('Estimated', 'Measured');
 grid on
 ```
-Left picture is the states of a noisy system. Right picture is the identified system from noisy data.
+The hysteresis causes the non symmetrical bow-shape. But I'm happy with the result! :) 
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result.png)
 
