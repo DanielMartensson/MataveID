@@ -352,9 +352,10 @@ This is very usefull if you have heavy nonlinear systems such as a hydraulic ori
 
 This example is a real world example with noise and very nonlinear. The data comes from a hydraulic system where a hydraulic motor where attached to a hydraulic valve. The output is the speed of the rotation for the hydraulic motor and the input is the signal into the hydraulic valve.
 
-System: Festo Laberatory Bench
+System: Festo Laboratory Bench
 Logging Software: FluidSim
 Systemidentification method: SINDY
+Nonlinearites: Noise, valve and motor hysteresis, non proportionality between input and output, temperature depended
 ```
 % Load CSV data
 X = csvread('OstryptData.csv'); % Can be found in the folder "data"
