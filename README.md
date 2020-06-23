@@ -394,7 +394,7 @@ t = t(1:end-1);
 inputs = [u'];
 states = [y];
 derivatives = [dy'];
-activations = [1 1 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1];
+activations = [1 1 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
 variables = ["y"; "u"]; % [states; inputs] - Always!
 lambda = 0.1;
 sindy(inputs, states, derivatives, activations, variables, lambda);
