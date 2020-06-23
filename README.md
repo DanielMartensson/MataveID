@@ -350,77 +350,65 @@ This is very usefull if you have heavy nonlinear systems such as a hydraulic ori
 
 ### SINDy Example
 
+This example is a real world example with noise and very nonlinear. The data comes from a hydraulic system where a hydraulic motor where attached to a hydraulic valve. The output is the speed of the rotation for the hydraulic motor and the input is the signal into the hydraulic valve.
+
+System: Festo Laberatory Bench
+Logging Software: FluidSim
+Systemidentification method: SINDY
 ```
-function sindy_test()
-  
-  % Simulate our unknown system and collect data
-  tsim = linspace(0, 10, 1000);
-  xyz0 = [0; 0; 0];
-  [t, x] = ode45(@(t, vars) f(t, vars, 10), tsim, xyz0);
-  
-  % Add noise to x - This is heavy noise!
-  x = x + 2*randn(1000, 3);
-  
-  % Get the derivatives by calling the same function again
-  dx = zeros(3, 1000);
-  for i = 1:1000
-    dx(:, i) = f(t, x(i, :), 10); % This will also contain noise
+% Load CSV data
+X = csvread('OstryptData.csv'); % Can be found in the folder "data"
+t = X(:, 1);
+u = X(:, 2);
+y = X(:, 3);
+sampleTime = 0.02;
+
+% Remove the zeros from y - Error measurement in FluidSim
+for i = 1:length(y)
+  if(y(i) == 0)
+    y(i) = y(i+1);
   end
-  
-  % Plot the noise and the system states
-  plot3(x(:, 1), x(:, 2), x(:, 3)); % x, y, z
-  
-  % Selection list for candidate functions
-  % E.g: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
-  activations = [0 1 1 1 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 1];
-  
-  % Our variables
-  variables = ["x"; "y"; "z"; "u"];
-  
-  % Inputs
-  inputs = linspace(10, 10, 1000);
-
-  % Identify
-  sindy(inputs, x', dx', activations, variables, 0.005);
-  
-  % Simulate the identified model
-  [t, x_id] = ode45(@(t, vars) fid(t, vars, 10), tsim, xyz0);
-  
-  figure(2)
-  plot3(x_id(:, 1), x_id(:, 2), x_id(:, 3)); % x, y, z
-  
-  
 end
 
-% Unknow system model
-function dx = f(t, vars, u)
+% Do filtering of y
+yf = filtfilt2(y', t', 0.1);
 
-    x = vars(1);
-    y = vars(2);
-    z = vars(3);
-    
-    % Our model
-    A = [-10*x + 10*y; 28*x - y - z*x + 0.1*sin(x); x*y - 8/3*z];
-    B = [u; 0; 0];
-    dx = A + B;
+% Find the derivative of y
+dy = (yf(2:end)-yf(1:end-1))/sampleTime;
 
+% Threshold for removing noise of the derivative
+for i = 1:length(yd)
+  v = dy(i);
+  if(and(v >= -0.15, v <= 0.15))
+    dy(i) = 0;
+  end
 end
 
-% Identified system model - Printed out from sindy.m
-function dx = fid(t, vars, u)
-  
-  x = vars(1);
-  y = vars(2);
-  z = vars(3);
-  
-  % Identified model
-  d1 =      -10.000000*x     +       10.000000*y      +       1.000000*u;
-  d2 =      28.000000*x             -1.000000*y             -1.000000*x*z     +      0.100000*sin(x);
-  d3 =      -2.666667*z      +       1.000000*x*y;
-   
-   dx = [d1;d2;d3];
-   
+% Same length as dy
+y = yf(1:end-1);
+u = u(1:end-1);
+t = t(1:end-1);
+
+% Sindy - Sparce identification Dynamics
+inputs = [u'];
+states = [y];
+derivatives = [dy'];
+activations = [1 1 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1];
+variables = ["y"; "u"]; % [states; inputs] - Always!
+lambda = 0.1;
+sindy(inputs, states, derivatives, activations, variables, lambda);
+
+% Euler simulation of Sindy model by anonymous function
+dy = @(y, u)  0.719906 + 2.533281*y - 1.175728*y^2 - 0.218748*u^2 + 0.813850*y*u - 4.212704*sqrt(y) + 1.255115*sqrt(u);
+output = zeros(1, length(u));
+x = 0;
+for i = 1:length(u)
+  x = x + sampleTime*dy(x, u(i));
+  output(i) = x;
 end
+plot(t, output, t, y)
+legend('Estimated', 'Measured');
+grid on
 ```
 Left picture is the states of a noisy system. Right picture is the identified system from noisy data.
 
