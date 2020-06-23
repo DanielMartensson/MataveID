@@ -1,7 +1,7 @@
 % Sparse Identification of Nonlinear Dynamics
 % Activations for u and y: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
 % Input: inputs, states, derivatives, activations, variables, lambda
-% Example: sindy(inputs, states, derivatives, activations, variables, lambda);
+% Example: sindyc(inputs, states, derivatives, activations, variables, lambda);
 % Author: Daniel Mårtensson, May 2, 2020
 
 function sindy(varargin)
@@ -173,16 +173,14 @@ end
 function [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, func)
   for j = 1:l
     for i = 1:l
-      if(j ~= i)
+      if(j ~= i) % Prevent us to do x*y and y*x
       
         % Add the name of the label
         switch func
           case '*'
-          labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
-        end
-        
-        % Add to O matrix
-        O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
+            labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
+            O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
+        end        
         columnposition = columnposition + 1;
       end
     end
