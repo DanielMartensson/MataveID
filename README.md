@@ -356,6 +356,9 @@ This example is a real world example with noise and very nonlinear. The data com
 - Logging Software: FluidSim
 - Systemidentification method: SINDY
 - Nonlinearities: Noise, valve and motor hysteresis, non proportionality between input and output, temperature depended
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FestoBench.jpg)
+
 ```matlab
 % Load CSV data
 X = csvread('OstryptData.csv'); % Can be found in the folder "data"
