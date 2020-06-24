@@ -356,7 +356,7 @@ This example is a real world example with noise and very nonlinear. The data com
 - Logging Software: FluidSim
 - Systemidentification method: SINDY
 - Nonlinearities: Noise, valve and motor hysteresis, non proportionality between input and output, temperature depended
-```
+```matlab
 % Load CSV data
 X = csvread('OstryptData.csv'); % Can be found in the folder "data"
 t = X(:, 1);
@@ -378,7 +378,7 @@ yf = filtfilt2(y', t', 0.1);
 dy = (yf(2:end)-yf(1:end-1))/sampleTime;
 
 % Threshold for removing noise of the derivative
-for i = 1:length(yd)
+for i = 1:length(dy)
   v = dy(i);
   if(and(v >= -0.15, v <= 0.15))
     dy(i) = 0;
