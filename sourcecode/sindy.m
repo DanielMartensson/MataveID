@@ -1,8 +1,9 @@
 % Sparse Identification of Nonlinear Dynamics
 % Activations for u and y: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
-% Input: inputs, states, derivatives, activations, variables, lambda
-% Example: sindyc(inputs, states, derivatives, activations, variables, lambda);
+% Input: inputs, states, derivatives, activations, lambda
+% Example: sindyc(inputs, states, derivatives, activations, lambda);
 % Author: Daniel Mårtensson, May 2, 2020
+% Update: Added more error handling and now display which activation function that being used, June 25, 2020
 
 function sindy(varargin)
   % Check if there is any input
@@ -83,28 +84,33 @@ function sindy(varargin)
   % You can add more candidates here!
   
   % Cut O matrix so we only using the selected candidates
-  O = O(:, 1:length(activations)); 
+  lengthActivations = length(activations);
+  lengthO = size(O, 2);
+  if(lengthActivations ~= lengthO)
+    error(strcat('Try to have activations as [', num2str(ones(1, lengthActivations)), '] to begin with'));
+  end
+  O = O(:, 1:lengthActivations); 
   
   % Delete all zero columns when we activate the candidates - Now we only using selected candidates
   O = O.*activations;
   O( :, ~any(O,1) ) = [];
   
   % Print candidates that we are using
-  text = "Candidates we are using with selected activations:";
+  text = strcat('Candidates we are using with selected activations for:', '[', num2str(activations), ']');
   disp(text);
   used_labels = [""];
   for j = 1:length(activations)
     if(activations(j) ~= 0)
-      disp(labels(j, :)) % Show
-      used_labels = [used_labels; labels(j, :)]; % save them
+      used_labels = [used_labels; labels(j, :)]; % Save them for the last for-loop
     end
+    disp(strcat(num2str(activations(j)), ':', labels(j, :))) % Show enabled and disabled
   end
   
   % Do least squares for every column of derivatives - This is the heart of SINDyC
   state_dimension = size(O, 2);
   E = stls_regression(O, derivatives, lambda);
   
-  % Print E  
+  % Print E - Don't replace " with '. They have a pourpose.
   text = "\nOur nonlinear state space model:";
   disp(text);
   for i = 1:size(E, 2)
@@ -173,14 +179,16 @@ end
 function [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, func)
   for j = 1:l
     for i = 1:l
-      if(j ~= i) % Prevent us to do x*y and y*x
+      if(j ~= i)
       
         % Add the name of the label
         switch func
           case '*'
-            labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
-            O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
-        end        
+          labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
+        end
+        
+        % Add to O matrix
+        O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
         columnposition = columnposition + 1;
       end
     end
