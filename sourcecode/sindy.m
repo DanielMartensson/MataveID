@@ -87,7 +87,7 @@ function sindy(varargin)
   lengthActivations = length(activations);
   lengthO = size(O, 2);
   if(lengthActivations ~= lengthO)
-    error(strcat('Try to have activations as [', num2str(ones(1, lengthActivations)), '] to begin with'));
+    error(strcat('Try to have activations as [', num2str(ones(1, lengthO)), '] to begin with'));
   end
   O = O(:, 1:lengthActivations); 
   
