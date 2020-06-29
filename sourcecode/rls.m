@@ -135,6 +135,9 @@ function [Gd, Hd, sysd, K] = rls(varargin)
   Gd = tf([Theta(np+1:np+nz)'],[1 Theta(1:np)']);
   Gd.sampleTime = sampleTime;
   Gd.delay = delay;
+  if(delay > 0)
+   disp('Hint: Try to convert Gd to time continuous, and then back to discrete state space if you have selected delay: G = d2c(Gd) -> sys = tf2ss(G) -> sysd = c2d(sys, sampleTime)'); 
+  end
   
   % Replace the delaytime to discrete delay time
   Gd.tfdash = strrep(Gd.tfdash, 'e', 'z');
