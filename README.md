@@ -77,7 +77,7 @@ grid on
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
 
 ### RLS - Recursive Least Squares
-RLS is an algorithm that creates a state space model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
+RLS is an algorithm that creates a transfer function model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
 
 Use this algorithm if you have regular data from a open loop system and you want to apply that algorithm into embedded system that have low RAM and low flash memory. RLS is very suitable for system that have a lack of memory. 
 
@@ -87,54 +87,39 @@ Use this algorithm if you have regular data from a open loop system and you want
 
 ### Example RLS
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_System.png)
+This is a hanging load of a hydraulic system. This system is a linear system due to the hydraulic cylinder that lift the load. Here I create two linear first order models. One for up lifting up and one for lowering down the weight. 
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_System.jpg)
 
 ```matlab
-%% Parameters
-m = 1000; % Mass kg
-b = 50; % Friction 
+% Load data
+X = csvread('HangingLoad.csv');
+t = X(:, 1); % Time
+r = X(:, 2); % Reference 
+y = X(:, 3); % Output position
+u = X(:, 4); % Input signal from P-controller with gain 3
+sampleTime = 0.02;
+ 
+% Do identification of the first data set
+l = length(r) + 2000; % This is half data
 
-A = -b/m;
-B = 1/m;
-C = 1;
-D = 0; % Does not need. ss function will auto generate D
-delay = 0;
+% Do identification on up and down
+Gd_up = rls(r(1:l/2), y(1:l/2), 1, 1, 1, sampleTime);
+Gd_down = rls(r(l/2+1:end), y(l/2+1:end), 1, 1, 1, sampleTime);
 
-%% Model
-cruise_ss = ss(delay,A,B,C,D);
-
-%% Input and time
-t = linspace(0, 20, 1000);
-u = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
-
-%% Simulation
-y = lsim(cruise_ss, u, t);
-
-%% Add 20% noise
-load v
-for i = 1:length(y)
-  noiseSigma = 0.20*y(i);
-  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
-  y(i) = y(i) + noise;
-end
-
-%% Identification - ARMAX  
-np = 5; % Number of poles for A polynomial
-nz = 5; % Number of zeros for B polynomial
-nze = np % Numer of zeros for C polynomial
-forgetting = 0.99;
-[Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, t(2) - t(1), delay, forgetting); % K will be included inside sysd
-close
-    
-%% Validation
-yt = lsim(Gd, u, t);
-close
-    
-%% Check
-plot(t, y, t, yt(:, 1:2:end))
-legend("Data", "Identified", 'location', 'northwest')
-grid on
+% Simulate 
+[~,~,x] = lsim(Gd_up, r'(1:l/2), t'(1:l/2));
+hold on
+lsim(Gd_down, r'(l/2+1:end), t'(l/2+1:end), x(:, end));
+hold on
+plot(t, y);
+legend('Up model', 'Down model', 'Measured');
+title('Hanging load - Hydraulic system')
+xlabel('Time [s]')
+ylabel('Position');
 ````
+
+Here we can se that the first model follows the measured position perfect. The "down-curve" should be measured a little bit longer to get a perfect linear model.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_Result.png)
 
