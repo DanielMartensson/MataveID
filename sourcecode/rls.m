@@ -132,8 +132,9 @@ function [Gd, Hd, sysd, K] = rls(varargin)
   end
   
   % Create the discrete transfer function
-  Gd = tf([Theta(np+1:np+nz)'],[1 Theta(1:np)'], delay);
+  Gd = tf([Theta(np+1:np+nz)'],[1 Theta(1:np)']);
   Gd.sampleTime = sampleTime;
+  Gd.delay = delay;
   
   % Replace the delaytime to discrete delay time
   Gd.tfdash = strrep(Gd.tfdash, 'e', 'z');
