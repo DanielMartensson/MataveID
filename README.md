@@ -87,7 +87,8 @@ Use this algorithm if you have regular data from a open loop system and you want
 
 ### Example RLS
 
-This is a hanging load of a hydraulic system. This system is a linear system due to the hydraulic cylinder that lift the load. Here I create two linear first order models. One for up lifting up and one for lowering down the weight. 
+This is a hanging load of a hydraulic system. This system is a linear system due to the hydraulic cylinder that lift the load. Here I create two linear first order models. One for up lifting up and one for lowering down the weight. I'm also but a small orifice between the outlet and inlet of the hydraulic cylinder.
+Notice that this RLS algorithm also computes a Kalman gain matrix.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_System.jpg)
 
@@ -335,29 +336,17 @@ This is very usefull if you have heavy nonlinear systems such as a hydraulic ori
 
 ### SINDy Example
 
-This example is a real world example with noise and very nonlinear. The data comes from a hydraulic system where a hydraulic motor where attached to a hydraulic valve. The output is the speed of the rotation for the hydraulic motor and the input is the signal into the hydraulic valve.
-
-- System: Festo Laboratory Bench
-- Logging Software: FluidSim
-- Systemidentification method: SINDY
-- Nonlinearities: Noise, valve and motor hysteresis, non proportionality between input and output, temperature depended
+This example is a real world example with noise and nonlinearities. Here I set up a hydraulic motor in a test bench and measure it's output and the current to the valve that gives the motor oil. The motor have two nonlinearities - Hysteresis and the input signal is not propotional to the output signal. By using two nonlinear models, we can avoid the hysteresis. 
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FestoBench.jpg)
 
 ```matlab
 % Load CSV data
-X = csvread('OstryptData.csv'); % Can be found in the folder "data"
+X = csvread('MotorRotation.csv'); % Can be found in the folder "data"
 t = X(:, 1);
 u = X(:, 2);
 y = X(:, 3);
 sampleTime = 0.02;
-
-% Remove the zeros from y - Error measurement in FluidSim
-for i = 1:length(y)
-  if(y(i) == 0)
-    y(i) = y(i+1);
-  end
-end
 
 % Do filtering of y
 yf = filtfilt2(y', t', 0.1);
@@ -407,10 +396,12 @@ for i = 1:length(u)
   end
 end
 plot(t, output, t, y)
-legend('Estimated', 'Measured');
+legend('Model', 'Measured');
+title('Hydraulic motor - Checking the hysteresis')
+xlabel('Time [s]')
+ylabel('Rotation');
 grid on
 ```
-By using two models, we can avoid the hysteresis. 
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result.png)
 
