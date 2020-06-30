@@ -1,7 +1,7 @@
 % Observer Controller Identification
 % Input: r(reference signal), uf(feedback signal), y(output signal), sampleTime, delay(optional), regularization(optional), systemorder(optional)
 % Output: sysd(Discrete state space model), K(Kalman gain matrix)
-% Example 1: [sysd, K, L] = ocid(r, uf, y, sampleTime, delay, regularization, systemorder);
+% Example 1: [sysd, K, L] = ocid(r, uf, y, sampleTime, regularization, systemorder);
 % Example 2: [sysd, K, L] = ocid(r, uf, y, sampleTime);
 % Author: Daniel Mårtensson, 24 April 2020. Follows NASA document ID 19920072673
 
@@ -39,16 +39,9 @@ function [sysd, K, L] = ocid(varargin)
     error('Missing sample time');
   end
   
-  % Get the delay
-  if(length(varargin) >= 5)
-    delay = varargin{5};
-  else
-    delay = 0; % If no delay was given
-  end
-  
   % Get the regularization parameter
-  if(length(varargin) >= 6)
-    regularization = varargin{6};
+  if(length(varargin) >= 5)
+    regularization = varargin{5};
     if (regularization <= 0)
       regularization = 0;
     end
@@ -57,8 +50,8 @@ function [sysd, K, L] = ocid(varargin)
   end
   
   % Get the order if the system
-  if(length(varargin) >= 7)
-    systemorder = varargin{7};
+  if(length(varargin) >= 6)
+    systemorder = varargin{6};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -142,6 +135,7 @@ function [sysd, K, L] = ocid(varargin)
   end
   
   % Time to find A, B, C, D, K, L 
+  delay = 0;
   [sysd, K, L] = eradcocid(D, Y, sampleTime, delay, systemorder);
 
 end
