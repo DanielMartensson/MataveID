@@ -18,7 +18,7 @@ OKID is an algoritm that creates the impulse makrov parameter response from data
 Use this algorithm if you got regular data from a open loop system.
 
 ```matlab
-[sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder);
+[sysd, K] = okid(u, y, sampleTime, regularization, systemorder);
 ```
 
 ### Example OKID
@@ -63,7 +63,7 @@ end
 %% Identification  
 regularization = 30000; % We need large number due to the noise!
 modelorder = 4;
-[sysd, K] = okid(u, y, t(2) - t(1), 0, regularization, modelorder);
+[sysd, K] = okid(u, y, t(2) - t(1), regularization, modelorder);
     
 %% Validation
 yt = lsim(sysd, u, t);
@@ -129,7 +129,7 @@ ERA/DC was invented 1987 and is a successor from ERA, that was invented 1985 at 
 Use this algorithm if you got impulse data from e.g structural mechanics.
 
 ```matlab
-[sysd] = eradc(g, sampleTime, delay, systemorder);
+[sysd] = eradc(g, sampleTime, systemorder);
 ```
 ### Example ERA/DC
 
@@ -172,7 +172,7 @@ end
 
 %% Identification  
 systemorder = 4;
-[sysd] = eradc(g, t(2) - t(1), delay, systemorder);
+[sysd] = eradc(g, t(2) - t(1), systemorder);
     
 %% Validation
 gt = impulse(sysd, 10);
@@ -193,7 +193,7 @@ markov parameters. Then I have used ERA/DC for identify the MIMO or SISO state s
 Use this algorithm if you got noisy MIMO data.
 
 ```matlab
-[sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, forgetting, systemorder);
+[sysd] = ssfd(u, y, sampleTime, modelorderTF, forgetting, systemorder);
 ```
 
 ### SSFD Example
@@ -211,6 +211,7 @@ Bm = 10;
 JL = 1000;
 Jm = 10;
 Ps = 100;
+delay = 0;
 
 %% State space for open valve
 A = [0 1;
@@ -242,7 +243,7 @@ end
 systemorder = 6;
 modelorderTF = 9;
 forgetting = 1;
-[sysd] = ssfd(u, y, t(2) - t(1), modelorderTF, delay, forgetting, systemorder);
+[sysd] = ssfd(u, y, t(2) - t(1), modelorderTF, forgetting, systemorder);
     
 %% Validation
 yt = lsim(sysd, u, t);
@@ -262,7 +263,7 @@ This is an extention from OKID. The idea is the same, but OCID creates a LQR con
 Use this algorithm if you want to extract a LQR control law, kalman observer and model from a running dynamical system. Or if your open loop system is unstable and it requries some kind of feedback to stabilize it. Then OCID is the perfect choice.
 
 ```matlab
-[sysd, K, L] = ocid(r, uf, y, sampleTime, delay, regularization, systemorder);
+[sysd, K, L] = ocid(r, uf, y, sampleTime, regularization, systemorder);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_System.png)
@@ -287,7 +288,8 @@ C = [1 0 0 0;
      0 0 0 1];
   
 %% Model and signals
-sys = ss(0, A, B, C);
+delay = 0;
+sys = ss(delay, A, B, C);
 t = linspace(0, 20, 1000);
 r = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
 r = [r;2*r]; % MIMO
@@ -312,7 +314,7 @@ uf = yf(3:4, :); % Input feedback signals
 y = yf(1:2, :); % Output feedback signals
 regularization = 600;
 modelorder = 4;
-[sysd, K, L] = ocid(r, uf, y, t(2) - t(1), delay, regularization, modelorder);
+[sysd, K, L] = ocid(r, uf, y, t(2) - t(1), regularization, modelorder);
     
 %% Validation
 u = -uf + r; % Input signal %u = -Lx + r = -uf + r
