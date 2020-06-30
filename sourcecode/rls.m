@@ -2,7 +2,7 @@
 % Input: u(input signal), y(output signal), np(number of poles), nz(number of zeros), nze(number of zeros for Hd), sampleTime, delay(optional), forgetting(optional) 
 % Output: sysd(Discrete state space model with noise), K(Kalman gain matrix)
 % Example 1: [sysd, K] = rls(u, y, np, nz, nze, sampleTime);
-% Example 2: [sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
+% Example 2: [sysd, K] = rls(u, y, np, nz, nze, sampleTime, forgetting);
 % Author: Daniel Mårtensson, September 2019. Follows the litterature Adaptive Control by Karl Johan Åström. Page 62. ISBN 9780486462783
 
 function [Gd, Hd, sysd, K] = rls(varargin)
@@ -62,19 +62,9 @@ function [Gd, Hd, sysd, K] = rls(varargin)
     error('Missing sample time');
   end
   
-  % Get the delay
-  if(length(varargin) >= 7)
-    delay = varargin{7};
-    if(delay < 0)
-      error('delay < 0');
-    end
-  else
-    delay = 0; % If no delay was given
-  end
-  
   % Get the lambda factor
-  if(length(varargin) >= 8)
-    l = varargin{8};
+  if(length(varargin) >= 7)
+    l = varargin{7};
     if(l <= 0)
       error('forgetting <= 0');
     end
@@ -131,19 +121,11 @@ function [Gd, Hd, sysd, K] = rls(varargin)
        
   end
   
-  % Create the discrete transfer function
+  % Create the discrete transfer function and convert it to state space
   Gd = tf([Theta(np+1:np+nz)'],[1 Theta(1:np)']);
   Gd.sampleTime = sampleTime;
-  Gd.delay = delay;
-  
-  % Convert it to state space
-  if(delay > 0)
-     G = d2c(Gd);
-     sys = tf2ss(G, 'OCF');
-     sysd = c2d(sys, sampleTime);
-  else
-     sysd = tf2ss(Gd, 'OCF');
-  end
+  Gd.delay = 0;
+  sysd = tf2ss(Gd, 'OCF');
   
   if(np == nze)
     K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition
