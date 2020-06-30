@@ -1,7 +1,7 @@
 % State Space Frequency Domain
-% Input: u(input signal), y(output signal), sampleTime, systemorderTF, delay(optional), forgetting(optional), systemorder(optional)
+% Input: u(input signal), y(output signal), sampleTime, systemorderTF, forgetting(optional), systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = ssfd(u, y, sampleTime, modelorderTF, delay, forgetting, systemorder);
+% Example 1: [sysd] = ssfd(u, y, sampleTime, modelorderTF, forgetting, systemorder);
 % Example 2: [sysd] = ssfd(u, y, sampleTime, systemorderTF);
 % Author: Daniel Mårtensson, April 2020. Follows almost the same idea behind the NASA documentat ID 19920023413 
 
@@ -39,23 +39,16 @@ function [sysd, Gdi] = ssfd(varargin)
      error('Missing model order');
   end
   
-  % Get the delay
-  if(length(varargin) >= 5)
-    delay = varargin{5};
-  else
-    delay = 0; % If no delay was given
-  end
-  
   % Get the forgetting
-  if(length(varargin) >= 6)
-    forgetting = varargin{6};
+  if(length(varargin) >= 5)
+    forgetting = varargin{5};
   else
     forgetting = 1; % If no forgetting was given
   end
   
   % Get the order if the system
-  if(length(varargin) >= 7)
-    systemorder = varargin{7};
+  if(length(varargin) >= 6)
+    systemorder = varargin{6};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -71,6 +64,7 @@ function [sysd, Gdi] = ssfd(varargin)
   % Get the amout if signals and the length of markov parameters
   r = size(u, 1);
   m = size(y, 2);
+  delay = 0;
   
   % Get the impulse response of Gdi
   H = [];
@@ -88,6 +82,6 @@ function [sysd, Gdi] = ssfd(varargin)
   end
   
   % Get our state space model by using ERA/DC algorithm
-  sysd = eradc(H, sampleTime, delay, systemorder);
+  sysd = eradc(H, sampleTime, systemorder);
   
 end
