@@ -82,7 +82,7 @@ RLS is an algorithm that creates a transfer function model from regular data. He
 Use this algorithm if you have regular data from a open loop system and you want to apply that algorithm into embedded system that have low RAM and low flash memory. RLS is very suitable for system that have a lack of memory. 
 
 ```matlab
-[Gd, Hd, sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
+[sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 ```
 
 ### Example RLS
@@ -104,13 +104,13 @@ sampleTime = 0.02;
 l = length(r) + 2000; % This is half data
 
 % Do identification on up and down
-Gd_up = rls(r(1:l/2), y(1:l/2), 1, 1, 1, sampleTime);
-Gd_down = rls(r(l/2+1:end), y(l/2+1:end), 1, 1, 1, sampleTime);
+sysd_up = rls(r(1:l/2), y(1:l/2), 1, 1, 1, sampleTime);
+sysd_down = rls(r(l/2+1:end), y(l/2+1:end), 1, 1, 1, sampleTime);
 
 % Simulate 
-[~,~,x] = lsim(Gd_up, r'(1:l/2), t'(1:l/2));
+[~,~,x] = lsim(sysd_up, r'(1:l/2), t'(1:l/2));
 hold on
-lsim(Gd_down, r'(l/2+1:end), t'(l/2+1:end), x(:, end));
+lsim(sysd_down, r'(l/2+1:end), t'(l/2+1:end), x(:, end));
 hold on
 plot(t, y);
 legend('Up model', 'Down model', 'Measured');
