@@ -1,7 +1,7 @@
 % Observer Kalman Filter Identification
 % Input: u(input signal), y(output signal), sampleTime, delay(optional), regularization(optional), systemorder(optional)
 % Output: sysd(Discrete state space model), K(Kalman gain matrix)
-% Example 1: [sysd, K] = okid(u, y, sampleTime, delay, regularization, systemorder);
+% Example 1: [sysd, K] = okid(u, y, sampleTime, regularization, systemorder);
 % Example 2: [sysd, K] = okid(u, y, sampleTime);
 % Author: Daniel Mårtensson, December 2017
 % Update January 2019 - Better hankel matrix that fix the 1 step delay.
@@ -34,16 +34,9 @@ function [sysd, K] = okid(varargin)
     error('Missing sample time');
   end
   
-  % Get the delay
-  if(length(varargin) >= 4)
-    delay = varargin{4};
-  else
-    delay = 0; % If no delay was given
-  end
-  
   % Get the regularization parameter
-  if(length(varargin) >= 5)
-    regularization = varargin{5};
+  if(length(varargin) >= 4)
+    regularization = varargin{4};
     if (regularization <= 0)
       regularization = 0;
     end
@@ -52,8 +45,8 @@ function [sysd, K] = okid(varargin)
   end
   
   % Get the order if the system
-  if(length(varargin) >= 6)
-    systemorder = varargin{6};
+  if(length(varargin) >= 5)
+    systemorder = varargin{5};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -141,6 +134,7 @@ function [sysd, K] = okid(varargin)
   end
   
   % Create A, B, C, D and K from one SVD computation. P = [CA^kB, CA^kM]; One markov parameter, even if it's rectangular.
+  delay = 0;
   [sysd, K] = eradcokid(P, sampleTime, delay, systemorder);
   
   % Time to find A, B, C, D using ERA/DC - Experimental!
