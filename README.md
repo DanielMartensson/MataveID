@@ -43,7 +43,8 @@ C = [1.00000   0.00000   0.00000   0.00000
      0.00000   0.00000   1.00000   0.00000];
 
 %% Model and signals
-sys = ss(0, A, B, C);
+delay = 0;
+sys = ss(delay, A, B, C);
 t = linspace(0, 20, 2000);
 u = [linspace(5, -11, 200) linspace(7, 3, 200) linspace(-6, 9, 200) linspace(-7, 1, 200) linspace(2, 0, 200) linspace(6, -9, 200) linspace(4, 1, 200) linspace(0, 0, 200) linspace(10, 17, 200) linspace(-30, 0, 200)];
 u = [u;2*u]; % MIMO
