@@ -1,7 +1,7 @@
 % Eigensystem Realization Algorithm with Data Correlation
 % Input: g(markov parameters), sampleTime, delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = eradc(g, sampleTime, delay, systemorder);
+% Example 1: [sysd] = eradc(g, sampleTime, systemorder);
 % Author: Daniel Mårtensson, November 2017
 % Update 20 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963
 
@@ -25,16 +25,9 @@ function [sysd] = eradc(varargin)
     error('Missing sample time');
   end
   
-  % Get the delay
-  if(length(varargin) >= 3)
-    delay = varargin{3};
-  else
-    delay = 0; % If no delay was given
-  end
-  
   % Get the order of the system
-  if(length(varargin) >= 4)
-    systemorder = varargin{4};
+  if(length(varargin) >= 3)
+    systemorder = varargin{3};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -88,6 +81,7 @@ function [sysd] = eradc(varargin)
   Dd = g(1:ny, 1:nu);
 
   % Create state space model now
+  delay = 0;
   sysd = ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 end
