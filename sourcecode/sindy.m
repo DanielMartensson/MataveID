@@ -118,6 +118,16 @@ function sindy(varargin)
     firstTimeWriting = 1;
     % This is the left side of the equation
     derivative = strcat('d', cell2mat(variables(i, :)), ' = '); % Get the e.g 'dx =' or 'dy ='
+    % This is the annonymous function handler
+    handler = " @(";
+    for k = 1:size(variables, 1)
+      if(k < size(variables, 1))
+        handler = strcat(handler, cell2mat(variables(k, :)), ",");
+      else
+        handler = strcat(handler, cell2mat(variables(k, :)), ") ");
+      end
+    end
+    % Save the equations here
     equation = [];
     % This is the right side of the equation
     for j = 1:size(used_labels, 1)
@@ -138,7 +148,7 @@ function sindy(varargin)
         equation = strcat(equation, val, '*', used_labels(j, :));  
       end
     end  
-    strcat(derivative, equation) % Print the equation for every i - row
+    strcat(derivative, handler, equation) % Print the equation for every i - row
   end
 end
 
