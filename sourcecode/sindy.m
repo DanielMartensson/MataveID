@@ -114,6 +114,8 @@ function sindy(varargin)
   text = "\nOur nonlinear state space model:";
   disp(text);
   for i = 1:size(E, 2)
+    % This is for so we don't write + directly after dy = 
+    firstTimeWriting = 1;
     % This is the left side of the equation
     derivative = strcat('d', cell2mat(variables(i, :)), ' = '); % Get the e.g 'dx =' or 'dy ='
     equation = [];
@@ -121,8 +123,19 @@ function sindy(varargin)
     for j = 1:size(used_labels, 1)
       % Only select values that have been sorted out by lambda value
       if(E(j, i) ~= 0)
-        val = sprintf("%f", E(j, i));
-        equation = strcat(equation, "\t", val, '*', used_labels(j, :), "\t");  
+        if(and(E(j, i) > 0, firstTimeWriting == 0))
+          val = sprintf(" + %f", E(j, i));
+        elseif(and(E(j, i) < 0, firstTimeWriting == 0))
+          val = sprintf(" - %f", abs(E(j, i)));
+        else
+          if(E(j, i) > 0)
+            val = sprintf(" %f", E(j, i));
+          else
+            val = sprintf(" - %f", abs(E(j, i)));
+          end
+        end
+        firstTimeWriting = 0;
+        equation = strcat(equation, val, '*', used_labels(j, :));  
       end
     end  
     strcat(derivative, equation) % Print the equation for every i - row
