@@ -111,7 +111,7 @@ function [fx] = sindy(varargin)
     disp(strcat(num2str(activations(j)), ':', labels(j, :))) % Show enabled and disabled
   end
   
-  % Do least squares for every column of derivatives - This is the heart of SINDyC
+  % Do least squares for every column of derivatives - This is the heart of SINDy
   state_dimension = size(O, 2);
   E = stls_regression(O, derivatives, lambda);
   
