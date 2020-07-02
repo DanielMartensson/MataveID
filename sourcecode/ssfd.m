@@ -64,12 +64,11 @@ function [sysd, Gdi] = ssfd(varargin)
   % Get the amout if signals and the length of markov parameters
   r = size(u, 1);
   m = size(y, 2);
-  delay = 0;
   
   % Get the impulse response of Gdi
   H = [];
   for i = 1:r
-    Gdi = rls(u(i, 1:m), y(i, 1:m), p, p, p, sampleTime, delay, forgetting); % RLS is a perfect choice in this noisy case
+    Gdi = rls(u(i, 1:m), y(i, 1:m), p, p, p, sampleTime, forgetting); % RLS is a perfect choice in this noisy case
     g = impulse(Gdi);
     g = g(1:2:length(g)); % Remove the discrete shape - Only necessary for plotting! In this case...no.
     close % A pop up plot will appear from impulse.m
