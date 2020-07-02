@@ -373,24 +373,22 @@ t = t(1:end-1);
 inputs = [u'];
 states = [y];
 derivatives = [dy'];
-activations = [1 1 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
+activations = [1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  1  1  0  0  0  0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
 variables = ["y"; "u"]; % [states; inputs] - Always!
 lambda = 0.1;
 l = length(inputs);
 h = floor(l/2);
 s = ceil(l/2);
-sindy(inputs(1:h), states(1:h), derivatives(1:h), activations, variables, lambda); % We go up
-sindy(inputs(s:end), states(s:end), derivatives(s:end), activations, variables, lambda); % We go down
+dy_up = sindy(inputs(1:h), states(1:h), derivatives(1:h), activations, variables, lambda); % We go up
+dy_down = sindy(inputs(s:end), states(s:end), derivatives(s:end), activations, variables, lambda); % We go down
 
 % Euler simulation of Sindy model by two anonymous functions
-dy_up = @(y, u)   -0.647673*1 - 9.979564*y + 11.899789*u - 2.971213*y^2 - 3.520133*u^2 - 0.345425*y^3 + 0.127282*u^3 + 5.899072*y*u  + 5.315195*sqrt(y) - 8.355978*sqrt(u);
-dy_down = @(y, u) 1.660146*1 + 4.766164*y + 0.777876*u - 2.545620*y^2 - 0.523338*u^2 + 1.728446*y*u - 9.311625*sqrt(y) + 2.878077*sqrt(u);
 output = zeros(1, length(u));
 x_up = 0;
 x_down = 0;
 for i = 1:length(u)
-  x_up = x_up + sampleTime*dy_up(x_up, u(i));
-  x_down = x_down + sampleTime*dy_down(x_down, u(i));
+  x_up = x_up + sampleTime*dy_up{1}(x_up, u(i));
+  x_down = x_down + sampleTime*dy_down{1}(x_down, u(i));
   if(i <= length(u)/2*0.91) % This is the half part of the dynamical system
     output(i) = x_up;
   else
