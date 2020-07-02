@@ -54,13 +54,13 @@ function [fx] = sindy(varargin)
   end
   
   % Do error checking between states and inputs
-  if(length(states) ~= length(inputs))
-    error('States and inputs need to have the same length')
+  if(size(states, 2) ~= size(inputs, 2))
+    error('States and inputs need to have the same length of columns - Try transpose')
   end
   
   % Do error checking between derivatives and inputs
-  if(length(derivatives) ~= length(inputs))
-    error('Derivatives and inputs need to have the same length')
+  if(size(derivatives, 1) ~= size(inputs, 2))
+    error('Derivatives and inputs need to have the same length - Try transpose')
   end
   
   % Create our data, it must contain states and inputs. States can be interpreted as outputs by the way!
