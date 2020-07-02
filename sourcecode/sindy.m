@@ -1,5 +1,5 @@
 % Sparse Identification of Nonlinear Dynamics
-% Activations for u and y: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
+% Activations for e.g u and y e.g: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
 % Input: inputs, states, derivatives, activations, lambda
 % Example: [fx] = sindy(inputs, states, derivatives, activations, variables, lambda);
 % Author: Daniel Mårtensson, May 2, 2020
