@@ -379,16 +379,16 @@ lambda = 0.1;
 l = length(inputs);
 h = floor(l/2);
 s = ceil(l/2);
-dy_up = sindy(inputs(1:h), states(1:h), derivatives(1:h), activations, variables, lambda); % We go up
-dy_down = sindy(inputs(s:end), states(s:end), derivatives(s:end), activations, variables, lambda); % We go down
+fx_up = sindy(inputs(1:h), states(1:h), derivatives(1:h), activations, variables, lambda); % We go up
+fx_down = sindy(inputs(s:end), states(s:end), derivatives(s:end), activations, variables, lambda); % We go down
 
 % Euler simulation of Sindy model by two anonymous functions
 output = zeros(1, length(u));
 x_up = 0;
 x_down = 0;
 for i = 1:length(u)
-  x_up = x_up + sampleTime*dy_up{1}(x_up, u(i));
-  x_down = x_down + sampleTime*dy_down{1}(x_down, u(i));
+  x_up = x_up + sampleTime*fx_up{1}(x_up, u(i));
+  x_down = x_down + sampleTime*fx_down{1}(x_down, u(i));
   if(i <= length(u)/2*0.91) % This is the half part of the dynamical system
     output(i) = x_up;
   else
