@@ -1,11 +1,11 @@
 % Sparse Identification of Nonlinear Dynamics
 % Activations for u and y: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
 % Input: inputs, states, derivatives, activations, lambda
-% Example: sindyc(inputs, states, derivatives, activations, variables, lambda);
+% Example: [fx] = sindyc(inputs, states, derivatives, activations, variables, lambda);
 % Author: Daniel Mårtensson, May 2, 2020
 % Update: Added more error handling and now display which activation function that being used, June 25, 2020
 
-function sindy(varargin)
+function [fx] = sindy(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -113,6 +113,7 @@ function sindy(varargin)
   % Print E - Don't replace " with '. They have a pourpose.
   text = "\nOur nonlinear state space model:";
   disp(text);
+  fx = {size(E, 2)};
   for i = 1:size(E, 2)
     % This is for so we don't write + directly after dy = 
     firstTimeWriting = 1;
@@ -141,14 +142,18 @@ function sindy(varargin)
           if(E(j, i) > 0)
             val = sprintf(" %f", E(j, i));
           else
-            val = sprintf(" - %f", abs(E(j, i)));
+            val = sprintf(" -%f", abs(E(j, i)));
           end
         end
         firstTimeWriting = 0;
         equation = strcat(equation, val, '*', used_labels(j, :));  
       end
     end  
-    strcat(derivative, handler, equation) % Print the equation for every i - row
+    % Print the equation for every i - row
+    strcat(derivative, handler, equation) 
+    % Remove first space from handler string and create the function handler
+    handler(1) = [];
+    fx(i) = str2func(strcat(handler, equation));
   end
 end
 
