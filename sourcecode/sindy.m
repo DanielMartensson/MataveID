@@ -76,11 +76,16 @@ function [fx] = sindy(varargin)
   [O, columnposition, labels] = candidate(O, data, l, columnposition, variables, labels, "none"); % We add every inputs
   [O, columnposition, labels] = candidate(O, data.^2, l, columnposition, variables, labels, "^2"); % We use the raised to power 2 candidate
   [O, columnposition, labels] = candidate(O, data.^3, l, columnposition, variables, labels, "^3"); % We use the raised to power 3 candidate
-  [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "*"); % We add e.g x.*y, z.*u, y.*u
+  [O, columnposition, labels] = candidate(O, data.^4, l, columnposition, variables, labels, "^4"); % We use the raised to power 4 candidate
+  [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "*"); % We add e.g x*y, z*u, y*u
+  [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "^2"); % We add e.g x^2*y^2, z^2*u^2, y^2*u^2
+  [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "sin"); % We add e.g sin(x*y), sin(z*u), sin(y*u)
   [O, columnposition, labels] = candidate(O, sin(data), l, columnposition, variables, labels, "sin"); % We use the add sin candidate
   [O, columnposition, labels] = candidate(O, cos(data), l, columnposition, variables, labels, "cos"); % We use the add cos candidate
   [O, columnposition, labels] = candidate(O, tan(data), l, columnposition, variables, labels, "tan"); % We use the add tan candidate
   [O, columnposition, labels] = candidate(O, sqrt(data), l, columnposition, variables, labels, "sqrt"); % We use the add sqrt candidate
+  [O, columnposition, labels] = candidate(O, exp(data), l, columnposition, variables, labels, "exp"); % We use the add exp candidate
+  [O, columnposition, labels] = candidate(O, log(data), l, columnposition, variables, labels, "log"); % We use the add log candidate
   % You can add more candidates here!
   
   % Cut O matrix so we only using the selected candidates
@@ -120,7 +125,7 @@ function [fx] = sindy(varargin)
     % This is the left side of the equation
     derivative = strcat('d', cell2mat(variables(i, :)), ' = '); % Get the e.g 'dx =' or 'dy ='
     % This is the annonymous function handler
-    handler = " @(";
+    handler = " @("; % We are going to delete that space before @ in the code below
     for k = 1:size(variables, 1)
       if(k < size(variables, 1))
         handler = strcat(handler, cell2mat(variables(k, :)), ",");
@@ -186,6 +191,8 @@ function [O, columnposition, labels] = candidate(O, data, l, columnposition, var
         labels = [labels; strcat(cell2mat(variables(i, :)), '^2')]; % e.g x^2
       case '^3'
         labels = [labels; strcat(cell2mat(variables(i, :)), '^3')]; % e.g x^3
+      case '^4'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^4')]; % e.g x^4
       case 'sin'
         labels = [labels; strcat('sin(', cell2mat(variables(i, :)), ')')]; % e.g sin(x)
       case 'cos'
@@ -194,7 +201,11 @@ function [O, columnposition, labels] = candidate(O, data, l, columnposition, var
         labels = [labels; strcat('tan(', cell2mat(variables(i, :)), ')')];
       case 'sqrt'
         labels = [labels; strcat('sqrt(', cell2mat(variables(i, :)), ')')];
-      % Add more here such as e^x or sin(x*y) etc.
+      case 'exp'
+        labels = [labels; strcat('exp(', cell2mat(variables(i, :)), ')')];
+      case 'log'
+        labels = [labels; strcat('log(', cell2mat(variables(i, :)), ')')];
+      % Add more cases here...
     end
     
     % Add to O matrix
@@ -209,14 +220,21 @@ function [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, 
     for i = 1:l
       if(j ~= i)
       
-        % Add the name of the label
+        % Add the name of the label and add to O matrix
         switch func
           case '*'
-          labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
+            labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
+            O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
+          case '^2'
+            labels = [labels; strcat(cell2mat(variables(j, :)), '^2*', cell2mat(variables(i, :)), '^2')]; % e.g x^2*y^2
+            O(:, columnposition) = (data(j,:).^2).*(data(i,:).^2);
+          case 'sin'
+            labels = [labels; strcat('sin(', cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)), ')')]; % e.g sin(x*y)
+            O(:, columnposition) = sin(data(j,:).*data(i,:));
+          % Add more cases here...
         end
         
         % Add to O matrix
-        O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
         columnposition = columnposition + 1;
       end
     end
