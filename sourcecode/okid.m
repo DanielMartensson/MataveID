@@ -1,5 +1,5 @@
 % Observer Kalman Filter Identification
-% Input: u(input signal), y(output signal), sampleTime, delay(optional), regularization(optional), systemorder(optional)
+% Input: u(input signal), y(output signal), sampleTime, modelorderTF(model order for ARMAX model), systemorder(optional)
 % Output: sysd(Discrete state space model), K(Kalman gain matrix)
 % Example 1: [sysd, K] = okid(u, y, sampleTime, modelorderTF, forgetting, systemorder);
 % Example 2: [sysd, K] = okid(u, y, sampleTime, systemorderTF);
