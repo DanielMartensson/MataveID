@@ -1,6 +1,7 @@
 # Mataveid V6.5
-Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from 
-data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise. 
+Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
+
+I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
 
 # Papers:
 
@@ -11,6 +12,12 @@ All of these methods can be found in Jer-Nan Juang's excellent and practical boo
 There are many good books about system identification, but if you want to make it easy, study easy and apply practical for implementation, then this book is for you. 
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/AppliedSystemIdentification.jpeg)
+
+If you want to have another excellent practical book with full of applied examples, I recommending "System Modeling and Identification" by Rolf Johansson. This book coveres Recursive Least Square algorithm best.
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RolfJohanssonsBok.jpg)
+
+Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/
 
 ### OKID - Observer Kalman Filter Identification
 OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including RLS algorithm and Euler simulation. So now it's very robust against noise.
@@ -41,7 +48,7 @@ y1 = X(:, 5); % Output for cylinder 1
 u = [r0';r1'];
 y = [y0';y1'];
 
-%
+% Do system identification with OKID
 sampleTime = 0.1;
 modelorderTF = 1; % ARMAX model order
 forgettingFactor = 1.0; % No forgetting
@@ -57,12 +64,16 @@ title('Cylinder 0');
 xlabel('Time');
 ylabel('Position');
 grid on
+legend('Identified', 'Measured');
+ylim([0 12]);
 figure
 plot(t, y(2, :), t, y1)
 title('Cylinder 1');
 xlabel('Time');
 ylabel('Position');
 grid on
+legend('Identified', 'Measured');
+ylim([0 12]);
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
 
