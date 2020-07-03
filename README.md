@@ -1,10 +1,9 @@
-# Mataveid V6.5
+# Mataveid V7.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
 
 # Papers:
-
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
 
 # Literature:
@@ -20,7 +19,7 @@ If you want to have another excellent practical book with full of applied exampl
 Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/
 
 ### OKID - Observer Kalman Filter Identification
-OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including RLS algorithm and Euler simulation. So now it's very robust against noise.
+OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including RLS algorithm and Euler simulation. So now it's very robust against noise. OKID returns also a kalman gain matrix K. 
 
 ```matlab
 [sysd, K] = okid(u, y, sampleTime, modelorderTF, forgetting, systemorder);
