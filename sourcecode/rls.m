@@ -5,7 +5,7 @@
 % Example 2: [sysd, K] = rls(u, y, np, nz, nze, sampleTime, forgetting);
 % Author: Daniel Mårtensson, September 2019. Follows the litterature Adaptive Control by Karl Johan Åström. Page 62. ISBN 9780486462783
 
-function [Gd, Hd, sysd, K] = rls(varargin)
+function [sysd, K] = rls(varargin)
    % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
