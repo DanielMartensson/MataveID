@@ -201,7 +201,7 @@ function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
   V1 = V(:, 1:nx);
 end
 
-% Create the half square hankel matrix - Special case for OKID: Pk = [CA^kB CA^k]; = Rectangular
+% Create the half square hankel matrix - Special case for OKID: Pk = [CA^kB CA^kM]; = Rectangular
 function [H] = hank(g, k)
   % We got markov parameters g = [g0 g1 g2 g2 g3 ... gl]; with size m*(2*m). g0 = D
   m = size(g, 1);
