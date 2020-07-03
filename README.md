@@ -27,7 +27,7 @@ OKID is an algoritm that creates the impulse makrov parameter response from data
 
 ### Example OKID
 
-Here I programmed a Beijer PLC that controls the multivariable cylinder system. It's a nonlinear system, but OKID can handle it because it's not so nonlinear as a hydraulic motor.
+Here I programmed a Beijer PLC that controls the multivariable cylinder system. It's a nonlinear system, but OKID can handle it because it's not so nonlinear as a hydraulic motor. Cylinder 0 and Cylinder 1 affecting each other when the propotional control valves opens.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PLC%20system.jpg)
 
