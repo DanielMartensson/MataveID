@@ -351,7 +351,7 @@ states = states(:, 1:end-1);
 inputs = inputs(:, 1:end-1);
 activations = [1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0];
 lambda = 1.1;
-variables = ["y0";"y1";"r0";"r1"];
+variables = ["y0";"y1";"r0";"r1"]; % [states; inputs] - Always!
 fx = sindy(inputs, states, derivatives', activations, variables, lambda);
 
 % Euler simulation
