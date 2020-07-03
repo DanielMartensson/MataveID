@@ -335,6 +335,48 @@ grid on
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result.png)
 
+Here is a multivariable example with SINDy. It use the same data as the OKID scenario.
+
+```matlab
+X = csvread('MultivariableCylinders.csv');
+t = X(:, 1);
+r0 = X(:, 2);
+r1 = X(:, 3);
+y0 = X(:, 4);
+y1 = X(:, 5);
+
+inputs = [r0';r1'];
+states = [y0';y1'];
+derivatives = (states(:, 2:end) - states(:, 1:end-1))/0.1;
+states = states(:, 1:end-1);
+inputs = inputs(:, 1:end-1);
+activations = [1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0];
+lambda = 1.1;
+variables = ["y0";"y1";"r0";"r1"];
+fx = sindy(inputs, states, derivatives', activations, variables, lambda);
+
+% Euler simulation
+output = zeros(2, length(t));
+x0 = 0;
+x1 = 0;
+h = 0.1; % Sample time
+for i = 1:length(output)
+  output(1, i) = x0;
+  output(2, i) = x1;
+  vy1 = fx{1}(x0, x1, r0(i), r1(i));
+  vy2 = fx{2}(x0, x1, r0(i), r1(i));
+  x0 = x0 + h*vy1;
+  x1 = x1 + h*vy2;
+end
+
+close all
+plot(t, output(2, :), t, y1);
+grid on
+figure
+plot(t, output(1, :), t, y0);
+grid on
+```
+
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
 
