@@ -19,10 +19,10 @@ If you want to have another excellent practical book with full of applied exampl
 Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/
 
 ### OKID - Observer Kalman Filter Identification
-OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including RLS algorithm and Euler simulation. So now it's very robust against noise. OKID returns also a kalman gain matrix K. 
+OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including SINDy algorithm and Euler simulation plus Algebraic Riccati Equations for finding the discrete kalman gain matrix K. So now it's very robust against noise.
 
 ```matlab
-[sysd, K] = okid(u, y, sampleTime, modelorderTF, forgetting, systemorder);
+[sysd, K] = okid(inputs, states, derivatives, t, sampleTime);
 ```
 
 ### Example OKID
