@@ -35,30 +35,28 @@ Here I programmed a Beijer PLC that controls the multivariable cylinder system. 
 
 
 ```matlab
-% Load data
+% Load the data
 X = csvread('MultivariableCylinders.csv');
 t = X(:, 1);
-r0 = X(:, 2); % Input for cylinder 0
-r1 = X(:, 3); % Input for cylinder 1
-y0 = X(:, 4); % Output for cylinder 0
-y1 = X(:, 5); % Output for cylinder 1
-
-% Connect them into u and y
-u = [r0';r1'];
-y = [y0';y1'];
-
-% Do system identification with OKID
+r0 = X(:, 2);
+r1 = X(:, 3);
+y0 = X(:, 4);
+y1 = X(:, 5);
 sampleTime = 0.1;
-modelorderTF = 1; % ARMAX model order
-forgettingFactor = 1.0; % No forgetting
-systemorder = 4; % We want 4 order state space
-[sysd, K] = okid(u, y, sampleTime, modelorderTF, forgettingFactor, systemorder);
-y = lsim(sysd, u, t');
-close
-y = y(:, 1:2:end); % Remove the discrete shape
 
-% Plot the output 
-plot(t, y(1, :), t, y0)
+% Create the model
+inputs = [r0';r1'];
+states = [y0';y1'];
+derivatives = (states(:, 2:end) - states(:, 1:end-1))/sampleTime;
+states = states(:, 1:end-1);
+inputs = inputs(:, 1:end-1);
+t = t'(1, 1:end-1);
+[sysd, K] = okid(inputs, states, derivatives', t, sampleTime);
+
+% Do simulation
+[outputs, T, x] = lsim(sysd ,inputs, t);
+close
+plot(T, outputs(1, :), t, states(1, :))
 title('Cylinder 0');
 xlabel('Time');
 ylabel('Position');
@@ -66,7 +64,7 @@ grid on
 legend('Identified', 'Measured');
 ylim([0 12]);
 figure
-plot(t, y(2, :), t, y1)
+plot(T, outputs(2, :), t, states(2, :))
 title('Cylinder 1');
 xlabel('Time');
 ylabel('Position');
@@ -343,10 +341,11 @@ r0 = X(:, 2);
 r1 = X(:, 3);
 y0 = X(:, 4);
 y1 = X(:, 5);
+sampleTime = 0.1;
 
 inputs = [r0';r1'];
 states = [y0';y1'];
-derivatives = (states(:, 2:end) - states(:, 1:end-1))/0.1;
+derivatives = (states(:, 2:end) - states(:, 1:end-1))/sampleTime;
 states = states(:, 1:end-1);
 inputs = inputs(:, 1:end-1);
 activations = [1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0];
@@ -358,14 +357,13 @@ fx = sindy(inputs, states, derivatives', activations, variables, lambda);
 output = zeros(2, length(t));
 x0 = 0;
 x1 = 0;
-h = 0.1; % Sample time
 for i = 1:length(output)
   output(1, i) = x0;
   output(2, i) = x1;
   vy1 = fx{1}(x0, x1, r0(i), r1(i));
   vy2 = fx{2}(x0, x1, r0(i), r1(i));
-  x0 = x0 + h*vy1;
-  x1 = x1 + h*vy2;
+  x0 = x0 + sampleTime*vy1;
+  x1 = x1 + sampleTime*vy2;
 end
 
 close all
