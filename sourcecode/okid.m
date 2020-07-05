@@ -1,12 +1,8 @@
 % Observer Kalman Filter Identification
-% Input: u(input signal), y(output signal), sampleTime, modelorderTF(model order for ARMAX model), systemorder(optional)
+% Input: inputs, states(outputs), derivatives, t(time vector), sample time
 % Output: sysd(Discrete state space model), K(Kalman gain matrix)
-% Example 1: [sysd, K] = okid(u, y, sampleTime, modelorderTF, forgetting, systemorder);
-% Example 2: [sysd, K] = okid(u, y, sampleTime, systemorderTF);
-% Author: Daniel Mårtensson, December 2017
-% Update January 2019 - Better hankel matrix that fix the 1 step delay.
-% Update 26 April 2020 - For MIMO data and follows NASA document ID 19910016123
-% Update 3 June 2020 - Connecting RLS with OKID for more stable estimation due to noise
+% Example: [sysd, K] = okid(inputs, states, derivatives, t, sampleTime);
+% Author: Daniel Mårtensson, Juli 2020
 
 function [sysd, K] = okid(varargin)
   % Check if there is any input
@@ -14,218 +10,72 @@ function [sysd, K] = okid(varargin)
     error('Missing imputs')
   end
   
-  % Get input
+  % Get inputs
   if(length(varargin) >= 1)
-    u = varargin{1};
+    inputs = varargin{1};
   else
-    error('Missing input')
+    error('Missing inputs')
   end
   
-  % Get output
+  % Get states
   if(length(varargin) >= 2)
-    y = varargin{2};
+    states = varargin{2};
   else
-    error('Missing output')
+    error('Missing states')
   end
   
-  % Get the sample time
+  % Get derivatives
   if(length(varargin) >= 3)
-    sampleTime = varargin{3};
+    derivatives = varargin{3};
   else
-    error('Missing sample time');
+    error('Missing derivatives')
   end
   
-  % Get the model order for the transfer function
+  % Get time
   if(length(varargin) >= 4)
-    systemorderTF = varargin{4};
+    t = varargin{4};
   else
-    error('Missing model order');
+    error('Missing time')
   end
   
-  % Get the forgetting
+  % Get sample time
   if(length(varargin) >= 5)
-    forgetting = varargin{5};
+    sampleTime = varargin{5};
   else
-    forgetting = 1; % If no forgetting was given
+    error('Missing sample time')
   end
   
-  % Get the order if the system
-  if(length(varargin) >= 6)
-    systemorder = varargin{6};
-    if (systemorder <= 0)
-      systemorder = -1;
-    end
-  else
-    systemorder = -1; % If no order was given
+  % Do error checking between states and inputs
+  if(size(states, 2) ~= size(inputs, 2))
+    error('States and inputs need to have the same length of columns - Try transpose')
   end
   
-  % Check if u and y has the same length
-  if(length(u) ~= length(y))
-    error('Input(u) and output(y) has not the same length')
+  % Do error checking between derivatives and inputs
+  if(size(derivatives, 1) ~= size(inputs, 2))
+    error('Derivatives and inputs need to have the same length - Try transpose')
   end
   
+  % Flip them so they are standing "up"
+  Y = states';
+  U = inputs';
   
-  % Get the dimensions first
-  q = size(y, 1); % Dimension of output
-  l = size(y, 2); % Total length
-  m = size(u, 1); % Dimension of input
+  % Find the linear solution Ax = b
+  X = linsolve([Y U], derivatives)'; % Important with transpose
   
-  % Data dimensions
-  impulseTime = 10; % You might want to change this if you have slow impulse response 
-  p = impulseTime/sampleTime*2;
-  P = zeros(q, p+p);
+  % Create the state space model
+  m = size(Y, 2);
+  A = X(:, 1:m);
+  n = size(U, 2);
+  B = X(:, m+1:m+n);
+  sys = ss(0, A, B); % 0 = delay
+  sysd = c2d(sys, sampleTime);
   
-  % Find the CA^kB and CA^kM parameters
-  for j = 1:q
-    [sysd, K] = rls(u(j, :), y(j, :), systemorderTF, systemorderTF, systemorderTF, sampleTime, forgetting); % RLS is a perfect choice in this noisy case
-    Yk = impulse(sysd, impulseTime);
-    close % A pop up plot will appear from impulse.m
-    Yk = Yk(1:2:length(Yk)); % Remove the discrete shape - Only necessary for plotting! In this case...no.
-    sysd.B = K; % Replace input matrix B with kalman gain matrix K. In OKID case, M = K
-    Yo = impulse(sysd, impulseTime);
-    close
-    Yo = Yo(1:2:length(Yo));
-    index = 1;
-    for i = 1:2:p
-      P(j, i:i+1) = [Yk(index) Yo(index)];
-      index = index + 1;
-    end
-  end
-  
-  % Create A, B, C, D and K from one SVD computation. P = [CA^kB, CA^kM] = [Yk Yo]; One markov parameter, even if it's rectangular.
-  delay = 0;
-  [sysd, K] = eradcokid(P, sampleTime, delay, systemorder);
-   
-end
-
-% Special ERA/DC for just OKID command.
-% This is equation 29 in OKID.pdf file. Read also ERADC.pdf file as well
-function [sysd, K] = eradcokid(g, sampleTime, delay, systemorder)
-  % Get the number of input
-  nu = size(g, 1); 
-  
-  % Change g for MIMO to diagonal case
-  if(nu > 1) 
-    l = length(g);
-    G = zeros(nu, l*nu); 
-    beginning = 1;
-    for i = 1:nu
-      Gcolumn = beginning; % Where we should start. 1 to begin with
-      columncount = 1;
-      for j = 1:l
-        
-        % Insert data into G and count
-        G(i, Gcolumn) = g(i, j);
-        Gcolumn = Gcolumn + 1;
-        columncount = columncount + 1;
-        
-        % When we av inserted [CAB CAM] then jump two steps to right
-        if(columncount > 2)
-          columncount = 1;
-          Gcolumn = Gcolumn + 2;
-        end
-        
-      end
-      
-      % This counter is made for the shifting so G will be diagonal
-      beginning = beginning + 2;
-    end
-    g = G; 
-  end
-  
-  % Create hankel matrices 
-  H0 = hank(g, 1);
-  H1 = hank(g, 2);
-  
-  % Do data correlations
-  R0 = H0*H0';
-  R1 = H1*H0';
-  
-  % Do SVD on R0
-  [U,S,V] = svd(R0, 'econ');
-  
-  % Do model reduction
-  [Un, En, Vn, nx] = modelReduction(U, S, V, systemorder);
-  
-  % Create the A matrix
-  Ad = En^(-1/2)*Un'*R1*Vn*En^(-1/2);
-  
-  % The reason why we are using 1:2:nu*2 and 2:2:nu*2 here is because how
-  %   P = [CAB CAM];
-  %   Is shaped. Try to understand how I have placed the data in P.
-  %   P(j, i:i+1) = [Yk(index) Yo(index)];
-  %  
-  %   Example for the impulse response
-  %         1     2     3    4     5   6   nu
-  %  1 g = [CAB1 CAM1   0    0     0   0
-  %  2       0     0   CAB2 CAM2   0   0
-  %  3       0     0    0    0   CAB3 CAM3];
-  %  nu
-  
-  % From X we can get Bd and K(Kalman gain M)
-  Pa = Un*En^(1/2);
-  X = pinv(Pa)*H0; 
-  Bd = X(1:nx, 1:2:nu*2);
-  K = X(1:nx, 2:2:nu*2);
-  
-  % From Pa we can find Cd
-  Cd = Pa(1:nu, 1:nx);
-  
-  % D matrix
-  Dd = g(1:nu, 1:2:nu*2);
-
-  % Create state space model now
-  sysd = ss(delay, Ad, Bd, Cd, Dd);
-  sysd.sampleTime = sampleTime;
-  
-end
-
-function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
-  % Plot singular values 
-  stem(1:length(S), diag(S));
-  title('Hankel Singular values');
-  xlabel('Amount of singular values');
-  ylabel('Value');
-  
-  if(systemorder == -1)
-    % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
-    nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
-    nx = str2num(cell2mat(nx));
-  else
-    nx = systemorder;
-  end
-  
-  % Choose the dimension nx
-  U1 = U(:, 1:nx);
-  S1 = S(1:nx, 1:nx);
-  V1 = V(:, 1:nx);
-end
-
-% Create the half square hankel matrix - Special case for OKID: Pk = [CA^kB CA^kM]; = Rectangular
-function [H] = hank(g, k)
-  % We got markov parameters g = [g0 g1 g2 g2 g3 ... gl]; with size m*(2*m). g0 = D
-  m = size(g, 1);
-  if(m == 1) % SISO
-    l = length(g)/2;
-    H = zeros(l/2, l);
-    for i = 1:l/2
-        if(k*2 + (i-1)*2 + l > length(g))
-          empty = k*2 + (i-1)*2 + l - length(g);
-          H(i, 1:l) = [g(m, 1 + k*2 + (i-1)*2: k*2 + (i-1)*2 + l - empty) zeros(1, empty)]; % If k >= 2
-        else
-          H(i, 1:l) = g(m, 1 + k*2 + (i-1)*2: k*2 + (i-1)*2 + l);
-        end
-    end
-  else % MIMO
-    l = length(g)/(m*2);
-    H = zeros(l/2, l*m);
-    for i = 1:l/2
-      if(k*2*m + (i-1)*2*m + l*m > length(g))
-        empty = k*2*m + (i-1)*2*m + l*m - length(g);
-        H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = [g(1:m, 1 + k*2*m + (i-1)*2*m: k*2*m + (i-1)*2*m + l*m - empty) zeros(m, empty)]; % If k >= 2
-      else
-        H(1 + (i-1)*m:(i-1)*m + m, 1:l*m) = g(1:m, 1 + k*2*m + (i-1)*2*m: k*2*m + (i-1)*2*m + l*m);
-      end
-    end
-  end
+  % Find the kalman gain matrix K
+  y = lsim(sysd, inputs, t);
+  y = y(:, 1:2:end); % Remove the discrete shape
+  close
+  noise = states - y;
+  Q = sysd.C'*sysd.C; % This is a standard way to select Q matrix for a kalman filter C'*C
+  R = cov(noise'); % Important with transpose
+  [K] = lqe(sysd, Q, R);
 end
