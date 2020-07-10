@@ -79,6 +79,9 @@ RLS is an algorithm that creates a transfer function model from regular data. He
 
 Use this algorithm if you have regular data from a open loop system and you want to apply that algorithm into embedded system that have low RAM and low flash memory. RLS is very suitable for system that have a lack of memory.
 
+There is a equivalent C-code for RLS algorithm here. Works on ALL embedded systems.
+https://github.com/DanielMartensson/CControl
+
 ```matlab
 [sysd, K] = rls(u, y, np, nz, nze, sampleTime, forgetting);
 ```
