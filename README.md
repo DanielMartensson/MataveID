@@ -7,6 +7,16 @@ I'm building this library because I feel that the commercial libraries are just 
 
 Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Identification Toolbox WILL cause problems with MataveID & MataveControl because they are using the same function names.
 
+# Functions and its purpose
+- OKID for multivariable hydraulic systems or temperature systems
+- ERA-DC for mechanical damped systems in the time plane
+- SINDY for multivariable abritary nonlinear systems
+- RLS for all kind of arbitary single input and single output systems (Use this first!)
+- OCID for linear feedback systems (I haven't found any real world practice for this method yet)
+- FILTFILT2 for low pass filtering without phase delay
+- SPA for spectral analysis
+- IDBODE for mechanical damped systems in the frequency plane
+
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
 
