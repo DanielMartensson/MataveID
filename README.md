@@ -3,6 +3,10 @@ Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
 
+# Cauction
+
+Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Identification Toolbox WILL cause problems with MataveID & MataveControl because they are using the same function names.
+
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
 
