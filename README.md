@@ -3,6 +3,11 @@ Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
 
+# UPDATE
+
+I will update this repository with new algorithms and sorting out some of algorithms that I find is obeselete in current indistrual use.
+I'm planning to add a square root unscented kalman filter and a neural network trainer with unscented kalman filter.
+
 # Caution
 
 Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Identification Toolbox WILL cause problems with MataveID & MataveControl because they are using the same function names.
