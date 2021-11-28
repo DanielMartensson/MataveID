@@ -514,6 +514,23 @@ legend("Filtered", "Noisy");
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT2_Result.png)
 
+# Robust Principal Component Analysis
+Robust principal component analysis(RPCA) is a great tool if you want to separate noise from data `X` into a matrix `S`. `RPCA` is a better tool than `PCA` because it using optimization and not only reconstructing the image using `SVD`, which `PCA` only does.
+
+```matlab
+X = imread('bob.jpg'); % Load Mr Bob
+X = rgb2gray(X);       % Grayscale 8 bit
+X = double(X);         % Must be double 40 => 40.0
+[L, S] = rpca(X);      % Start RPCA. Our goal is to get L matrix
+figure(1)
+imshow(uint8(X))       % Before PCA
+title('Before RPCA - Bob')
+figure(2)
+imshow(uint8(L))       % After RPCA
+title('After RPCA - Bob')
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RPCA_Bob.png)
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
