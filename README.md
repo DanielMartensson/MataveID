@@ -518,7 +518,7 @@ legend("Filtered", "Noisy");
 Robust principal component analysis(RPCA) is a great tool if you want to separate noise from data `X` into a matrix `S`. `RPCA` is a better tool than `PCA` because it using optimization and not only reconstructing the image using `SVD`, which `PCA` only does.
 
 ```matlab
-[L, S] = prca(X);
+[L, S] = rpca(X);
 ```
 ### Robust Principal Component Analysis example
 
