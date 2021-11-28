@@ -8,6 +8,9 @@ I'm building this library because I feel that the commercial libraries are just 
 I will update this repository with new algorithms and sorting out some of algorithms that I find is obeselete in current indistrual use.
 I'm planning to add a square root unscented kalman filter and a neural network trainer with unscented kalman filter.
 
+- Image classification using Fisherfaces
+- Sparse Representation Classification
+
 # Caution
 
 Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Identification Toolbox WILL cause problems with MataveID & MataveControl because they are using the same function names.
