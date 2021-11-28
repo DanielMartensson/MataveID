@@ -10,6 +10,7 @@ I'm planning to add a square root unscented kalman filter and a neural network t
 
 - Image classification using Fisherfaces
 - Sparse Representation Classification
+- Compressed sensing
 
 # Caution
 
