@@ -9,8 +9,10 @@ I will update this repository with new algorithms and sorting out some of algori
 I'm planning to add a square root unscented kalman filter and a neural network trainer with unscented kalman filter.
 
 - Image classification using Fisherfaces
-- Sparse Representation Classification
+- Sparse representation classification
 - Compressed sensing
+- Square root unscented kalman filter for parameter estimation
+- Square root unscented kalman filter for state estimation
 
 # Caution
 
