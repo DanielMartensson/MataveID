@@ -13,6 +13,7 @@ I'm planning to add a square root unscented kalman filter and a neural network t
 - Compressed sensing
 - Square root unscented kalman filter for parameter estimation
 - Square root unscented kalman filter for state estimation
+- Particle filter for state estimation
 
 # Caution
 
