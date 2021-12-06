@@ -552,7 +552,8 @@ Independent component analysis(ICA) is a tool if you want to separate independen
 [S] = ica(X);
 ```
 ## Independent Component Analysis example
-```
+
+```matlab
 % Clear all plots
 clear
 close all
