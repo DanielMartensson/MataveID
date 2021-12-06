@@ -29,6 +29,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for filtering data and images
+- ICA forseparating signals so they are independent from each other
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
