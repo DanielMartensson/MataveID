@@ -704,7 +704,7 @@ This is how the signals look when we are measuring them
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ICA_Mixed_Signals.png)
 
-This is how the signals are reconstructed as they where independent
+This is how the signals are reconstructed as they were independent
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ICA_After.png)
 
