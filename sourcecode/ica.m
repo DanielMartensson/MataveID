@@ -76,7 +76,7 @@ function W = fastica(Z)
         wp = wp - dumsum;        
         wp = wp / sqrt(wp'*wp);
     end
-    W(:,p) = wp; 
+    W(:,p) = wp;
   end
 end
 
