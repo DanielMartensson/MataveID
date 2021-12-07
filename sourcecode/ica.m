@@ -25,18 +25,12 @@ function [S] = ica(varargin)
   S = estimate_data(W, Z);
 end
 
-function X = center_data(X)
-  % Get size 
-  N = size(X, 1);
-  
+function X = center_data(X)  
   % Do transpose
   X = X';                                  
-  
-  % Find mean of X
-  Xmean = mean(X);                            
-  
+    
   % Perform centering of X
-  X = X - Xmean;
+  X = X - mean(X);
 end
 
 function Z = whitening_data(X)
