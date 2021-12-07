@@ -2,7 +2,7 @@
 % Input: X(Mixed signal matrix)
 % Output: S(Estimated signal matrix)
 % Example 1: [Y] = ica(X);
-% Author: Daniel Mårtensson, November 2021
+% Author: Daniel MÃ¥rtensson, November 2021
 
 function [S] = ica(varargin)
  % Check if there is some input arguments
@@ -36,9 +36,7 @@ function X = center_data(X)
   Xmean = mean(X);                            
   
   % Perform centering of X
-  for i = 1:N
-      X(:,i) = X(:,i) - Xmean(i);
-  end
+  X = X - Xmean;
 end
 
 function Z = whitening_data(X)
