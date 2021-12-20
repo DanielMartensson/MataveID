@@ -718,7 +718,7 @@ This is Uncented Kalman Filter that using cholesky update method, instead of cho
 
 # Square Root Uncented Kalman Filter for parameter estimation example
 ```matlab
-%
+
 % Hello! This is Square Root Uncented Kalman Filter (SR-UKF) for parameter estimation and this algorithm is successor of Uncented Kalman Filter(UKF)
 % because UKF had some issues with the cholesky decomposition when it going to find the square root.
 % SR-UKF come in two papers. The first paper and the second paper. The first paper does not re-compute sigma point matrix for the
@@ -728,16 +728,16 @@ This is Uncented Kalman Filter that using cholesky update method, instead of cho
 % it easier to use SR-UKF.
 
 % Initial parameters
-L = 3; 																% How many states we have
-e = 0.1;															% Tuning factor for noise
-alpha = 0.1; 												  % Alpha value - A small number like 0.01 -> 1.0
-beta = 2.0; 													% Beta value - Normally 2 for gaussian noise
-Re = e*eye(L); 								        % Initial noise covariance matrix - Recommended to use identity matrix
-Sw = eye(L); 								          % Initial covariance matrix - Recommended to use identity matrix
-what = zeros(L, 1); 						      % Estimated parameter vector
-d = zeros(L, 1);										  % This is our measurement
-x = [4.4; 6.2; 1.0]; 						      % State vector
-lambda_rls = 1.0;									    % RLS forgetting parameter between 0.0 and 1.0, but very close to 1.0
+L = 3; 																   % How many states we have
+e = 0.1;															   % Tuning factor for noise
+alpha = 0.1; 												 % Alpha value - A small number like 0.01 -> 1.0
+beta = 2.0; 													 % Beta value - Normally 2 for gaussian noise
+Re = e*eye(L); 								   % Initial noise covariance matrix - Recommended to use identity matrix
+Sw = eye(L); 								     % Initial covariance matrix - Recommended to use identity matrix
+what = zeros(L, 1); 						% Estimated parameter vector
+d = zeros(L, 1);										% This is our measurement
+x = [4.4; 6.2; 1.0]; 					% State vector
+lambda_rls = 1.0;									% RLS forgetting parameter between 0.0 and 1.0, but very close to 1.0
 
 % Our transition function - This is the orifice equation Q = a*sqrt(P2 - P1) for hydraulics
 G = @(x, w) [w(1)*sqrt(x(2) - x(1));
@@ -745,7 +745,6 @@ G = @(x, w) [w(1)*sqrt(x(2) - x(1));
              w(2)*x(2);
              w(3)*x(3)];
              
-
 % Start clock time
 tic
 
