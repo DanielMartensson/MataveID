@@ -735,7 +735,7 @@ beta = 2.0;             % Beta value - Normally 2 for gaussian noise
 Re = e*eye(L);          % Initial noise covariance matrix - Recommended to use identity matrix
 Sw = eye(L);            % Initial covariance matrix - Recommended to use identity matrix
 what = zeros(L, 1);    	% Estimated parameter vector
-d = zeros(L, 1);	       % This is our measurement
+d = zeros(L, 1);        % This is our measurement
 x = [4.4; 6.2; 1.0];    % State vector
 lambda_rls = 1.0;       % RLS forgetting parameter between 0.0 and 1.0, but very close to 1.0
 
