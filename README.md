@@ -1,4 +1,4 @@
-# Mataveid V8.5
+# Mataveid V9.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -11,7 +11,6 @@ I'm planning to add a square root unscented kalman filter and a neural network t
 - Image classification using Fisherfaces
 - Sparse representation classification
 - Compressed sensing
-- Square root unscented kalman filter for parameter estimation
 - Square root unscented kalman filter for state estimation
 - Particle filter for state estimation
 
@@ -29,7 +28,8 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for filtering data and images
-- ICA forseparating signals so they are independent from each other
+- ICA for separating signals so they are independent from each other
+- SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
@@ -709,6 +709,87 @@ This is how the signals are reconstructed as they were independent
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ICA_After.png)
 
+### Square Root Uncented Kalman Filter for parameter estimation
+This is Uncented Kalman Filter that using cholesky update method, instead of cholesky decomposition (more stable). This algorithm can estimate parameters to very complex function if data is available. This method is reqursive and there is a C code version in CControl as well. Use this when you need to estimate parameters to a function if you have data that are generated from that function. It can be for example an object that you have measured data and you know the mathematical formula for that object. Use the measured data with this algorithm and find the parameters for the formula.
+
+```matlab
+[Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
+```
+
+# Square Root Uncented Kalman Filter for parameter estimation example
+```matlab
+%
+% Hello! This is Square Root Uncented Kalman Filter (SR-UKF) for parameter estimation and this algorithm is successor of Uncented Kalman Filter(UKF)
+% because UKF had some issues with the cholesky decomposition when it going to find the square root.
+% SR-UKF come in two papers. The first paper and the second paper. The first paper does not re-compute sigma point matrix for the
+% observability function H. The second paper re-compute sigma point matrix for the observability function H.
+% In this algorithm, I assume that the output y and the state has the same dimension and observability function is just an identity matrix.
+% That's because I want to minimize the input arguments for the SR-UKF function. Less turning parameters, function, constants and so on makes
+% it easier to use SR-UKF.
+
+% Initial parameters
+L = 3; 																% How many states we have
+e = 0.1;															% Tuning factor for noise
+alpha = 0.1; 												  % Alpha value - A small number like 0.01 -> 1.0
+beta = 2.0; 													% Beta value - Normally 2 for gaussian noise
+Re = e*eye(L); 								        % Initial noise covariance matrix - Recommended to use identity matrix
+Sw = eye(L); 								          % Initial covariance matrix - Recommended to use identity matrix
+what = zeros(L, 1); 						      % Estimated parameter vector
+d = zeros(L, 1);										  % This is our measurement
+x = [4.4; 6.2; 1.0]; 						      % State vector
+lambda_rls = 1.0;									    % RLS forgetting parameter between 0.0 and 1.0, but very close to 1.0
+
+% Our transition function - This is the orifice equation Q = a*sqrt(P2 - P1) for hydraulics
+G = @(x, w) [w(1)*sqrt(x(2) - x(1));
+            % We only need to use w[0] so we assume that w[1] and w[2] will become close to 1.0 
+             w(2)*x(2);
+             w(3)*x(3)];
+             
+
+% Start clock time
+tic
+
+% Declare arrays 
+samples = 100;
+WHAT = zeros(samples, L);
+E = zeros(samples, L);
+
+% Do SR-UKF for parameter estimation
+for i = 1:samples
+  % Assume that this is our measurement 
+  d(1) = 5 + e*randn(1,1);
+  
+  % This is just to make sure w(2) and w(3) becomes close to 1.0
+  d(2) = x(2);
+  d(3) = x(3);
+  
+  % SR-UKF
+  [Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
+  
+  % Save the estimated parameter 
+  WHAT(i, :) = what';
+  
+  % Measure the error
+  E(i, :) = abs(d - G(x, what))';
+end
+
+% Stop the clock
+toc 
+
+% Print the data
+[M, N] = size(WHAT);
+
+for k = 1:N                                 
+  subplot(3,1,k);
+  plot(1:M, WHAT(:,k), '-', 1:M, E(:, k), '--');
+  title(sprintf('Parameter estimation for parameter w%i', k));
+  ylabel(sprintf('w%i', k));
+  grid on
+  legend('Estimated parameters', 'Parameter error')
+end
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SR_UKF_parameter_estimation.png)
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
