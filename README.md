@@ -552,7 +552,7 @@ Independent component analysis(ICA) is a tool if you want to separate independen
 ```matlab
 [S] = ica(X);
 ```
-## Independent Component Analysis example
+### Independent Component Analysis example
 
 ```matlab
 % Clear all plots
@@ -716,7 +716,7 @@ This is Uncented Kalman Filter that using cholesky update method, instead of cho
 [Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
 ```
 
-# Square Root Uncented Kalman Filter for parameter estimation example
+### Square Root Uncented Kalman Filter for parameter estimation example
 ```matlab
 
 % Hello! This is Square Root Uncented Kalman Filter (SR-UKF) for parameter estimation and this algorithm is successor of Uncented Kalman Filter(UKF)
