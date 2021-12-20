@@ -741,7 +741,7 @@ lambda_rls = 1.0;       % RLS forgetting parameter between 0.0 and 1.0, but very
 
 % Our transition function - This is the orifice equation Q = a*sqrt(P2 - P1) for hydraulics
 G = @(x, w) [w(1)*sqrt(x(2) - x(1));
-            % We only need to use w[0] so we assume that w[1] and w[2] will become close to 1.0 
+            % We only need to use w(1) so we assume that w(2) and w(3) will become close to 1.0 
              w(2)*x(2);
              w(3)*x(3)];
              
