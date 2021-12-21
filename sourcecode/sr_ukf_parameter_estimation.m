@@ -85,7 +85,7 @@ function [D] = compute_transistion_function(W, x, G, L)
   % Create the outputs from the transition function
   D = zeros(L, N);
   
-  % Call the F transition function with W matrix 
+  % Call the G transition function with W matrix 
   for i = 1:N
     D(:, i) = G(x, W(:, i));
   end
