@@ -17,8 +17,8 @@
 % d[L] = Measurement parameter (our output)
 function [Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L)  
   % Predict: Create the weights
-	kappa = 3 - L; % kappa is 3 - L for parameter estimation
-	[Wc, Wm] = create_weights(alpha, beta, kappa, L);
+  kappa = 3 - L; % kappa is 3 - L for parameter estimation
+  [Wc, Wm] = create_weights(alpha, beta, kappa, L);
   
   % Predict: Scale Sw with lambda_rls
   [Sw] = scale_Sw_with_lambda_rls_factor(Sw, lambda_rls);
@@ -30,47 +30,47 @@ function [Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls,
   [D] = compute_transistion_function(W, x, G, L);
   
   % Predict: Multiply sigma points to weights for dhat
-	[dhat] = multiply_sigma_point_matrix_to_weights(D, Wm, L);
+  [dhat] = multiply_sigma_point_matrix_to_weights(D, Wm, L);
   
   % Update: Create measurement covariance matrix
-	[Sd] = create_state_estimation_error_covariance_matrix(Wc, D, dhat, Re, L);
+  [Sd] = create_state_estimation_error_covariance_matrix(Wc, D, dhat, Re, L);
   
   % Update: Create parameter covariance matrix
-	[Pwd] = create_state_cross_covariance_matrix(Wc, W, D, what, dhat, L);
+  [Pwd] = create_state_cross_covariance_matrix(Wc, W, D, what, dhat, L);
   
   % Update: Perform parameter update and covariance update
-	[Sw, what] = update_state_covarariance_matrix_and_state_estimation_vector(Sw, what, dhat, d, Sd, Pwd, L);
+  [Sw, what] = update_state_covarariance_matrix_and_state_estimation_vector(Sw, what, dhat, d, Sd, Pwd, L);
 end
 
 function [Wc, Wm] = create_weights(alpha, beta, kappa, L)
-	% Create the size N
-	N = 2 * L + 1;
+  % Create the size N
+  N = 2 * L + 1;
   
   % Create vectors
   Wc = zeros(1, N);
-	Wm = zeros(1, N);
+  Wm = zeros(1, N);
 
-	% Compute lambda and gamma parameters
-	lambda = alpha * alpha * (L + kappa) - L;
+  % Compute lambda and gamma parameters
+  lambda = alpha * alpha * (L + kappa) - L;
 
-	% Insert at first index
-	Wm(1) = lambda/(L + lambda);
-	Wc(1) = Wm(1) + 1 - alpha * alpha + beta;
+  % Insert at first index
+  Wm(1) = lambda/(L + lambda);
+  Wc(1) = Wm(1) + 1 - alpha * alpha + beta;
 
-	% The rest of the indexes are the same 
+  % The rest of the indexes are the same 
   Wc(2:N) = 0.5 / (L + lambda);
   Wm(2:N) = Wc(2:N);
 end
 
 function [Sw] = scale_Sw_with_lambda_rls_factor(Sw, lambda_rls)
-	% Apply scalar factor to Sw
+  % Apply scalar factor to Sw
   Sw = Sw*1.0/sqrt(lambda_rls);
 end
 
 function [W] = create_sigma_point_matrix(what, Sw, alpha, kappa, L) 
-	% Compute lambda and gamma parameters
-	lambda = alpha * alpha * (L + kappa) - L;
-	gamma = sqrt(L + lambda);
+  % Compute lambda and gamma parameters
+  lambda = alpha * alpha * (L + kappa) - L;
+  gamma = sqrt(L + lambda);
 
   % Construct sigma point matrix - Notice that (:, 1:L) must be used because Sw is diagnoal matrix - GNU Octave issue perhaps
   A = what + gamma*Sw(:, 1:L);
@@ -79,8 +79,8 @@ function [W] = create_sigma_point_matrix(what, Sw, alpha, kappa, L)
 end
 
 function [D] = compute_transistion_function(W, x, G, L)
-	% Create the size N
-	N = 2 * L + 1;
+  % Create the size N
+  N = 2 * L + 1;
 
   % Create the outputs from the transition function
   D = zeros(L, N);
@@ -92,10 +92,10 @@ function [D] = compute_transistion_function(W, x, G, L)
 end
 
 function [dhat] = multiply_sigma_point_matrix_to_weights(D, Wm, L)
-	% Create the size N
-	N = 2 * L + 1;
+  % Create the size N
+  N = 2 * L + 1;
 
-	% Create dhat
+  % Create dhat
   dhat = zeros(L, 1);
   
   % Multiply dhat = Wm*D 
