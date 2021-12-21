@@ -115,7 +115,7 @@ function [Sd] = create_state_estimation_error_covariance_matrix(Wc, D, dhat, Re,
   if(Wc(1) < 0)
     Sd = cholupdate(Sd, D(:, 1) - dhat, '-');
   else
-    Sd = cholupdate(Sd, D(:, 1) - dhat, '-');
+    Sd = cholupdate(Sd, D(:, 1) - dhat, '+');
   end
 end
 
