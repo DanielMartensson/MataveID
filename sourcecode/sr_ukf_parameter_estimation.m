@@ -108,7 +108,7 @@ function [Sd] = create_state_estimation_error_covariance_matrix(Wc, D, dhat, Re,
   % Pick up the second weight
   weight2 = sqrt(abs(Wc(2)));
   
-  % Find economy size R by using QR-decomposition
+  % Find economy sized Sd by using QR-decomposition
   [~, Sd] = qr([weight2*(D-dhat), sqrt(Re)]', 0);
     
   % Use cholupdate
