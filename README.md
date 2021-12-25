@@ -8,10 +8,6 @@ I'm building this library because I feel that the commercial libraries are just 
 I will update this repository with new algorithms and sorting out some of algorithms that I find is obeselete in current indistrual use.
 I'm planning to add a square root unscented kalman filter and a neural network trainer with unscented kalman filter.
 
-- Image classification using Fisherfaces
-- Sparse representation classification
-- Compressed sensing
-- Square root unscented kalman filter for state estimation
 - Particle filter for state estimation
 
 # Caution
@@ -30,6 +26,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - RPCA for filtering data and images
 - ICA for separating signals so they are independent from each other
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
+- SR-UKF-State-Estimation for filtering noise and estimate the state of a system
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
