@@ -1,4 +1,4 @@
-# Mataveid V9.5
+# Mataveid V10.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -27,6 +27,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - ICA for separating signals so they are independent from each other
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
+- SVM for classification of data
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
@@ -855,6 +856,52 @@ end
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SR_UKF_state_estimation.png)
+
+### Support Vector Machine with C code generation
+This algorithm can do C code generation for nonlinear models. It's a very simple algorithm because the user set out the support points by using the mouse pointer. When all the supports are set ut, then the algorithm will generate C code for you so you can apply the SVM model in pure C code using CControl library. 
+
+All you need to have is two matrices, `X` and `Y`. Where the column length is the data and the row length is the amount of classes.
+The `svm.m` file will plot your data and then when you have placed out your support points, then the `svm.m` will generate C code for you that contains all the support points. 
+
+```matlab
+svm(X, Y);
+```
+
+### Support Vector Machine with C code generation example
+
+```matlab
+% How much data should we generate 
+N = 50;
+
+% How many classes 
+c = 5;
+
+% Create variance and average for X and Y data
+X_variance = [2, 4, 3, 4, 5];
+Y_variance = [3, 5, 3, 4, 5];
+X_average = [50, 70, 10, 90, 20];
+Y_average = [20, 70, 60, 10, 20];
+
+% Create scatter data
+X = zeros(c, N);
+Y = zeros(c, N);
+for i = 1:c
+  % Create data for X-axis 
+  X(i, 1:N) = X_average(i) + X_variance(i)*randn(1, N);
+    
+  % Create data for Y-axis
+  Y(i, 1:N) = Y_average(i) + Y_variance(i)*randn(1, N);
+end
+  
+% Create SVM model 
+svm(X, Y);
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_plot.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_c_source.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_c_header.png)
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
