@@ -1,9 +1,10 @@
 % Support Vector Machine with C code generation
 % Input: X(data in x-axis), Y(data in y-axis)
-% Example 1: svm(X, Y);
+% Output: X_point(coordinates in x-axis), Y_point(coordinates in y-axis), amount_of_supports_for_class(how many points for each class)
+% Example 1: [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y);
 % Author: Daniel Mårtensson, December 2021
 
-function svm(X, Y)
+function [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
   % First print our data 
   [legend_labels] = print_data(X, Y);
   
@@ -17,7 +18,7 @@ function svm(X, Y)
   [file_name] = ask_user_about_file_name();
   
   % Generate C code
-  [c_source, c_header] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name);
+  [[c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name);
   
   % Save the C code into a file 
   save_c_code_into_a_file(c_source, c_header, file_name);
@@ -51,7 +52,8 @@ function [X_point, Y_point, amount_of_supports_for_class] = place_out_supports_p
     % buttonnumber == 3 indicates right click
     buttonnumber = 1;
     j = 1;
-    title(sprintf('Set out SVM points for Data %i', i), 'FontSize', 30);
+    title(sprintf('Place SVM points for Data %i', i), 'FontSize', 30);
+    xlabel('Left click to set out a point. Right click to go to next data class');
     while buttonnumber == 1
       % Left-click on the scatter plot
       [x, y, buttonnumber] = ginput(1); 
@@ -128,7 +130,7 @@ function [file_name] = ask_user_about_file_name()
   end
 end
 
-function [c_source, c_header] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name)
+function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name)
   % We round down to 3 decimals 
   X_point = round(X_point*1000)/1000;
   Y_point = round(Y_point*1000)/1000;
@@ -165,7 +167,7 @@ function [c_source, c_header] = generate_c_code(X_point, Y_point, amount_of_supp
   ' * This function can handle 255 classes. It will return a number the class number beginning from 1 to 255'
   ' * If the function returns 0, then it means no class has been found. Try to use another lower threshold value then'
   ' */'
-  sprintf('#define svm_classes %i        /* How many classes this SVM function handle */', svm_classes);
+  sprintf('#define svm_classes %i        /* How many classes this this SVM function handle */', svm_classes);
   sprintf('#define len_px_py %i          /* Length of the px and py matrix */', len_px_py);
   ''
   sprintf('uint8_t %s(float x[], float y[], uint16_t m, uint16_t threshold){', file_name);
