@@ -18,7 +18,7 @@ function [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
   [file_name] = ask_user_about_file_name();
   
   % Generate C code
-  [[c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name);
+  [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name);
   
   % Save the C code into a file 
   save_c_code_into_a_file(c_source, c_header, file_name);
