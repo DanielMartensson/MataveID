@@ -2,7 +2,7 @@
 % Input: X(data in x-axis), Y(data in y-axis)
 % Output: X_point(coordinates in x-axis), Y_point(coordinates in y-axis), amount_of_supports_for_class(how many points for each class)
 % Example 1: [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y);
-% Author: Daniel Mårtensson, December 2021
+% Author: Daniel MÃ¥rtensson, December 2021
 
 function [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
   % First print our data 
@@ -166,15 +166,15 @@ function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = 
   ' * Support vector machine for classification using CControl library'
   ' * x[m] = Data in x-axis'
   ' * y[m] = Data in y-axis'
-  ' * threshold = A positive number for determine how much we should trust the selected class'
+  ' * point_counter_list[svm_classes] = Array that holds how many points each class got from the data'
   ' *'
-  ' * This function can handle 255 classes. It will return a number the class number beginning from 1 to 255'
-  ' * If the function returns 0, then it means no class has been found. Try to use another lower threshold value then'
+  ' * This function can hold 256 classes. Each index in the array point_counter_list got a positive number'
+  ' * Largest number in the array point_counter_list can reveal what class the data belongs to by looking at the index of the array'
   ' */'
   sprintf('#define svm_classes %i        /* How many classes this this SVM function handle */', svm_classes);
   sprintf('#define len_px_py %i          /* Length of the px and py matrix */', len_px_py);
   ''
-  sprintf('uint8_t %s(float x[], float y[], uint16_t m, uint16_t threshold){', file_name);
+  sprintf('void %s(float x[], float y[], uint16_t m, uint16_t point_counter_list[]){', file_name);
   ''
   '  /* Create the polygon coordinates */'
   sprintf('  float px[svm_classes*len_px_py] = {%s};', px);
@@ -183,30 +183,11 @@ function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = 
   '  /* How much data in each line of the polygon coordinates */'
   sprintf('  uint8_t p[svm_classes] = {%s};', p);
   ''
-  '  /* Perform SVM to find the class index */'
-  '  uint16_t point_counter;'
-  '  uint16_t max_points = 0;'
-  '  uint8_t class_index = 0;'
-  '  for(uint8_t i = 0; i < svm_classes; i++){'
-  '    /* Reset point counter */'
-  '    point_counter = 0;'
-  ''
-  '    /* Count how many points the data gives for each class */'
+  '  /* Count how many points the data gives for each class */'
+  '  memset(point_counter_list, 0, svm_classes*sizeof(uint16_t));'
+  '  for(uint8_t i = 0; i < svm_classes; i++)'
   '    for(uint16_t j = 0; j < m; j++)'
-  '      point_counter += (uint8_t) point_in_polygon(x[j], y[j], &px[i*len_px_py], &py[i*len_px_py], p[i]);'
-  ''
-  '    /* Remember the max points */'
-  '    if(point_counter > max_points){'
-  '      max_points = point_counter;'
-  '      class_index = i+1;'
-  '    }'
-  '  }'
-  ''
-  '  /* Use the threshold for determine if the max_points should be trusted */'
-  '  if(max_points >= threshold)'
-  '    return class_index;'
-  '  else'
-  '    return 0; /* No class was found */'
+  '      point_counter_list[i] += (uint8_t) point_in_polygon(x[j], y[j], &px[i*len_px_py], &py[i*len_px_py], p[i]);'
   '}'};
   
   % Create the header file
@@ -219,14 +200,13 @@ function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = 
   'extern "C" {'
   '#endif'
   ''
-  sprintf('uint8_t %s(float x[], float y[], uint16_t m, uint16_t threshold);', file_name);
+  sprintf('void %s(float x[], float y[], uint16_t m, uint16_t point_counter_list[]);', file_name);
   ''
   '#ifdef __cplusplus'
   '}'
   '#endif'
   ''
   '#endif'};
-  
 end
 
 function save_c_code_into_a_file(c_source, c_header, file_name)
