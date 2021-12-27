@@ -165,7 +165,7 @@ function [c_source, c_header] = generate_c_code(X_point, Y_point, amount_of_supp
   ' * This function can handle 255 classes. It will return a number the class number beginning from 1 to 255'
   ' * If the function returns 0, then it means no class has been found. Try to use another lower threshold value then'
   ' */'
-  sprintf('#define svm_classes %i        /* How many classes this this SVM function handle */', svm_classes);
+  sprintf('#define svm_classes %i        /* How many classes this SVM function handle */', svm_classes);
   sprintf('#define len_px_py %i          /* Length of the px and py matrix */', len_px_py);
   ''
   sprintf('uint8_t %s(float x[], float y[], uint16_t m, uint16_t threshold){', file_name);
