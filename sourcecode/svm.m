@@ -131,9 +131,9 @@ function [file_name] = ask_user_about_file_name()
 end
 
 function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name)
-  % We round down to 3 decimals 
-  X_point = round(X_point*1000)/1000;
-  Y_point = round(Y_point*1000)/1000;
+  % We round down to 4 decimals 
+  X_point = round(X_point*10000)/10000;
+  Y_point = round(Y_point*10000)/10000;
   
   % Find maximum column for X_point_str and Y_point_str 
   len_px_py = max(amount_of_supports_for_class);
@@ -147,11 +147,15 @@ function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = 
     Y_point(i, 1 + amount_of_supports_for_class(i):len_px_py) = 0.1;
   end
   
+  % Cut the matrix so we can avoid all zeros
+  X_point = X_point(:, 1:len_px_py);
+  Y_point = Y_point(:, 1:len_px_py);
+  
   % Create px matrix 
-  px = regexprep(mat2str(X_point(:, 1:len_px_py)), {']', '\[', ';', ' '}, {'', '', 'f,', 'f,'});
+  px = regexprep(mat2str(X_point), {']', '\[', ';', ' '}, {'', '', 'f,', 'f,'});
 
   % Create py matrix
-  py = regexprep(mat2str(Y_point(:, 1:len_px_py)), {']', '\[', ';', ' '}, {'', '', 'f,', 'f,'});
+  py = regexprep(mat2str(Y_point), {']', '\[', ';', ' '}, {'', '', 'f,', 'f,'});
   
   % Create p array
   p = regexprep(mat2str(amount_of_supports_for_class), {']', '\[', ' '}, {'', '', ','});
