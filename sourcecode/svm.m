@@ -2,7 +2,7 @@
 % Input: X(data in x-axis), Y(data in y-axis)
 % Output: X_point(coordinates in x-axis), Y_point(coordinates in y-axis), amount_of_supports_for_class(how many points for each class)
 % Example 1: [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y);
-% Author: Daniel MÃ¥rtensson, December 2021
+% Author: Daniel Mårtensson, December 2021
 
 function [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
   % First print our data 
@@ -207,6 +207,7 @@ function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = 
   '#endif'
   ''
   '#endif'};
+  
 end
 
 function save_c_code_into_a_file(c_source, c_header, file_name)
