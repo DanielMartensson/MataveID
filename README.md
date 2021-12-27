@@ -866,7 +866,7 @@ The `svm.m` file will plot your data and then when you have placed out your supp
 If you have let's say more than two variables, e.g `Z` matrix or even more. Then you can create multiple models as well by just using diffrent data as arguments for the `svm` function below. The C code generation is very fast and it's very easy to build a model. 
 
 ```matlab
-svm(X, Y);
+[X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
 ```
 
 ### Support Vector Machine with C code generation example
@@ -896,7 +896,7 @@ for i = 1:c
 end
   
 % Create SVM model 
-svm(X, Y);
+[X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_plot.png)
