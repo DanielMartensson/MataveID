@@ -897,8 +897,6 @@ end
   
 % Create SVM model - X_point and Y_point is coordinates for the SVM points.
 % amount_of_supports_for_class is how many points there are in each row
-% Some rows in X_point and Y_point have 0.1 values. They are just for the C code generation only.
-% The C code generation add a .f after each decimal and therefore 0 values cannot be included because they are not floats
 [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y);
   
 % Do a quick re-sampling of random data again
