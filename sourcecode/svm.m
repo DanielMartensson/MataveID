@@ -130,35 +130,28 @@ function [file_name] = ask_user_about_file_name()
   end
 end
 
-function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name)
-  % We round down to 4 decimals 
-  X_point = round(X_point*10000)/10000;
-  Y_point = round(Y_point*10000)/10000;
-  
+function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = generate_c_code(X_point, Y_point, amount_of_supports_for_class, file_name)  
   % Find maximum column for X_point_str and Y_point_str 
   len_px_py = max(amount_of_supports_for_class);
   
   % Create svm_classes
   svm_classes = size(X_point, 1);
   
-  % This is only for the C code. In C, we want to place .f after every float value beacause setting 0f will give an error in C
-  for i = 1:svm_classes
-    X_point(i, 1 + amount_of_supports_for_class(i):len_px_py) = 0.1; % Any float number will be OK. The C code will not read it anyway
-    Y_point(i, 1 + amount_of_supports_for_class(i):len_px_py) = 0.1;
-  end
-  
   % Cut the matrix so we can avoid all zeros
   X_point = X_point(:, 1:len_px_py);
   Y_point = Y_point(:, 1:len_px_py);
   
-  % Create px matrix 
-  px = regexprep(mat2str(X_point), {']', '\[', ';', ' '}, {'', '', 'f,', 'f,'});
-
-  % Create py matrix
-  py = regexprep(mat2str(Y_point), {']', '\[', ';', ' '}, {'', '', 'f,', 'f,'});
+  % Create px matrix with 4 decimals - Notice that X_point must be transpose
+  px = sprintf('%0.4ff,', X_point');
+  px(end) = ''; % Remove the last ','
+  
+  % Create py matrix with 4 decimals - Notice that Y_point must be transpose
+  py = sprintf('%0.4ff,', Y_point');
+  py(end) = ''; % Remove the last ','
   
   % Create p array
-  p = regexprep(mat2str(amount_of_supports_for_class), {']', '\[', ' '}, {'', '', ','});
+  p = sprintf('%i,', amount_of_supports_for_class);
+  p(end) = ''; % Remove the last ','
   
   % Write this c source into a file
   c_source = {sprintf('#include "%s.h"', file_name);
@@ -187,7 +180,7 @@ function [c_source, c_header, X_point, Y_point, amount_of_supports_for_class] = 
   '  memset(point_counter_list, 0, svm_classes*sizeof(uint16_t));'
   '  for(uint8_t i = 0; i < svm_classes; i++)'
   '    for(uint16_t j = 0; j < m; j++)'
-  '      point_counter_list[i] += (uint8_t) point_in_polygon(x[j], y[j], &px[i*len_px_py], &py[i*len_px_py], p[i]);'
+  '      point_counter_list[i] += inpolygon(x[j], y[j], &px[i*len_px_py], &py[i*len_px_py], p[i]);'
   '}'};
   
   % Create the header file
@@ -224,4 +217,8 @@ function save_c_code_into_a_file(c_source, c_header, file_name)
     fprintf(fid, "%s\n", cell2mat(c_header(i)));
   end
   fclose(fid);
+  
+  % Tell the users about the fantastic news
+  disp(sprintf('The source file %s.c and header file %s.h has been generated at the location %s', file_name, file_name, pwd));
+  
 end
