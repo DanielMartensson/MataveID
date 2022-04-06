@@ -1,14 +1,15 @@
 % Eigensystem Realization Algorithm with Data Correlation
-% Input: g(markov parameters), sampleTime, delay(optional), systemorder(optional)
+% Input: g(markov parameters/impulse response), sampleTime, systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = eradc(g, sampleTime, systemorder);
+% Example 1: [sysd] = eradc(g, sampleTime);
+% Example 2: [sysd] = eradc(g, sampleTime, systemorder);
 % Author: Daniel Mårtensson, November 2017
 % Update 20 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963
 
 function [sysd] = eradc(varargin)
   % Check if there is any input
   if(isempty(varargin))
-    error('Missing imputs')
+    error('Missing inputs')
   end
   
   % Get impulse response
