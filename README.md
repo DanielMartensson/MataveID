@@ -48,7 +48,7 @@ Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identificat
 OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including SINDy algorithm and Euler simulation plus Algebraic Riccati Equations for finding the discrete kalman gain matrix K. So now it's very robust against noise.
 
 ```matlab
-[sysd, K] = okid(inputs, states, derivatives, t, sampleTime);
+[sysd, K] = okid(u, y, t, sampleTime);
 ```
 
 ### Example OKID
@@ -70,19 +70,18 @@ y0 = X(:, 4);
 y1 = X(:, 5);
 sampleTime = 0.1;
 
+% Transpose the CSV data
+u = [r0';r1'];
+y = [y0';y1'];
+t = t';
+
 % Create the model
-inputs = [r0';r1'];
-states = [y0';y1'];
-derivatives = (states(:, 2:end) - states(:, 1:end-1))/sampleTime;
-states = states(:, 1:end-1);
-inputs = inputs(:, 1:end-1);
-t = t'(1, 1:end-1);
-[sysd, K] = okid(inputs, states, derivatives', t, sampleTime);
+[sysd, K] = okid(u, y, t, sampleTime);
 
 % Do simulation
-[outputs, T, x] = lsim(sysd ,inputs, t);
+[outputs, T, x] = lsim(sysd ,y, t);
 close
-plot(T, outputs(1, :), t, states(1, :))
+plot(T, outputs(1, :), t, y(1, :))
 title('Cylinder 0');
 xlabel('Time');
 ylabel('Position');
@@ -90,7 +89,7 @@ grid on
 legend('Identified', 'Measured');
 ylim([0 12]);
 figure
-plot(T, outputs(2, :), t, states(2, :))
+plot(T, outputs(2, :), t, y(2, :))
 title('Cylinder 1');
 xlabel('Time');
 ylabel('Position');
