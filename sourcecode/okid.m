@@ -1,13 +1,13 @@
 % Observer Kalman Filter Identification
-% Input: inputs, states(outputs), derivatives, t(time vector), sample time
+% Input: u(inputs), y(outputs), t(time vector), sampleTime(sample time)
 % Output: sysd(Discrete state space model), K(Kalman gain matrix)
-% Example: [sysd, K] = okid(inputs, states, derivatives, t, sampleTime);
-% Author: Daniel MÃ¥rtensson, Juli 2020
+% Example: [sysd, K] = okid(u, y, t, sampleTime);
+% Author: Daniel Mårtensson, Juli 2020
 
 function [sysd, K] = okid(varargin)
   % Check if there is any input
   if(isempty(varargin))
-    error('Missing imputs')
+    error('Missing inputs')
   end
   
   % Get inputs
@@ -17,46 +17,41 @@ function [sysd, K] = okid(varargin)
     error('Missing inputs')
   end
   
-  % Get states
+  % Get outputs
   if(length(varargin) >= 2)
-    states = varargin{2};
+    outputs = varargin{2};
   else
-    error('Missing states')
-  end
-  
-  % Get derivatives
-  if(length(varargin) >= 3)
-    derivatives = varargin{3};
-  else
-    error('Missing derivatives')
+    error('Missing outputs')
   end
   
   % Get time
-  if(length(varargin) >= 4)
-    t = varargin{4};
+  if(length(varargin) >= 3)
+    t = varargin{3};
   else
     error('Missing time')
   end
   
   % Get sample time
-  if(length(varargin) >= 5)
-    sampleTime = varargin{5};
+  if(length(varargin) >= 4)
+    sampleTime = varargin{4};
   else
     error('Missing sample time')
   end
   
-  % Do error checking between states and inputs
-  if(size(states, 2) ~= size(inputs, 2))
-    error('States and inputs need to have the same length of columns - Try transpose')
-  end
+  % Compute derivatives by using (y(i+1) - y(i)) / sampleTime
+  derivatives = (outputs(:, 2:end) - outputs(:, 1:end-1))/sampleTime;
+  outputs = outputs(:, 1:end-1);
+  inputs = inputs(:, 1:end-1);
+  t = t(1, 1:end-1);
+  derivatives = derivatives';
   
-  % Do error checking between derivatives and inputs
-  if(size(derivatives, 1) ~= size(inputs, 2))
-    error('Derivatives and inputs need to have the same length - Try transpose')
+  % Do error checking between outputs and inputs
+  if(size(outputs, 2) ~= size(inputs, 2))
+    error('Outputs and inputs need to have the same length of columns - Try transpose')
   end
   
   % Flip them so they are standing "up"
-  Y = states';
+  Y = outputs';
   U = inputs';
   
   % Find the linear solution Ax = b
@@ -74,7 +69,7 @@ function [sysd, K] = okid(varargin)
   y = lsim(sysd, inputs, t);
   y = y(:, 1:2:end); % Remove the discrete shape
   close
-  noise = states - y;
+  noise = outputs - y;
   Q = sysd.C'*sysd.C; % This is a standard way to select Q matrix for a kalman filter C'*C
   R = cov(noise'); % Important with transpose
   [K] = lqe(sysd, Q, R);
