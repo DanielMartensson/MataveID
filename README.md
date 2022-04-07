@@ -1,4 +1,4 @@
-# Mataveid V10.0
+# Mataveid V11.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -28,6 +28,9 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
 - SVM for classification of data
+- N4SID for MIMO, SIMO, MISO or SISO state space systems
+- MOESP for MIMO, SIMO, MISO or SISO state space systems
+- PIMOESP for MIMO, SIMO, MISO, or SISO state space systems
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
