@@ -1,4 +1,4 @@
-% Numerical algorithms for Subspace State Space System IDentiﬁcation
+% Numerical algorithms for Subspace State Space System IDentification
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
 % Output: sysd(Discrete state space model)
 % Example 1: [sysd] = n4sid(u, y, k, sampleTime, delay);
