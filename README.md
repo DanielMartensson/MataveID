@@ -355,15 +355,12 @@ y0 = X(:, 4);
 y1 = X(:, 5);
 sampleTime = 0.1;
 
-inputs = [r0';r1'];
-states = [y0';y1'];
-derivatives = (states(:, 2:end) - states(:, 1:end-1))/sampleTime;
-states = states(:, 1:end-1);
-inputs = inputs(:, 1:end-1);
-activations = [1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0];
-lambda = 1.1;
-variables = ["y0";"y1";"r0";"r1"]; % [states; inputs] - Always!
-fx = sindy(inputs, states, derivatives', activations, variables, lambda);
+inputs = [r0 r1];
+outputs = [y0 y1];
+activations = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
+lambda = 0.2;
+variables = ["y0";"y1";"r0";"r1"]; % [outputs; inputs] - Always!
+fx = sindy(inputs, outputs, activations, variables, lambda, sampleTime);
 
 % Euler simulation
 output = zeros(2, length(t));
