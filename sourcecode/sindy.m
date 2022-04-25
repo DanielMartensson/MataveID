@@ -4,7 +4,6 @@
 % Example: [fx] = sindy(inputs, outputs, activations, variables, lambda, sampleTime);
 % Author: Daniel Mårtensson, May 2, 2020
 % Update: Added more error handling and now display which activation function that being used, June 25, 2020
-% Update: Easier to use now
 
 function [fx] = sindy(varargin)
   % Check if there is any input
