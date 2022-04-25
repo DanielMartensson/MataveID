@@ -312,7 +312,7 @@ sampleTime = 0.02;
 y = filtfilt2(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
-activations = [1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
+activations = [1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
 variables = ["y"; "u"]; % [outputs; inputs] - Always!
 lambda = 0.05;
 l = length(u);
