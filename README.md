@@ -383,6 +383,8 @@ plot(t, output(1, :), t, y0);
 grid on
 ```
 
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result_multivariable.png)
+
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
 
