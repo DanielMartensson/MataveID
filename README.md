@@ -309,36 +309,17 @@ y = X(:, 3);
 sampleTime = 0.02;
 
 % Do filtering of y
-yf = filtfilt2(y', t', 0.1);
-
-% Find the derivative of y
-dy = (yf(2:end)-yf(1:end-1))/sampleTime;
-
-% Threshold for removing noise of the derivative
-for i = 1:length(dy)
-  v = dy(i);
-  if(and(v >= -0.15, v <= 0.15))
-    dy(i) = 0;
-  end
-end
-
-% Same length as dy
-y = yf(1:end-1);
-u = u(1:end-1);
-t = t(1:end-1);
+y = filtfilt2(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
-inputs = [u'];
-states = [y];
-derivatives = [dy'];
-activations = [1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  1  1  0  0  0  0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
-variables = ["y"; "u"]; % [states; inputs] - Always!
-lambda = 0.1;
-l = length(inputs);
+activations = [1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
+variables = ["y"; "u"]; % [outputs; inputs] - Always!
+lambda = 0.05;
+l = length(u);
 h = floor(l/2);
 s = ceil(l/2);
-fx_up = sindy(inputs(1:h), states(1:h), derivatives(1:h), activations, variables, lambda); % We go up
-fx_down = sindy(inputs(s:end), states(s:end), derivatives(s:end), activations, variables, lambda); % We go down
+fx_up = sindy(u(1:h), y(1:h), activations, variables, lambda, sampleTime); % We go up
+fx_down = sindy(u(s:end), y(s:end), activations, variables, lambda, sampleTime); % We go down
 
 % Euler simulation of Sindy model by two anonymous functions
 output = zeros(1, length(u));
