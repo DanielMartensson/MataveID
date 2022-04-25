@@ -1,7 +1,7 @@
 % Sparse Identification of Nonlinear Dynamics
 % Activations for e.g u and y e.g: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
-% Input: inputs, states, derivatives, activations, lambda
-% Example: [fx] = sindy(inputs, states, derivatives, activations, variables, lambda);
+% Input: inputs, output, derivatives, activations, lambda
+% Example: [fx] = sindy(inputs, outputs, activations, variables, lambda, sampleTime);
 % Author: Daniel Mårtensson, May 2, 2020
 % Update: Added more error handling and now display which activation function that being used, June 25, 2020
 
@@ -18,43 +18,55 @@ function [fx] = sindy(varargin)
     error('Missing inputs')
   end
   
-  % Get states
+  % Get outputs
   if(length(varargin) >= 2)
-    states = varargin{2};
+    outputs = varargin{2};
   else
-    error('Missing states')
-  end
-  
-  % Get derivatives
-  if(length(varargin) >= 3)
-    derivatives = varargin{3};
-  else
-    error('Missing derivatives')
+    error('Missing outputs')
   end
   
   % Get activations
-  if(length(varargin) >= 4)
-    activations = varargin{4};
+  if(length(varargin) >= 3)
+    activations = varargin{3};
   else
     error('Missing activations')
   end
   
   % Get variables
-  if(length(varargin) >= 5)
-    variables = cellstr(varargin{5});
+  if(length(varargin) >= 4)
+    variables = cellstr(varargin{4});
   else
     error('Missing variable vector')
   end
   
   % Get lambda
-  if(length(varargin) >= 6)
-    lambda = varargin{6};
+  if(length(varargin) >= 5)
+    lambda = varargin{5};
   else
     error('Missing lambda')
   end
   
-  % Do error checking between states and inputs
-  if(size(states, 2) ~= size(inputs, 2))
+  % Get sampleTime
+  if(length(varargin) >= 6)
+    sampleTime = varargin{6};
+  else
+    error('Missing sample time')
+  end
+  
+  % Find the derivative of outputs
+  derivatives = (outputs(2:end)-outputs(1:end-1))/sampleTime;
+
+  % Same length as derivatives
+  outputs = outputs(1:end-1);
+  inputs = inputs(1:end-1);
+  
+  % Transpose them all 
+  inputs = inputs';
+  outputs = outputs';
+  derivatives = derivatives;
+  
+  % Do error checking between outputs and inputs
+  if(size(outputs, 2) ~= size(inputs, 2))
     error('States and inputs need to have the same length of columns - Try transpose')
   end
   
@@ -63,8 +75,8 @@ function [fx] = sindy(varargin)
     error('Derivatives and inputs need to have the same length - Try transpose')
   end
   
-  % Create our data, it must contain states and inputs. States can be interpreted as outputs by the way!
-  data = [states; inputs];
+  % Create our data, it must contain outputs and inputs. States can be interpreted as outputs by the way!
+  data = [outputs; inputs];
   
   % Create our O matrix - Our system matrix. Here we create our data by the candidate functions
   l = size(data, 1);
@@ -77,6 +89,18 @@ function [fx] = sindy(varargin)
   [O, columnposition, labels] = candidate(O, data.^2, l, columnposition, variables, labels, "^2"); % We use the raised to power 2 candidate
   [O, columnposition, labels] = candidate(O, data.^3, l, columnposition, variables, labels, "^3"); % We use the raised to power 3 candidate
   [O, columnposition, labels] = candidate(O, data.^4, l, columnposition, variables, labels, "^4"); % We use the raised to power 4 candidate
+  [O, columnposition, labels] = candidate(O, data.^5, l, columnposition, variables, labels, "^5"); % We use the raised to power 5 candidate
+  [O, columnposition, labels] = candidate(O, data.^5, l, columnposition, variables, labels, "^5");
+  [O, columnposition, labels] = candidate(O, data.^6, l, columnposition, variables, labels, "^6");
+  [O, columnposition, labels] = candidate(O, data.^7, l, columnposition, variables, labels, "^7");
+  [O, columnposition, labels] = candidate(O, data.^8, l, columnposition, variables, labels, "^8");
+  [O, columnposition, labels] = candidate(O, data.^9, l, columnposition, variables, labels, "^9");
+  [O, columnposition, labels] = candidate(O, data.^10, l, columnposition, variables, labels, "^10");
+  [O, columnposition, labels] = candidate(O, data.^11, l, columnposition, variables, labels, "^11");
+  [O, columnposition, labels] = candidate(O, data.^12, l, columnposition, variables, labels, "^12");
+  [O, columnposition, labels] = candidate(O, data.^13, l, columnposition, variables, labels, "^13");
+  [O, columnposition, labels] = candidate(O, data.^14, l, columnposition, variables, labels, "^14");
+  [O, columnposition, labels] = candidate(O, data.^15, l, columnposition, variables, labels, "^15");
   [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "*"); % We add e.g x*y, z*u, y*u
   [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "^2"); % We add e.g x^2*y^2, z^2*u^2, y^2*u^2
   [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, variables, labels, "sin"); % We add e.g sin(x*y), sin(z*u), sin(y*u)
@@ -193,6 +217,28 @@ function [O, columnposition, labels] = candidate(O, data, l, columnposition, var
         labels = [labels; strcat(cell2mat(variables(i, :)), '^3')]; % e.g x^3
       case '^4'
         labels = [labels; strcat(cell2mat(variables(i, :)), '^4')]; % e.g x^4
+      case '^5'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^5')]; % e.g x^5
+      case '^6'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^6')]; % e.g x^6
+      case '^7'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^7')]; % e.g x^7
+      case '^8'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^8')]; % e.g x^8
+      case '^9'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^9')]; % e.g x^9
+      case '^10'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^10')]; % e.g x^10
+      case '^11'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^11')]; % e.g x^11
+      case '^12'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^12')]; % e.g x^12
+      case '^13'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^13')]; % e.g x^13
+      case '^14'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^14')]; % e.g x^14
+      case '^15'
+        labels = [labels; strcat(cell2mat(variables(i, :)), '^15')]; % e.g x^15
       case 'sin'
         labels = [labels; strcat('sin(', cell2mat(variables(i, :)), ')')]; % e.g sin(x)
       case 'cos'
