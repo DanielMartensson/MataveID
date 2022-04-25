@@ -378,9 +378,15 @@ end
 close all
 plot(t, output(2, :), t, y1);
 grid on
+title('Cylinder 1');
+xlabel('Time');
+ylabel('Position');
 figure
 plot(t, output(1, :), t, y0);
 grid on
+title('Cylinder 0');
+xlabel('Time');
+ylabel('Position');
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result_multivariable.png)
