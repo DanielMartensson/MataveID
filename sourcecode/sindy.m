@@ -54,11 +54,11 @@ function [fx] = sindy(varargin)
   end
   
   % Find the derivative of outputs
-  derivatives = (outputs(2:end)-outputs(1:end-1))/sampleTime;
+  derivatives = (outputs(2:end, :)-outputs(1:end-1, :))/sampleTime;
 
   % Same length as derivatives
-  outputs = outputs(1:end-1);
-  inputs = inputs(1:end-1);
+  outputs = outputs(1:end-1, :);
+  inputs = inputs(1:end-1, :);
   
   % Transpose them all 
   inputs = inputs';
