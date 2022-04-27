@@ -368,7 +368,28 @@ model = sindy(inputs, outputs, activations, lambda, sampleTime);
 u = inputs';
 x0 = outputs'(:, 1);
 stepTime = 1.0;
-nlsim(model, u, x0, stepTime, 'ode15s');
+[x, t] = nlsim(model, u, x0, stepTime, 'ode15s');
+
+% Compare
+close all 
+plot(x(1, :))
+hold on 
+plot(y0)
+legend('Simulation', 'Measurement')
+ylabel('Position')
+xlabel('Time')
+title('Cylinder 0')
+grid on
+
+figure
+plot(x(2, :))
+hold on 
+plot(y1)
+legend('Simulation', 'Measurement')
+ylabel('Position')
+xlabel('Time')
+title('Cylinder 1')
+grid on
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result_multivariable.png)
