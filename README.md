@@ -313,32 +313,33 @@ y = filtfilt2(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
 activations = [1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
-variables = ["y"; "u"]; % [outputs; inputs] - Always!
 lambda = 0.05;
 l = length(u);
 h = floor(l/2);
 s = ceil(l/2);
-fx_up = sindy(u(1:h), y(1:h), activations, variables, lambda, sampleTime); % We go up
-fx_down = sindy(u(s:end), y(s:end), activations, variables, lambda, sampleTime); % We go down
+fx_up = sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
+fx_down = sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
 
-% Euler simulation of Sindy model by two anonymous functions
-output = zeros(1, length(u));
-x_up = 0;
-x_down = 0;
-for i = 1:length(u)
-  x_up = x_up + sampleTime*fx_up{1}(x_up, u(i));
-  x_down = x_down + sampleTime*fx_down{1}(x_down, u(i));
-  if(i <= length(u)/2*0.91) % This is the half part of the dynamical system
-    output(i) = x_up;
-  else
-    output(i) = x_down; % Here we go down
-  end
-end
-plot(t, output, t, y)
-legend('Model', 'Measured');
-title('Hydraulic motor - Checking the hysteresis')
-xlabel('Time [s]')
-ylabel('Rotation');
+% Simulation up
+x0 = y(1:h)(1);
+u_up = u(1:h)(1:100:end)';
+stepTime = 1.2;
+[x_up, t] = nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
+
+% Simulation down 
+x0 = y(s:end)(1);
+u_down = u(s:end)(1:100:end)';
+stepTime = 1.2;
+[x_down, t] = nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
+
+% Compare 
+close all
+plot([x_up x_down])
+hold on 
+plot(y(1:100:end));
+legend('Simulation', 'Measurement')
+ylabel('Rotation')
+xlabel('Time')
 grid on
 ```
 
@@ -347,46 +348,27 @@ grid on
 Here is a multivariable example with SINDy. It use the same data as the OKID scenario.
 
 ```matlab
+% Data
 X = csvread('MultivariableCylinders.csv');
 t = X(:, 1);
-r0 = X(:, 2);
-r1 = X(:, 3);
-y0 = X(:, 4);
-y1 = X(:, 5);
+r0 = X(:, 2); % Reference 0
+r1 = X(:, 3); % Reference 1
+y0 = X(:, 4); % Output 0
+y1 = X(:, 5); % Output 1
 sampleTime = 0.1;
 
+% Identification
 inputs = [r0 r1];
 outputs = [y0 y1];
 activations = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
 lambda = 0.2;
-variables = ["y0";"y1";"r0";"r1"]; % [outputs; inputs] - Always!
-fx = sindy(inputs, outputs, activations, variables, lambda, sampleTime);
+model = sindy(inputs, outputs, activations, lambda, sampleTime);
 
-% Euler simulation
-output = zeros(2, length(t));
-x0 = 0;
-x1 = 0;
-for i = 1:length(output)
-  output(1, i) = x0;
-  output(2, i) = x1;
-  vy1 = fx{1}(x0, x1, r0(i), r1(i));
-  vy2 = fx{2}(x0, x1, r0(i), r1(i));
-  x0 = x0 + sampleTime*vy1;
-  x1 = x1 + sampleTime*vy2;
-end
-
-close all
-plot(t, output(2, :), t, y1);
-grid on
-title('Cylinder 1');
-xlabel('Time');
-ylabel('Position');
-figure
-plot(t, output(1, :), t, y0);
-grid on
-title('Cylinder 0');
-xlabel('Time');
-ylabel('Position');
+% Simulation
+u = inputs';
+x0 = outputs'(:, 1);
+stepTime = 1.0;
+nlsim(model, u, x0, stepTime, 'ode15s');
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result_multivariable.png)
