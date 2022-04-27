@@ -1,14 +1,14 @@
 % Sparse Identification of Nonlinear Dynamics
 % Activations for e.g u and y e.g: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
 % Input: inputs, output, derivatives, activations, lambda
-% Example: [fx] = sindy(inputs, outputs, activations, variables, lambda, sampleTime);
+% Example: [dx] = sindy(inputs, outputs, activations, lambda, sampleTime);
 % Author: Daniel Mårtensson, May 2, 2020
 % Update: Added more error handling and now display which activation function that being used, June 25, 2020
 
-function [fx] = sindy(varargin)
+function [dx] = sindy(varargin)
   % Check if there is any input
   if(isempty(varargin))
-    error('Missing imputs')
+    error('Missing inputs')
   end
   
   % Get inputs
@@ -32,23 +32,16 @@ function [fx] = sindy(varargin)
     error('Missing activations')
   end
   
-  % Get variables
-  if(length(varargin) >= 4)
-    variables = cellstr(varargin{4});
-  else
-    error('Missing variable vector')
-  end
-  
   % Get lambda
-  if(length(varargin) >= 5)
-    lambda = varargin{5};
+  if(length(varargin) >= 4)
+    lambda = varargin{4};
   else
     error('Missing lambda')
   end
   
   % Get sampleTime
-  if(length(varargin) >= 6)
-    sampleTime = varargin{6};
+  if(length(varargin) >= 5)
+    sampleTime = varargin{5};
   else
     error('Missing sample time')
   end
@@ -74,6 +67,16 @@ function [fx] = sindy(varargin)
   if(size(derivatives, 1) ~= size(inputs, 2))
     error('Derivatives and inputs need to have the same length - Try transpose')
   end
+  
+  % Create variables x(1), x(2), x(3), ... , u(1), u(2), u(3) ...
+  variables = "";
+  for i = 1:size(outputs, 1)
+    variables = [variables; 'x(', num2str(i), ')'];
+  end
+  for i = 1:size(inputs, 1)
+    variables = [variables; 'u(', num2str(i), ')'];
+  end 
+  
   
   % Create our data, it must contain outputs and inputs. States can be interpreted as outputs by the way!
   data = [outputs; inputs];
@@ -139,24 +142,15 @@ function [fx] = sindy(varargin)
   state_dimension = size(O, 2);
   E = stls_regression(O, derivatives, lambda);
   
+  % Create function handler 
+  handler = "@(t, x, u)";
+  
   % Print E - Don't replace " with '. They have a pourpose.
-  text = "\nOur nonlinear state space model:";
-  disp(text);
-  fx = {size(E, 2)};
+  disp("\nOur nonlinear state space model:");
+  equations = "";
   for i = 1:size(E, 2)
     % This is for so we don't write + directly after dy = 
     firstTimeWriting = 1;
-    % This is the left side of the equation
-    derivative = strcat('d', cell2mat(variables(i, :)), ' = '); % Get the e.g 'dx =' or 'dy ='
-    % This is the annonymous function handler
-    handler = " @("; % We are going to delete that space before @ in the code below
-    for k = 1:size(variables, 1)
-      if(k < size(variables, 1))
-        handler = strcat(handler, cell2mat(variables(k, :)), ",");
-      else
-        handler = strcat(handler, cell2mat(variables(k, :)), ") ");
-      end
-    end
     % Save the equations here
     equation = [];
     % This is the right side of the equation
@@ -178,12 +172,17 @@ function [fx] = sindy(varargin)
         equation = strcat(equation, val, '*', used_labels(j, :));  
       end
     end  
-    % Print the equation for every i - row
-    strcat(derivative, handler, equation) 
-    % Remove first space from handler string and create the function handler
-    handler(1) = [];
-    fx(i) = str2func(strcat(handler, equation));
+    % Add ; if i is below size of E
+    if(i < size(E, 2))
+      equation = strcat(equation, ';');
+    end
+    % Add equation to equations 
+    equations = [equations equation];
   end
+  
+  % Create the nonlinear model 
+  dx = str2func(strcat(handler, '[', equations , ']'))
+  
 end
 
 function dXi = stls_regression(O, dX, lambda)
@@ -210,47 +209,47 @@ function [O, columnposition, labels] = candidate(O, data, l, columnposition, var
     % Add the name of the label
     switch func
       case 'none'
-        labels = [labels; cell2mat(variables(i, :))]; % Regular
+        labels = [labels; variables(i, :)]; % Regular
       case '^2'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^2')]; % e.g x^2
+        labels = [labels; strcat(variables(i, :), '^2')]; % e.g x^2
       case '^3'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^3')]; % e.g x^3
+        labels = [labels; strcat(variables(i, :), '^3')]; % e.g x^3
       case '^4'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^4')]; % e.g x^4
+        labels = [labels; strcat(variables(i, :), '^4')]; % e.g x^4
       case '^5'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^5')]; % e.g x^5
+        labels = [labels; strcat(variables(i, :), '^5')]; % e.g x^5
       case '^6'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^6')]; % e.g x^6
+        labels = [labels; strcat(variables(i, :), '^6')]; % e.g x^6
       case '^7'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^7')]; % e.g x^7
+        labels = [labels; strcat(variables(i, :), '^7')]; % e.g x^7
       case '^8'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^8')]; % e.g x^8
+        labels = [labels; strcat(variables(i, :), '^8')]; % e.g x^8
       case '^9'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^9')]; % e.g x^9
+        labels = [labels; strcat(variables(i, :), '^9')]; % e.g x^9
       case '^10'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^10')]; % e.g x^10
+        labels = [labels; strcat(variables(i, :), '^10')]; % e.g x^10
       case '^11'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^11')]; % e.g x^11
+        labels = [labels; strcat(variables(i, :), '^11')]; % e.g x^11
       case '^12'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^12')]; % e.g x^12
+        labels = [labels; strcat(variables(i, :), '^12')]; % e.g x^12
       case '^13'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^13')]; % e.g x^13
+        labels = [labels; strcat(variables(i, :), '^13')]; % e.g x^13
       case '^14'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^14')]; % e.g x^14
+        labels = [labels; strcat(variables(i, :), '^14')]; % e.g x^14
       case '^15'
-        labels = [labels; strcat(cell2mat(variables(i, :)), '^15')]; % e.g x^15
+        labels = [labels; strcat(variables(i, :), '^15')]; % e.g x^15
       case 'sin'
-        labels = [labels; strcat('sin(', cell2mat(variables(i, :)), ')')]; % e.g sin(x)
+        labels = [labels; strcat('sin(', variables(i, :), ')')]; % e.g sin(x)
       case 'cos'
-        labels = [labels; strcat('cos(', cell2mat(variables(i, :)), ')')];
+        labels = [labels; strcat('cos(', variables(i, :), ')')];
       case 'tan'
-        labels = [labels; strcat('tan(', cell2mat(variables(i, :)), ')')];
+        labels = [labels; strcat('tan(', variables(i, :), ')')];
       case 'sqrt'
-        labels = [labels; strcat('sqrt(', cell2mat(variables(i, :)), ')')];
+        labels = [labels; strcat('sqrt(', variables(i, :), ')')];
       case 'exp'
-        labels = [labels; strcat('exp(', cell2mat(variables(i, :)), ')')];
+        labels = [labels; strcat('exp(', variables(i, :), ')')];
       case 'log'
-        labels = [labels; strcat('log(', cell2mat(variables(i, :)), ')')];
+        labels = [labels; strcat('log(', variables(i, :), ')')];
       % Add more cases here...
     end
     
@@ -269,13 +268,13 @@ function [O, columnposition, labels] = candidatexyz(O, data, l, columnposition, 
         % Add the name of the label and add to O matrix
         switch func
           case '*'
-            labels = [labels; strcat(cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)))]; % e.g x*y
+            labels = [labels; strcat(variables(j, :), '*', variables(i, :))]; % e.g x*y
             O(:, columnposition) = data(j,:).*data(i,:); % e.g x.*y, y.*z, z.*k, k.*j, j.*i where inputs is [x;y;z,k,j,i] and l is 6 due to row size of [x;y;z,k,j,i]
           case '^2'
-            labels = [labels; strcat(cell2mat(variables(j, :)), '^2*', cell2mat(variables(i, :)), '^2')]; % e.g x^2*y^2
+            labels = [labels; strcat(variables(j, :), '^2*', variables(i, :), '^2')]; % e.g x^2*y^2
             O(:, columnposition) = (data(j,:).^2).*(data(i,:).^2);
           case 'sin'
-            labels = [labels; strcat('sin(', cell2mat(variables(j, :)), '*', cell2mat(variables(i, :)), ')')]; % e.g sin(x*y)
+            labels = [labels; strcat('sin(', variables(j, :), '*', variables(i, :), ')')]; % e.g sin(x*y)
             O(:, columnposition) = sin(data(j,:).*data(i,:));
           % Add more cases here...
         end
