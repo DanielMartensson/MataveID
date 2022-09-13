@@ -39,6 +39,7 @@ function [amp, wout] = spa(varargin)
   plot(freq, Y)
   ylabel('Amplitude')
   xlabel('Frequency [Hz]')
+  grid on
   
   % Return values
   amp = 20*log10(Y);
