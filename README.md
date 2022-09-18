@@ -8,6 +8,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - Create Particle filter for state estimation
 - Upload the dampling project for ERA-DC
 - Build on sindy.m file. It must be an easier way to select the activation functions
+- Add State Space Frequency Domain algorithm from NASA
 
 # Caution
 
