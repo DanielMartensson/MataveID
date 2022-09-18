@@ -259,8 +259,8 @@ L = lqr(sys, Q, R);
 [feedbacksys] = reg(sys, L);
 yf = lsim(feedbacksys, r, t);
 
-%% Add 10% noise
-load v
+%% Add noise
+v = 2*randn(1, 1000);
 for i = 1:length(yf)
   noiseSigma = 0.10*yf(:, i);
   noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
@@ -270,7 +270,7 @@ end
 %% Identification  
 uf = yf(3:4, :); % Input feedback signals
 y = yf(1:2, :); % Output feedback signals
-regularization = 600;
+regularization = 10000;
 modelorder = 4;
 [sysd, K, L] = ocid(r, uf, y, t(2) - t(1), regularization, modelorder);
     
