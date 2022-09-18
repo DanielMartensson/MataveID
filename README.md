@@ -9,16 +9,16 @@ I will update this repository with new algorithms and sorting out some of algori
 I'm planning to add a square root unscented kalman filter and a neural network trainer with unscented kalman filter.
 
 - Particle filter for state estimation
+- Upload dampling project for ERA-DC
 
 # Caution
 
 Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Identification Toolbox WILL cause problems with MataveID & MataveControl because they are using the same function names.
 
 # Functions and its purpose
-- OKID for multivariable hydraulic systems or temperature systems
 - ERA-DC for mechanical damped systems in the time plane
 - SINDY for multivariable abritary nonlinear systems
-- RLS for all kind of arbitary single input and single output systems (Use this first!)
+- RLS for all kind of arbitary single input and single output systems
 - OCID for linear feedback systems (I haven't found any real world practice for this method yet)
 - FILTFILT2 for low pass filtering without phase delay
 - SPA for spectral analysis
@@ -29,8 +29,6 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
 - SVM for classification of data
 - N4SID for MIMO, SIMO, MISO or SISO state space systems
-- MOESP for MIMO, SIMO, MISO or SISO state space systems
-- PIMOESP for MIMO, SIMO, MISO, or SISO state space systems
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
@@ -47,16 +45,16 @@ If you want to have another excellent practical book with full of applied exampl
 
 Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/
 
-### OKID - Observer Kalman Filter Identification
-OKID is an algoritm that creates the impulse makrov parameter response from data for identify a state space model and also a kalman filter gain matrix. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. OKID have it's orgin from Hubble Telescope at NASA. This algorithm was invented 1991. The drawback with OKID algorithm is that it's very extremely sensitive to noise. So I have modify OKID by including SINDy algorithm and Euler simulation plus Algebraic Riccati Equations for finding the discrete kalman gain matrix K. So now it's very robust against noise.
+### N4SID - Numerical algorithm for Subspace State Space System IDentification.
+N4SID is an algoritm that replaces the famous Observer Kalman Filter IDentification(OKID) for identify a state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1991. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a onlinear state space model, check out the SINDy algorithm.
 
 ```matlab
-[sysd, K] = okid(u, y, t, sampleTime);
+[sysd] = n4sid(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
 ```
 
-### Example OKID
+### Example N4SID
 
-Here I programmed a Beijer PLC that controls the multivariable cylinder system. It's a nonlinear system, but OKID can handle it because it's not so nonlinear as a hydraulic motor. Cylinder 0 and Cylinder 1 affecting each other when the propotional control valves opens.
+Here I programmed a Beijer PLC that controls the multivariable cylinder system. It's a nonlinear system, but N4SID can handle it because it's not so nonlinear as a hydraulic motor. Cylinder 0 and Cylinder 1 affecting each other when the propotional control valves opens.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PLC%20system.jpg)
 
@@ -79,10 +77,12 @@ y = [y0';y1'];
 t = t';
 
 % Create the model
-[sysd, K] = okid(u, y, t, sampleTime);
+k = 10;
+sampleTime = t(2) - t(1);
+[sysd] = n4sid(u, y, k, sampleTime); % Delay argment is default 0
 
 % Do simulation
-[outputs, T, x] = lsim(sysd ,y, t);
+[outputs, T, x] = lsim(sysd, y, t);
 close
 plot(T, outputs(1, :), t, y(1, :))
 title('Cylinder 0');
