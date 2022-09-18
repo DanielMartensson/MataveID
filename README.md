@@ -79,7 +79,7 @@ t = t';
 % Create the model
 k = 10;
 sampleTime = t(2) - t(1);
-[sysd] = n4sid(u, y, k, sampleTime); % Delay argment is default 0
+[sysd] = n4sid(u, y, k, sampleTime); % Delay argment is default 0. Select model order = 2 when n4sid ask you
 
 % Do simulation
 [outputs, T, x] = lsim(sysd, y, t);
