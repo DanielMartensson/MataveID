@@ -45,7 +45,7 @@ If you want to have another excellent practical book with full of applied exampl
 Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/
 
 ### N4SID - Numerical algorithm for Subspace State Space System IDentification.
-N4SID is an algoritm that replaces the famous Observer Kalman Filter IDentification(OKID) for identify a state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm.
+N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm.
 
 ```matlab
 [sysd] = n4sid(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
