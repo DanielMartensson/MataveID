@@ -191,7 +191,7 @@ buss = ss(delay,A,B,C,D);
 [g, t] = impulse(buss, 10);
 
 %% Add 15% noise
-load v
+v = 2*randn(1, 1000);
 for i = 1:length(g)-1
   noiseSigma = 0.15*g(i);
   noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
