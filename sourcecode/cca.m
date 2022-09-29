@@ -1,6 +1,6 @@
 % Canoncial Correlation Analysis
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
-% Output: sysd(Discrete state space model)
+% Output: sysd(Discrete state space model), K(Kalman Gain matrix)
 % Example 1: [sysd, K, R, Q] = n4sid(u, y, k, sampleTime, delay);
 % Example 2: [sysd, K, R, Q] = n4sid(u, y, k, sampleTime);
 % Author: Daniel Mårtensson, September 2022
