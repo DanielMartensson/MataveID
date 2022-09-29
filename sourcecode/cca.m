@@ -164,5 +164,3 @@ function [U1, S1, V1, nx] = modelReduction(U, S, V)
   S1 = S(1:nx, 1:nx);
   V1 = V(:, 1:nx);
 end
-
-
