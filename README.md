@@ -131,6 +131,7 @@ yn = y + 1.5*randn(1, length(y));
 % Indentify model and recieve kalman gain matrix K - Select model order = 2
 sampleTime = t(2) - t(1);
 [sysd, K] = cca(u, yn, 100, sampleTime); % 100 is tuning parameter
+close
 
 % Simulate
 [s, ts] = lsim(sysd, u, t);
