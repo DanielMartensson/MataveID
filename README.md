@@ -28,6 +28,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
 - SVM for C-code classification of data for CControl
 - N4SID for MIMO, SIMO, MISO or SISO linear state space systems
+- CCA for MIMO, SIMO, MISO, or SISO linear stochastic state space systems
 
 # Papers:
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
@@ -100,6 +101,45 @@ legend('Identified', 'Measured');
 ylim([0 12]);
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
+
+### CCA - Canonical Correlation Analysis
+If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA also retruns the kalman gain matrix K and it's tuning matricies Q, R and S.
+
+```matlab
+[sysd, K, R, Q, S] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+```
+
+### Example CCA
+```matlab
+% Create input signal
+amplitude1 = 10;
+amplitude2 = 50;
+[u1, t] = gensig('square', amplitude1, 100, 200);
+[u2, t] = gensig('square', amplitude2, 50, 150);
+u = [u1 u2];
+
+% Create time vector
+t = linspace(0, 30, length(u));
+
+% Create output signals
+G = tf([1], [1 0.9 1]);
+y = lsim(G, u, t);
+
+% Add much noise
+yn = y + 1.5*randn(1, length(y));
+
+% Indentify model and recieve kalman gain matrix K - Select model order = 2
+sampleTime = t(2) - t(1);
+[sysd, K] = cca(u, yn, 100, sampleTime); % 100 is tuning parameter
+
+% Simulate
+[s, ts] = lsim(sysd, u, t);
+plot(t, yn, ts, s, 'linewidth', 2, '--r');
+title('CCA');
+legend('Real measurement', 'Identified')
+grid on
+```
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/CCA_Result.png)
 
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a transfer function model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
