@@ -103,7 +103,7 @@ ylim([0 12]);
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
 
 ### CCA - Canonical Correlation Analysis
-If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA also retruns the kalman gain matrix K and it's tuning matricies Q, R and S.
+If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA also retruns the kalman gain matrix K and its tuning matrices Q, R and S.
 
 ```matlab
 [sysd, K, R, Q, S] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
