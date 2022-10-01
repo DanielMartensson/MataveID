@@ -60,8 +60,7 @@ Advantages:
  - Easy to read and somtimes practical
  - Include filtering, statistics and other types of modeling techniques
  - Include impulse, frequency, stochastic, closed loop, nonlinear and recursive identification
- - Include both realization theory and subspace system identification methods
- - Include nonlinear identification
+ - Include both realization theory, subspace and nonlinear system identification methods
  
 Disadvantages:
  - Do not include closed loop identification
