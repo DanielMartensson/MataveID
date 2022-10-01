@@ -42,11 +42,7 @@ This book include techniques for linear mechanical systems such as vibrating bea
 Advantages:
  - Easy to read and very practical
  - Include mechanical model buildning
- - Include impulse identification
- - Include frequency identification
- - Include stochastic identification
- - Include closed loop identification
- - Include recursive identification
+ - Include impulse, frequency, stochastic, closed loop and recursive identification
  - These techniques are applied onto Hubble Telescope, Space Shuttle Discovery and Galileo spacecraft
  
 Disadvantages:
@@ -64,11 +60,8 @@ This book covering techniques for all types of systems, linear and nonlinear, bu
 Advantages:
  - Easy to read and somtimes practical
  - Include filtering, statistics and other types of modeling techniques
- - Include impulse identification
- - Include frequency identification
- - Include stochastic identification
- - Include recursive identification
- - Include both legacy and subspace system identification methods
+ - Include impulse, frequency, stochastic, closed loop, nonlinear and recursive identification
+ - Include both realization theory and subspace system identification methods
  - Include nonlinear identification
  
 Disadvantages:
@@ -82,18 +75,14 @@ This book include techniques for all types of linear systems. It's a general boo
 
 Advantages:
  - Include MATLAB code examples and lots of step by step examples
- - Include impulse identification
- - Include frequency identification
- - Include stochastic identification
+ - Include impulse, frequency, stochastic and recursive identification
  - Include latest methods for linear system identification
  
 Disadvantages:
  - Short theory about realization theory methods for system identification
  - Difficult to read and understand
- - Does not include closed loop identification
- - Does not include recursive identification
+ - Does not include closed loop and nonlinear identification
  - Does not include filtering, statistics and other types of modeling techniques
- - Does not include nonlinear identification
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
 
