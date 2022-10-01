@@ -4,6 +4,9 @@
 % Example 1: [sysd, K, R, Q, S] = cca(u, y, k, sampleTime, delay);
 % Example 2: [sysd, K, R, Q, S] = cca(u, y, k, sampleTime);
 % Author: Daniel Mårtensson, September 2022. Following page 292 from Subspace Methods for System Identification, ISBN-10: 1852339810
+% Returning back the model 
+% x(k+1) = Ax(k) + Bu(k) + Ke(k)
+% y(k) = Cx(k) + Du(k) + e(k)
 
 function [sysd, K, R, Q, S] = cca(varargin)
   % Check if there is any input
