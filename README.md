@@ -46,8 +46,7 @@ Advantages:
  - These techniques are applied onto Hubble Telescope, Space Shuttle Discovery and Galileo spacecraft
  
 Disadvantages:
- - Do not include nonlinear system identification
- - Do not include subspace methods
+ - Do not include nonlinear system identification and subspace methods
  - Do not include filtering
  - MATLAB files from this book is export controlled from NASA = Difficult to download
  - This book is not produced anymore. I have the PDF.
