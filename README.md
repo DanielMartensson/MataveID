@@ -37,17 +37,60 @@ Mataveid contains realization identification and polynomal algorithms. They can 
 I have been using these books for creating the `.m` files. All these books have different audience. 
 
 ### Applied System Identification
-This book handles techniques for linear mechanical systems such as vibrating beams, damping, structural mechanics etc. These techniques comes from NASA and the techniques are created by `Jer-Nan Juang`. This is a very practical book. The book uses the so called legacy methods for identify dynamical models from data. This book handles only system identification.
+This book include techniques for linear mechanical systems such as vibrating beams, damping, structural mechanics etc. These techniques comes from NASA and the techniques are created by `Jer-Nan Juang`. This is a very practical book. The book uses the so called realization theory methods for identify dynamical models from data. 
+
+Advantages:
+ - Easy to read and very practical
+ - Include mechanical model buildning
+ - Include impulse identification
+ - Include frequency identification
+ - Include stochastic identification
+ - Include closed loop identification
+ - Include recursive identification
+ - These techniques are applied onto Hubble Telescope, Space Shuttle Discovery and Galileo spacecraft
+Disadvantages:
+ - Do not include nonlinear system identification
+ - Do not include subspace methods
+ - Do not include filtering
+ - MATLAB files from this book is export controlled from NASA = Difficult to download
+ - This book is not produced anymore. I have the PDF.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/AppliedSystemIdentification.jpeg)
 
 ### System Modeling & Identification
-This book handles techniques for all types of systems, linear and nonlinear, but it's more a general book for system identfication. `Professor Rolf Johansson` book contains lots of practice, but also theory as well. More theory and less practice compared to `Applied System Identification` from `Jer-Nan Juang`. This book uses both the legacy methods and modern methods for identify dynamical systems from data. Also this book handles filters as well such as Uncented Kalman Filter. Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/ 
+This book covering techniques for all types of systems, linear and nonlinear, but it's more a general book for system identfication. `Professor Rolf Johansson` book contains lots of practice, but also theory as well. More theory and less practice compared to `Applied System Identification` from `Jer-Nan Juang`. This book uses both the realization theory methods and subspace methods for identify dynamical systems from data. Also this book includes filters as well such as Uncented Kalman Filter. Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/ 
+
+Advantages:
+ - Easy to read and somtimes practical
+ - Include filtering, statistics and other types of modeling techniques
+ - Include impulse identification
+ - Include frequency identification
+ - Include stochastic identification
+ - Include recursive identification
+ - Include both legacy and subspace system identification methods
+ - Include nonlinear identification
+Disadvantages:
+ - Do not include closed loop identification
+ - Some methods are difficult to understand how to apply with MATLAB-code. Typical univerity literature for students
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RolfJohanssonsBok.jpg)
 
 ### Subspace Methods For System Identification
-This book handles techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it handels modern system identification methods and it's only subspace methods. The disadvantages about this book is that it contains only theory and no practice. So it's unclear if subspace methods is better than legacy system identification methods which is taught from `Applied System identification`, but `Professor Thoru Katayama`, have made a great work for collecting all these modern methods.
+This book include techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it include modern system identification techniques. The disadvantages about this book is that it contains only theory and no practice, but `Professor Thoru Katayama`, have made a great work for collecting all these subspace methods.
+
+Advantages:
+ - Include MATLAB code examples
+ - Include impulse identification
+ - Include frequency identification
+ - Include stochastic identification
+ - Include latest methods for linear system identification
+Disadvantages:
+ - Short theory about realization theory methods for system identification
+ - Difficult to read and understand
+ - Does not include closed loop identification
+ - Does not include recursive identification
+ - Does not include filtering, statistics and other types of modeling techniques
+ - Does not include nonlinear identification
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
 
