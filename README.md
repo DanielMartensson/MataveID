@@ -49,7 +49,7 @@ This book handles techniques for all types of systems, linear and nonlinear, but
 ### Subspace Methods For System Identification
 This book handles techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it handels modern system identification methods and it's only subspace methods. The disadvantages about this book is that it contains only theory and no practice. So it's unclear if subspace methods is better than legacy system identification methods. `Professor Thoru Katayama`, have made a great work for collecting all these modern methods.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subpsace_methods_for_system_identification.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
 
 ### N4SID - Numerical algorithm for Subspace State Space System IDentification.
 N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm.
