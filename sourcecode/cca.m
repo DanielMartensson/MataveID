@@ -1,14 +1,15 @@
 % Canoncial Correlation Analysis
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
-% Output: sysd(Discrete state space model), K(Kalman Gain matrix), R(Noise matrix), Q(Disturbance matrix), S(Noise Disturbance matrix)
-% Example 1: [sysd, K, R, Q, S] = cca(u, y, k, sampleTime, delay);
-% Example 2: [sysd, K, R, Q, S] = cca(u, y, k, sampleTime);
+% Output: sysd(Discrete state space model with a kalman filter included)
+% Example 1: [sysd] = cca(u, y, k, sampleTime);
+% Example 2: [sysd] = cca(u, y, k, sampleTime, delay);
+% Example 3: [sysd] = cca(u, y, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, September 2022. Following page 292 from Subspace Methods for System Identification, ISBN-10: 1852339810
-% Returning back the model 
-% x(k+1) = Ax(k) + Bu(k) + Ke(k)
-% y(k) = Cx(k) + Du(k) + e(k)
+% Model structure where e(k) is process noise with zero mean
+% x(k+1) = Ax(k) + BK[u(k); e(k)]
+% y(k) = Cx(k) + DI[u(k); e(k)]
 
-function [sysd, K, R, Q, S] = cca(varargin)
+function [sysd] = cca(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -47,6 +48,16 @@ function [sysd, K, R, Q, S] = cca(varargin)
     delay = varargin{5};
   else
     delay = 0; % If no delay was given
+  end
+
+  % Get the order of the system
+  if(length(varargin) >= 6)
+    systemorder = varargin{6};
+    if (systemorder <= 0)
+      systemorder = -1;
+    end
+  else
+    systemorder = -1; % If no order was given
   end
 
   % Check if u and y has the same length
@@ -108,7 +119,7 @@ function [sysd, K, R, Q, S] = cca(varargin)
   [UU,SS,VV] = svd(OC, 'econ');
 
   % Do model reduction
-  [U1, S1, V1, n] = modelReduction(UU, SS, VV);
+  [U1, S1, V1, n] = modelReduction(UU, SS, VV, systemorder);
 
   % Find A, B, C, D as one matrix
   X = sqrtm(S1)*V1'*Lpi*Wp;
@@ -124,17 +135,12 @@ function [sysd, K, R, Q, S] = cca(varargin)
   Cd = ABCD(n+1:n+p,1:n);
   Dd = ABCD(n+1:n+p,n+1:n+m);
 
-  % Create state space model now
-  delay = 0;
-  sysd = ss(delay, Ad, Bd, Cd, Dd);
-  sysd.sampleTime = sampleTime;
-
-  % Get noise and disturbance
-  W = XX - Ad*X - Bd*U;
-  E = Y - Cd*X - Dd*U;
+  % Get noise e and disturbance w
+  w = XX - Ad*X - Bd*U;
+  e = Y - Cd*X - Dd*U;
 
   % Computing the covariance matrix
-  covariance = [W*W' W*E'; E*W' E*E']/(N-1);
+  covariance = [w*w' w*e'; e*w' e*e']/(N-1);
 
   % Compute Q, R, S for the riccati equation
   Q = covariance(1:n, 1:n);
@@ -147,20 +153,28 @@ function [sysd, K, R, Q, S] = cca(varargin)
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
-  [X, K, L] = are(riccati, Q, R, S);
-  K = L';
+  [~, K] = are(riccati, Q, R, S);
+
+   % Create state space model now
+  delay = 0;
+  sysd = ss(delay, Ad, [Bd K'], Cd, [Dd eye(size(Dd))]);
+  sysd.sampleTime = sampleTime;
 end
 
-function [U1, S1, V1, nx] = modelReduction(U, S, V)
+function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
   % Plot singular values
   stem(1:length(S), diag(S));
   title('Hankel Singular values');
   xlabel('Amount of singular values');
   ylabel('Value');
 
-  % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
-  nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
-  nx = str2num(cell2mat(nx));
+  if(systemorder == -1)
+    % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
+    nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
+    nx = str2num(cell2mat(nx));
+  else
+    nx = systemorder;
+  end
 
   % Choose the dimension nx
   U1 = U(:, 1:nx);
