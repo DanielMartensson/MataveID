@@ -124,17 +124,24 @@ t = linspace(0, 30, length(u));
 % Create output signals
 G = tf([1], [1 0.9 1]);
 y = lsim(G, u, t);
-
-% Add much noise
-yn = y + 1.5*randn(1, length(y));
-
-% Indentify model and recieve kalman gain matrix K - Select model order = 2
-sampleTime = t(2) - t(1);
-[sysd, K] = cca(u, yn, 100, sampleTime); % 100 is tuning parameter
 close
 
-% Simulate
-[s, ts] = lsim(sysd, u, t);
+% Add much process npise with zero mean
+e = randn(1, length(y));
+yn = y + e;
+
+% Indentify model that have a kalman gain matrix included
+sampleTime = t(2) - t(1);
+systemorder = 2;
+delay = 0;
+k = 100; % 100 is tuning parameter
+[sysd] = cca(u, yn, k, sampleTime, delay, systemorder);
+close
+
+
+% Simulate the model
+[s, ts] = lsim(sysd, [u; e*0], t); % e*0 means that we disable the noise
+close
 plot(t, yn, ts, s, 'linewidth', 2, '--r');
 title('CCA');
 legend('Real measurement', 'Identified')
