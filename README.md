@@ -31,7 +31,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - CCA for MIMO, SIMO, MISO, or SISO linear stochastic state space systems
 
 # Papers:
-Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
+Mataveid contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
 
 # Literature:
 I have been using these books for creating the `.m` files. All these books have different audience. Some techniques are meant for researchers and some are meant for practical engineering.
