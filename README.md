@@ -47,7 +47,7 @@ This book handles techniques for all types of systems, linear and nonlinear, but
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RolfJohanssonsBok.jpg)
 
 ### Subspace Methods For System Identification
-This book handles techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it handels modern system identification methods and it's only subspace methods. The disadvantages about this book is that it contains only theory and no practice. So it's unclear if subspace methods is better than legacy system identification methods. `Professor Thoru Katayama`, have made a great work for collecting all these modern methods.
+This book handles techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it handels modern system identification methods and it's only subspace methods. The disadvantages about this book is that it contains only theory and no practice. So it's unclear if subspace methods is better than legacy system identification methods which is taught from `Applied System identification`, but `Professor Thoru Katayama`, have made a great work for collecting all these modern methods.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
 
