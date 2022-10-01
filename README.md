@@ -34,16 +34,22 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
 
 # Literature:
-All of these methods can be found in Jer-Nan Juang's excellent and practical book Applied System Identification.
-There are many good books about system identification, but if you want to make it easy, study easy and apply practical for implementation, then this book is for you. 
+I have been using these books for creating the `.m` files. All these books have different audience. 
+
+### Applied System Identification
+This book handles techniques for linear mechanical systems such as vibrating beams, damping, structural mechanics etc. These techniques comes from NASA and the techniques are created by `Jer-Nan Juang`. This is a very practical book. The book uses the so called legacy methods for identify dynamical models from data. This book handles only system identification.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/AppliedSystemIdentification.jpeg)
 
-If you want to have another excellent practical book with full of applied examples, I recommending "System Modeling and Identification" by Rolf Johansson. This book coveres Recursive Least Square algorithm best.
+### System Modeling & Identification
+This book handles techniques for all types of systems, linear and nonlinear, but it's more a general book for system identfication. `Professor Rolf Johansson` book contains lots of practice, but also theory as well. More theory and less practice compared to `Applied System Identification` from `Jer-Nan Juang`. This book uses both the legacy methods and modern methods for identify dynamical systems from data. Also this book handles filters as well such as Uncented Kalman Filter. Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/ 
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RolfJohanssonsBok.jpg)
 
-Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/
+### Subspace Methods For System Identification
+This book handles techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it handels modern system identification methods and it's only subspace methods. The disadvantages about this book is that it contains only theory and no practice. So it's unclear if subspace methods is better than legacy system identification methods. `Professor Thoru Katayama`, have made a great work for collecting all these modern methods.
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subpsace_methods_for_system_identification.jpg)
 
 ### N4SID - Numerical algorithm for Subspace State Space System IDentification.
 N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm.
