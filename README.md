@@ -103,10 +103,10 @@ ylim([0 12]);
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
 
 ### CCA - Canonical Correlation Analysis
-If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA also retruns the kalman gain matrix K and its tuning matrices Q, R and S.
+If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA returns a state space model that have a kalman filter gain matrix K included.
 
 ```matlab
-[sysd, K, R, Q, S] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+[sysd] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
 ```
 
 ### Example CCA
@@ -127,7 +127,7 @@ y = lsim(G, u, t);
 close
 
 % Add much process npise with zero mean
-e = randn(1, length(y));
+e = 1.5*randn(1, length(y));
 yn = y + e;
 
 % Indentify model that have a kalman gain matrix included
