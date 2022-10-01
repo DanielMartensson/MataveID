@@ -3,7 +3,7 @@
 % Output: sysd(Discrete state space model), K(Kalman Gain matrix), R(Noise matrix), Q(Disturbance matrix), S(Noise Disturbance matrix)
 % Example 1: [sysd, K, R, Q, S] = cca(u, y, k, sampleTime, delay);
 % Example 2: [sysd, K, R, Q, S] = cca(u, y, k, sampleTime);
-% Author: Daniel Mårtensson, September 2022
+% Author: Daniel Mårtensson, September 2022. Following page 292 from Subspace Methods for System Identification, ISBN-10: 1852339810
 
 function [sysd, K, R, Q, S] = cca(varargin)
   % Check if there is any input
