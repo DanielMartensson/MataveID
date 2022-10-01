@@ -34,7 +34,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 Mataveid contains realization identification and polynomal algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the realization identification algorithms if you want to understand how they work. 
 
 # Literature:
-I have been using these books for creating the `.m` files. All these books have different audience. 
+I have been using these books for creating the `.m` files. All these books have different audience. Some techniques are meant for researchers and some are meant for practical engineering.
 
 ### Applied System Identification
 This book include techniques for linear mechanical systems such as vibrating beams, damping, structural mechanics etc. These techniques comes from NASA and the techniques are created by `Jer-Nan Juang`. This is a very practical book. The book uses the so called realization theory methods for identify dynamical models from data. 
