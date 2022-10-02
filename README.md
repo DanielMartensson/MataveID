@@ -74,10 +74,10 @@ This book include techniques for all types of linear systems. It's a general boo
 Advantages:
  - Include MATLAB code examples and lots of step by step examples
  - Include stochastic and recursive identification
- - Include latest methods for linear system identification
+ - Include the latest methods for linear system identification
+ - Include both realization theory, subspace and nonlinear system identification methods
  
 Disadvantages:
- - Short theory about realization theory methods for system identification
  - Difficult to read and understand
  - Does not include impulse, frequency, closed loop and nonlinear identification
  - Does not include filtering, statistics and other types of modeling techniques
