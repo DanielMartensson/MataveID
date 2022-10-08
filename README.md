@@ -29,6 +29,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SVM for C-code classification of data for CControl
 - N4SID for MIMO, SIMO, MISO or SISO linear state space systems
 - CCA for MIMO, SIMO, MISO, or SISO linear stochastic state space systems
+- SRA for SISO stochastic model identification
 
 # Papers:
 Mataveid contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
@@ -203,7 +204,7 @@ Use this algorithm if you want to create a more real world scenario of a simulat
 
 ### Example SRA
 
-```
+```matlab
 N = 1000;
 t = linspace(0, 100, N); % Time vector
 sampleTime = t(2) - t(1);
