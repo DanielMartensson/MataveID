@@ -86,11 +86,40 @@ Disadvantages:
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
 
-### N4SID - Numerical algorithm for Subspace State Space System IDentification.
-N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm.
+### MOESP - Multivariable Output-Error State Space
+MOESP is an algorithm that identify a linear state space model. It was invented in 1992. It can both identify SISO and MISO models.
+Try MOESP or N4SID. They give the same result, but sometimes MOESP can be better than N4SID. It all depends on the data.
 
 ```matlab
-[sysd] = n4sid(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+[sysd] = moesp(u, y, k, sampleTime, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+```
+
+### Example MOESP
+
+```matlab
+N = 200;
+t = linspace(0, 100, N); % Time vector
+u = sin(t); % Input signal
+G = tf(1, [1 0.2 3]); % Model
+y = lsim(G, u, t); % Simulation
+close
+k = 20;
+sampleTime = t(2) - t(1);
+systemorder = 2;
+sysd = moesp(u, y, k, sampleTime, systemorder);
+close
+lsim(sysd, u, t);
+hold on
+plot(t, y)
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/MOESP_Result.png)
+
+### N4SID - Numerical algorithm for Subspace State Space System IDentification.
+N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
+
+```matlab
+[sysd] = n4sid(u, y, k, sampleTime, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
 ```
 
 ### Example N4SID
