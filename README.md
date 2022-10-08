@@ -106,7 +106,7 @@ close
 k = 20;
 sampleTime = t(2) - t(1);
 systemorder = 2;
-sysd = moesp(u, y, k, sampleTime, systemorder);
+sysd = moesp(u, y, k, sampleTime, systemorder); % This won't result well with N4SID
 close
 lsim(sysd, u, t);
 hold on
@@ -149,6 +149,7 @@ t = t';
 % Create the model
 k = 10;
 sampleTime = t(2) - t(1);
+% This won't result well with MOESP and system order = 2
 [sysd] = n4sid(u, y, k, sampleTime); % Delay argment is default 0. Select model order = 2 when n4sid ask you
 
 % Do simulation
