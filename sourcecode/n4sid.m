@@ -1,9 +1,11 @@
 % Numerical algorithms for Subspace State Space System IDentification
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = n4sid(u, y, k, sampleTime, delay);
-% Example 2: [sysd] = n4sid(u, y, k, sampleTime);
+% Example 1: [sysd] = n4sid(u, y, k, sampleTime);
+% Example 2: [sysd] = n4sid(u, y, k, sampleTime, delay);
+% Example 3: [sysd] = n4sid(u, y, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, December 2017
+% Update: Added system order, Oktober 2022
 
 function [sysd] = n4sid(varargin)
   % Check if there is any input
@@ -44,6 +46,16 @@ function [sysd] = n4sid(varargin)
     delay = varargin{5};
   else
     delay = 0; % If no delay was given
+  end
+  
+  % Get the order of the system
+  if(length(varargin) >= 6)
+    systemorder = varargin{6};
+    if (systemorder <= 0)
+      systemorder = -1;
+    end
+  else
+    systemorder = -1; % If no order was given
   end
   
   % Check if u and y has the same length
@@ -88,7 +100,7 @@ function [sysd] = n4sid(varargin)
   [U,S,V] = svd(AbC, 'econ');
   
   % Do model reduction
-  [U1, S1, V1, nx] = modelReduction(U, S, V);
+  [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder);
   
   % Create the observability matrix
   OBSV = U1*sqrtm(S1);
@@ -133,16 +145,20 @@ function [sysd] = n4sid(varargin)
   
 end
 
-function [U1, S1, V1, nx] = modelReduction(U, S, V)
+function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
   % Plot singular values 
   stem(1:length(S), diag(S));
   title('Hankel Singular values');
   xlabel('Amount of singular values');
   ylabel('Value');
   
-  % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
-  nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
-  nx = str2num(cell2mat(nx));
+  if(systemorder == -1)
+    % Choose system dimension n - Remember that you can use modred.m to reduce some states too!
+    nx = inputdlg('Choose the state dimension by looking at hankel singular values: ');
+    nx = str2num(cell2mat(nx));
+  else
+    nx = systemorder;
+  end
   
   % Choose the dimension nx
   U1 = U(:, 1:nx);
