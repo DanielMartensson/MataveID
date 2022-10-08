@@ -28,6 +28,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
 - SVM for C-code classification of data for CControl
 - N4SID for MIMO, SIMO, MISO or SISO linear state space systems
+- MOESP for MIMO, SIMO, MISO or SISO linear state space systems
 - CCA for MIMO, SIMO, MISO, or SISO linear stochastic state space systems
 - SRA for SISO stochastic model identification
 
