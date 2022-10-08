@@ -80,7 +80,7 @@ Advantages:
  
 Disadvantages:
  - Difficult to read and understand
- - Does not include impulse, frequency, closed loop and nonlinear identification
+ - Does not include impulse, frequency and nonlinear identification
  - Does not include filtering, statistics and other types of modeling techniques
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
