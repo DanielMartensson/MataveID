@@ -13,3 +13,5 @@ sr_ukf_state_estimation.m
 svm.m
 n4sid.m
 cca.m
+moesp.m
+sra.m
