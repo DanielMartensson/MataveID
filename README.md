@@ -123,7 +123,8 @@ close
 k = 20;
 sampleTime = t(2) - t(1);
 systemorder = 2;
-sysd = moesp(u, y, k, sampleTime, systemorder); % This won't result well with N4SID
+delay = 0;
+sysd = moesp(u, y, k, sampleTime, delay, systemorder); % This won't result well with N4SID
 close
 lsim(sysd, u, t);
 hold on
