@@ -94,7 +94,7 @@ This book is only for adaptive control. But there is one algorithm that are very
 Advantages:
  - The authors of the book explains which chapters are for pratcial engineering and theoretical researchers
  - Easy to read 
- - Include both advanced and simple methods depending on what problem to solve
+ - Include both advanced and simple methods depending on which type of problem to solve
 
 Disadvantages:
  - Only one system identification algorithm is taught
