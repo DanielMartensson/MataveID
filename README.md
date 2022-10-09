@@ -86,6 +86,21 @@ Disadvantages:
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
 
+### Adaptive Control
+This book is only for adaptive control. But there is one algorithm that are very useful - Recursive Least Squares. This is a very pratical book for applied adaptive control. It's uses the legacy SISO adaptive techniques such as pole placement, Self Tuning Regulator(STR) and Model Reference Adaptive Systems(MRAS) combined with Recursive Least Squares(RLS). If you wonder why only SISO and not MIMO, it's because adaptive control is very difficult in pratice to create a reliable controller for all types of systems. The more difficult problem to solve, the more simplier technique need to be used.
+
+Advantages:
+ - The authors of the book explains which chapters are for pratcial engineering and theoretical researchers
+ - Easy to read 
+ - Include both advanced and simple methods depending on what problem to solve
+
+Disadvantages:
+ - Only one system identification algorithm is taught
+ - Only SISO model are applied
+ - This book is made for adaptive control and have only one chapter that contains system identification
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Adaptive_control.png)
+
 ### MOESP - Multivariable Output-Error State Space
 MOESP is an algorithm that identify a linear state space model. It was invented in 1992. It can both identify SISO and MISO models.
 Try MOESP or N4SID. They give the same result, but sometimes MOESP can be better than N4SID. It all depends on the data.
