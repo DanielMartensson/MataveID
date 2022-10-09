@@ -242,6 +242,10 @@ This is an algorithm that can identify a stochastic model from error measurement
  2. Simulate your deterministic model with input `u` and recieve output. We call it `ym` where `m` stands for model.
  3. Find the error `e` from `e = y - ym`. Now you have the disturbance noise, who also is gaussian distributed (zero mean). That's very important.
  
+Here is an example of how to interpret a stochastic model. All you need to do is to first find the deterministic model, then the stochastic model from the disturbance error `e`.
+ 
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Stochastic_model.png)
+ 
 Use this algorithm if you want to create a more real world scenario of a simulation where disturbance affekting the output from a deterministic model. That means you will have to create two models. One deterministic model and one stochastic model, that runs parallel with the deterministic model. Notise that the stochastic models are e.g `ARMA` models and not regular transfer functions.
 
 ```matlab
