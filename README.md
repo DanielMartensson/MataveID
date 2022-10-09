@@ -5,10 +5,12 @@ I'm building this library because I feel that the commercial libraries are just 
 
 # TODO
 
-- Create Particle filter for state estimation
 - Upload the dampling project for ERA-DC
-- Build on sindy.m file. It must be an easier way to select the activation functions
-- Add State Space Frequency Domain algorithm from NASA
+- Apply Observer Controller IDentification (OCID) on a real example
+- Easier use of Sparse regression IDentification Dynamics (SINDY)
+- Create the State Space Frequency Domain (SSFD) algorithm
+- Create the Observer Kalman-Filter IDentification (OKID) algorithm
+- Create the Particle Filter (PF) algorithm
 
 # Caution
 
