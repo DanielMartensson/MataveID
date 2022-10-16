@@ -69,7 +69,7 @@ function [sysd, K] = okid(varargin)
   q = size(y, 1); % Dimension of output
   l = size(y, 2); % Total length
   m = size(u, 1); % Dimension of input
-  p = l/2-1; % We select half minus -1 else Ybar can be unstable for noise free case. 
+  p = l/2-(q+m); % We select half minus -(q+m) else Ybar can be unstable for noise free case.
   % If you going to estimate K by the experimental way, set p = l/2-1 to p = l/2. Else, you will not get correct indexing for O matrix down there.
   
   % Save the system markov parameters and observer markov parameters here
