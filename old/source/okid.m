@@ -100,12 +100,11 @@ function [sysd, K] = okid(varargin)
     y_part = zeros(1, 1:l-p);
     y_part(1, 1:l-p) = y(j, p+1:l);
     
-    % Solve for non-filtred markov parameters with tikhonov regularization
-    Ybar = y_part*inv(V'*V + regularization*eye(size(V'*V)))*V';
+    % Solve for non-filtred markov parameters with tikhonov regularization: TODO: There must be a better way! This method is not good for noise!
+    Ybar = y_part*V'*inv(V*V' + regularization*eye(size(V*V')));
     
     % Get D matrix
-    D = zeros(1, 1);
-    D(1,1) = Ybar(1, 1:1); % This is YBar_{-1}
+    D = Ybar(1, 1:1); % This is YBar_{-1}
     
     % Remove D from Ybar
     YbarNoD = zeros(1, (1+1)*p);
