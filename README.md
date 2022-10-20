@@ -11,6 +11,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - Create the State Space Frequency Domain (SSFD) algorithm
 - Make a decision if the Observer Kalman-Filter IDentification (OKID) algorithm should be implemented
 - Create the Particle Filter (PF) algorithm
+- Add ARMAX for RLS algorithm
 
 # Caution
 
