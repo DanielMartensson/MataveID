@@ -1,4 +1,8 @@
-
+% Particle Filter
+% Input: x(state input, e.g measurement), xhatp(past estimated state input), k(counter), horizon(matrix), noise(matrix)
+% Output: xhat(estimated state), horizon(matrix), k(counter), noise(matrix)
+% Example 1: [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+% Author: Daniel Mårtensson, Oktober 23:e 2022
 
 function [xhat, horizon, k, noise] = pf(varargin)
   % Check if there is any input
@@ -13,9 +17,9 @@ function [xhat, horizon, k, noise] = pf(varargin)
     error('Missing state input')
   end
 
-  % Get past state input
+  % Get past estimated state input
   if(length(varargin) >= 2)
-    xp = varargin{2};
+    xhatp = varargin{2};
   else
     error('Missing past state input')
   end
@@ -47,7 +51,7 @@ function [xhat, horizon, k, noise] = pf(varargin)
   % Create the estimated state
   xhat = zeros(m, 1);
 
-  % Get length of horizon
+  % Get length of horizon matrix, which is the same length as noise matrix
   p = size(horizon, 2);
 
   % Horizon matrix shifting
@@ -68,7 +72,7 @@ function [xhat, horizon, k, noise] = pf(varargin)
     ratio = x(i)/(x(i) + x(i) * P(i, index));
 
     % Difference between old and new
-    diff = x(i) - xp(i);
+    diff = x(i) - xhatp(i);
 
     % This gives a smoother filtering
     horizon(i, k) = horizon(i, k)*abs(diff);
