@@ -33,7 +33,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - MOESP for MIMO, SIMO, MISO or SISO linear state space systems
 - CCA for MIMO, SIMO, MISO, or SISO linear stochastic state space systems
 - SRA for SISO stochastic model identification
-- PF for non-gaussian state estimation filtering
+- PF for particle filter for non-gaussian state estimation filtering
 
 # Papers:
 Mataveid contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
