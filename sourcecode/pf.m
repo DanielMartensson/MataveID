@@ -76,7 +76,7 @@ function [xhat, horizon, k, noise] = pf(varargin)
 
     % This gives a smoother filtering
     horizon(i, k) = horizon(i, k)*abs(diff);
-
+    
     % Update state. It MUST be negative
     xhat(i) = x(i) - ratio*diff;
 
