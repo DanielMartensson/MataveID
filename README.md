@@ -1,4 +1,4 @@
-# Mataveid V12.0
+# Mataveid V12.5
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -10,7 +10,6 @@ I'm building this library because I feel that the commercial libraries are just 
 - Easier use of Sparse regression IDentification Dynamics (SINDY)
 - Create the State Space Frequency Domain (SSFD) algorithm
 - Make a decision if the Observer Kalman-Filter IDentification (OKID) algorithm should be implemented
-- Create the Particle Filter (PF) algorithm
 - Add ARMAX for RLS algorithm
 
 # Caution
@@ -1025,6 +1024,62 @@ end
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SR_UKF_state_estimation.png)
+
+### Particle Filter - Nonlinear filter
+A particle filter is another estimation filter such as Square Root Uncented Kalman Filter (SR-UKF), but SR-UKF assume that the noise is gaussian (normally distributed) and SR-UKF requries a dynamical model. The particle filter does not require the user to specify a dynamical model and the particle filter assume that the noise can be non-gaussian or gaussian, nonlinear in other words.
+
+The particle filter is using Kernel Density Estimation algorithm to create the internal probability model, hence the user only need to specify one parameter with the following example. If you don't have a model that describes the dynamical behaviour, this filter is the right choice for you then.
+
+```matlab
+[xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+```
+
+### Particle Filter example
+```matlab
+% Create inputs
+N = 200;
+u = linspace(1, 1, N);
+u = [5*u 10*u -4*u 3*u 5*u 0*u -5*u 0*u];
+
+% Create time
+t = linspace(0, 100, length(u));
+
+% Create second order model
+G = tf(1, [1 0.8 3]);
+
+% Simulate outputs
+y = lsim(G, u, t);
+close
+
+% Add noise
+e = 0.1*randn(1, length(u));
+y = y + e;
+
+% Do particle filtering - Tuning parameters
+p = 30;                            % Length of the horizon (Change this)
+
+% Particle filter - No tuning
+[m, n] = size(y);                  % Dimension of the output state and length n
+yf = zeros(m, n);                  % Filtered outputs
+horizon = zeros(m, p);             % Horizon matrix
+xhatp = zeros(m, 1);               % Past estimated state
+k = 1;                             % Horizon counting (will be counted to p. Do not change this)
+noise = rand(m, p);                % Random noise, not normal distributed
+
+% Particle filter - Simulation
+for i = 1:n
+  x = y(:, i);                     % Get the state
+  [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+  yf(:, i) = xhat;                 % Estimated state
+  xhatp = xhat;                    % This is the past estimated state
+end
+
+% Plot restult
+plot(t, y, t, yf, '-r')
+grid on
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result.png)
 
 ### Support Vector Machine with C code generation
 This algorithm can do C code generation for nonlinear models. It's a very simple algorithm because the user set out the support points by using the mouse pointer. When all the supports are set ut, then the algorithm will generate C code for you so you can apply the SVM model in pure C code using CControl library. 
