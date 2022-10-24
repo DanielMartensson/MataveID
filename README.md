@@ -9,7 +9,6 @@ I'm building this library because I feel that the commercial libraries are just 
 - Apply Observer Controller IDentification (OCID) on a real example
 - Easier use of Sparse regression IDentification Dynamics (SINDY)
 - Create the State Space Frequency Domain (SSFD) algorithm
-- Make a decision if the Observer Kalman-Filter IDentification (OKID) algorithm should be implemented
 - Add ARMAX for RLS algorithm
 
 # Caution
