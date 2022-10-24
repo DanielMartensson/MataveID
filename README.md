@@ -338,7 +338,7 @@ Use this algorithm if you got impulse data from e.g structural mechanics.
 ```matlab
 [sysd] = eradc(g, sampleTime, systemorder);
 ```
-### Example ERA/DC
+### Example ERA/DC for MIMO systems
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ERADC_System.png)
 
@@ -355,12 +355,14 @@ A=[0                 1   0                                              0
   -(b1*b2)/(m1*m2)   0   ((b1/m1)*((b1/m1)+(b1/m2)+(b2/m2)))-(k1/m1)   -(b1/m1)
    b2/m2             0  -((b1/m1)+(b1/m2)+(b2/m2))                      1
    k2/m2             0  -((k1/m1)+(k1/m2)+(k2/m2))                      0];
-B=[0;                 
-   1/m1;              
-   0;                
-   (1/m1)+(1/m2)];
-C=[0 0 1 0];
-D=[0];
+B=[0 0;
+   1/m1 0;
+   0 0 ;
+   (1/m1)+(1/m2) 1/m2];
+C=[0 0 1 0;
+   0 1 0 0];
+D=[0 0;
+   0 0];
 delay = 0;
 
 %% Model
@@ -377,17 +379,17 @@ for i = 1:length(g)-1
   g(i) = g(i) + noise;
 end
 
-%% Identification  
-systemorder = 4;
+%% Identification
+systemorder = 10;
 [sysd] = eradc(g, t(2) - t(1), systemorder);
-    
+
 %% Validation
 gt = impulse(sysd, 10);
 close
-    
+
 %% Check
 plot(t, g, t, gt(:, 1:2:end))
-legend("Data", "Identified", 'location', 'northwest')
+legend('Data 1', 'Data 2', 'Identified 1', 'Identified 2', 'location', 'northwest')
 grid on
 ```
 
