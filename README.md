@@ -400,8 +400,10 @@ This is an extention from OKID. The idea is the same, but OCID creates a LQR con
 
 Use this algorithm if you want to extract a LQR control law, kalman observer and model from a running dynamical system. Or if your open loop system is unstable and it requries some kind of feedback to stabilize it. Then OCID is the perfect choice.
 
+This OCID algorithm have a particle filter that estimates the markov parameters.
+
 ```matlab
-[sysd, K, L] = ocid(r, uf, y, sampleTime, regularization, systemorder);
+[sysd, K, L] = ocid(r, uf, y, sampleTime, alpha, regularization, systemorder);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_System.png)
