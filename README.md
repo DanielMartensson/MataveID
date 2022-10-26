@@ -7,6 +7,7 @@ I'm building this library because I feel that the commercial libraries are just 
 
 - Upload the dampling project for ERA-DC
 - Apply Observer Controller IDentification (OCID) on a real example
+- Apply Orthogonal Decomposition of Joint Input-Output Process (ORTJIOP) on a real example
 - Easier use of Sparse regression IDentification Dynamics (SINDY)
 - Create the State Space Frequency Domain (SSFD) algorithm
 - Add ARMAX for RLS algorithm
@@ -20,7 +21,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SINDY for multivariable abritary nonlinear systems
 - RLS for all kind of arbitary single input and single output systems
 - OCID for closed loop identification, observer identification and controller identification
-- ORTJIOP for stochastic closed loop identification
+- ORTJIOP for stochastic closed loop, plant and controller identification
 - FILTFILT2 for low pass filtering without phase delay
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
