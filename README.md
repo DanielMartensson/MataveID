@@ -79,7 +79,7 @@ This book include techniques for all types of linear systems. It's a general boo
 
 Advantages:
  - Include MATLAB code examples and lots of step by step examples
- - Include stochastic and recursive identification
+ - Include stochastic and closed identification
  - Include the latest methods for linear system identification
  - Include both realization theory and subspace system identification methods
  
