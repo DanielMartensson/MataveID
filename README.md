@@ -1,4 +1,4 @@
-# Mataveid V12.5
+# Mataveid V13.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -19,7 +19,8 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - ERA-DC for mechanical damped systems in the time plane
 - SINDY for multivariable abritary nonlinear systems
 - RLS for all kind of arbitary single input and single output systems
-- OCID for linear feedback systems (I haven't found any real world practice for this method yet)
+- OCID for closed loop identification, observer identification and controller identification
+- ORTJIOP for stochastic closed loop identification
 - FILTFILT2 for low pass filtering without phase delay
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
@@ -278,6 +279,18 @@ Here we can see that the outputs are very close to each other.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result.png)
 
+### Orthogonal Decomposition of Joint Input-Output Process
+This algorithm identify the closed loop system, plant and controller.
+
+```matlab
+[sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
+```
+
+### Orthogonal Decomposition of Joint Input-Output Process example
+
+```matlab
+% Will upload soon a practical example with real measurements
+```
 
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a transfer function model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
