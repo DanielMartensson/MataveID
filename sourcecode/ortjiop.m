@@ -1,14 +1,21 @@
 % Orthogonal Decomposition of Joint Input-Output Process
 % Input: u(input signal), y(output signal), r(reference), d(input disturbance), k(Hankel row length), sampleTime, delay(optional), systemorder(optional)
-% Output: sysd(Discrete state space model with a kalman filter included)
-% Example 1: [sysd] = ortjiop(u, y, r, d, k, sampleTime);
-% Example 2: [sysd] = ortjiop(u, y, r, d, k, sampleTime, delay);
-% Example 3: [sysd] = ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
+% Output: sysd(closed loop model), P(plant model), C(controller model)
+% Example 1: [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime);
+% Example 2: [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay);
+% Example 3: [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, Oktober 26:e 2022. Following page 314 from Subspace Methods for System Identification, ISBN-10: 1852339810
+% Closed loop:
 % x(k+1) = Ax(k) + B[r(k); d(k)]
 % [y(k);u(k)] = Cx(k) + D[r(k); d(k)]
+% Plant model:
+% x(k+1) = (A - B2*inv(D22)*C2)x + B2*inv(D22)*u
+% y(k) = C1*x + 0*u
+% Controller model:
+% x(k+1) = (A - B2*inv(D22)*C2)x + (B1 - B2*inv(D22)*D21)*u
+% y(k) = inv(D22)*C2*x + inv(D22)*D21*u
 
-function [sysd] = ortjiop(varargin)
+function [sysd, P, C] = ortjiop(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -153,9 +160,35 @@ function [sysd] = ortjiop(varargin)
   D = DB(1:p+m,:);
   B = DB(p+m+1:size(DB,1),:);
 
-  % Create our state space model
+  % Create the closed loop
   sysd = ss(delay, A, B, C, D);
   sysd.sampleTime = sampleTime;
+
+  % Split up B, C, D
+  B1 = B(:, 1:m);
+  B2 = B(:, m+1:m+p);
+  C1 = C(1:p, :);
+  C2 = C(p+1:m+p, :);
+  D11 = D(1:p, 1:m);
+  D12 = D(1:p, m+1:m+p);
+  D21 = D(p+1:m+p, 1:m);
+  D22 = D(p+1:m+p, m+1:m+p);
+
+  % Create plant model
+  Ad = A - B2*inv(D22)*C2;
+  Bd = B2*inv(D22);
+  Cd = C1;
+  Dd = zeros(p, m);
+  P = ss(delay, Ad, Bd, Cd, Dd);
+  P.sampleTime = sampleTime;
+
+  % Create controller model
+  Ad = A - B2*inv(D22)*C2;
+  Bd = B1 - B2*inv(D22)*D21;
+  Cd = inv(D22)*C2;
+  Dd = inv(D22)*D21;
+  C = ss(delay, Ad, Bd, Cd, Dd);
+  C.sampleTime = sampleTime;
 end
 
 function P = getPast(A, k, N)
