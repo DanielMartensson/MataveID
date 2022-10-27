@@ -38,7 +38,7 @@ function [amp, wout] = spa(varargin)
   freq = (0:n-1)*(Fs/n);
 
   % Compute the amplitudes
-  Y = abs(Y)/n*2;
+  Y = Y/n*2;
 
   % Cut away the mirror
   Y = Y(1:end/2);
