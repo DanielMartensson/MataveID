@@ -5,9 +5,6 @@ I'm building this library because I feel that the commercial libraries are just 
 
 # TODO
 
-- Upload the dampling project for ERA-DC
-- Apply Observer Controller IDentification (OCID) on a real example
-- Apply Orthogonal Decomposition of Joint Input-Output Process (ORTJIOP) on a real example
 - Easier use of Sparse regression IDentification Dynamics (SINDY)
 - Create the State Space Frequency Domain (SSFD) algorithm
 - Add ARMAX for RLS algorithm
