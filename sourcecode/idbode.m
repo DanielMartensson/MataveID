@@ -62,28 +62,7 @@ function idbode(varargin)
     subplot(2,1,2)
 
     % Create the bode angles
-    BodeAngles = zeros(1, length(H));
-
-    % This fixing the 360 degrees problem
-    R = 0;
-    for k = 1:length(H)-1
-      % Get the angle in degrees
-      a1 = angle(H(k)) * 180/pi;
-      a2 = angle(H(k+1)) * 180/pi;
-
-      % Add angle
-      BodeAngles(k) = a1 + R;
-
-      % Check if we are aboute 90
-      if(and(a2 > 170, a1 < -170))
-        R = R - 360
-      elseif(and(a1 > 170, a2 < -170))
-        R = R + 360
-      end
-    end
-    BodeAngles(end) = angle(H(end)) * 180/pi + R;
-
-    % Plot
+    BodeAngles = angle(H) * 180/pi;
     semilogx(freq, BodeAngles);
     ylabel('Phase [deg]');
     xlabel('Frequency [rad/s]');
