@@ -619,6 +619,9 @@ G = tf([1], [M b K]);
 y = lsim(G, u, t);
 close all
 
+% Add noise
+y = y + 0.0001*randn(1, length(y));
+
 %% Identify bode diagram
 idbode(u, y, fs);
 
