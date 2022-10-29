@@ -613,16 +613,14 @@ b = 52; % Nm/s^2
 G = tf([1], [M b K]);
 
 %% Frequency response
-t = linspace(0.0, 50, 3000);
-w = linspace(0, 100, 3000);
-u = 10*sin(2*pi*w.*t);
+[u, fs] = chirp(t);
 
 %% Simulation
 y = lsim(G, u, t);
-close
+close all
 
 %% Identify bode diagram
-idbode(u, y, w);
+idbode(u, y, fs);
 
 %% Check
 bode(G);
