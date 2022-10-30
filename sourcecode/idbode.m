@@ -49,8 +49,8 @@ function idbode(varargin)
 
     % Do FFT
     Nfft = 32768; % 2^15 is a good number to get a clean plot
-    fy = fft(y(i, :),Nfft);
-    fu = fft(u(i, :) ,Nfft);
+    fy = fft(y(i, :), Nfft);
+    fu = fft(u(i, :), Nfft);
     H = fy./fu;
 
     % Frequencies
