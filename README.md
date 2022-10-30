@@ -610,6 +610,7 @@ b = 52; % Nm/s^2
 G = tf([1], [M b K]);
 
 %% Frequency response
+t = linspace(0, 50, 3000);
 [u, fs] = chirp(t);
 
 %% Simulation
