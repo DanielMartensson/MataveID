@@ -6,7 +6,6 @@ I'm building this library because I feel that the commercial libraries are just 
 # TODO
 
 - Easier use of Sparse regression IDentification Dynamics (SINDY)
-- Create the State Space Frequency Domain (SSFD) algorithm
 - Add ARMAX for RLS algorithm
 
 # Caution
