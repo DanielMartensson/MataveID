@@ -38,6 +38,11 @@ function idbode(varargin)
   if(n ~= size(u, 2))
     error('Input u need to have the same length as output y')
   end
+  
+  % Check if u has the same rows as y
+  if(m ~= size(u, 1))
+    error('Input u need to have the same rows as output y')
+  end
 
   % Do Fast Fourier Transform for every input signal
   for i = 1:m
