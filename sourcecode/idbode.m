@@ -1,5 +1,5 @@
 % Plot a bode diagram from frequency data
-% Input: u(frequency input), y(frequency response), sampleTime
+% Input: u(frequency input), y(frequency response), samplingFrequency
 % Example: idbode(u, y, fs)
 % Author: Daniel Mårtensson, April 2020
 % Update 2022, Oktober 29:e Better plot
@@ -24,21 +24,21 @@ function idbode(varargin)
     error('Missing output')
   end
 
-  % Get the sample time
+  % Get the sampling frequency
   if(length(varargin) >= 3)
-    sampleTime = varargin{3};
+    samplingFrequency = varargin{3};
   else
-    error('Missing sample time');
+    error('Missing sampling frequency');
   end
 
   % Get the size of u or y and w
   [m, n] = size(y);
-  
+
   % Check if u has the same length as y
   if(n ~= size(u, 2))
     error('Input u need to have the same length as output y')
   end
-  
+
   % Check if u has the same rows as y
   if(m ~= size(u, 1))
     error('Input u need to have the same rows as output y')
@@ -49,12 +49,12 @@ function idbode(varargin)
 
     % Do FFT
     Nfft = 32768; % 2^15 is a good number to get a clean plot
-    fy = fft(y(i, :), Nfft);
-    fu = fft(u(i, :), Nfft);
+    fy = fft(y(i, :),Nfft);
+    fu = fft(u(i, :) ,Nfft);
     H = fy./fu;
 
     % Frequencies
-    freq = [0:Nfft-1]/Nfft*2*pi*sampleTime;
+    freq = [0:Nfft-1]/Nfft*2*pi*samplingFrequency;
 
     % Avoid zero
     freq(1) = freq(2);
