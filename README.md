@@ -640,29 +640,19 @@ This plots all the amplitudes from noisy data over its frequencies. Very good to
 Assume that we are using the previous example with different parameters.
 
 ```matlab
-%% Model of a mass spring damper system
-M = 1; % Kg
-K = 500; % Nm/m
-b = 3; % Nm/s^2
-G = tf([1], [M b K]);
-
-%% Frequency response
+%% Frequency input
 t = linspace(0.0, 100, 30000);
-u1 = 10*sin(2*pi*5.*t); % 5 Hz
-u2 = 10*sin(2*pi*10.*t); % 10 Hz
+u1 = 2*sin(2*pi*5.*t); % 5 Hz
+u2 = 6*sin(2*pi*10.*t); % 10 Hz
 u3 = 10*sin(2*pi*20.*t); % 20 Hz
-u4 = 10*sin(2*pi*8.*t); % 8 Hz
+u4 = 20*sin(2*pi*8.*t); % 8 Hz
 u = u1 + u2 + u3 + u4;
 
-%% Simulation
-y = lsim(G, u, t);
-figure
-
 %% Noise
-y = y + 0.001*randn(1, 30000); 
+u = u + 5*randn(1, 30000);
 
-%% Identify what frequencies we had!
-spa(y, t);
+%% Identify what frequencies and amplitudes we had!
+spa(u, t);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SPA_Result.png)
