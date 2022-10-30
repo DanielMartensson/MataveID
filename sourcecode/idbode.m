@@ -24,11 +24,11 @@ function idbode(varargin)
     error('Missing output')
   end
 
-  % Get the sampleTime
+  % Get the sample time
   if(length(varargin) >= 3)
     sampleTime = varargin{3};
   else
-    error('Missing time');
+    error('Missing sample time');
   end
 
   % Get the size of u or y and w
