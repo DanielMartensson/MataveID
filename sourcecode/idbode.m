@@ -1,5 +1,5 @@
 % Plot a bode diagram from frequency data
-% Input: u(frequency input), y(frequency response), fs(sampleTime)
+% Input: u(frequency input), y(frequency response), sampleTime
 % Example: idbode(u, y, fs)
 % Author: Daniel Mårtensson, April 2020
 % Update 2022, Oktober 29:e Better plot
@@ -33,6 +33,11 @@ function idbode(varargin)
 
   % Get the size of u or y and w
   [m, n] = size(y);
+  
+  % Check if u has the same length as y
+  if(n ~= size(u, 2))
+    error('Input u need to have the same length as output y')
+  end
 
   % Do Fast Fourier Transform for every input signal
   for i = 1:m
