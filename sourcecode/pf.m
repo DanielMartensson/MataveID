@@ -60,6 +60,9 @@ function [xhat, horizon, k, noise] = pf(varargin)
   % Compute the kernel density function from the horizon
   [P, H] = kernel_density_estimation(horizon, m, p, noise);
 
+  % Create noise vector
+  e = zeros(m, 1);
+
   % Estimate the next value
   for i = 1:m
     % Find the corresponding index of x and sorted H
@@ -76,16 +79,16 @@ function [xhat, horizon, k, noise] = pf(varargin)
 
     % This gives a smoother filtering
     horizon(i, k) = horizon(i, k)*abs(diff);
-    
+
     % Update state. It MUST be negative
     xhat(i) = x(i) - ratio*diff;
 
     % Compute the noise
-    e = xhat(i) - x(i);
-
-    % Noise matrix shifting
-    noise = shift_matrix(noise, e, p, k, m);
+    e(i) = xhat(i) - x(i);
   end
+
+  % Noise matrix shifting
+  noise = shift_matrix(noise, e, p, k, m);
 
   % Next matrix column
   if(k < p)
