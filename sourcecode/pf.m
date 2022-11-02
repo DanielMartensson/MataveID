@@ -76,10 +76,10 @@ function [xhat, horizon, k, noise] = pf(varargin)
 
     % Difference between old and new
     diff = x(i) - xhatp(i);
-
+    
     % This gives a smoother filtering
     horizon(i, k) = horizon(i, k)*abs(diff);
-
+    
     % Update state. It MUST be negative
     xhat(i) = x(i) - ratio*diff;
 
