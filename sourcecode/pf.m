@@ -72,14 +72,18 @@ function [xhat, horizon, k, noise] = pf(varargin)
     % Compute the ratio (0.5-1.0)
     % If P(i, index) = 1 (100%), then ratio = 0.5 (Good)
     % If P(i, index) = 0 (0%), then ratio = 1.0 (Problem, bad kernel density estimation...)
-    ratio = x(i)/(x(i) + x(i) * P(i, index));
+    if(x(i) ~= 0)
+      ratio = x(i)/(x(i) + x(i) * P(i, index));
+    else
+      ratio = 0;
+    end
 
     % Difference between old and new
     diff = x(i) - xhatp(i);
-    
+
     % This gives a smoother filtering
     horizon(i, k) = horizon(i, k)*abs(diff);
-    
+
     % Update state. It MUST be negative
     xhat(i) = x(i) - ratio*diff;
 
@@ -137,7 +141,7 @@ function [P, H] = kernel_density_estimation(x, m, n, noise)
 
   % Turn P into a probability where the largest number is 1.0 (100%)
   for i = 1:m
-    P(i, :) = P(i, :) / max(P(i, :));
+    P(i, :) = P(i, :) / sum(P(i, :));
   end
 end
 
