@@ -75,7 +75,7 @@ function [xhat, horizon, k, noise] = pf(varargin)
     if(x(i) ~= 0)
       ratio = x(i)/(x(i) + x(i) * P(i, index));
     else
-      ratio = 0;
+      ratio = eps;
     end
 
     % Difference between old and new
