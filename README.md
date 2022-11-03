@@ -1045,7 +1045,7 @@ The particle filter is using Kernel Density Estimation algorithm to create the i
 [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
 ```
 
-### Particle Filter example
+### Particle Filter example 1
 ```matlab
 % Create inputs
 N = 200;
@@ -1067,7 +1067,7 @@ e = 0.1*randn(1, length(u));
 y = y + e;
 
 % Do particle filtering - Tuning parameters
-p = 30;                            % Length of the horizon (Change this)
+p = 4;                            % Length of the horizon (Change this)
 
 % Particle filter - No tuning
 [m, n] = size(y);                  % Dimension of the output state and length n
@@ -1090,7 +1090,42 @@ plot(t, y, t, yf, '-r')
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result1.png)
+
+### Particle Filter example 2
+```matlab
+X = dlmread('ParticleFilterDataRaw.csv');
+t = X(:, 1)';
+y = X(:, 2)';
+%y(1) = y(2);
+
+% Do particle filtering - Tuning parameters
+p = 14;                            % Length of the horizon (Change this)
+
+% Particle filter - No tuning
+[m, n] = size(y);                  % Dimension of the output state and length n
+yf = zeros(m, n);                  % Filtered outputs
+horizon = zeros(m, p);             % Horizon matrix
+xhatp = zeros(m, 1);               % Past estimated state
+k = 1;                             % Horizon counting (will be counted to p. Do not change this)
+noise = rand(m, p);                % Random noise, not normal distributed
+
+% Particle filter - Simulation
+for i = 1:n
+  x = y(:, i);                     % Get the state
+  [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+  yf(:, i) = xhat;                 % Estimated state
+  xhatp = xhat;                    % This is the past estimated state
+end
+
+% Plot restult
+plot(t, y)
+hold on
+plot(t, yf, '-r')
+grid on
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result2.png)
 
 ### Support Vector Machine with C code generation
 This algorithm can do C code generation for nonlinear models. It's a very simple algorithm because the user set out the support points by using the mouse pointer. When all the supports are set ut, then the algorithm will generate C code for you so you can apply the SVM model in pure C code using CControl library. 
