@@ -1097,7 +1097,6 @@ grid on
 X = dlmread('ParticleFilterDataRaw.csv');
 t = X(:, 1)';
 y = X(:, 2)';
-%y(1) = y(2);
 
 % Do particle filtering - Tuning parameters
 p = 14;                            % Length of the horizon (Change this)
