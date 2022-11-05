@@ -72,10 +72,10 @@ function [xhat, horizon, k, noise] = pf(varargin)
     % Compute the ratio (0.5-1.0)
     % If P(i, index) = 1 (100%), then ratio = 0.5 (Good)
     % If P(i, index) = 0 (0%), then ratio = 1.0 (Problem, bad kernel density estimation...)
-    if(x(i) ~= 0)
+    if(abs(x(i)) > 0)
       ratio = x(i)/(x(i) + x(i) * P(i, index));
     else
-      ratio = eps;
+      ratio = 0.5;
     end
 
     % Difference between old and new
