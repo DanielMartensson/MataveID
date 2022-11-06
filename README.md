@@ -337,14 +337,14 @@ subplot(2, 1, 1)
 legend('Up model', 'Down model', 'Measured');
 title('Hanging load - Hydraulic system')
 xlabel('Time [s]')
-ylabel('Position');
+ylabel('Hanging load position');
 
 % Place legend, title, labels for the noise
 subplot(2, 1, 2)
 legend('Noise up', 'Noise down');
 title('Hanging load - Hydraulic system')
 xlabel('Time [s]')
-ylabel('Position');
+ylabel('Noise');
 ````
 
 Here we can se that the first model follows the measured position perfect. The "down-curve" should be measured a little bit longer to get a perfect linear model.
