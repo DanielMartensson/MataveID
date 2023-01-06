@@ -140,7 +140,7 @@ function [sysd] = cca(varargin)
   e = Y - Cd*X - Dd*U;
 
   % Computing the covariance matrix
-  covariance = [w*w' w*e'; e*w' e*e']/(N-1);
+  covariance = cov([w' e']); % Old way = [w*w' w*e'; e*w' e*e']/(N-1);
 
   % Compute Q, R, S for the riccati equation
   Q = covariance(1:n, 1:n);
