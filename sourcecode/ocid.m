@@ -113,7 +113,7 @@ function [sysd, K, L] = ocid(varargin)
     yt = [y(j, p+1:l); uf(j, p+1:l)];
 
     % Solve for non-filtred markov parameters with tikhonov regularization
-    Ybar = yt*inv(V'*V + regularization*eye(size(V'*V)))*V';
+    Ybar = yt*((V'*V + regularization*eye(size(V,2)))\(V'));
 
     % Get D matrix
     D0 = Ybar(1, 1); % This is YBar_{0}
@@ -135,10 +135,22 @@ function [sysd, K, L] = ocid(varargin)
 
     % Save them into one markov parameter Y
     index = 1;
-    ak = bk = ck = dk = 1;
-    ahatp = bhatp = chatp = dhatp = 0;
-    ahorizon = bhorizon = chorizon = dhorizon = zeros(1, alpha);
-    anoise = bnoise = cnoise = dnoise = rand(1, alpha);
+    ak = 1;
+    bk = 1;
+    ck = 1;
+    dk = 1;
+    ahatp = 0;
+    bhatp = 0;
+    chatp = 0;
+    dhatp = 0;
+    ahorizon = zeros(1, alpha);
+    bhorizon = zeros(1, alpha);
+    chorizon = zeros(1, alpha);
+    dhorizon = zeros(1, alpha);
+    anoise = rand(1, alpha);
+    bnoise = rand(1, alpha);
+    cnoise = rand(1, alpha);
+    dnoise = rand(1, alpha);
     for i = 1:2:2*p
       % Particle filtering for Y11
       a = Y11(index);
