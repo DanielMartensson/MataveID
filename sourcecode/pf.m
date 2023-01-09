@@ -147,5 +147,5 @@ end
 
 function y = normal_pdf(x, mu, sigma)
   % Normal distribution
-  y = 1/(sigma*sqrt(2*pi))*e.^(-1/2*(x-mu).^2/sigma^2);
+  y = 1/(sigma*sqrt(2*pi))*exp(-1/2*(x-mu).^2/sigma^2);
 end
