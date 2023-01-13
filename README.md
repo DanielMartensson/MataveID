@@ -25,7 +25,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `svm.m` | Ongoing | Find a practical example with image classification and PCA |
 | `pf.m` | Complete | Nothing to do here |
 | `rpca.m` | Complete | Nothing to do here |
-| `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix |
+| `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
 | `bj.m` | Not created yet | Create a box jenkins model that estimates an arma model or arima |
 | `arx.m` | Not created yet | Create a ARX-model estimator that uses `armax.m` |
 | `oe.m` | Not created yet | Create a OE-model estimator that uses `armax.m` |
