@@ -5,7 +5,28 @@ I'm building this library because I feel that the commercial libraries are just 
 
 # TODO
 
-- Easier use of Sparse regression IDentification Dynamics (SINDY)
+| Function  | Status | Comment | 
+| ------------- | ------------- |
+| `cca.m`  | Complete  | Returns kalman gain matrix `K` |
+| `rls.m`  | Complete  | Returns kalman gain matrix `K` |
+| `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
+| `n4sid.m` | Ongoing | Going to return kaman gain matrix `K` |
+| `moesp.m` | Ongoing | Going to return kaman gain matrix `K` |
+| `sra.m` | Ongoing | Going to return kaman gain matrix `K`, return state space model instead of polynomial model |
+| `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
+| `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
+| `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
+| `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
+| `sr_ukf_state_estimation.m` | Ongoing | Use with `sindy.m` and a pratical example |
+| `filtilf2.m` | Ongoing | Rename it to `filtfilt.m` instead |
+| `spa.m` | Complete | Nothing to do here |
+| `ortjiop.m` | Ongoing | Find a practical example |
+| `idbode.m` | Ongoing | Find a practical example |
+| `ica.m` | Ongoing | Find a practical example |
+| `svm.m` | Ongoing | Find a practical example with image classification and PCA |
+| `pf.m` | Complete | Nothing to do here |
+| `rpca.m` | Complete | Nothing to do here |
+| `okid.m` | Ongoing | Create the file and make sure it is robust against noise |
 
 # Caution
 
