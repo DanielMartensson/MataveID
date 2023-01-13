@@ -15,7 +15,6 @@ I'm building this library because I feel that the commercial libraries are just 
 | `sra.m` | Ongoing | Find a pratical example of a hydraulical stochastic system |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
-| `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
 | `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
 | `sr_ukf_state_estimation.m` | Ongoing | Use with `sindy.m` and a pratical example |
 | `filtilf2.m` | Ongoing | Rename it to `filtfilt.m` instead |
