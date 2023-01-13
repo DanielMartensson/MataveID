@@ -8,7 +8,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | Function  | Status | Comment | 
 | ------------- | ------------- | ------------------- |
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
-| `rls.m`  | Oncoging  | Returns kalman gain matrix `K`, need to be applied to `bj.m` |
+| `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, need to be applied to `bj.m` |
 | `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
 | `n4sid.m` | Ongoing | Going to return kaman gain matrix `K` |
 | `moesp.m` | Ongoing | Going to return kaman gain matrix `K` |
