@@ -1,11 +1,11 @@
 % Recursive Least Square
 % Input: u(input signal), y(output signal), np(number of poles of A(q)), nz(number of zeros of B(q)), nze(number of zeros for C(q)), sampleTime, delay(optional), forgetting(optional)
 % Output: sysd(Discrete state space model with noise), K(Kalman gain matrix)
-% Example 1: [sysd] = rls(u, y, np, nz, nze, sampleTime);
-% Example 2: [sysd] = rls(u, y, np, nz, nze, sampleTime, forgetting);
+% Example 1: [sysd, K] = rls(u, y, np, nz, nze, sampleTime);
+% Example 2: [sysd, K] = rls(u, y, np, nz, nze, sampleTime, forgetting);
 % Author: Daniel Mårtensson, September 2019. Follows the litterature Adaptive Control by Karl Johan Åström. Page 62. ISBN 9780486462783
 
-function [sysd] = rls(varargin)
+function [sysd, K] = rls(varargin)
    % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -139,9 +139,9 @@ function [sysd] = rls(varargin)
   % Check if we could include a kalman gain matrix into the system
   if(np == nze)
     K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition
-    sysd.B = [sysd.B K];
   else
     disp('No kalman filter included at B-matrix, due to np =/= nze')
+    K = 0;
   end
 
 end
