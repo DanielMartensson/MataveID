@@ -8,7 +8,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | Function  | Status | Comment | 
 | ------------- | ------------- | ------------------- |
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
-| `rls.m`  | Complete  | Returns kalman gain matrix `K` |
+| `rls.m`  | Oncoging  | Returns kalman gain matrix `K`, need to be applied to `bj.m` |
 | `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
 | `n4sid.m` | Ongoing | Going to return kaman gain matrix `K` |
 | `moesp.m` | Ongoing | Going to return kaman gain matrix `K` |
@@ -27,6 +27,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `pf.m` | Complete | Nothing to do here |
 | `rpca.m` | Complete | Nothing to do here |
 | `okid.m` | Ongoing | Create the file and make sure it is robust against noise |
+| `bj.m` | Ongoing | Create a box jenkins model that estimates an arma model or arima |
 
 # Caution
 
