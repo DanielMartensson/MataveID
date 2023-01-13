@@ -29,7 +29,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `okid.m` | Ongoing | Create the file and make sure it is robust against noise |
 | `bj.m` | Ongoing | Create a box jenkins model that estimates an arma model or arima |
 | `arx.m` | Ongoing | Create a ARX-model estimator that uses `armax.m` |
-| `oe.m` | Ongoing | Create a EO-model estimator that uses `armax.m` |
+| `oe.m` | Ongoing | Create a OE-model estimator that uses `armax.m` |
 | `arima.m` | Ongoing | Create a ARIMA-model estimator |
 
 
