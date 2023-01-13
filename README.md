@@ -189,48 +189,51 @@ ylim([0 12]);
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
 
 ### CCA - Canonical Correlation Analysis
-If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA returns a state space model that have a kalman filter gain matrix K included.
+If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA returns a state space model and a kalman gain matrix K.
 
 ```matlab
-[sysd] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+[sysd, K] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
 ```
 
 ### Example CCA
 ```matlab
-% Create input signal
-amplitude1 = 10;
-amplitude2 = 50;
-[u1, t] = gensig('square', amplitude1, 100, 200);
-[u2, t] = gensig('square', amplitude2, 50, 150);
-u = [u1 u2];
+clc; clear; close all;
 
-% Create time vector
-t = linspace(0, 30, length(u));
+% Create model
+G = tf(1, [1 1.5 1]);
 
-% Create output signals
-G = tf([1], [1 0.9 1]);
+% Create control inputs
+[u, t] = gensig('square', 10, 10, 100);
+u = [u*5 u*2 -u 10*u -2*u];
+t = linspace(0, 50, length(u));
+
+% Simulate
 y = lsim(G, u, t);
 close
 
-% Add much process npise with zero mean
-e = 1.5*randn(1, length(y));
-yn = y + e;
+% Add noise
+yn = y + randn(1, length(y));
 
-% Indentify model that have a kalman gain matrix included
+% Identify the model
 sampleTime = t(2) - t(1);
-systemorder = 2;
 delay = 0;
-k = 100; % 100 is tuning parameter
-[sysd] = cca(u, yn, k, sampleTime, delay, systemorder);
-close
+systemOrder = 2;
+k = 30;
+[sysd, K] = cca(u, yn, k, sampleTime, delay, systemOrder);
 
+% Create an observer
+delay = sysd.delay;
+A = sysd.A;
+B = sysd.B;
+C = sysd.C;
+D = sysd.D;
+observer = ss(delay, A - K*C, [B K], C, [D 0]);
+observer.sampleTime = sysd.sampleTime;
 
-% Simulate the model
-[s, ts] = lsim(sysd, [u; e*0], t); % e*0 means that we disable the noise
+% Simulate the observer
+[yobs, tobs] = lsim(observer, [u; yn], t);
 close
-plot(t, yn, ts, s, 'linewidth', 2, '--r');
-title('CCA');
-legend('Real measurement', 'Identified')
+plot(t, yn, '-r', tobs, yobs, '-b');
 grid on
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/CCA_Result.png)
