@@ -9,10 +9,10 @@ I'm building this library because I feel that the commercial libraries are just 
 | ------------- | ------------- | ------------------- |
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
 | `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, rename `rls.m` to `armax.m`. Use arguments `armax(u,y,[na nb nc nk])` as in MATLAB |
-| `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
-| `n4sid.m` | Ongoing | Going to return kaman gain matrix `K` |
-| `moesp.m` | Ongoing | Going to return kaman gain matrix `K` |
-| `sra.m` | Ongoing | Going to return kaman gain matrix `K`, return state space model instead of polynomial model |
+| `eradc.m` | Ongoing | Show an example how to use `eradc.m` with `lqe.m` |
+| `n4sid.m` | Ongoing | Show an example how to use `n4sid.m` with `lqe.m`|
+| `moesp.m` | Ongoing | Show an example how to use `moesp.m` with `lqe.m` |
+| `sra.m` | Ongoing | Find a pratical example of a hydraulical stochastic system |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
 | `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
@@ -26,7 +26,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `svm.m` | Ongoing | Find a practical example with image classification and PCA |
 | `pf.m` | Complete | Nothing to do here |
 | `rpca.m` | Complete | Nothing to do here |
-| `okid.m` | Ongoing | Create the file and make sure it is robust against noise |
+| `okid.m` | Ongoing | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix |
 | `bj.m` | Ongoing | Create a box jenkins model that estimates an arma model or arima |
 | `arx.m` | Ongoing | Create a ARX-model estimator that uses `armax.m` |
 | `oe.m` | Ongoing | Create a OE-model estimator that uses `armax.m` |
