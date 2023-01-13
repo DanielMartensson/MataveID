@@ -298,7 +298,7 @@ This is a hanging load of a hydraulic system. This system is a linear system due
 
 ```matlab
 % Load data
-X = csvread('HangingLoad.csv');
+X = csvread('..\data\HangingLoad.csv');
 t = X(:, 1)'; % Time
 r = X(:, 2)'; % Reference
 y = X(:, 3)'; % Output position
@@ -317,13 +317,21 @@ nze = 1; % Number of zeros of C(q)
 u_up = r(1:l/2);
 e_up = randn(1, length(u_up)); % Noise
 y_up = y(1:l/2) + e_up;
-sysd_up = rls(u_up, y_up, np, nz, nze, sampleTime);
+[sysd, K] = rls(u_up, y_up, np, nz, nze, sampleTime);
+
+% Observer
+sysd_up = ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
+sysd_up.sampleTime = sysd.sampleTime;
 
 % Model down
 u_down = r(l/2+1:end);
 e_down = randn(1, length(u_down)); % Noise
 y_down = y(l/2+1:end) + e_down;
-sysd_down = rls(u_down, y_down, np, nz, nze, sampleTime);
+[sysd, K] = rls(u_down, y_down, np, nz, nze, sampleTime);
+
+% Observer
+sysd_down = ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
+sysd_down.sampleTime = sysd.sampleTime;
 
 % Simulate model up
 time_up = t(1:l/2);
