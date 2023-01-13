@@ -1,15 +1,15 @@
 % Canoncial Correlation Analysis
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
 % Output: sysd(Discrete state space model with a kalman filter included)
-% Example 1: [sysd] = cca(u, y, k, sampleTime);
-% Example 2: [sysd] = cca(u, y, k, sampleTime, delay);
-% Example 3: [sysd] = cca(u, y, k, sampleTime, delay, systemorder);
+% Example 1: [sysd, K] = cca(u, y, k, sampleTime);
+% Example 2: [sysd, K] = cca(u, y, k, sampleTime, delay);
+% Example 3: [sysd, K] = cca(u, y, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, September 2022. Following page 292 from Subspace Methods for System Identification, ISBN-10: 1852339810
 % Model structure where e(k) is process noise with zero mean
 % x(k+1) = Ax(k) + BK[u(k); e(k)]
 % y(k) = Cx(k) + DI[u(k); e(k)]
 
-function [sysd] = cca(varargin)
+function [sysd, K] = cca(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -154,10 +154,11 @@ function [sysd] = cca(varargin)
 
   % Find kalman filter gain matrix K
   [~, K] = are(riccati, Q, R, S);
+  K = K';
 
    % Create state space model now
   delay = 0;
-  sysd = ss(delay, Ad, [Bd K'], Cd, [Dd eye(size(Dd))]);
+  sysd = ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 end
 
