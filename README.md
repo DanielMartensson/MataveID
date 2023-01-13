@@ -6,7 +6,7 @@ I'm building this library because I feel that the commercial libraries are just 
 # TODO
 
 | Function  | Status | Comment | 
-| ------------- | ------------- |
+| ------------- | ------------- | ------------------- |
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
 | `rls.m`  | Complete  | Returns kalman gain matrix `K` |
 | `eradc.m` | Ongoing | Going to return kaman gain matrix `K` |
