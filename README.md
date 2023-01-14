@@ -10,7 +10,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
 | `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, rename `rls.m` to `armax.m`. Use arguments `armax(u,y,[na nb nc nk])` as in MATLAB |
 | `eradc.m` | Ongoing | Show an example how to use `eradc.m` with `lqe.m` |
-| `n4sid.m` | Ongoing | Show an example how to use `n4sid.m` with `lqe.m`|
+| `n4sid.m` | Complete | Added kalman filter |
 | `moesp.m` | Ongoing | Show an example how to use `moesp.m` with `lqe.m` |
 | `sra.m` | Ongoing | Find a pratical example of a hydraulical stochastic system |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
@@ -159,7 +159,7 @@ plot(t, y)
 N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
 
 ```matlab
-[sysd] = n4sid(u, y, k, sampleTime, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+[sysd, K] = n4sid(u, y, k, sampleTime, ktune, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc. ktune = kalman filter tuning such as 0.1, 0.01 etc
 ```
 
 ### Example N4SID
@@ -172,8 +172,9 @@ Here I programmed a Beijer PLC that controls the multivariable cylinder system. 
 
 
 ```matlab
+clc; clear; close all;
 % Load the data
-X = csvread('MultivariableCylinders.csv');
+X = csvread('..\data\MultivariableCylinders.csv');
 t = X(:, 1);
 r0 = X(:, 2);
 r1 = X(:, 3);
@@ -189,11 +190,18 @@ t = t';
 % Create the model
 k = 10;
 sampleTime = t(2) - t(1);
+ktune = 0.01; % Kalman filter tuning
 % This won't result well with MOESP and system order = 2
-[sysd] = n4sid(u, y, k, sampleTime); % Delay argment is default 0. Select model order = 2 when n4sid ask you
+[sysd, K] = n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
+
+% Create the observer
+observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer.sampleTime = sysd.sampleTime;
+
+observer
 
 % Do simulation
-[outputs, T, x] = lsim(sysd, y, t);
+[outputs, T, x] = lsim(observer, [u; y], t);
 close
 plot(T, outputs(1, :), t, y(1, :))
 title('Cylinder 0');
