@@ -16,11 +16,18 @@ t = t';
 % Create the model
 k = 10;
 sampleTime = t(2) - t(1);
+ktune = 0.01; % Kalman filter tuning
 % This won't result well with MOESP and system order = 2
-[sysd] = n4sid(u, y, k, sampleTime); % Delay argment is default 0. Select model order = 2 when n4sid ask you
+[sysd, K] = n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
+
+% Create the observer
+observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer.sampleTime = sysd.sampleTime;
+
+observer
 
 % Do simulation
-[outputs, T, x] = lsim(sysd, y, t);
+[outputs, T, x] = lsim(observer, [u; y], t);
 close
 plot(T, outputs(1, :), t, y(1, :))
 title('Cylinder 0');
