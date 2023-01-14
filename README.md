@@ -799,7 +799,9 @@ Robust principal component analysis(RPCA) is a great tool if you want to separat
 ### Robust Principal Component Analysis example
 
 ```matlab
-X = imread('bob.jpg'); % Load Mr Bob
+clc; clear; close all;
+
+X = imread('..\pictures\bob.png'); % Load Mr Bob
 X = rgb2gray(X);       % Grayscale 8 bit
 X = double(X);         % Must be double 40 => 40.0
 [L, S] = rpca(X);      % Start RPCA. Our goal is to get L matrix
@@ -811,7 +813,7 @@ imshow(uint8(L))       % After RPCA
 title('After RPCA - Bob')
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RPCA_Bob.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RPCA_Result.png)
 
 ### Independent Component Analysis
 Independent component analysis(ICA) is a tool if you want to separate independent signals from each other. This is not a filter algorithm, but instead of removing noise, it separate the disturbances from the signals. The disturbances are created from other signals. Assume that you have an engine and you are measuring vibration in X, Y and Z-axis. These axis will affect each other and therefore the signals will act like they are mixed. ICA separate the mixed signals into clean and independent signals.
