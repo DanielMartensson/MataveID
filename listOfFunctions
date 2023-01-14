@@ -1,5 +1,5 @@
 eradc.m
-filtfilt2.m
+filtfilt.m
 idbode.m
 ocid.m
 rls.m
