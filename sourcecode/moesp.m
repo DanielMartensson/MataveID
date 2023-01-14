@@ -1,12 +1,14 @@
 % Multivariable Output-Error State Space
-% Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional), systemorder(optional)
+% Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, ktune(kalman tuning, optimal), delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model)
-% Example 1: [sysd] = moesp(u, y, k, sampleTime);
-% Example 2: [sysd] = moesp(u, y, k, sampleTime, delay);
-% Example 3: [sysd] = moesp(u, y, k, sampleTime, delay, systemorder);
+% Example 1: [sysd, K] = moesp(u, y, k, sampleTime);
+% Example 2: [sysd, K] = moesp(u, y, k, sampleTime, ktune);
+% Example 3: [sysd, K] = moesp(u, y, k, sampleTime, delay);
+% Example 4: [sysd, K] = moesp(u, y, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, Oktober 2022
+% Update: Added kalman filter, Januari 2023
 
-function [sysd] = moesp(varargin)
+function [sysd, K] = moesp(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing imputs')
@@ -40,16 +42,23 @@ function [sysd] = moesp(varargin)
     error('Missing sample time');
   end
 
-  % Get the delay
+  % Get the kalman filter tuning
   if(length(varargin) >= 5)
-    delay = varargin{5};
+    ktune = varargin{5};
+  else
+    ktune = 1;
+  end
+
+  % Get the delay
+  if(length(varargin) >= 6)
+    delay = varargin{6};
   else
     delay = 0; % If no delay was given
   end
 
   % Get the order of the system
-  if(length(varargin) >= 6)
-    systemorder = varargin{6};
+  if(length(varargin) >= 7)
+    systemorder = varargin{7};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -120,6 +129,40 @@ function [sysd] = moesp(varargin)
   % Create the model
   sysd = ss(0, A, B, C, D);
   sysd.sampleTime = sampleTime;
+
+  % Create kalman filter
+  x = zeros(size(A, 1), 1);
+  for k = 1:size(u, 2)
+    xhat(:,k) = x; % Save the states
+    yhat(:,k) = C*x + D*u(:,k);
+    x = A*x + B*u(:,k); % Update state vector
+  end
+
+  % Find the real states
+  x = C\(y-D*u);
+
+  % Find the noise
+  e = y - yhat;
+
+  % Find the disturbance
+  w = (x - xhat)*ktune;
+
+  % Computing the covariance matrix
+  covariance = cov([w' e']); % Old way = [w*w' w*e'; e*w' e*e']/(N-1);
+
+  % Compute Q, R, S for the riccati equation
+  Q = covariance(1:n, 1:n);
+  R = covariance(n+1:n+ny, n+1:n+ny);
+  S = covariance(1:n, n+1:n+ny);
+
+  % Create a temporary state space model
+  delay = 0;
+  riccati = ss(delay, A', C', B', D');
+  riccati.sampleTime = sampleTime;
+
+  % Find kalman filter gain matrix K
+  [~, K] = are(riccati, Q, R, S);
+  K = K';
 end
 
 function [nx] = modelReduction(S, systemorder)
