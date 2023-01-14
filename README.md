@@ -9,9 +9,9 @@ I'm building this library because I feel that the commercial libraries are just 
 | ------------- | ------------- | ------------------- |
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
 | `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, rename `rls.m` to `armax.m`. Use arguments `armax(u,y,[na nb nc nk])` as in MATLAB |
-| `eradc.m` | Ongoing | Show an example how to use `eradc.m` with `lqe.m` |
-| `n4sid.m` | Complete | Added a kalman filter |
-| `moesp.m` | Complete | Added a kalman filter |
+| `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
+| `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
+| `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `sra.m` | Ongoing | Find a pratical example of a hydraulical stochastic system |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
@@ -406,13 +406,15 @@ ERA/DC was invented 1987 and is a successor from ERA, that was invented 1985 at 
 Use this algorithm if you got impulse data from e.g structural mechanics.
 
 ```matlab
-[sysd] = eradc(g, sampleTime, systemorder);
+[sysd, K] = eradc(g, sampleTime, ktune, delay systemorder);
 ```
 ### Example ERA/DC for MIMO systems
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ERADC_System.png)
 
 ```matlab
+clc; clear; close all
+
 %% Parameters
 m1 = 2.3;
 m2 = 3.1;
@@ -441,6 +443,10 @@ buss = ss(delay,A,B,C,D);
 %% Simulation
 [g, t] = impulse(buss, 10);
 
+% Reconstruct the input impulse signal from impulse.m
+u = zeros(size(g));
+u(1) = 1;
+
 %% Add 15% noise
 v = 2*randn(1, 1000);
 for i = 1:length(g)-1
@@ -451,14 +457,21 @@ end
 
 %% Identification
 systemorder = 10;
-[sysd] = eradc(g, t(2) - t(1), systemorder);
+ktune = 0.09;
+sampleTime = t(2) - t(1);
+delay = 0;
+[sysd, K] = eradc(g, sampleTime, ktune, delay systemorder);
+
+% Create the observer
+observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer.sampleTime = sysd.sampleTime;
 
 %% Validation
-gt = impulse(sysd, 10);
+[gf, tf] = lsim(observer, [u; g], t);
 close
 
 %% Check
-plot(t, g, t, gt(:, 1:2:end))
+plot(t, g, tf, gf)
 legend('Data 1', 'Data 2', 'Identified 1', 'Identified 2', 'location', 'northwest')
 grid on
 ```
