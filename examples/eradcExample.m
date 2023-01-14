@@ -28,6 +28,10 @@ buss = ss(delay,A,B,C,D);
 %% Simulation
 [g, t] = impulse(buss, 10);
 
+% Reconstruct the input impulse signal from impulse.m
+u = zeros(size(g));
+u(1) = 1;
+
 %% Add 15% noise
 v = 2*randn(1, 1000);
 for i = 1:length(g)-1
@@ -38,13 +42,20 @@ end
 
 %% Identification
 systemorder = 10;
-[sysd] = eradc(g, t(2) - t(1), systemorder);
+ktune = 0.09;
+sampleTime = t(2) - t(1);
+delay = 0;
+[sysd, K] = eradc(g, sampleTime, ktune, delay, systemorder);
+
+% Create the observer
+observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer.sampleTime = sysd.sampleTime;
 
 %% Validation
-gt = impulse(sysd, 10);
+[gf, tf] = lsim(observer, [u; g], t);
 close
 
 %% Check
-plot(t, g, t, gt(:, 1:2:end))
+plot(t, g, tf, gf)
 legend('Data 1', 'Data 2', 'Identified 1', 'Identified 2', 'location', 'northwest')
 grid on
