@@ -24,8 +24,6 @@ ktune = 0.01; % Kalman filter tuning
 observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
 observer.sampleTime = sysd.sampleTime;
 
-observer
-
 % Do simulation
 [outputs, T, x] = lsim(observer, [u; y], t);
 close
