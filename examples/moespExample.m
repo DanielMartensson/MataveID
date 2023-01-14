@@ -1,16 +1,22 @@
 clc; clear close all;
-N = 200;
-t = linspace(0, 100, N); % Time vector
-u = sin(t); % Input signal
-G = tf(1, [1 0.2 3]); % Model
+[u, t] = gensig('square', 10, 10, 100);
+G = tf(1, [1 0.8 3]); % Model
 y = lsim(G, u, t); % Simulation
+y = y + 0.4*rand(1, length(t));
 close
-k = 20;
+k = 30;
 sampleTime = t(2) - t(1);
-systemorder = 2;
+systemorder = 3;
 delay = 0;
-sysd = moesp(u, y, k, sampleTime, delay, systemorder); % This won't result well with N4SID
+ktune = 0.01;
+[sysd, K] = moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
+
+% Create the observer
+observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer.sampleTime = sysd.sampleTime;
+
+% Check observer
+[yf, tf] = lsim(observer, [u; y], t);
 close
-lsim(sysd, u, t);
-hold on
-plot(t, y)
+plot(tf, yf, t, y)
+grid on
