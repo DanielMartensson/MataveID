@@ -17,7 +17,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
 | `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
 | `sr_ukf_state_estimation.m` | Ongoing | Use with `sindy.m` and a pratical example |
-| `filtilf2.m` | Ongoing | Rename it to `filtfilt.m` instead |
+| `filtfilt.m` | Complete | Renamed it to `filtfilt.m` |
 | `spa.m` | Complete | Nothing to do here |
 | `ortjiop.m` | Ongoing | Find a practical example |
 | `idbode.m` | Ongoing | Find a practical example |
@@ -42,7 +42,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - RLS for all kind of arbitary single input and single output systems
 - OCID for closed loop identification, observer identification and controller identification
 - ORTJIOP for stochastic closed loop, plant and controller identification
-- FILTFILT2 for low pass filtering without phase delay
+- FILTFILT for low pass filtering without phase delay
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for filtering data and images
@@ -744,14 +744,14 @@ spa(u, t);
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SPA_Result.png)
 
-### Filtfilt2 - Zero Phase Filter
-This filter away noise with a good old low pass filter that are being runned twice. Filtfilt2 is equal to the famous function filtfilt, but this is a regular .m file and not a C/C++ subroutine. Easy to use and recommended. 
+### Filtfilt - Zero Phase Filter
+This filter away noise with a good old low pass filter that are being runned twice. Filtfilt is equal to the famous function filtfilt in MATLAB, but this is a regular .m file and not a C/C++ subroutine. Easy to use and recommended. 
 
 ```matlab
-[y] = filtfilt2(y, t, K);
+[y] = filtfilt(y, t, K);
 ```
 
-### Filtfilt2 Example
+### Filtfilt Example
 
 We are using the previous example here as well.
 
@@ -779,13 +779,13 @@ end
 
 %% Filter away the noise
 lowpass = 0.2;
-[yf] = filtfilt2(y, t, lowpass);
+[yf] = filtfilt(y, t, lowpass);
 
 %% Check
 plot(t, yf, t, y);
 legend("Filtered", "Noisy");
 ```
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT2_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT_Result.png)
 
 ### Robust Principal Component Analysis
 Robust principal component analysis(RPCA) is a great tool if you want to separate noise from data `X` into a matrix `S`. `RPCA` is a better tool than `PCA` because it using optimization and not only reconstructing the image using `SVD`, which `PCA` only does.
