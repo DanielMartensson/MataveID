@@ -1,6 +1,6 @@
 % Canoncial Correlation Analysis
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
-% Output: sysd(Discrete state space model with a kalman filter included)
+% Output: sysd(Discrete state space model), K(Kalman Gain matrix)
 % Example 1: [sysd, K] = cca(u, y, k, sampleTime);
 % Example 2: [sysd, K] = cca(u, y, k, sampleTime, delay);
 % Example 3: [sysd, K] = cca(u, y, k, sampleTime, delay, systemorder);
