@@ -6,6 +6,7 @@
 % Example 3: [sysd, K] = n4sid(u, y, k, sampleTime, ktune, delay, systemorder);
 % Author: Daniel Mårtensson, December 2017
 % Update: Added system order, Oktober 2022
+% Update: Added kalman filter, Januari 2023
 
 function [sysd, K] = n4sid(varargin)
   % Check if there is any input
