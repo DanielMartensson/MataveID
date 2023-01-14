@@ -5,9 +5,6 @@
 % Example 2: [sysd, K] = cca(u, y, k, sampleTime, delay);
 % Example 3: [sysd, K] = cca(u, y, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, September 2022. Following page 292 from Subspace Methods for System Identification, ISBN-10: 1852339810
-% Model structure where e(k) is process noise with zero mean
-% x(k+1) = Ax(k) + BK[u(k); e(k)]
-% y(k) = Cx(k) + DI[u(k); e(k)]
 
 function [sysd, K] = cca(varargin)
   % Check if there is any input
