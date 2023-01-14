@@ -8,7 +8,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | Function  | Status | Comment | 
 | ------------- | ------------- | ------------------- |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
-| `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, rename `rls.m` to `armax.m`. Use arguments `armax(u,y,[na nb nc nk])` as in MATLAB |
+| `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
@@ -27,8 +27,10 @@ I'm building this library because I feel that the commercial libraries are just 
 | `rpca.m` | Complete | Nothing to do here |
 | `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
 | `bj.m` | Not created yet | Create a box jenkins model that estimates an arma model or arima |
-| `arx.m` | Not created yet | Create a ARX-model estimator that uses `armax.m` |
-| `oe.m` | Not created yet | Create a OE-model estimator that uses `armax.m` |
+| `arx.m` | Not created yet | Create a ARX-model estimator that uses `rls.m` |
+| `oe.m` | Not created yet | Create a OE-model estimator that uses `rls.m` |
+| `armax.m` | Not created yet | Create a armax-model estimator that uses `rls.m` |
+
 
 
 # Caution
