@@ -7,7 +7,7 @@ I'm building this library because I feel that the commercial libraries are just 
 
 | Function  | Status | Comment | 
 | ------------- | ------------- | ------------------- |
-| `cca.m`  | Complete  | Returns kalman gain matrix `K` |
+| `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, rename `rls.m` to `armax.m`. Use arguments `armax(u,y,[na nb nc nk])` as in MATLAB |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
