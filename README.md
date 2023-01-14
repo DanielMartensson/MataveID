@@ -10,8 +10,8 @@ I'm building this library because I feel that the commercial libraries are just 
 | `cca.m`  | Complete  | Returns kalman gain matrix `K` |
 | `rls.m`  | Ongoging  | Returns kalman gain matrix `K`, rename `rls.m` to `armax.m`. Use arguments `armax(u,y,[na nb nc nk])` as in MATLAB |
 | `eradc.m` | Ongoing | Show an example how to use `eradc.m` with `lqe.m` |
-| `n4sid.m` | Complete | Added kalman filter |
-| `moesp.m` | Ongoing | Show an example how to use `moesp.m` with `lqe.m` |
+| `n4sid.m` | Complete | Added a kalman filter |
+| `moesp.m` | Complete | Added a kalman filter |
 | `sra.m` | Ongoing | Find a pratical example of a hydraulical stochastic system |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
@@ -136,27 +136,34 @@ Try MOESP or N4SID. They give the same result, but sometimes MOESP can be better
 ### Example MOESP
 
 ```matlab
-N = 200;
-t = linspace(0, 100, N); % Time vector
-u = sin(t); % Input signal
-G = tf(1, [1 0.2 3]); % Model
+clc; clear close all;
+[u, t] = gensig('square', 10, 10, 100);
+G = tf(1, [1 0.8 3]); % Model
 y = lsim(G, u, t); % Simulation
+y = y + 0.4*rand(1, length(t));
 close
-k = 20;
+k = 30;
 sampleTime = t(2) - t(1);
-systemorder = 2;
+systemorder = 3;
 delay = 0;
-sysd = moesp(u, y, k, sampleTime, delay, systemorder); % This won't result well with N4SID
+ktune = 0.01;
+[sysd, K] = moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
+
+% Create the observer
+observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer.sampleTime = sysd.sampleTime;
+
+% Check observer
+[yf, tf] = lsim(observer, [u; y], t);
 close
-lsim(sysd, u, t);
-hold on
-plot(t, y)
+plot(tf, yf, t, y)
+grid on
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/MOESP_Result.png)
 
 ### N4SID - Numerical algorithm for Subspace State Space System IDentification.
-N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. N4SID is the best algorithm for identify a linear MIMO state space model from data. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
+N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
 
 ```matlab
 [sysd, K] = n4sid(u, y, k, sampleTime, ktune, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc. ktune = kalman filter tuning such as 0.1, 0.01 etc
