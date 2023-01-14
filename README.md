@@ -29,7 +29,6 @@ I'm building this library because I feel that the commercial libraries are just 
 | `bj.m` | Not created yet | Create a box jenkins model that estimates an arma model or arima |
 | `arx.m` | Not created yet | Create a ARX-model estimator that uses `armax.m` |
 | `oe.m` | Not created yet | Create a OE-model estimator that uses `armax.m` |
-| `arima.m` | Not created yet | Create a ARIMA-model estimator |
 
 
 # Caution
