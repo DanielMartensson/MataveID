@@ -756,6 +756,8 @@ This filter away noise with a good old low pass filter that are being runned twi
 We are using the previous example here as well.
 
 ```matlab
+clc; clear; close all;
+
 %% Model of a mass spring damper system
 M = 1; % Kg
 K = 500; % Nm/m
@@ -768,12 +770,13 @@ u = 10*sin(t);
 
 %% Simulation
 y = lsim(G, u, t);
+close
 
 %% Add 10% noise
-load v
+v = 2*randn(1, length(y));
 for i = 1:length(y)
   noiseSigma = 0.10*y(i);
-  noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1
+  noise = noiseSigma*v(i); 
   y(i) = y(i) + noise;
 end
 
