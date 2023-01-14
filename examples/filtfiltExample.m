@@ -23,7 +23,7 @@ end
 
 %% Filter away the noise
 lowpass = 0.2;
-[yf] = filtfilt2(y, t, lowpass);
+[yf] = filtfilt(y, t, lowpass);
 
 %% Check
 plot(t, yf, t, y);
