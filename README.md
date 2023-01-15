@@ -30,7 +30,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `arx.m` | Not created yet | Create a ARX-model estimator that uses `rls.m` |
 | `oe.m` | Not created yet | Create a OE-model estimator that uses `rls.m` |
 | `armax.m` | Not created yet | Create a armax-model estimator that uses `rls.m` |
-| `rml.m` | Not created yet | Create a recursive maximum likelihood estimation algorith `rlm.m` for `bj.m` |
+| `rml.m` | Not created yet | Create a recursive maximum likelihood estimation algorithm `rlm.m` for `bj.m` |
 
 
 
