@@ -25,31 +25,31 @@ function [sysd, K] = rls(varargin)
     error('Missing output');
   end
 
-  % Get number of poles
+  % Get number of poles for A(q)
   if(length(varargin) >= 3)
     np = varargin{3};
   else
-    error('Missing number of poles');
+    error('Missing number of poles A(q)');
   end
 
-  % Get number of zeros
+  % Get number of zeros for B(q)
   if(length(varargin) >= 4)
     nz = varargin{4};
     if(nz > np)
       error('nz > np');
     end
   else
-    error('Missing number of zeros');
+    error('Missing number of zeros B(q)');
   end
 
-  % Get number of zeros for Hd
+  % Get number of zeros for C(q)
   if(length(varargin) >= 5)
     nze = varargin{5};
     if(nze > np)
       error('nze > np');
     end
   else
-    error('Missing number of zeros for Hd');
+    error('Missing number of zeros for C(q)');
   end
 
   % Get the sample time
