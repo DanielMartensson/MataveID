@@ -138,7 +138,7 @@ function [sysd, K] = rls(varargin)
 
   % Check if we could include a kalman gain matrix into the system
   if(np == nze)
-    K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition
+    K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition. ISBN 9780486462783
   else
     disp('No kalman filter included at B-matrix, due to np =/= nze')
     K = 0;
