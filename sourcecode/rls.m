@@ -3,7 +3,7 @@
 % Output: sysd(Discrete state space model with noise), K(Kalman gain matrix)
 % Example 1: [sysd, K] = rls(u, y, np, nz, nze, sampleTime);
 % Example 2: [sysd, K] = rls(u, y, np, nz, nze, sampleTime, forgetting);
-% Author: Daniel Mårtensson, September 2019. Follows the litterature Adaptive Control by Karl Johan Åström. Page 62. ISBN 9780486462783
+% Author: Daniel Mårtensson, September 2019
 
 function [sysd, K] = rls(varargin)
    % Check if there is any input
