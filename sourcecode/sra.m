@@ -1,11 +1,12 @@
 % Stochastic Realization Algorithm
-% Input: e(Error with gaussian distribution), k(Hankel row length), sampleTime, static_gain(optional), systemorder(optional)
+% Input: e(Gaussian noise/disturbance), k(Hankel row length), sampleTime, ktune(kalman tuning, optimal), delay(optional), systemorder(optional)
 % Output: H(Disturbance model)
-% Example 1: [H] = sra(e, k, sampleTime, static_gain);
-% Example 2: [H] = sra(e, k, sampleTime, static_gain, systemorder);
+% Example 1: [sysd, K] = sra(e, k, sampleTime, ktune);
+% Example 2: [sysd, K] = sra(e, k, sampleTime, ktune, delay);
+% Example 3: [sysd, K] = sra(e, k, sampleTime, ktune, delay, systemorder);
 % Author: Daniel Mårtensson, Oktober 2022
 
-function [sysd] = sra(varargin)
+function [sysd, K] = sra(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -32,16 +33,23 @@ function [sysd] = sra(varargin)
     error('Missing sample time');
   end
 
-  % Get the static gain
+  % Get the ktune
   if(length(varargin) >= 4)
-    static_gain = varargin{4};
+    ktune = varargin{4};
   else
-    static_gain = 1;
+    ktune = 1;
+  end
+
+  % Get the delay
+  if(length(varargin) >= 5)
+    delay = varargin{5};
+  else
+    delay = 0;
   end
 
   % Get the order of the system
-  if(length(varargin) >= 5)
-    systemorder = varargin{5};
+  if(length(varargin) >= 6)
+    systemorder = varargin{6};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -95,23 +103,46 @@ function [sysd] = sra(varargin)
 
   % Create system matrices
   Ad = Ok(1:k*p-p,:) \ Ok(p+1:k*p,:);
-  Bd = Ck(:,(k-1)*p + 1:k*p)';
+  Bd = Ck(:,(k-1)*p + 1:k*p);
   Cd = Ok(1:p,:);
   Dd = zeros(p, p);
 
+  % Create the states
+  X = Ck*Yp;
+  XX = X(:,2:N);
+  X = X(:,1:N-1);
+  Y = Yf(1:p,1:N-1);
+
+  % Get noise e and disturbance w
+  w = (XX - Ad*X)*ktune;
+  e = Y - Cd*X;
+
+  % Computing the covariance matrix
+  covariance = cov([w' e']); % Old way = [w*w' w*e'; e*w' e*e']/(N-1);
+
+  % Compute Q, R, S for the riccati equation
+  Q = covariance(1:n, 1:n);
+  R = covariance(n+1:n+p, n+1:n+p);
+  S = covariance(1:n, n+1:n+p);
+
+  % Create a temporary state space model
+  riccati = ss(0, Ad', Cd', Bd', Dd');
+  riccati.sampleTime = sampleTime;
+
+  % Find kalman filter gain matrix K
+  [~, K] = are(riccati, Q, R, S);
+  K = K';
+
   % Create R matrix and then kalman gain K matrix
-  R = Lambda - Cd*S*Cd';
-  K = (Bd' - Ad*S*Cd')/R;
+  %R = Lambda - Cd*S*Cd';
+  %K = (Bd' - Ad*S*Cd')/R;
 
   % Create the model
-  sysd = ss(0, Ad, K, Cd, Dd);
+  sysd = ss(delay, Ad, K, Cd, Dd);
   sysd.sampleTime = sampleTime;
 
   % Change the reference gain
   sysd = referencegain(sysd);
-
-  % Multiply the kalman gain matrix K with 1/2
-  sysd.B = sysd.B*static_gain;
 end
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
