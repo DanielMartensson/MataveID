@@ -71,16 +71,16 @@ function [sysd, K] = arx(varargin)
 
   % Get the lambda factor
   if(length(varargin) >= 8)
-    l = varargin{8};
-    if(l <= 0)
+    forgetting = varargin{8};
+    if(forgetting <= 0)
       error('forgetting <= 0');
     end
   else
-    l = 1; % If no lambda forgetting factor was given
+    forgetting = 1; % If no lambda forgetting factor was given
   end
 
   % Identify
-  [sysd, K] = rls(u, y, np, nz, 1, sampleTime, delay, l);
+  [sysd, K] = rls(u, y, np, nz, 1, sampleTime, delay, forgetting);
 
   % Find the matrices
   Ad = sysd.A;
