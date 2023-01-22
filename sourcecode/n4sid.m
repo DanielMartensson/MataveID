@@ -189,8 +189,7 @@ function [sysd, K] = n4sid(varargin)
   S = covariance(1:nx, nx+1:nx+l);
 
   % Create a temporary state space model
-  delay = 0;
-  riccati = ss(delay, Ad', Cd', Bd', Dd');
+  riccati = ss(0, Ad', Cd', Bd', Dd');
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
