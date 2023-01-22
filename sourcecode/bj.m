@@ -6,6 +6,7 @@
 % Example 3: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay);
 % Example 4: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd);
 % Example 5: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+% Author: Daniel Mårtensson, Januari 2023
 
 function [sysd, K1, sysh, K2] = bj(varargin)
   % Check if there is any input
