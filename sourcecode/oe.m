@@ -63,14 +63,14 @@ function [sysd, K] = oe(varargin)
 
   % Get the lambda factor
   if(length(varargin) >= 7)
-    l = varargin{7};
-    if(l <= 0)
+    forgetting = varargin{7};
+    if(forgetting <= 0)
       error('forgetting <= 0');
     end
   else
-    l = 1; % If no lambda forgetting factor was given
+    forgetting = 1; % If no lambda forgetting factor was given
   end
 
   % Identify
-  [sysd, K] = rls(u, y, np, nz, np, sampleTime, delay, l);
+  [sysd, K] = rls(u, y, np, nz, np, sampleTime, delay, forgetting);
 end
