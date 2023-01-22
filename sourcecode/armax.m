@@ -81,16 +81,16 @@ function [sysd, K] = armax(varargin)
 
   % Get the lambda factor
   if(length(varargin) >= 9)
-    l = varargin{9};
-    if(l <= 0)
+    forgetting = varargin{9};
+    if(forgetting <= 0)
       error('forgetting <= 0');
     end
   else
-    l = 1; % If no lambda forgetting factor was given
+    forgetting = 1; % If no lambda forgetting factor was given
   end
 
   % Identify
-  [sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, l);
+  [sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 
   % If we could not compute the kalman gain matrix
   if(nze ~= np)
