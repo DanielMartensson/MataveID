@@ -8,9 +8,12 @@ I'm building this library because I feel that the commercial libraries are just 
 | Function  | Status | Comment | 
 | ------------- | ------------- | ------------------- |
 | `rpca.m` | Complete | Nothing to do here |
-| `filtfilt.m` | Complete | Renamed it to `filtfilt.m` |
+| `filtfilt.m` | Complete | Nothing to do here |
 | `pf.m` | Complete | Nothing to do here |
 | `spa.m` | Complete | Nothing to do here |
+| `arx.m` | Complete | Nothing to do here |
+| `oe.m` | Complete | Nothing to do here |
+| `armax.m` | Complete | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
@@ -27,9 +30,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `ica.m` | Ongoing | Find a practical example |
 | `svm.m` | Ongoing | Find a practical example with image classification and PCA |
 | `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
-| `arx.m` | Not created yet | Create a ARX-model estimator that uses `rls.m` |
-| `oe.m` | Not created yet | Create a OE-model estimator that uses `rls.m` |
-| `armax.m` | Not created yet | Create a armax-model estimator that uses `rls.m` |
+
 
 # Caution
 
