@@ -11,7 +11,7 @@
 function [sysd, K] = moesp(varargin)
   % Check if there is any input
   if(isempty(varargin))
-    error('Missing imputs')
+    error('Missing inputs')
   end
 
   % Get input
