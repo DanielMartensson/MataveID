@@ -12,7 +12,7 @@
 function [sysd, K] = n4sid(varargin)
   % Check if there is any input
   if(isempty(varargin))
-    error('Missing imputs')
+    error('Missing inputs')
   end
 
   % Get input
