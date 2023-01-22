@@ -8,7 +8,7 @@
 % A(q)*y(t) = B(q)*u(t) + C(q)*e(t)
 % Author: Daniel Mårtensson, Januari 2023
 
-function [sysd, K] = arx(varargin)
+function [sysd, K] = armax(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
