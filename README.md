@@ -12,7 +12,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
-| `sra.m` | Ongoing | Find a pratical example of a hydraulical stochastic system |
+| `sra.m` | Almost complete | Upload measurement sensor system |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
 | `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
@@ -30,9 +30,6 @@ I'm building this library because I feel that the commercial libraries are just 
 | `arx.m` | Not created yet | Create a ARX-model estimator that uses `rls.m` |
 | `oe.m` | Not created yet | Create a OE-model estimator that uses `rls.m` |
 | `armax.m` | Not created yet | Create a armax-model estimator that uses `rls.m` |
-| `rml.m` | Not created yet | Create a recursive maximum likelihood estimation algorithm `rlm.m` for `bj.m` |
-
-
 
 # Caution
 
