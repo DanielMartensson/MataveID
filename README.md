@@ -346,7 +346,7 @@ grid on
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result1.png)
 
-### Example SRA 1
+### Example SRA 2
 
 ```matlab
 % Clear all
