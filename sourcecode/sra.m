@@ -1,11 +1,11 @@
 % Stochastic Realization Algorithm
-% Input: e(Error with gaussian distribution), k(Hankel row length), sampleTime, systemorder(optional)
-% Output: H(ARMA model)
-% Example 1: [H] = sra(e, k, sampleTime);
-% Example 2: [H] = sra(e, k, sampleTime, systemorder);
+% Input: e(Error with gaussian distribution), k(Hankel row length), sampleTime, static_gain(optional), systemorder(optional)
+% Output: H(Disturbance model)
+% Example 1: [H] = sra(e, k, sampleTime, static_gain);
+% Example 2: [H] = sra(e, k, sampleTime, static_gain, systemorder);
 % Author: Daniel Mårtensson, Oktober 2022
 
-function [H] = sra(varargin)
+function [sysd] = sra(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -32,9 +32,16 @@ function [H] = sra(varargin)
     error('Missing sample time');
   end
 
-  % Get the order of the system
+  % Get the static gain
   if(length(varargin) >= 4)
-    systemorder = varargin{4};
+    static_gain = varargin{4};
+  else
+    static_gain = 1;
+  end
+
+  % Get the order of the system
+  if(length(varargin) >= 5)
+    systemorder = varargin{5};
     if (systemorder <= 0)
       systemorder = -1;
     end
@@ -81,28 +88,30 @@ function [H] = sra(varargin)
   [U,S,V] = svd(inv(L)*Rfp*inv(M)', 'econ');
   [U, S, V, n] = modelReduction(U, S, V, systemorder);
 
-  Lambda = Rpp(1:p,1:p); % Covariance matrix of output
+  % Covariance matrix of output
+  Lambda = Rpp(1:p,1:p);
   Ok = L*U*sqrtm(S); % Eq. (8.79)
   Ck = sqrtm(S)*V'*M';
+
+  % Create system matrices
   Ad = Ok(1:k*p-p,:) \ Ok(p+1:k*p,:);
+  Bd = Ck(:,(k-1)*p + 1:k*p)';
   Cd = Ok(1:p,:);
-  Bd = Ck(:,(k-1)*p+1:k*p)';
-  R = Lambda-Cd*S*Cd';
-  K = (Bd'-Ad*S*Cd')/R;
+  Dd = zeros(p, p);
+
+  % Create R matrix and then kalman gain K matrix
+  R = Lambda - Cd*S*Cd';
+  K = (Bd' - Ad*S*Cd')/R;
 
   % Create the model
-  sysd = ss(0, Ad, K, Cd, zeros(p, p));
+  sysd = ss(0, Ad, K, Cd, Dd);
   sysd.sampleTime = sampleTime;
 
-  % Get poles, zeros and gain to build state space to ARMA
-  p = pole(sysd);
-  [z, gain] = tzero(sysd);
+  % Change the reference gain
+  sysd = referencegain(sysd);
 
-  % Get the numerators and denomerators
-  zeros_poles_gain = zpk(z, p, gain);
-  num = zeros_poles_gain.num;
-  den = zeros_poles_gain.den;
-  H = arma(num, den);
+  % Multiply the kalman gain matrix K with 1/2
+  sysd.B = sysd.B*static_gain;
 end
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
