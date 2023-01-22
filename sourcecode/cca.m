@@ -145,7 +145,6 @@ function [sysd, K] = cca(varargin)
   S = covariance(1:n, n+1:n+p);
 
   % Create a temporary state space model
-  delay = 0;
   riccati = ss(delay, Ad', Cd', Bd', Dd');
   riccati.sampleTime = sampleTime;
 
@@ -154,7 +153,6 @@ function [sysd, K] = cca(varargin)
   K = K';
 
    % Create state space model now
-  delay = 0;
   sysd = ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 end
