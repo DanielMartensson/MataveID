@@ -279,44 +279,114 @@ grid on
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/CCA_Result.png)
 
 ### SRA - Stochastic Realization Algorithm
-This is an algorithm that can identify a stochastic model from error measurement data. When I mean error measurement data, I mean the disturbance signal from the output. Assume that you have step response measurement that have some disturbances. What you need to do is this:
-
- 1. Identify a deterministic model (regular model in other words) from input `u` and output `y`
- 2. Simulate your deterministic model with input `u` and recieve output. We call it `ym` where `m` stands for model.
- 3. Find the error `e` from `e = y - ym`. Now you have the disturbance noise, who also is gaussian distributed (zero mean). That's very important.
- 
-Here is an example of how to interpret a stochastic model. All you need to do is to first find the deterministic model, then the stochastic model from the disturbance error `e`.
+This is an algorithm that can identify a stochastic model from error measurement data.
  
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Stochastic_model.png)
  
-Use this algorithm if you want to create a more real world scenario of a simulation where disturbance affekting the output from a deterministic model. That means you will have to create two models. One deterministic model and one stochastic model, that runs parallel with the deterministic model. Notise that the stochastic models are e.g `ARMA` models and not regular transfer functions.
-
 ```matlab
-[H] = sra(e, k, sampleTime, systemorder);
+[sysd, K] = sra(e, k, sampleTime, ktune, delay, systemorder);
 ```
 
-### Example SRA
+### Example SRA 1
 
 ```matlab
-N = 1000;
-t = linspace(0, 100, N); % Time vector
-e = randn(1, N); % Disturbance error
+% Clear all
+clear all
+
+% Create system model
+G = tf(1, [1 1.5 2]);
+
+% Create disturbance model
+H = tf([2 3], [1 5 6]);
+
+% Create input signal
+[u, t] = gensig('square', 10, 10, 100);
+u = [u*5 u*2 -u 10*u -2*u];
+t = linspace(0, 30, length(u));
+
+% Create disturbance signal
+e = randn(1, length(t));
+
+% Simulate with noise-
+y = lsim(G, u, t) + lsim(H, e, t);
+close
+
+% Identify a system model
+k = 50;
 sampleTime = t(2) - t(1);
-H = arma([1 -0.5 0.3],[1 -1.5 0.7], sampleTime); % Stochastic ARMA model
-y = lsim(H, e, t); % Simulate the stochastic model
+delay = 0;
+systemorder = 2;
+Ghat = cca(u, y, k, sampleTime, delay, systemorder);
+
+% Find the disturbance d = H*e
+Ad = Ghat.A;
+Bd = Ghat.B;
+Cd = Ghat.C;
+Dd = Ghat.D;
+x = zeros(systemorder, 1);
+for i = 1:size(t, 2)
+  yhat(:,i) = Cd*x + Dd*u(:,i);
+  x = Ad*x + Bd*u(:,i); % Update state vector
+end
+d = y - yhat;
+
+% Identify the disturbance model
+systemorder = 2;
+ktune = 0.5;
+[Hhat] = sra(d, k, sampleTime, ktune, delay, systemorder);
+
+% Simulate the disturbance model
+[dy, dt] = lsim(Hhat, e, t);
 close
-k = 20; % Hankel tuning block
-systemorder = 2; % Second order, I assume
-idH = sra(y, k, sampleTime, systemorder); % Identify stochastic model from output y
-close
-lsim(idH, e, t); % Simulate the identified model
-hold on
-plot(t, y); % Plot with real measurement
+plot(dt, dy, t, d);
+legend('d = Hhat*e(t)', 'd = y - yhat')
+grid on
+
 ```
 
-Here we can see that the outputs are very close to each other. 
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result1.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result.png)
+### Example SRA 1
+
+```matlab
+% Clear all
+clear all
+
+% Create disturbance signal
+t = linspace(0, 100, 1000);
+e = randn(1, length(t));
+
+% Create disturbance model
+H = tf([1], [1 3]);
+
+% Simulate
+y = lsim(H, e, t);
+close
+
+% Identify a model
+k = 100;
+sampleTime = t(2) - t(1);
+ktune = 0.01;
+delay = 0;
+systemorder = 2;
+[H, K] = sra(y, k, sampleTime, ktune, delay, systemorder);
+
+% Observer
+H.A = H.A - K*H.C;
+
+% Create new signals
+[y, t] = gensig('square', 10, 10, 100);
+y = [y*5 y*2 -y 10*y -2*y];
+t = linspace(0, 100, length(y));
+
+% Add some noise
+y = y + 2*randn(1, length(y));
+
+% Simulate
+lsim(H, y, t);
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result2.png)
 
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a transfer function model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
