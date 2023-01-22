@@ -110,6 +110,7 @@ function [sysd, K] = arx(varargin)
 
   % Compute Q, R, S for the riccati equation
   nx = size(Ad, 2);
+  l = size(y, 1);
   Q = covariance(1:nx, 1:nx);
   R = covariance(nx+1:nx+l, nx+1:nx+l);
   S = covariance(1:nx, nx+1:nx+l);
