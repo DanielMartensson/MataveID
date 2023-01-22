@@ -454,15 +454,23 @@ title('Disturbance model', 'FontSize', 20)
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/BJ_Result.png)
 
 ### RLS - Recursive Least Squares
-RLS is an algorithm that creates a transfer function model from regular data. Here you can select if you want to estimate an ARX, OE model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
+RLS is an algorithm that creates a SISO model from data. Here you can select if you want to estimate an ARX, OE model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with noise. This algorithm was invented 1821 by Carl Friedrich Gauss, but it was until 1950 when it got its attention in adaptive control.
 
-Use this algorithm if you have regular data from a open loop system and you want to apply that algorithm into embedded system that have low RAM and low flash memory. RLS is very suitable for system that have a lack of memory.
+Use this algorithm if you have data from a open/close loop system and you want to apply that algorithm into embedded system that have low RAM and low flash memory. RLS is very suitable for system that have a lack of memory.
 
 There is a equivalent C-code for RLS algorithm here. Works on ALL embedded systems.
 https://github.com/DanielMartensson/CControl
 
 ```matlab
 [sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
+```
+
+Notice that there are sevral functions that simplify the use of `rls.m`
+
+```matlab
+[sysd, K] = oe(u, y, np, nz, sampleTime, delay, forgetting);
+[sysd, K] = arx(u, y, np, nz, sampleTime, ktune, delay, forgetting);
+[sysd, K] = armax(u, y, np, nz, nze, sampleTime, ktune, delay, forgetting);
 ```
 
 ### Example RLS
