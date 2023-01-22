@@ -26,7 +26,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `pf.m` | Complete | Nothing to do here |
 | `rpca.m` | Complete | Nothing to do here |
 | `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
-| `bj.m` | Not created yet | Create a box jenkins model that estimates an arma model or arima |
+| `bj.m` | Almost complete | Find a pratical example |
 | `arx.m` | Not created yet | Create a ARX-model estimator that uses `rls.m` |
 | `oe.m` | Not created yet | Create a OE-model estimator that uses `rls.m` |
 | `armax.m` | Not created yet | Create a armax-model estimator that uses `rls.m` |
@@ -49,11 +49,12 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
 - SVM for C-code classification of data for CControl
-- N4SID for MIMO, SIMO, MISO or SISO linear state space systems
-- MOESP for MIMO, SIMO, MISO or SISO linear state space systems
-- CCA for MIMO, SIMO, MISO, or SISO linear stochastic state space systems
-- SRA for SISO stochastic model identification
+- N4SID for regular linear state space systems
+- MOESP for regular linear state space systems
+- CCA for linear stochastic state space systems
+- SRA for stochastic model identification
 - PF for particle filter for non-gaussian state estimation filtering
+- BJ for estimate system model and disturbance model
 
 # Papers:
 Mataveid contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
@@ -384,6 +385,73 @@ lsim(H, y, t);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result2.png)
+
+## BJ - Box-Jenkins
+Box-Jenkins is a special case when a system model `sysd` and a disturbance model `sysh` need to be found. The disturbance is difficult to know and with this Box-Jenkins algorithm, then the user can identify the disturbance model and create an observer of it by using the kalman gain matrices `K1, K2`. Notice that this Box-Jenkins algorithm using subspace methods, instead of classical polynomial methods.
+
+The disturbance model can be used for:
+* Create a disturbance simulation with feedback control 
+* Create filtering for sensors
+
+```matlab
+[sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+```
+
+### Example BJ
+
+```matlab
+% Clear all
+clear all
+close all
+
+% Create system model
+G = tf(1, [1 1.5 2]);
+
+% Create disturbance model
+H = tf([2 3], [1 5 6]);
+
+% Create input signal
+[u, t] = gensig('square', 10, 10, 100);
+u = [u*5 u*2 -u 10*u -2*u];
+t = linspace(0, 30, length(u));
+
+% Create disturbance signal
+e = randn(1, length(t));
+
+% Simulate with noise
+d = lsim(H, e, t);
+y = lsim(G, u, t) + d
+close
+
+% Use Box-Jenkins to find the system model and the disturbance model
+k = 50;
+sampleTime = t(2) - t(1);
+ktune = 0.5;
+delay = 0;
+systemorder_sysd = 2;
+systemorder_sysh = 2;
+[sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+
+% Plot sysd
+[sysd_y, sysd_t] = lsim(sysd, u, t);
+close all
+plot(t, y, sysd_t, sysd_y);
+legend('Measurement', 'Identified')
+grid on
+title('System model', 'FontSize', 20)
+
+% Plot sysh
+figure(2)
+[sysh_y, sysh_t] = lsim(sysh, e, t);
+close(2)
+figure(2)
+plot(t, d, sysh_t, sysh_y);
+legend('Measurement', 'Identified')
+grid on
+title('Disturbance model', 'FontSize', 20)
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/BJ_Result.png)
 
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a transfer function model from regular data. Here you can select if you want to estimate an ARX model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with high noise, but you will only get a SISO model from it. This algorithm was invented 1821 by Gauss, but it was until 1950 when it got its attention in adaptive control.
