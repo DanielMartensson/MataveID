@@ -140,7 +140,7 @@ function [sysd, K] = rls(varargin)
   if(np == nze)
     K = (Theta(nz+np+1:np+nz+np)' - Theta(1:np)')'; % Kalman filter - Page 166 Adaptive Control Karl Johan Åström Second edition. ISBN 9780486462783
   else
-    disp('No kalman filter included at B-matrix, due to np =/= nze')
+    % No kalman filter included at B-matrix, due to np =/= nze
     K = 0;
   end
 
