@@ -7,26 +7,26 @@ I'm building this library because I feel that the commercial libraries are just 
 
 | Function  | Status | Comment | 
 | ------------- | ------------- | ------------------- |
+| `rpca.m` | Complete | Nothing to do here |
+| `filtfilt.m` | Complete | Renamed it to `filtfilt.m` |
+| `pf.m` | Complete | Nothing to do here |
+| `spa.m` | Complete | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `sra.m` | Almost complete | Upload measurement sensor system |
+| `bj.m` | Almost complete | Find a pratical example |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
 | `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
 | `sr_ukf_state_estimation.m` | Ongoing | Use with `sindy.m` and a pratical example |
-| `filtfilt.m` | Complete | Renamed it to `filtfilt.m` |
-| `spa.m` | Complete | Nothing to do here |
 | `ortjiop.m` | Ongoing | Find a practical example |
 | `idbode.m` | Ongoing | Find a practical example |
 | `ica.m` | Ongoing | Find a practical example |
 | `svm.m` | Ongoing | Find a practical example with image classification and PCA |
-| `pf.m` | Complete | Nothing to do here |
-| `rpca.m` | Complete | Nothing to do here |
 | `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
-| `bj.m` | Almost complete | Find a pratical example |
 | `arx.m` | Not created yet | Create a ARX-model estimator that uses `rls.m` |
 | `oe.m` | Not created yet | Create a OE-model estimator that uses `rls.m` |
 | `armax.m` | Not created yet | Create a armax-model estimator that uses `rls.m` |
