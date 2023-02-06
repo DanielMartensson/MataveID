@@ -74,7 +74,7 @@ function [X_point, Y_point, amount_of_supports_for_class] = place_out_supports_p
     % buttonnumber == 3 indicates right click
     buttonnumber = 1;
     j = 1;
-    title(sprintf('Place SVM points for Data %i', i), 'FontSize', 30);
+    title(sprintf('Create SVM boundary for Data %i', i), 'FontSize', 30);
     xlabel('Left click to set out a point. Right click to go to next data class');
     while buttonnumber == 1
       % Left-click on the scatter plot
