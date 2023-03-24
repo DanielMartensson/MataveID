@@ -1441,6 +1441,17 @@ ylabel('Points');
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_c_header.png)
 
+Here is an application with SVM for a hydraulical system. This little box explains whats happening inside the hydraulical system if something happen e.g 
+a motor or a valve is active. It can identify the state of the system.
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_Box.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_System.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_Inside.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_Classes.png)
+
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
 
