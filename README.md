@@ -47,7 +47,8 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - FILTFILT for low pass filtering without phase delay
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
-- RPCA for filtering data and images
+- RPCA for reducing noise from data
+- PCA for dimension reduction
 - ICA for separating signals so they are independent from each other
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
@@ -937,6 +938,37 @@ plot(t, yf, t, y);
 legend("Filtered", "Noisy");
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT_Result.png)
+
+## Principal Component Analysis
+Principal Component Analysis can be used for dimension reduction and projection.
+
+```matlab
+[P, W] = pca(X, c);
+```
+### Principal Component Analysis example
+
+```matlab
+X = [1 3 10;
+    2 4 12;
+    3 6 13;
+    4 10 16;
+    5 13 20;
+    30 34 104;
+    31 56 120;
+    32 74 127;
+    33 80 128;
+    34 89 131;
+    35 103 139];
+
+[P, W] = pca(X, 2);
+
+figure(1)
+scatter3(X(:, 1), X(:, 2), X(:, 3))
+figure(2)
+scatter(P(:, 2), P(:, 1));
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result.png)
 
 ### Robust Principal Component Analysis
 Robust principal component analysis(RPCA) is a great tool if you want to separate noise from data `X` into a matrix `S`. `RPCA` is a better tool than `PCA` because it using optimization and not only reconstructing the image using `SVD`, which `PCA` only does.
