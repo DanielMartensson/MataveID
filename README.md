@@ -19,6 +19,8 @@ I'm building this library because I feel that the commercial libraries are just 
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
+| `pca.m` | Almost complete | Need to find a practical example |
+| `ica.m` | Almost complete | Need to find a practical example |
 | `sra.m` | Almost complete | Upload measurement sensor system |
 | `bj.m` | Almost complete | Find a pratical example |
 | `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
