@@ -16,5 +16,3 @@ figure(1)
 scatter3(X(:, 1), X(:, 2), X(:, 3))
 figure(2)
 scatter(P(:, 2), P(:, 1));
-
-
