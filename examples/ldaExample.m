@@ -16,7 +16,7 @@ x3 = 15 + 3*randn(1, l);
 y3 = 50 + 2*randn(1, l);
 z3 = -l:-1;
 
-% Create the data matrix by using C style array
+% Create the data matrix in this way
 A = [x1 x2 x3];
 B = [y1 y2 y3];
 C = [z1 z2 z3];
