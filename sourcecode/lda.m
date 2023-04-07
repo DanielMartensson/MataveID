@@ -88,7 +88,7 @@ function [P,W] = lda(varargin)
 	end
 
 	% Find the eigenvectors - by solving the generalized eigenvalue problem: Sb*v = Sw*v*lambda
-  L = chol(Sw, 'lower');
+  	L = chol(Sw, 'lower');
 	Y = linsolve(L, Sb);
 	Z = Y*inv(L');
 	[V, D] = eig(Z);
