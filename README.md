@@ -1,4 +1,4 @@
-# Mataveid V13.0
+# Mataveid V15.0
 Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -20,6 +20,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `pca.m` | Almost complete | Need to find a practical example |
+| `lda.m` | Almost complete | Need to find a practical example |
 | `ica.m` | Almost complete | Need to find a practical example |
 | `sra.m` | Almost complete | Upload measurement sensor system |
 | `bj.m` | Almost complete | Find a pratical example |
@@ -48,7 +49,8 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SPA for spectral analysis
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for reducing noise from data
-- PCA for dimension reduction
+- PCA for dimension reduction on maximum variance
+- LDA for dimension reduction on maximum distance
 - ICA for separating signals so they are independent from each other
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
@@ -939,8 +941,92 @@ legend("Filtered", "Noisy");
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT_Result.png)
 
+## Linear Discriminant Analysis
+Linear Discriminant Analysis can be used for dimension reduction and projection on maximum distance between classes.
+
+```matlab
+[P, W] = lda(X, y, c);
+```
+### Principal Component Analysis example
+
+```matlab
+% How much data
+l = 50;
+
+% Data for the first class
+x1 = 2*randn(1, l);
+y1 = 50 + 5*randn(1, l);
+z1 = 1:l;
+
+% Data for the second class
+x2 = 5*randn(1, l);
+y2 = -4 + 2*randn(1, l);
+z2 = 2*l:-1:l+1;
+
+% Data for the third class
+x3 = 15 + 3*randn(1, l);
+y3 = 50 + 2*randn(1, l);
+z3 = -l:-1;
+
+% Create the data matrix by using C style array
+A = [x1 x2 x3];
+B = [y1 y2 y3];
+C = [z1 z2 z3];
+X = [A; B; C];
+
+% Create class ID, indexing from zero
+y = [0*ones(1, l), 1*ones(1, l), 2*ones(1, l)];
+
+% How many dimensions
+c = 2;
+
+% Plot original data
+close all
+scatter3(x1, y1, z1, 'r')
+hold on
+scatter3(x2, y2, z2, 'g')
+hold on
+scatter3(x3, y3, z3, 'b')
+legend('Class 1', 'Class 2', 'Class 3')
+
+% Do LDA for 2D
+[P, W] = lda(X, y, c);
+
+% Plot 2D were P is a c x l matrix
+figure
+scatter(P(1, 1:l), P(2,1:l), 'r*')
+hold on
+scatter(P(1,l+1:2*l), P(2, l+1:2*l), 'b*')
+hold on
+scatter(P(1, 2*l+1:3*l), P(2, 2*l+1:3*l), 'g*')
+grid on
+legend('Class 1', 'Class 2', 'Class 3')
+
+% How many dimensions
+c = 1;
+
+% Do LDA for 1D
+[P, W] = lda(X, y, c);
+
+% Plot 1D were P is a c x l matrix
+figure
+scatter(P(1, 1:l), 0*P(1, 1:l), 'r*')
+hold on
+scatter(P(1, l+1:2*l), 0*P(1, l+1:2*l), 'b*')
+hold on
+scatter(P(1, 2*l+1:3*l), 0*P(1, 2*l+1:3*l), 'g*')
+grid on
+legend('Class 1', 'Class 2', 'Class 3')
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LDA_Result_3D.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LDA_Result_2D.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LDA_Result_1D.png)
+
 ## Principal Component Analysis
-Principal Component Analysis can be used for dimension reduction and projection.
+Principal Component Analysis can be used for dimension reduction and projection on maximum variance between classes.
 
 ```matlab
 [P, W] = pca(X, c);
