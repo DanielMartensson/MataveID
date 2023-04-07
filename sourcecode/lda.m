@@ -88,7 +88,8 @@ function [P,W] = lda(varargin)
 	end
 
 	% Find the eigenvectors
-  [V, D] = eig(inv(Sw)*Sb);
+        %[V, D] = eig(inv(Sw)*Sb);
+	[V, D] = eig(Sb, Sw);
 
 	% Sort eigenvectors descending by eigenvalue
 	[D, idx] = sort(diag(D), 1, 'descend');
