@@ -722,7 +722,6 @@ This algorithm identify the closed loop system, plant and controller. The differ
 % Will upload soon a practical example with real measurements
 ```
 
-
 ### SINDy - Sparse Identification of Nonlinear Dynamics
 This is a new identification technique made by [Eurika Kaiser](https://github.com/eurika-kaiser) from University of Washington. It extends the identification methods of grey-box modeling to a much simplier way. This is a very easy to use method, but still powerful because it use least squares with sequentially thresholded least squares procedure. I have made it much simpler because now it also creates the formula for the system. In more practical words, this method identify a nonlinear ordinary differential equations from time domain data.
 
@@ -947,7 +946,7 @@ Linear Discriminant Analysis can be used for dimension reduction and projection 
 ```matlab
 [P, W] = lda(X, y, c);
 ```
-### Principal Component Analysis example
+### Linear Discriminant Analysis example
 
 ```matlab
 % How much data
@@ -1037,6 +1036,11 @@ Principal Component Analysis can be used for dimension reduction and projection 
 ### Principal Component Analysis example
 
 ```matlab
+% First clear and close all figures
+clear
+close all
+
+% Create data where every colum is a variable
 X = [1 3 10;
     2 4 12;
     3 6 13;
@@ -1049,15 +1053,39 @@ X = [1 3 10;
     34 89 131;
     35 103 139];
 
-[P, W] = pca(X, 2);
-
-figure(1)
+% Plot original data
 scatter3(X(:, 1), X(:, 2), X(:, 3))
-figure(2)
-scatter(P(:, 2), P(:, 1));
+title('Original 3D data', 'FontSize', 20)
+
+% Reduce how many dimensions
+c = 2;
+
+% Do PCA for 2D
+[P, W] = pca(X, c);
+
+% Show 2D reduction
+figure
+scatter(P(:, 1), P(:, 2));
+grid
+title('Dimension reduction to 2D', 'FontSize', 20)
+
+% Reduce how many dimensions
+c = 1;
+
+% Do PCA for 1D
+[P, W] = pca(X, c);
+figure
+scatter(P(:, 1), 0*P(:, 1));
+grid
+title('Dimension reduction to 1D', 'FontSize', 20)
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_3D.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_2D.png)
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_1D.png)
+
 
 ### Robust Principal Component Analysis
 Robust principal component analysis(RPCA) is a great tool if you want to separate noise from data `X` into a matrix `S`. `RPCA` is a better tool than `PCA` because it using optimization and not only reconstructing the image using `SVD`, which `PCA` only does.
