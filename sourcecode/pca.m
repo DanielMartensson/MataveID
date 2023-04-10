@@ -30,8 +30,11 @@ function [P, W] = pca(varargin)
   % Center data
 	Y = X - mu;
 
+  % Create the covariance
+  Z = cov(Y);
+
   % PCA analysis
-	[U, S, V] = svd(Y, 0);
+	[~, ~, V] = svd(Z, 0);
 
   % Projection
 	W = V(:, 1:c);
