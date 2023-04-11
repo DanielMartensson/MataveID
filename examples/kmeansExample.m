@@ -1,4 +1,7 @@
 % Remove
+clear 
+close all
+clc
 
 % Create data
 t = linspace(0, 3*pi, 200)';
