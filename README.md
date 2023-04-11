@@ -19,6 +19,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
+| `kmeans.m` | Almost complete | Need to have a pratical example |
 | `pca.m` | Almost complete | Need to find a practical example |
 | `lda.m` | Almost complete | Need to find a practical example |
 | `ica.m` | Almost complete | Need to find a practical example |
@@ -61,6 +62,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - SRA for stochastic model identification
 - PF for particle filter for non-gaussian state estimation filtering
 - BJ for estimate system model and disturbance model
+- KMEANS for identify clusters
 
 # Papers:
 Mataveid contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
@@ -864,6 +866,47 @@ bode(G);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/IDBODE_Result.png)
+
+### K-means clustering
+K-means clustering is a tool that can identify the center of clusters. All you need to do is to specify how many cluster IDs you think there exist in your data. 
+
+```matlab
+[idx, C] = kmeans(X, k);
+```
+
+### K-means clustering example
+
+```matlab
+% Remove
+clear 
+close all
+clc
+
+% Create data
+t = linspace(0, 3*pi, 200)';
+data = [40 + 10*randn(200,3);
+        50 + 5*sin(t) + 5*t, 10*randn(200, 1), 5*sqrt(t.^2);
+        -20 + 23*rand(300, 3)];
+
+% Amount of cluster
+K = 3;
+
+% K-means clustering
+[idx, C] = kmeans(data, K);
+
+% Plot cluster
+figure;
+scatter3(data(:,1), data(:,2), data(:,3), 10, idx, 'filled');
+hold on;
+scatter3(C(:,1), C(:,2), C(:,3), 50, 'r', 'filled');
+title('K-means clustering', 'FontSize', 20);
+xlabel('x', 'FontSize', 20);
+ylabel('y', 'FontSize', 20);
+zlabel('z', 'FontSize', 20);
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Kmeans_Result.png)
+
 
 ### SPA - Spectral Analysis
 This plots all the amplitudes from noisy data over its frequencies. Very good to see what type of noise or signals you have. With this, you can determine what the real frequencies and amplitudes are and therefore you can create your filtered frequency response that are clean.
