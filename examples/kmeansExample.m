@@ -9,7 +9,7 @@ data = [40 + 10*randn(200,3);
         50 + 5*sin(t) + 5*t, 10*randn(200, 1), 5*sqrt(t.^2);
         -20 + 23*rand(300, 3)];
 
-% Amount of cluster
+% Amount of clusters
 K = 3;
 
 % K-means clustering
