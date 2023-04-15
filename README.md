@@ -1072,9 +1072,11 @@ legend('Class 1', 'Class 2', 'Class 3')
 
 ## Principal Component Analysis
 Principal Component Analysis can be used for dimension reduction and projection on maximum variance between classes.
+This PCA algorithm has a very smart method to remove outliers. The method is using L2-norm and sorting to detect outliers.
+Just tune in the variable `cluster_limit`. That variable describes the limit of points it must be, to be counted as a cluster and not an outpier.
 
 ```matlab
-[P, W] = pca(X, c);
+[P, W] = pca(X, c, cluster_limit);
 ```
 ### Principal Component Analysis example
 
@@ -1083,43 +1085,59 @@ Principal Component Analysis can be used for dimension reduction and projection 
 clear
 close all
 
-% Create data where every colum is a variable
-X = [1 3 10;
-    2 4 12;
-    3 6 13;
-    4 10 16;
-    5 13 20;
-    30 34 104;
-    31 56 120;
-    32 74 127;
-    33 80 128;
-    34 89 131;
-    35 103 139];
+% Create data
+X = [10 30 100;
+    20 40 93;
+    30 60 163;
+    60 100 126;
+    55 13 134;
+    306 34 104;
+    316 56 120;
+    326 74 127;
+    337 80 128;
+    347 89 131;
+    358 103 139
+    -31 -56 -120;
+    -32 -74 -127;
+    -33 -80 -128;
+    -34 -89 -131;
+    -35 -103 -139;
+    700 600 500;
+    1000 1000 1000
+    -3231 4345 -4352];
+
+X = [X; 10*randn(10, 3)];
 
 % Plot original data
-scatter3(X(:, 1), X(:, 2), X(:, 3))
+cmap = jet(length(X));
+scatter3(X(:, 1), X(:, 2), X(:, 3), 50,cmap)
 title('Original 3D data', 'FontSize', 20)
 
-% Reduce how many dimensions
-c = 2;
+% Settings
+cluster_limit = 4;
+
+% Do PCA for 3D
+c = 3;
+[P, W] = pca(X, c, cluster_limit);
+figure
+scatter3(P(:, 1), P(:, 2), P(:, 3), 50,cmap);
+grid on
+title('Dimension transformation to 3D', 'FontSize', 20)
 
 % Do PCA for 2D
-[P, W] = pca(X, c);
-
-% Show 2D reduction
+c = 2;
+[P, W] = pca(X, c, cluster_limit);
 figure
-scatter(P(:, 1), P(:, 2));
-grid
+scatter(P(:, 1), P(:, 2), 20,cmap);
+grid on
 title('Dimension reduction to 2D', 'FontSize', 20)
 
-% Reduce how many dimensions
-c = 1;
-
 % Do PCA for 1D
-[P, W] = pca(X, c);
+c = 1;
+[P, W] = pca(X, c, cluster_limit);
 figure
-scatter(P(:, 1), 0*P(:, 1));
-grid
+scatter(P(:, 1), 0*P(:, 1), 50,cmap);
+grid on
 title('Dimension reduction to 1D', 'FontSize', 20)
 ```
 
