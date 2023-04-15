@@ -31,14 +31,14 @@ function [P, W] = pca(varargin)
     error('Missing cluster limit');
   end
 
+  % Filter the data
+  X = cluster_filter(X, cluster_limit);
+
   % Average
   mu = mean(X);
 
   % Center data
 	Y = X - mu;
-
-  % Filter the data
-  Y = cluster_filter(Y, cluster_limit);
 
   % Create the covariance
   Z = cov(Y);
