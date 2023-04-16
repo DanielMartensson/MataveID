@@ -57,8 +57,7 @@ function X = cluster_filter(X, cluster_limit)
 
   % Create these arrays
   nearest_distance = zeros(1, m);
-  nearest_row = zeros(1, m);
-  computed_row = zeros(1, m);
+  already_computed_row = zeros(1, m);
 
   % Start counting the euclidean distance
   selected_row = 1;
@@ -68,7 +67,7 @@ function X = cluster_filter(X, cluster_limit)
     minimal_distance = 0;
     first_iteration = true;
     for compare_row = 1:m
-      if(and(selected_row ~= compare_row, ~computed_row(compare_row)))
+      if(and(selected_row ~= compare_row, or(~already_computed_row(compare_row), i == m)))
         % Do L2-norm
         a = X(selected_row, :);
         b = X(compare_row, :);
@@ -82,38 +81,66 @@ function X = cluster_filter(X, cluster_limit)
     end
 
     % Now we have the minimal distance between selected_row and chosen_row
-    nearest_distance(i) = minimal_distance;
-    nearest_row(i) = selected_row;
-    computed_row(selected_row) = true;
+    nearest_distance(selected_row) = minimal_distance;
+    already_computed_row(selected_row) = true;
 
     % Next selected row
     selected_row = chosen_row;
   end
 
-  % The last distance index is always zero due to computed_row array.
-  % Give the last distance the same value ans the second last distance
-  nearest_distance(end) = nearest_distance(end - 1);
-
   % Compute the average of nearest distances
-  average_distance = mean(nearest_distance);
+  average_distance = mean(nearest_distance)
 
-  % Delete rows that are far away
+  % Notice which rows has outliers
   cluster_points = 0;
+  outliers_row_index = zeros(1, m);
+  counter_outliers = 0;
   for i = 1:m
     if(nearest_distance(i) < average_distance)
       cluster_points = cluster_points + 1;
     else
       if(and(cluster_points < cluster_limit, cluster_points > 0))
-        % Delete by centering the data in X
-        for j = i - cluster_points + 1 : i
-          % All rows from i:th back to i - cluster_points will be deleted
-          X(nearest_row(j), :) = 0;
+        for j = i - cluster_points : i
+          % Count multiple outliers
+          outliers_row_index(counter_outliers + 1) = j;
+          counter_outliers = counter_outliers + 1;
         end
       else
-        % Delete a single spot because it's violating the distance
-        X(nearest_row(i), :) = 0;
+        % Count a single outlier
+        outliers_row_index(counter_outliers + 1) = i;
+        counter_outliers = counter_outliers + 1;
       end
       cluster_points = 0;
+    end
+  end
+
+  % If we got some outliers
+  if(counter_outliers > 0)
+    % Find a non outlier row index
+    non_outlier_row_index = 1;
+    for i = 1:m
+      % Flag
+      is_outlier_row_index = false;
+
+      % Loop through
+      for j = 1:counter_outliers
+        if(i == outliers_row_index(j))
+          is_outlier_row_index = true;
+          break;
+        else
+          non_outlier_row_index = i;
+        end
+      end
+
+      % Break when an outlier is not found = we found an index of an non outliner
+      if(~is_outlier_row_index)
+        break;
+      end
+    end
+
+    % Delete them by replacing outliers with non outliers
+    for j = 1:counter_outliers
+      X(outliers_row_index(j), :) = X(non_outlier_row_index, :);
     end
   end
 end
