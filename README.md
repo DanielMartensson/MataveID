@@ -1141,6 +1141,7 @@ scatter(P(:, 1), 0*P(:, 1), 50,cmap);
 grid on
 title('Dimension reduction to 1D', 'FontSize', 20)
 ```
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Original_Data.png)
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_3D.png)
 
