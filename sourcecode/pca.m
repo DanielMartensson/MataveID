@@ -25,16 +25,16 @@ function [P, W] = pca(varargin)
   end
 
   % Filter the data
-  X = cluster_filter(X);
+  Y = cluster_filter(X);
 
   % Average
-  mu = mean(X);
+  mu = mean(Y);
 
   % Center data
-	Y = X - mu;
+	Z = Y - mu;
 
   % Create the covariance
-  Z = cov(Y);
+  Z = cov(Z);
 
   % PCA analysis
 	[~, ~, V] = svd(Z, 0);
