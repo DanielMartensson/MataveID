@@ -1,7 +1,7 @@
-% Principal Component Analysis
-% Input: X(Data), c(Amount of components), cluster_limit
+% Principal Component Analysis with cluster filtering
+% Input: X(Data), c(Amount of components)
 % Output: Projected matrix P, Project matrix W
-% Example 1: [P, W] = pca(X, c, cluster_limit);
+% Example 1: [P, W] = pca(X, c);
 % Author: Daniel Mårtensson, 2023 April
 
 function [P, W] = pca(varargin)
@@ -24,15 +24,8 @@ function [P, W] = pca(varargin)
     error('Missing amount of components');
   end
 
-  % Get the cluster limit
-  if(length(varargin) >= 3)
-    cluster_limit = varargin{3};
-  else
-    error('Missing cluster limit');
-  end
-
   % Filter the data
-  X = cluster_filter(X, cluster_limit);
+  X = cluster_filter(X);
 
   % Average
   mu = mean(X);
@@ -51,7 +44,7 @@ function [P, W] = pca(varargin)
 	P = X*W;
 end
 
-function X = cluster_filter(X, cluster_limit)
+function X = cluster_filter(X)
   % Get size of X
   [m, n] = size(X);
 
@@ -89,7 +82,25 @@ function X = cluster_filter(X, cluster_limit)
   end
 
   % Compute the average of nearest distances
-  average_distance = mean(nearest_distance)
+  average_distance = mean(nearest_distance);
+
+  % Compute the cluster limit
+  cluster_points = 0;
+  counted_clusters = 0;
+  total_cluster_points = 0;
+  for i = 1:m
+    % Check if it changes
+    if(nearest_distance(i) < average_distance)
+      cluster_points = cluster_points + 1;
+    else
+      if(cluster_points > 0)
+        counted_clusters = counted_clusters + 1;
+        total_cluster_points = total_cluster_points + cluster_points;
+      end
+      cluster_points = 0;
+    end
+  end
+  cluster_limit = total_cluster_points / counted_clusters;
 
   % Notice which rows has outliers
   cluster_points = 0;
