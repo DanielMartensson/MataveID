@@ -100,7 +100,10 @@ function X = cluster_filter(X)
       cluster_points = 0;
     end
   end
-  cluster_limit = total_cluster_points / counted_clusters;
+  cluster_limit = 0;
+  if(counted_clusters > 0)
+    cluster_limit = total_cluster_points / counted_clusters;
+  end
 
   % Notice which rows has outliers
   cluster_points = 0;
