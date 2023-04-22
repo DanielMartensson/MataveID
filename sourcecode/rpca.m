@@ -39,8 +39,8 @@ function [L, S] = rpca(varargin)
 end
 
 function out = SVT(X, tau)
-  [U, S, V] = svd(X, 'econ');
-  out = U*shrink(S, tau)*V';
+  [U, E, V] = svd(X, 'econ');
+  out = U*shrink(E, tau)*V';
 end
 
 function out = shrink(X, tau)
