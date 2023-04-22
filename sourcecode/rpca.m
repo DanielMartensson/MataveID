@@ -2,7 +2,7 @@
 % Input: data matrix(X)
 % Output: filtred data matrix(L), sparse noise matrix(S)
 % Example 1: [L, S] = rpca(X)
-% Author: Daniel Mårtensson, 28 April 2021.
+% Author: Daniel MÃ¥rtensson, 28 April 2021.
 
 function [L, S] = rpca(varargin)
  % Check if there is any input
@@ -21,7 +21,7 @@ function [L, S] = rpca(varargin)
   lambda = 1/sqrt(max(n1, n2));
   
   % Create a threshold 
-  thresh = 1e-7*norm(X, 'fro');
+  thresh = 1e-6*norm(X, 'fro');
   
   % Create three matrices 
   L = zeros(size(X));
