@@ -14,6 +14,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `arx.m` | Complete | Nothing to do here |
 | `oe.m` | Complete | Nothing to do here |
 | `armax.m` | Complete | Nothing to do here |
+| `lsvm.m`  | Complete | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
@@ -55,7 +56,8 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - ICA for separating signals so they are independent from each other
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
 - SR-UKF-State-Estimation for filtering noise and estimate the state of a system
-- SVM for C-code classification of data for CControl
+- Nonlinear SVM for C-code classification of data for CControl
+- Linear SVM for generate a 1xN matrix + bias variable for prediction
 - N4SID for regular linear state space systems
 - MOESP for regular linear state space systems
 - CCA for linear stochastic state space systems
@@ -1578,19 +1580,74 @@ grid on
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result2.png)
 
-### Support Vector Machine with C code generation
+### Linear Support Vector Machine
+This is the standard way to create a support vector machine. Even if it's only returning back a linear model, it's still very powerful and suits systems that need extreamly fast predictions such as embedded systems. 
+
+Notice that the Linear Support Vector Machine can only do two-class prediction only. But you can use multiple classes with the Linear Support Vector Machine by using multiple linear support vector machines. It's called One-VS-All method.
+
+```matlab
+[w, b, accuracy] = lsvm(x, y, C, lambda)
+```
+
+### Linear Support Vector Machine example
+
+```matlab
+% Clear all
+clear all
+clc
+
+% Create data. You can have multiple columns and multiple rows.
+x = [-5 -2;
+     -1 -4;
+     -3 -1;
+     -7 -2;
+     -8 -1;
+     -9 -3;
+     -2, -6;
+     -8, -5;
+     -1, -1;
+     -2, -9;
+     -3, 0;
+     -2, -5;
+     -2, -8;
+     50 20;
+     10 40;
+     30 10;
+     70 20;
+     80 10;
+     90 30;
+     20, 60;
+     80, 50;
+     10, 10;
+     20, 90;
+     30, 0;
+     20, 50;
+     20, 80];
+
+% Create labels for the data x
+y = [1;1;1;1;1;1;1;1;1;1;1;1;1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1];
+
+% Tuning parameters
+C = 1;              % For upper boundary limit
+lambda = 10;        % Regularization (Makes it faster to solve the quadratic programming)
+
+% Compute weigths, bias and find accuracy
+[w, b, accuracy] = lsvm(x, y, C, lambda)
+```
+
+### Nonlinear Support Vector Machine with C code generation
 This algorithm can do C code generation for nonlinear models. It's a very simple algorithm because the user set out the support points by using the mouse pointer. When all the supports are set ut, then the algorithm will generate C code for you so you can apply the SVM model in pure C code using CControl library. 
 
 All you need to have is two matrices, `X` and `Y`. Where the column length is the data and the row length is the amount of classes.
-The `svm.m` file will plot your data and then when you have placed out your support points, then the `svm.m` will generate C code for you that contains all the support points.
+The `nlsvm.m` file will plot your data and then when you have placed out your support points, then the `svm.m` will generate C code for you that contains all the support points.
 
 If you have let's say more than two variables, e.g `Z` matrix or even more. Then you can create multiple models as well by just using diffrent data as arguments for the `svm` function below. The C code generation is very fast and it's very easy to build a model. 
 
 ```matlab
-[X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
+[X_point, Y_point, amount_of_supports_for_class] = nlsvm(X, Y)
 ```
 
-### Support Vector Machine with C code generation example
+### Nonlinear Support Vector Machine with C code generation example
 
 ```matlab
 % How much data should we generate 
@@ -1618,7 +1675,7 @@ end
   
 % Create SVM model - X_point and Y_point is coordinates for the SVM points.
 % amount_of_supports_for_class is how many points there are in each row
-[X_point, Y_point, amount_of_supports_for_class] = svm(X, Y);
+[X_point, Y_point, amount_of_supports_for_class] = nlsvm(X, Y);
   
 % Do a quick re-sampling of random data again
 for i = 1:c
