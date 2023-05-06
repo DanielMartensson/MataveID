@@ -10,7 +10,7 @@ rpca.m
 ica.m
 sr_ukf_parameter_estimation.m
 sr_ukf_state_estimation.m
-svm.m
+nlsvm.m
 n4sid.m
 cca.m
 moesp.m
