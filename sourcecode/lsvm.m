@@ -77,5 +77,4 @@ function [w, b, accuracy] = lsvm(varargin)
 
   % Compute accuracy
   accuracy = points/m;
-  printf("The accuracy of the model is: %f\n", accuracy);
 end
