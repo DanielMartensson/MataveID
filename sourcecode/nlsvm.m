@@ -1,11 +1,11 @@
-% Support Vector Machine with C code generation
+% Nonlinear Support Vector Machine with C code generation
 % Input: X(data in x-axis), Y(data in y-axis)
 % Output: X_point(coordinates in x-axis), Y_point(coordinates in y-axis), amount_of_supports_for_class(how many points for each class)
-% Example 1: [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y);
+% Example 1: [X_point, Y_point, amount_of_supports_for_class] = nlsvm(X, Y);
 % Author: Daniel Mårtensson, December 2021
 % Update 2023-02-07: Now some points can be avoided, easier to create boundaries
 
-function [X_point, Y_point, amount_of_supports_for_class] = svm(X, Y)
+function [X_point, Y_point, amount_of_supports_for_class] = nlsvm(X, Y)
   % Then place out our support points
   [X_point, Y_point, amount_of_supports_for_class] = place_out_supports_points(X, Y);
 
