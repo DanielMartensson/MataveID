@@ -2,6 +2,8 @@
 % Input: x(Data matrix), y(Labels), C(Upper bondary), lambda(Regularization)
 % Example: [w, b, accuracy] = lsvm(x, y, C, lambda);
 % Author: Daniel Mårtensson, May 06, 2023
+% To verify the model, just use:
+% class_ID = sign(w*x + b), where x is an unknown measurement
 
 function [w, b, accuracy] = lsvm(varargin)
   % Check if there is any input
@@ -44,21 +46,23 @@ function [w, b, accuracy] = lsvm(varargin)
   [m, n] = size(x);
 
   % Train Support Vector Machine
-  H = (y*y').*(x*x');
-  H = H + lambda*eye(size(H));
-  f = -ones(size(y));
+  Q = (y*y').*(x*x');
+  Q = Q + lambda*eye(size(Q));
+  c = -ones(size(y));
   Aeq = y';
   beq = 0;
   lb = zeros(size(y));
   ub = C*ones(size(y));
-  [alpha, solution] = quadprog(H, f, [eye(size(H)); -eye(size(H)); Aeq; -Aeq], [ub; -lb; beq; -beq]);
-
-  % Find weights
-  w = (alpha.* y)' * x;
+  G = [eye(size(Q)); -eye(size(Q)); Aeq; -Aeq];
+  h = [ub; -lb; beq; -beq];
+  [alpha, solution] = quadprog(Q, c, G, h);
 
   % Support vectors have non zero lagrange multipliers
   tol = 1.192092896e-07;
   sv_idx = find(alpha > tol);
+
+  % Find weights and bias
+  w = (alpha(sv_idx).* y(sv_idx))' * x(sv_idx, :);
   b = mean(y(sv_idx)-x(sv_idx,:)*w');
 
   % Check if the training result well
