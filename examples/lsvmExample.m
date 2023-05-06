@@ -2,7 +2,7 @@
 clear all
 clc
 
-% Create data
+% Create data. You can have multiple columns and multiple rows.
 x = [-5 -2;
      -1 -4;
      -3 -1;
