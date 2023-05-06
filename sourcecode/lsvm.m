@@ -3,7 +3,7 @@
 % Example: [w, b, accuracy] = lsvm(x, y, C, lambda);
 % Author: Daniel Mårtensson, May 06, 2023
 % To verify the model, just use:
-% class_ID = sign(w*x + b), where x is an unknown measurement
+% class_ID = sign(w*x + b), where x is an unknown measurement vector
 
 function [w, b, accuracy] = lsvm(varargin)
   % Check if there is any input
