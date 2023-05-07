@@ -35,7 +35,7 @@ y = [1;1;1;1;1;1;1;1;1;1;1;1;1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1];
 
 % Tuning parameters
 C = 1;              % For upper boundary limit
-lambda = 10;        % Regularization (Makes it faster to solve the quadratic programming)
+lambda = 5;        % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy] = lsvm(x, y, C, lambda)
+[w, b, accuracy, solution] = lsvm(x, y, C, lambda)
