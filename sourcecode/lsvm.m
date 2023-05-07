@@ -58,15 +58,15 @@ function [w, b, accuracy] = lsvm(varargin)
   [alpha, solution] = quadprog(Q, c, G, h);
 
   % Support vectors have non zero lagrange multipliers
-  tol = 1.192092896e-07;
-  sv_idx = find(alpha > tol);
+  tol = 1e-5;
+  sv_idx = find(alpha > tol)
 
   % Find weights and bias
   w = (alpha(sv_idx).* y(sv_idx))' * x(sv_idx, :);
   b = mean(y(sv_idx)-x(sv_idx,:)*w');
 
   % Check if the training result well
-  points = 0;
+  counter = 0;
   for i = 1:m
     % Predict
     predicted_class_ID = sign(w*x(i, :)' + b);
@@ -74,11 +74,11 @@ function [w, b, accuracy] = lsvm(varargin)
 
     % Count if the prediction is right
     if(or(and(actual_class_ID > 0, predicted_class_ID > 0), and(actual_class_ID < 0, predicted_class_ID < 0)))
-      points = points + 1;
+      counter = counter + 1;
     end
 
   end
 
   % Compute accuracy
-  accuracy = points/m;
+  accuracy = counter/m;
 end
