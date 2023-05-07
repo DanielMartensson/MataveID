@@ -59,7 +59,7 @@ function [w, b, accuracy] = lsvm(varargin)
 
   % Support vectors have non zero lagrange multipliers
   tol = 1e-5;
-  sv_idx = find(alpha > tol)
+  sv_idx = find(alpha > tol);
 
   % Find weights and bias
   w = (alpha(sv_idx).* y(sv_idx))' * x(sv_idx, :);
