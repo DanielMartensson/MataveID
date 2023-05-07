@@ -1586,7 +1586,7 @@ This is the standard way to create a support vector machine. Even if it's only r
 Notice that the Linear Support Vector Machine can only do two-class prediction only. But you can use multiple classes with the Linear Support Vector Machine by using multiple linear support vector machines. It's called One-VS-All method.
 
 ```matlab
-[w, b, accuracy] = lsvm(x, y, C, lambda)
+[w, b, accuracy, solution] = lsvm(x, y, C, lambda)
 ```
 
 ### Linear Support Vector Machine example
@@ -1629,10 +1629,10 @@ y = [1;1;1;1;1;1;1;1;1;1;1;1;1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1];
 
 % Tuning parameters
 C = 1;              % For upper boundary limit
-lambda = 10;        % Regularization (Makes it faster to solve the quadratic programming)
+lambda = 5;        % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy] = lsvm(x, y, C, lambda)
+[w, b, accuracy, solution] = lsvm(x, y, C, lambda)
 ```
 
 ### Nonlinear Support Vector Machine with C code generation
