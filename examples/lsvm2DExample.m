@@ -53,7 +53,7 @@ legend('Class A', 'Class B', 'Separation', 'location', 'northwest')
 x_unknown = [15; 5];
 class_ID = sign(w*x_unknown + b)
 if(class_ID > 0)
-  disp('x_unknown class A')
+  disp('x_unknown class B')
 else
-  disp('x_unknown is class B')
+  disp('x_unknown is class A')
 end
