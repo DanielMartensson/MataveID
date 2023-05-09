@@ -29,7 +29,6 @@ scatter3(X(y == 1,1), X(y == 1,2), X(y == 1,3), 'g');
 grid on
 legend('Class A', 'Class B', 'location', 'northwest')
 
-
 % Tuning parameters
 C = 1;              % For upper boundary limit
 lambda = 1;         % Regularization (Makes it faster to solve the quadratic programming)
