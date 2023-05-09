@@ -9,6 +9,7 @@ X = [5 3;
      18 13;
      16 20;
      19, 15];
+
 % Labels of the data for each class
 y = [1;
      1;
@@ -26,9 +27,11 @@ hold on
 scatter(X(y == 1,1), X(y == 1,2), 'g');
 grid on
 legend('Class A', 'Class B', 'location', 'northwest')
+     
 % Tuning parameters
 C = 1; % For upper boundary limit
 lambda = 1; % Regularization (Makes it faster to solve the quadratic programming)
+
 % Compute weigths, bias and find accuracy
 [w, b, accuracy, solution] = lsvm(X, y, C, lambda);
 
