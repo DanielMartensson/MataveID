@@ -70,7 +70,7 @@ function [w, b, accuracy, solution] = lsvm(varargin)
   counter = 0;
   for i = 1:m
     % Predict
-    predicted_class_ID = sign(w*x(i, :)' - b);
+    predicted_class_ID = sign(w*x(i, :)' + b);
     actual_class_ID = y(i);
 
     % Count if the prediction is right
