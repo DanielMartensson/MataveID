@@ -1589,51 +1589,139 @@ Notice that the Linear Support Vector Machine can only do two-class prediction o
 [w, b, accuracy, solution] = lsvm(x, y, C, lambda)
 ```
 
-### Linear Support Vector Machine example
+### Linear Support Vector Machine 2D example 
 
 ```matlab
-% Clear all
-clear all
-clc
-
-% Create data. You can have multiple columns and multiple rows.
-x = [-5 -2;
-     -1 -4;
-     -3 -1;
-     -7 -2;
-     -8 -1;
-     -9 -3;
-     -2, -6;
-     -8, -5;
-     -1, -1;
-     -2, -9;
-     -3, 0;
-     -2, -5;
-     -2, -8;
-     50 20;
-     10 40;
-     30 10;
-     70 20;
-     80 10;
-     90 30;
-     20, 60;
-     80, 50;
-     10, 10;
-     20, 90;
-     30, 0;
-     20, 50;
-     20, 80];
-
-% Create labels for the data x
-y = [1;1;1;1;1;1;1;1;1;1;1;1;1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1];
+% Data
+X = [5 3;
+     2 1;
+     7 2;
+     8 3;
+     9 1;
+     15 23;
+     17 18;
+     18 13;
+     16 20;
+     19, 15];
+     
+% Labels of the data for each class
+y = [1;
+     1;
+     1;
+     1;
+     1;
+     -1;
+     -1;
+     -1;
+     -1;
+     -1];
+% Plot 2D
+scatter(X(y == -1,1),X(y == -1,2), 'r');
+hold on
+scatter(X(y == 1,1), X(y == 1,2), 'g');
+grid on
+legend('Class A', 'Class B', 'location', 'northwest')
 
 % Tuning parameters
-C = 10;              % For upper boundary limit
-lambda = 800;        % Regularization (Makes it faster to solve the quadratic programming)
+C = 1; % For upper boundary limit
+lambda = 1; % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy, solution] = lsvm(x, y, C, lambda)
+[w, b, accuracy, solution] = lsvm(X, y, C, lambda);
+
+% How long the line should be
+min_value_column_1 = min(X(:,1));
+max_value_column_1 = max(X(:,1));
+
+% Create the separation line y = k*x + m
+x1 = linspace(min_value_column_1, max_value_column_1);
+x2 = (-w(1)*x1 - b) / w(2);
+
+% Plot the separation line
+plot(x1, x2, 'k', 'LineWidth', 2);
+xlim([0 20]) % Max x-axis limit
+ylim([0 20]) % Max y-axis limit
+legend('Class A', 'Class B', 'Separation', 'location', 'northwest')
+     
+% Classify
+x_unknown = [15; 5];
+class_ID = sign(w*x_unknown - b)
+if(class_ID > 0)
+  disp('x_unknown class A')
+else
+  disp('x_unknown is class B')
+end
 ```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LSVM_Result_2D.png)
+
+### Linear Support Vector Machine 3D example 
+
+```matlab
+% Data
+X = [5 3;
+     2 1;
+     7 2;
+     8 3;
+     9 1;
+     15 23;
+     17 18;
+     18 13;
+     16 20;
+     19, 15];
+     
+% Labels of the data for each class
+y = [1;
+     1;
+     1;
+     1;
+     1;
+     -1;
+     -1;
+     -1;
+     -1;
+     -1];
+% Plot 2D
+scatter(X(y == -1,1),X(y == -1,2), 'r');
+hold on
+scatter(X(y == 1,1), X(y == 1,2), 'g');
+grid on
+legend('Class A', 'Class B', 'location', 'northwest')
+
+% Tuning parameters
+C = 1; % For upper boundary limit
+lambda = 1; % Regularization (Makes it faster to solve the quadratic programming)
+
+% Compute weigths, bias and find accuracy
+[w, b, accuracy, solution] = lsvm(X, y, C, lambda);
+
+% How long the line should be
+min_value_column_1 = min(X(:,1));
+max_value_column_1 = max(X(:,1));
+
+% Create the separation line y = k*x + m
+x1 = linspace(min_value_column_1, max_value_column_1);
+x2 = (-w(1)*x1 - b) / w(2);
+
+% Plot the separation line
+plot(x1, x2, 'k', 'LineWidth', 2);
+xlim([0 20]) % Max x-axis limit
+ylim([0 20]) % Max y-axis limit
+legend('Class A', 'Class B', 'Separation', 'location', 'northwest')
+     
+% Classify
+x_unknown = [15; 5];
+class_ID = sign(w*x_unknown - b)
+if(class_ID > 0)
+  disp('x_unknown class A')
+else
+  disp('x_unknown is class B')
+end
+```
+
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LSVM_Result_3D.png)
+
+
 
 ### Nonlinear Support Vector Machine with C code generation
 This algorithm can do C code generation for nonlinear models. It's a very simple algorithm because the user set out the support points by using the mouse pointer. When all the supports are set ut, then the algorithm will generate C code for you so you can apply the SVM model in pure C code using CControl library. 
@@ -1704,24 +1792,24 @@ xlabel('Class index');
 ylabel('Points');
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_plot.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_plot.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_results.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_results.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_c_source.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_c_source.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_c_header.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_c_header.png)
 
 Here is an application with SVM for a hydraulical system. This little box explains whats happening inside the hydraulical system if something happen e.g 
 a motor or a valve is active. It can identify the state of the system.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_Box.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_Box.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_System.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_System.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_Inside.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_Inside.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SVM_Result_Classes.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_Classes.png)
 
 # Install
 To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
