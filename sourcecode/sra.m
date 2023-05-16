@@ -142,7 +142,7 @@ function [sysd, K] = sra(varargin)
   sysd.sampleTime = sampleTime;
 
   % Change the reference gain
-  sysd = referencegain(sysd);
+  sysd = mc.referencegain(sysd);
 end
 
 function [U1, S1, V1, nx] = modelReduction(U, S, V, systemorder)
