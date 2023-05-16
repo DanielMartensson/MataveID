@@ -33,9 +33,9 @@ I'm building this library because I feel that the commercial libraries are just 
 | `ortjiop.m` | Ongoing | Find a practical example |
 | `idbode.m` | Ongoing | Find a practical example |
 | `ica.m` | Ongoing | Find a practical example |
-| `svm.m` | Ongoing | Find a practical example with image classification and PCA |
+| `lsvm.m` | Ongoing | Find a practical example with image classification and PCA + LDA |
 | `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
-| `dnn.m` | Not created yet | Planning to include a basic deep neural network for modeling nonlinear dynamics |
+| `dnn.m` | Not created yet | Planning to include a basic deep neural network for modeling nonlinear dynamics or other types of classifications |
 
 
 # Caution
