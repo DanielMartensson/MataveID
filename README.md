@@ -35,6 +35,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `ica.m` | Ongoing | Find a practical example |
 | `svm.m` | Ongoing | Find a practical example with image classification and PCA |
 | `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
+| `dnn.m` | Not created yet | Planning to include a basic deep neural network for modeling nonlinear dynamics |
 
 
 # Caution
