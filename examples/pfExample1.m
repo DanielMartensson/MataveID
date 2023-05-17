@@ -9,10 +9,10 @@ u = [5*u 10*u -4*u 3*u 5*u 0*u -5*u 0*u];
 t = linspace(0, 100, length(u));
 
 % Create second order model
-G = tf(1, [1 0.8 3]);
+G = mc.tf(1, [1 0.8 3]);
 
 % Simulate outputs
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close
 
 % Add noise

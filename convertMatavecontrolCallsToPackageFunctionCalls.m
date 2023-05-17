@@ -13,7 +13,7 @@ mifles.folder = string(mcFiles.folder);
 [~,mcFunctionList] = fileparts(mcFiles.name);
 
 % Get the Mataveid m file list
-sourceCodeFiles = struct2table(dir(fullfile("sourcecode","*.m")));
+sourceCodeFiles = struct2table(dir(fullfile("examples","*.m")));
 sourceCodeFiles.name = string(sourceCodeFiles.name);
 sourceCodeFiles.folder = string(sourceCodeFiles.folder);
 [~,midFunctionList] = fileparts(sourceCodeFiles.name);

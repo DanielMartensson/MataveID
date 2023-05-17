@@ -21,11 +21,11 @@ ktune = 0.01; % Kalman filter tuning
 [sysd, K] = n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
 
 % Create the observer
-observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
 observer.sampleTime = sysd.sampleTime;
 
 % Do simulation
-[outputs, T, x] = lsim(observer, [u; y], t);
+[outputs, T, x] = mc.lsim(observer, [u; y], t);
 close
 plot(T, outputs(1, :), t, y(1, :))
 title('Cylinder 0');

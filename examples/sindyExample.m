@@ -25,14 +25,14 @@ x0 = y(1);
 u_up = u(1:h);
 u_up = u_up(1:100:end)';
 stepTime = 1.2;
-[x_up, t] = mc.nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
+[x_up, t] = mc.mc.nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
 
 % Simulation down 
 x0 = y(s);
 u_down = u(s:end)
 u_down = u_down(1:100:end)';
 stepTime = 1.2;
-[x_down, t] = mc.nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
+[x_down, t] = mc.mc.nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
 
 % Compare 
 figure

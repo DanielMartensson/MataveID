@@ -5,14 +5,14 @@ clc; clear; close all;
 M = 5; % Kg
 K = 100; % Nm/m
 b = 52; % Nm/s^2
-G = tf([1], [M b K]);
+G = mc.tf([1], [M b K]);
 
 %% Frequency response
 t = linspace(0, 50, 3000);
-[u, fs] = chirp(t);
+[u, fs] = mc.chirp(t);
 
 %% Simulation
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close all
 
 % Add noise
@@ -22,4 +22,4 @@ y = y + 0.0001*randn(1, length(y));
 idbode(u, y, fs);
 
 %% Check
-bode(G);
+mc.bode(G);

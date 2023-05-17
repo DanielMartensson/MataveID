@@ -18,7 +18,7 @@ C = [1 0 0 0;
 
 %% Model and signals
 delay = 0;
-sys = ss(delay, A, B, C);
+sys = mc.ss(delay, A, B, C);
 t = linspace(0, 20, 1000);
 r = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
 r = [r;2*r]; % MIMO
@@ -26,9 +26,9 @@ r = [r;2*r]; % MIMO
 %% Feedback
 Q = sys.C'*sys.C;
 R = [1 0; 0 1];
-L = lqr(sys, Q, R);
-[feedbacksys] = reg(sys, L);
-yf = lsim(feedbacksys, r, t);
+L = mc.lqr(sys, Q, R);
+[feedbacksys] = mc.reg(sys, L);
+yf = mc.lsim(feedbacksys, r, t);
 close
 
 %% Add noise
@@ -50,7 +50,7 @@ alpha = 20; % Filtering integer parameter
 
 %% Validation
 u = -uf + r; % Input signal %u = -Lx + r = -uf + r
-yt = lsim(sysd, u, t);
+yt = mc.lsim(sysd, u, t);
 close
 
 %% Check

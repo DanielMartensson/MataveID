@@ -23,10 +23,10 @@ D=[0 0;
 delay = 0;
 
 %% Model
-buss = ss(delay,A,B,C,D);
+buss = mc.ss(delay,A,B,C,D);
 
 %% Simulation
-[g, t] = impulse(buss, 10);
+[g, t] = mc.impulse(buss, 10);
 
 % Reconstruct the input impulse signal from impulse.m
 u = zeros(size(g));
@@ -48,11 +48,11 @@ delay = 0;
 [sysd, K] = eradc(g, sampleTime, ktune, delay, systemorder);
 
 % Create the observer
-observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
 observer.sampleTime = sysd.sampleTime;
 
 %% Validation
-[gf, tf] = lsim(observer, [u; g], t);
+[gf, tf] = mc.lsim(observer, [u; g], t);
 close
 
 %% Check

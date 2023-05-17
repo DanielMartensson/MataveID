@@ -2,13 +2,13 @@
 clear all
 
 % Create system model
-G = tf(1, [1 1.5 2]);
+G = mc.tf(1, [1 1.5 2]);
 
 % Create disturbance model
-H = tf([2 3], [1 5 6]);
+H = mc.tf([2 3], [1 5 6]);
 
 % Create input signal
-[u, t] = gensig('square', 10, 10, 100);
+[u, t] = mc.gensig('square', 10, 10, 100);
 u = [u*5 u*2 -u 10*u -2*u];
 t = linspace(0, 30, length(u));
 
@@ -16,7 +16,7 @@ t = linspace(0, 30, length(u));
 e = randn(1, length(t));
 
 % Simulate with noise-
-y = lsim(G, u, t) + lsim(H, e, t);
+y = mc.lsim(G, u, t) + mc.lsim(H, e, t);
 close
 
 % Identify a system model
@@ -44,7 +44,7 @@ ktune = 0.5;
 [Hhat] = sra(d, k, sampleTime, ktune, delay, systemorder);
 
 % Simulate the disturbance model
-[dy, dt] = lsim(Hhat, e, t);
+[dy, dt] = mc.lsim(Hhat, e, t);
 close
 plot(dt, dy, t, d);
 legend('d = Hhat*e(t)', 'd = y - yhat')
