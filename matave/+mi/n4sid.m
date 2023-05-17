@@ -1,10 +1,10 @@
 % Numerical algorithms for Subspace State Space System IDentification
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, ktune(kalman tuning, optimal), delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model), K(Kalman Gain matrix)
-% Example 1: [sysd, K] = Mid.n4sid(u, y, k, sampleTime);
-% Example 2: [sysd, K] = Mid.n4sid(u, y, k, sampleTime, ktune);
-% Example 3: [sysd, K] = Mid.n4sid(u, y, k, sampleTime, ktune, delay);
-% Example 4: [sysd, K] = Mid.n4sid(u, y, k, sampleTime, ktune, delay, systemorder);
+% Example 1: [sysd, K] = mi.n4sid(u, y, k, sampleTime);
+% Example 2: [sysd, K] = mi.n4sid(u, y, k, sampleTime, ktune);
+% Example 3: [sysd, K] = mi.n4sid(u, y, k, sampleTime, ktune, delay);
+% Example 4: [sysd, K] = mi.n4sid(u, y, k, sampleTime, ktune, delay, systemorder);
 % Author: Daniel Mårtensson, December 2017
 % Update: Added system order, Oktober 2022
 % Update: Added kalman filter, Januari 2023

@@ -1,7 +1,7 @@
 % Independent Component Analysis
 % Input: X(Mixed signal matrix)
 % Output: S(Estimated signal matrix)
-% Example 1: [Y] = Mid.ica(X);
+% Example 1: [Y] = mi.ica(X);
 % Author: Daniel Mårtensson, November 2021
 
 function [S] = ica(varargin)

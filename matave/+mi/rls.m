@@ -1,9 +1,9 @@
 % Recursive Least Square
 % Input: u(input signal), y(output signal), np(number of poles of A(q)), nz(number of zeros of B(q)), nze(number of zeros for C(q)), sampleTime, delay(optional), forgetting(optional)
 % Output: sysd(Discrete state space model with noise), K(Kalman gain matrix)
-% Example 1: [sysd, K] = Mid.rls(u, y, np, nz, nze, sampleTime);
-% Example 2: [sysd, K] = Mid.rls(u, y, np, nz, nze, sampleTime, delay);
-% Example 2: [sysd, K] = Mid.rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
+% Example 1: [sysd, K] = mi.rls(u, y, np, nz, nze, sampleTime);
+% Example 2: [sysd, K] = mi.rls(u, y, np, nz, nze, sampleTime, delay);
+% Example 2: [sysd, K] = mi.rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 % Author: Daniel Mårtensson, September 2019
 
 function [sysd, K] = rls(varargin)

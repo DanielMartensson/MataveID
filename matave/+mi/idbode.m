@@ -1,6 +1,6 @@
 % Plot a bode diagram from frequency data
 % Input: u(frequency input), y(frequency response), samplingFrequency
-% Example: Mid.idbode(u, y, fs)
+% Example: mi.idbode(u, y, fs)
 % Author: Daniel Mårtensson, April 2020
 % Update 2022, Oktober 29:e Better plot
 

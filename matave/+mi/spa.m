@@ -1,7 +1,7 @@
 % Plot bode spectral analysis plot using Fast Fourier Transform
 % Input: y(frequency output), t(time)
 % Output: amp(amplitude), wout(frequencies)
-% Example 1: [amp, wout] = Mid.spa(y, t);
+% Example 1: [amp, wout] = mi.spa(y, t);
 % Author: Daniel Mårtensson, November 2017
 % Update 2022-10-27 with better frequencies and amplitudes
 

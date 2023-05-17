@@ -1,7 +1,7 @@
 % Square Root Unscented Kalman Filter For Parameter Estimation (A better version than regular UKF)
 % Input: Se list below
 % Output: Sw(Parameter estimate error covariance), what(Estimated parameter vector)
-% Example 1: [Sw, what] = Mid.sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L)
+% Example 1: [Sw, what] = mi.sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L)
 % Author: Daniel Mårtensson, December 2021
 
 % L = Number of states, or sensors in practice.

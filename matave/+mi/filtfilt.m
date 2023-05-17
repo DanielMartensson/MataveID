@@ -1,8 +1,8 @@
 % Filtfilt2 - A filter with no or less phase shifting. Very simple to use.
 % Input: y(noisy signal), t(time signal), K(optional filter factor)
 % Output: y(clean signal)
-% Example 1: [y] = Mid.filtfilt(y, t);
-% Example 2: [y] = Mid.filtfilt(y, t, K);
+% Example 1: [y] = mi.filtfilt(y, t);
+% Example 2: [y] = mi.filtfilt(y, t, K);
 % Author: Daniel Mårtensson, April 2020
 % Update: 27 April 2020 for MIMO signals
 % Update: 29 April 2020 for Euler method 

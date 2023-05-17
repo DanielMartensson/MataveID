@@ -1,7 +1,7 @@
 % Linear Discriminant Analysis
 % Input: X(Data), y(Class ID), c(Amount of components)
 % Output: Projected matrix P, Project matrix W
-% Example 1: [P, W] = Mid.lda(X, y, c);
+% Example 1: [P, W] = mi.lda(X, y, c);
 % Author: Daniel Mårtensson, 2023 April
 
 function [P,W] = lda(varargin)

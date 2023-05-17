@@ -1,7 +1,7 @@
 % Robust Principal Component Analysis
 % Input: data matrix(X)
 % Output: filtred data matrix(L), sparse noise matrix(S)
-% Example 1: [L, S] = Mid.rpca(X)
+% Example 1: [L, S] = mi.rpca(X)
 % Author: Daniel Mårtensson, 28 April 2021.
 
 function [L, S] = rpca(varargin)
