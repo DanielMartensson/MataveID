@@ -32,7 +32,7 @@ yf = mc.lsim(feedbacksys, r, t);
 close
 
 %% Add noise
-v = 2*randn(1, 1000);
+v = randn(1, 1000);
 for i = 1:length(yf)
   noiseSigma = 0.10*yf(:, i);
   noise = noiseSigma*v(i); % v = noise, 1000 samples -1 to 1

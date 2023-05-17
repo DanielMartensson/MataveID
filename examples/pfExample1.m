@@ -27,6 +27,7 @@ p = 4;                            % Length of the horizon (Change this)
 yf = zeros(m, n);                  % Filtered outputs
 horizon = zeros(m, p);             % Horizon matrix
 xhatp = zeros(m, 1);               % Past estimated state
+xhatp(1) = y(1);                   % First estimation is a real measurement
 k = 1;                             % Horizon counting (will be counted to p. Do not change this)
 noise = rand(m, p);                % Random noise, not normal distributed
 
