@@ -1822,7 +1822,7 @@ savepath
 
 Package requriments: 
 
- - ![MataveControl](https://github.com/DanielMartensson/matavecontrol) package.
+ - [MataveControl](https://github.com/DanielMartensson/matavecontrol) package.
 
 # Update
 Write this inside the terminal. Then MataveID is going to download new .m files to MataveID from GitHub
