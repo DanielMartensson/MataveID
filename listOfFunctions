@@ -24,3 +24,4 @@ armax.m
 pca.m
 lda.m
 lsvm.m
+kmeans.m
