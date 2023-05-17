@@ -13,7 +13,7 @@ data = [40 + 10*randn(200,3);
 K = 3;
 
 % K-means clustering
-[idx, C] = Mid.kmeans(data, K);
+[idx, C] = mi.kmeans(data, K);
 
 % Plot cluster
 figure;

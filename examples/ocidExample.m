@@ -46,7 +46,7 @@ regularization = 10000;
 modelorder = 6;
 sampleTime = t(2) - t(1);
 alpha = 20; % Filtering integer parameter
-[sysd, K, L] = Mid.ocid(r, uf, y, sampleTime, alpha, regularization, modelorder);
+[sysd, K, L] = mi.ocid(r, uf, y, sampleTime, alpha, regularization, modelorder);
 
 %% Validation
 u = -uf + r; % Input signal %u = -Lx + r = -uf + r

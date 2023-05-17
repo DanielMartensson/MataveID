@@ -137,16 +137,16 @@ MOESP is an algorithm that identify a linear state space model. It was invented 
 Try MOESP or N4SID. They give the same result, but sometimes MOESP can be better than N4SID. It all depends on the data.
 
 ```matlab
-[sysd] = moesp(u, y, k, sampleTime, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+[sysd] = mi.moesp(u, y, k, sampleTime, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
 ```
 
 ### Example MOESP
 
 ```matlab
 clc; clear close all;
-[u, t] = gensig('square', 10, 10, 100);
-G = tf(1, [1 0.8 3]); % Model
-y = lsim(G, u, t); % Simulation
+[u, t] = mc.gensig('square', 10, 10, 100);
+G = mc.tf(1, [1 0.8 3]); % Model
+y = mc.lsim(G, u, t); % Simulation
 y = y + 0.4*rand(1, length(t));
 close
 k = 30;
@@ -154,14 +154,14 @@ sampleTime = t(2) - t(1);
 systemorder = 3;
 delay = 0;
 ktune = 0.01;
-[sysd, K] = moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
+[sysd, K] = mi.moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
 
 % Create the observer
-observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
 observer.sampleTime = sysd.sampleTime;
 
 % Check observer
-[yf, tf] = lsim(observer, [u; y], t);
+[yf, tf] = mc.lsim(observer, [u; y], t);
 close
 plot(tf, yf, t, y)
 grid on
@@ -173,7 +173,7 @@ grid on
 N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
 
 ```matlab
-[sysd, K] = n4sid(u, y, k, sampleTime, ktune, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc. ktune = kalman filter tuning such as 0.1, 0.01 etc
+[sysd, K] = mi.n4sid(u, y, k, sampleTime, ktune, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc. ktune = kalman filter tuning such as 0.1, 0.01 etc
 ```
 
 ### Example N4SID
@@ -188,7 +188,8 @@ Here I programmed a Beijer PLC that controls the multivariable cylinder system. 
 ```matlab
 clc; clear; close all;
 % Load the data
-X = csvread('..\data\MultivariableCylinders.csv');
+file = fullfile('..','data','MultivariableCylinders.csv');
+X = csvread(file);
 t = X(:, 1);
 r0 = X(:, 2);
 r1 = X(:, 3);
@@ -206,14 +207,14 @@ k = 10;
 sampleTime = t(2) - t(1);
 ktune = 0.01; % Kalman filter tuning
 % This won't result well with MOESP and system order = 2
-[sysd, K] = n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
+[sysd, K] = mi.n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
 
 % Create the observer
-observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
 observer.sampleTime = sysd.sampleTime;
 
 % Do simulation
-[outputs, T, x] = lsim(observer, [u; y], t);
+[outputs, T, x] = mc.lsim(observer, [u; y], t);
 close
 plot(T, outputs(1, :), t, y(1, :))
 title('Cylinder 0');
@@ -230,6 +231,7 @@ ylabel('Position');
 grid on
 legend('Identified', 'Measured');
 ylim([0 12]);
+
 ```
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OKID_Result.png)
 
@@ -237,7 +239,7 @@ ylim([0 12]);
 If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA returns a state space model and a kalman gain matrix K.
 
 ```matlab
-[sysd, K] = cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
+[sysd, K] = mi.cca(u, y, k, sampleTime, delay); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
 ```
 
 ### Example CCA
@@ -245,15 +247,15 @@ If N4SID won't work for you due to high noise measurement, then CCA is an altern
 clc; clear; close all;
 
 % Create model
-G = tf(1, [1 1.5 1]);
+G = mc.tf(1, [1 1.5 1]);
 
 % Create control inputs
-[u, t] = gensig('square', 10, 10, 100);
+[u, t] = mc.gensig('square', 10, 10, 100);
 u = [u*5 u*2 -u 10*u -2*u];
 t = linspace(0, 50, length(u));
 
 % Simulate
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close
 
 % Add noise
@@ -264,7 +266,7 @@ sampleTime = t(2) - t(1);
 delay = 0;
 systemOrder = 2;
 k = 30;
-[sysd, K] = cca(u, yn, k, sampleTime, delay, systemOrder);
+[sysd, K] = mi.cca(u, yn, k, sampleTime, delay, systemOrder);
 
 % Create an observer
 delay = sysd.delay;
@@ -272,11 +274,11 @@ A = sysd.A;
 B = sysd.B;
 C = sysd.C;
 D = sysd.D;
-observer = ss(delay, A - K*C, [B K], C, [D 0]);
+observer = mc.ss(delay, A - K*C, [B K], C, [D 0]);
 observer.sampleTime = sysd.sampleTime;
 
 % Simulate the observer
-[yobs, tobs] = lsim(observer, [u; yn], t);
+[yobs, tobs] = mc.lsim(observer, [u; yn], t);
 close
 plot(t, yn, '-r', tobs, yobs, '-b');
 grid on
@@ -289,7 +291,7 @@ This is an algorithm that can identify a stochastic model from error measurement
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/Stochastic_model.png)
  
 ```matlab
-[sysd, K] = sra(e, k, sampleTime, ktune, delay, systemorder);
+[sysd, K] = mi.sra(e, k, sampleTime, ktune, delay, systemorder);
 ```
 
 ### Example SRA 1
@@ -299,13 +301,13 @@ This is an algorithm that can identify a stochastic model from error measurement
 clear all
 
 % Create system model
-G = tf(1, [1 1.5 2]);
+G = mc.tf(1, [1 1.5 2]);
 
 % Create disturbance model
-H = tf([2 3], [1 5 6]);
+H = mc.tf([2 3], [1 5 6]);
 
 % Create input signal
-[u, t] = gensig('square', 10, 10, 100);
+[u, t] = mc.gensig('square', 10, 10, 100);
 u = [u*5 u*2 -u 10*u -2*u];
 t = linspace(0, 30, length(u));
 
@@ -313,7 +315,7 @@ t = linspace(0, 30, length(u));
 e = randn(1, length(t));
 
 % Simulate with noise-
-y = lsim(G, u, t) + lsim(H, e, t);
+y = mc.lsim(G, u, t) + mc.lsim(H, e, t);
 close
 
 % Identify a system model
@@ -321,7 +323,7 @@ k = 50;
 sampleTime = t(2) - t(1);
 delay = 0;
 systemorder = 2;
-Ghat = cca(u, y, k, sampleTime, delay, systemorder);
+Ghat = mi.cca(u, y, k, sampleTime, delay, systemorder);
 
 % Find the disturbance d = H*e
 Ad = Ghat.A;
@@ -338,15 +340,14 @@ d = y - yhat;
 % Identify the disturbance model
 systemorder = 2;
 ktune = 0.5;
-[Hhat] = sra(d, k, sampleTime, ktune, delay, systemorder);
+[Hhat] = mi.sra(d, k, sampleTime, ktune, delay, systemorder);
 
 % Simulate the disturbance model
-[dy, dt] = lsim(Hhat, e, t);
+[dy, dt] = mc.lsim(Hhat, e, t);
 close
 plot(dt, dy, t, d);
 legend('d = Hhat*e(t)', 'd = y - yhat')
 grid on
-
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SRA_Result1.png)
@@ -362,10 +363,10 @@ t = linspace(0, 100, 1000);
 e = randn(1, length(t));
 
 % Create disturbance model
-H = tf([1], [1 3]);
+H = mc.tf([1], [1 3]);
 
 % Simulate
-y = lsim(H, e, t);
+y = mc.lsim(H, e, t);
 close
 
 % Identify a model
@@ -374,13 +375,13 @@ sampleTime = t(2) - t(1);
 ktune = 0.01;
 delay = 0;
 systemorder = 2;
-[H, K] = sra(y, k, sampleTime, ktune, delay, systemorder);
+[H, K] = mi.sra(y, k, sampleTime, ktune, delay, systemorder);
 
 % Observer
 H.A = H.A - K*H.C;
 
 % Create new signals
-[y, t] = gensig('square', 10, 10, 100);
+[y, t] = mc.gensig('square', 10, 10, 100);
 y = [y*5 y*2 -y 10*y -2*y];
 t = linspace(0, 100, length(y));
 
@@ -388,7 +389,7 @@ t = linspace(0, 100, length(y));
 y = y + 2*randn(1, length(y));
 
 % Simulate
-lsim(H, y, t);
+mc.lsim(H, y, t);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SRA_Result2.png)
@@ -401,7 +402,7 @@ The disturbance model can be used for:
 * Create filtering for sensors
 
 ```matlab
-[sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+[sysd, K1, sysh, K2] = mi.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
 ```
 
 ### Example BJ
@@ -412,13 +413,13 @@ clear all
 close all
 
 % Create system model
-G = tf(1, [1 1.5 2]);
+G = mc.tf(1, [1 1.5 2]);
 
 % Create disturbance model
-H = tf([2 3], [1 5 6]);
+H = mc.tf([2 3], [1 5 6]);
 
 % Create input signal
-[u, t] = gensig('square', 10, 10, 100);
+[u, t] = mc.gensig('square', 10, 10, 100);
 u = [u*5 u*2 -u 10*u -2*u];
 t = linspace(0, 30, length(u));
 
@@ -426,8 +427,8 @@ t = linspace(0, 30, length(u));
 e = randn(1, length(t));
 
 % Simulate with noise
-d = lsim(H, e, t);
-y = lsim(G, u, t) + d
+d = mc.lsim(H, e, t);
+y = mc.lsim(G, u, t) + d
 close
 
 % Use Box-Jenkins to find the system model and the disturbance model
@@ -437,10 +438,10 @@ ktune = 0.5;
 delay = 0;
 systemorder_sysd = 2;
 systemorder_sysh = 2;
-[sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+[sysd, K1, sysh, K2] = mi.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
 
 % Plot sysd
-[sysd_y, sysd_t] = lsim(sysd, u, t);
+[sysd_y, sysd_t] = mc.lsim(sysd, u, t);
 close all
 plot(t, y, sysd_t, sysd_y);
 legend('Measurement', 'Identified')
@@ -449,7 +450,7 @@ title('System model', 'FontSize', 20)
 
 % Plot sysh
 figure(2)
-[sysh_y, sysh_t] = lsim(sysh, e, t);
+[sysh_y, sysh_t] = mc.lsim(sysh, e, t);
 close(2)
 figure(2)
 plot(t, d, sysh_t, sysh_y);
@@ -469,15 +470,15 @@ There is a equivalent C-code for RLS algorithm here. Works on ALL embedded syste
 https://github.com/DanielMartensson/CControl
 
 ```matlab
-[sysd, K] = rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
+[sysd, K] = mi.rls(u, y, np, nz, nze, sampleTime, delay, forgetting);
 ```
 
 Notice that there are sevral functions that simplify the use of `rls.m`
 
 ```matlab
-[sysd, K] = oe(u, y, np, nz, sampleTime, delay, forgetting);
-[sysd, K] = arx(u, y, np, nz, sampleTime, ktune, delay, forgetting);
-[sysd, K] = armax(u, y, np, nz, nze, sampleTime, ktune, delay, forgetting);
+[sysd, K] = mi.oe(u, y, np, nz, sampleTime, delay, forgetting);
+[sysd, K] = mi.arx(u, y, np, nz, sampleTime, ktune, delay, forgetting);
+[sysd, K] = mi.armax(u, y, np, nz, nze, sampleTime, ktune, delay, forgetting);
 ```
 
 ### Example RLS
@@ -488,7 +489,8 @@ This is a hanging load of a hydraulic system. This system is a linear system due
 
 ```matlab
 % Load data
-X = csvread('..\data\HangingLoad.csv');
+file = fullfile('..','data','HangingLoad.csv');
+X = csvread(file);
 t = X(:, 1)'; % Time
 r = X(:, 2)'; % Reference
 y = X(:, 3)'; % Output position
@@ -507,31 +509,31 @@ nze = 1; % Number of zeros of C(q)
 u_up = r(1:l/2);
 e_up = randn(1, length(u_up)); % Noise
 y_up = y(1:l/2) + e_up;
-[sysd, K] = rls(u_up, y_up, np, nz, nze, sampleTime);
+[sysd, K] = mi.rls(u_up, y_up, np, nz, nze, sampleTime);
 
 % Observer
-sysd_up = ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
+sysd_up = mc.ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
 sysd_up.sampleTime = sysd.sampleTime;
 
 % Model down
 u_down = r(l/2+1:end);
 e_down = randn(1, length(u_down)); % Noise
 y_down = y(l/2+1:end) + e_down;
-[sysd, K] = rls(u_down, y_down, np, nz, nze, sampleTime);
+[sysd, K] = mi.rls(u_down, y_down, np, nz, nze, sampleTime);
 
 % Observer
-sysd_down = ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
+sysd_down = mc.ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
 sysd_down.sampleTime = sysd.sampleTime;
 
 % Simulate model up
 time_up = t(1:l/2);
-[~,~,x] = lsim(sysd_up, [u_up; e_up], time_up);
+[~,~,x] = mc.lsim(sysd_up, [u_up; e_up], time_up);
 hold on
 
 % Simulate model down
 time_down = t(l/2+1:end);
 x0 = x(:, end); % Initial state
-lsim(sysd_down, [u_down; e_down], time_down, x0);
+mc.lsim(sysd_down, [u_down; e_down], time_down, x0);
 
 % Place legend, title, labels for the signals
 subplot(2, 1, 1)
@@ -558,7 +560,7 @@ ERA/DC was invented 1987 and is a successor from ERA, that was invented 1985 at 
 Use this algorithm if you got impulse data from e.g structural mechanics.
 
 ```matlab
-[sysd, K] = eradc(g, sampleTime, ktune, delay systemorder);
+[sysd, K] = mi.eradc(g, sampleTime, ktune, delay systemorder);
 ```
 ### Example ERA/DC for MIMO systems
 
@@ -590,10 +592,10 @@ D=[0 0;
 delay = 0;
 
 %% Model
-buss = ss(delay,A,B,C,D);
+buss = mc.ss(delay,A,B,C,D);
 
 %% Simulation
-[g, t] = impulse(buss, 10);
+[g, t] = mc.impulse(buss, 10);
 
 % Reconstruct the input impulse signal from impulse.m
 u = zeros(size(g));
@@ -612,14 +614,14 @@ systemorder = 10;
 ktune = 0.09;
 sampleTime = t(2) - t(1);
 delay = 0;
-[sysd, K] = eradc(g, sampleTime, ktune, delay systemorder);
+[sysd, K] = mi.eradc(g, sampleTime, ktune, delay, systemorder);
 
 % Create the observer
-observer = ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
+observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
 observer.sampleTime = sysd.sampleTime;
 
 %% Validation
-[gf, tf] = lsim(observer, [u; g], t);
+[gf, tf] = mc.lsim(observer, [u; g], t);
 close
 
 %% Check
@@ -639,7 +641,7 @@ Use this algorithm if you want to extract a LQR control law, kalman observer and
 This OCID algorithm have a particle filter that estimates the markov parameters.
 
 ```matlab
-[sysd, K, L] = ocid(r, uf, y, sampleTime, alpha, regularization, systemorder);
+[sysd, K, L] = mi.ocid(r, uf, y, sampleTime, alpha, regularization, systemorder);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OCID_System.png)
@@ -647,6 +649,8 @@ This OCID algorithm have a particle filter that estimates the markov parameters.
 ### OCID Example
 
 ```matlab
+clc; close all; clear;
+
 %% Matrix A
 A = [0 1  0  0;
     -7 -5 0  1;
@@ -665,7 +669,7 @@ C = [1 0 0 0;
 
 %% Model and signals
 delay = 0;
-sys = ss(delay, A, B, C);
+sys = mc.ss(delay, A, B, C);
 t = linspace(0, 20, 1000);
 r = [linspace(5, -11, 100) linspace(7, 3, 100) linspace(-6, 9, 100) linspace(-7, 1, 100) linspace(2, 0, 100) linspace(6, -9, 100) linspace(4, 1, 100) linspace(0, 0, 100) linspace(10, 17, 100) linspace(-30, 0, 100)];
 r = [r;2*r]; % MIMO
@@ -673,9 +677,9 @@ r = [r;2*r]; % MIMO
 %% Feedback
 Q = sys.C'*sys.C;
 R = [1 0; 0 1];
-L = lqr(sys, Q, R);
-[feedbacksys] = reg(sys, L);
-yf = lsim(feedbacksys, r, t);
+L = mc.lqr(sys, Q, R);
+[feedbacksys] = mc.reg(sys, L);
+yf = mc.lsim(feedbacksys, r, t);
 close
 
 %% Add noise
@@ -693,11 +697,11 @@ regularization = 10000;
 modelorder = 6;
 sampleTime = t(2) - t(1);
 alpha = 20; % Filtering integer parameter
-[sysd, K, L] = ocid(r, uf, y, sampleTime, alpha, regularization, modelorder);
+[sysd, K, L] = mi.ocid(r, uf, y, sampleTime, alpha, regularization, modelorder);
 
 %% Validation
 u = -uf + r; % Input signal %u = -Lx + r = -uf + r
-yt = lsim(sysd, u, t);
+yt = mc.lsim(sysd, u, t);
 close
 
 %% Check
@@ -714,7 +718,7 @@ This algorithm identify the closed loop system, plant and controller. The differ
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ORTJIOP_Process.png)
 
 ```matlab
-[sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
+[sysd, P, C] = mi.ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
 ```
 
 ### Orthogonal Decomposition of Joint Input-Output Process example
@@ -735,15 +739,19 @@ This example is a real world example with noise and nonlinearities. Here I set u
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/FestoBench.jpg)
 
 ```matlab
+clc; clear; close all;
+
+
 % Load CSV data
-X = csvread('MotorRotation.csv'); % Can be found in the folder "data"
+file = fullfile('..','data','MotorRotation.csv');
+X = csvread(file); % Can be found in the folder "data"
 t = X(:, 1);
 u = X(:, 2);
 y = X(:, 3);
 sampleTime = 0.02;
 
 % Do filtering of y
-y = filtfilt2(y', t', 0.1)';
+y = mi.filtfilt(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
 activations = [1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
@@ -751,23 +759,25 @@ lambda = 0.05;
 l = length(u);
 h = floor(l/2);
 s = ceil(l/2);
-fx_up = sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
-fx_down = sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
+fx_up = mi.sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
+fx_down = mi.sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
 
 % Simulation up
-x0 = y(1:h)(1);
-u_up = u(1:h)(1:100:end)';
+x0 = y(1);
+u_up = u(1:h);
+u_up = u_up(1:100:end)';
 stepTime = 1.2;
-[x_up, t] = nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
+[x_up, t] = mc.nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
 
 % Simulation down 
-x0 = y(s:end)(1);
-u_down = u(s:end)(1:100:end)';
+x0 = y(s);
+u_down = u(s:end)
+u_down = u_down(1:100:end)';
 stepTime = 1.2;
-[x_down, t] = nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
+[x_down, t] = mc.nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
 
 % Compare 
-close all
+figure
 plot([x_up x_down])
 hold on 
 plot(y(1:100:end));
@@ -796,13 +806,13 @@ inputs = [r0 r1];
 outputs = [y0 y1];
 activations = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
 lambda = 0.2;
-model = sindy(inputs, outputs, activations, lambda, sampleTime);
+model = mi.sindy(inputs, outputs, activations, lambda, sampleTime);
 
 % Simulation
 u = inputs';
 x0 = outputs'(:, 1);
 stepTime = 1.0;
-[x, t] = nlsim(model, u, x0, stepTime, 'ode15s');
+[x, t] = mi.nlsim(model, u, x0, stepTime, 'ode15s');
 
 % Compare
 close all 
@@ -832,7 +842,7 @@ grid on
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
 
 ```matlab
-idbode(u, y, w);
+mi.idbode(u, y, w);
 ```
 
 ### IDBode Example
@@ -840,28 +850,31 @@ idbode(u, y, w);
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/IDBODE_System.png)
 
 ```matlab
+clc; clear; close all;
+
+
 %% Model of a mass spring damper system
 M = 5; % Kg
 K = 100; % Nm/m
 b = 52; % Nm/s^2
-G = tf([1], [M b K]);
+G = mc.tf([1], [M b K]);
 
 %% Frequency response
 t = linspace(0, 50, 3000);
-[u, fs] = chirp(t);
+[u, fs] = mc.chirp(t);
 
 %% Simulation
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close all
 
 % Add noise
 y = y + 0.0001*randn(1, length(y));
 
 %% Identify bode diagram
-idbode(u, y, fs);
+mi.idbode(u, y, fs);
 
 %% Check
-bode(G);
+mc.bode(G);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/IDBODE_Result.png)
@@ -870,7 +883,7 @@ bode(G);
 K-means clustering is a tool that can identify the center of clusters. All you need to do is to specify how many cluster IDs you think there exist in your data. 
 
 ```matlab
-[idx, C] = kmeans(X, k);
+[idx, C] = mi.kmeans(X, k);
 ```
 
 ### K-means clustering example
@@ -891,7 +904,7 @@ data = [40 + 10*randn(200,3);
 K = 3;
 
 % K-means clustering
-[idx, C] = kmeans(data, K);
+[idx, C] = mi.kmeans(data, K);
 
 % Plot cluster
 figure;
@@ -911,7 +924,7 @@ zlabel('z', 'FontSize', 20);
 This plots all the amplitudes from noisy data over its frequencies. Very good to see what type of noise or signals you have. With this, you can determine what the real frequencies and amplitudes are and therefore you can create your filtered frequency response that are clean.
 
 ```matlab
-[amp, wout] = spa(y, t);
+[amp, wout] = mi.spa(y, t);
 ```
 
 ### SPA Example
@@ -919,6 +932,8 @@ This plots all the amplitudes from noisy data over its frequencies. Very good to
 Assume that we are using the previous example with different parameters.
 
 ```matlab
+clc; clear; close all;
+
 %% Frequency input
 t = linspace(0.0, 100, 30000);
 u1 = 2*sin(2*pi*5.*t); % 5 Hz
@@ -931,7 +946,7 @@ u = u1 + u2 + u3 + u4;
 u = u + 5*randn(1, 30000);
 
 %% Identify what frequencies and amplitudes we had!
-spa(u, t);
+mi.spa(u, t);
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SPA_Result.png)
@@ -940,7 +955,7 @@ spa(u, t);
 This filter away noise with a good old low pass filter that are being runned twice. Filtfilt is equal to the famous function filtfilt in MATLAB, but this is a regular .m file and not a C/C++ subroutine. Easy to use and recommended. 
 
 ```matlab
-[y] = filtfilt(y, t, K);
+[y] = mi.filtfilt(y, t, K);
 ```
 
 ### Filtfilt Example
@@ -954,14 +969,14 @@ clc; clear; close all;
 M = 1; % Kg
 K = 500; % Nm/m
 b = 3; % Nm/s^2
-G = tf([1], [M b K]);
+G = mc.tf([1], [M b K]);
 
 %% Input signal
 t = linspace(0.0, 100, 3000);
 u = 10*sin(t);
 
 %% Simulation
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close
 
 %% Add 10% noise
@@ -974,7 +989,7 @@ end
 
 %% Filter away the noise
 lowpass = 0.2;
-[yf] = filtfilt(y, t, lowpass);
+[yf] = mi.filtfilt(y, t, lowpass);
 
 %% Check
 plot(t, yf, t, y);
@@ -986,7 +1001,7 @@ legend("Filtered", "Noisy");
 Linear Discriminant Analysis can be used for dimension reduction and projection on maximum distance between classes.
 
 ```matlab
-[P, W] = lda(X, y, c);
+[P, W] = mi.lda(X, y, c);
 ```
 ### Linear Discriminant Analysis example
 
@@ -1032,7 +1047,7 @@ title('Original 3D data', 'FontSize', 20)
 legend('Class 1', 'Class 2', 'Class 3')
 
 % Do LDA for 2D
-[P, W] = lda(X, y, c);
+[P, W] = mi.lda(X, y, c);
 
 % Plot 2D were P is a c x l matrix
 figure
@@ -1049,7 +1064,7 @@ legend('Class 1', 'Class 2', 'Class 3')
 c = 1;
 
 % Do LDA for 1D
-[P, W] = lda(X, y, c);
+[P, W] = mi.lda(X, y, c);
 
 % Plot 1D were P is a c x l matrix
 figure
@@ -1075,7 +1090,7 @@ This PCA algorithm has a very smart method to remove outliers. The method is usi
 how many points can a the data be defined as a cluster.
 
 ```matlab
-[P, W] = pca(X, c);
+[P, W] = mi.pca(X, c);
 ```
 ### Principal Component Analysis example
 
@@ -1118,7 +1133,7 @@ title('Original 3D data', 'FontSize', 20)
 
 % Do PCA for 3D
 c = 3;
-[P, W] = pca(X, c);
+[P, W] = mi.pca(X, c);
 figure
 scatter3(P(:, 1), P(:, 2), P(:, 3), 50,cmap);
 grid on
@@ -1126,7 +1141,7 @@ title('Dimension transformation to 3D', 'FontSize', 20)
 
 % Do PCA for 2D
 c = 2;
-[P, W] = pca(X, c);
+[P, W] = mi.pca(X, c);
 figure
 scatter(P(:, 1), P(:, 2), 20,cmap);
 grid on
@@ -1134,7 +1149,7 @@ title('Dimension reduction to 2D', 'FontSize', 20)
 
 % Do PCA for 1D
 c = 1;
-[P, W] = pca(X, c);
+[P, W] = mi.pca(X, c);
 figure
 scatter(P(:, 1), 0*P(:, 1), 50,cmap);
 grid on
@@ -1178,15 +1193,12 @@ title('After RPCA - Bob')
 Independent component analysis(ICA) is a tool if you want to separate independent signals from each other. This is not a filter algorithm, but instead of removing noise, it separate the disturbances from the signals. The disturbances are created from other signals. Assume that you have an engine and you are measuring vibration in X, Y and Z-axis. These axis will affect each other and therefore the signals will act like they are mixed. ICA separate the mixed signals into clean and independent signals.
 
 ```matlab
-[S] = ica(X);
+[S] = mi.ica(X);
 ```
 ### Independent Component Analysis example
 
 ```matlab
-% Clear all plots
-clear
-close all
-clc
+clear; close all; clc
 
 % Tick clock
 tic
@@ -1283,7 +1295,7 @@ ylabel('Signal Amplitude')
 legend('Observed Mixture 1', 'Observed Mixture 2', 'Observed Mixture 3', 'Observed Mixture 4', 'Observed Mixture 5', 'Observed Mixture 6')
 
 % Use ICA to find S from X
-S = ica(X);
+S = mi.ica(X);
 
 figure
 plot(timeVector, S(1,:))
@@ -1341,11 +1353,14 @@ This is how the signals are reconstructed as they were independent
 This is Uncented Kalman Filter that using cholesky update method (more stable), instead of cholesky decomposition. This algorithm can estimate parameters to very a complex function if data is available. This method is reqursive and there is a C code version in CControl as well. Use this when you need to estimate parameters to a function if you have data that are generated from that function. It can be for example an object that you have measured data and you know the mathematical formula for that object. Use the measured data with this algorithm and find the parameters for the formula.
 
 ```matlab
-[Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
+[Sw, what] = mi.sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
 ```
 
 ### Square Root Uncented Kalman Filter for parameter estimation example
 ```matlab
+clc; clear; close all;
+
+
 % Initial parameters
 L = 3;                  % How many states we have
 e = 0.1;                % Tuning factor for noise
@@ -1382,7 +1397,7 @@ for i = 1:samples
   d(3) = x(3);
   
   % SR-UKF
-  [Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
+  [Sw, what] = mi.sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
   
   % Save the estimated parameter 
   WHAT(i, :) = what';
@@ -1413,11 +1428,14 @@ end
 This is Uncented Kalman Filter that using cholesky update method (more stable), instead of cholesky decomposition. This algorithm can estimate states from a very complex model. This method is reqursive and there is a C code version in CControl as well. Use this when you need to estimate state to a model if you have data that are generated from that function. It can be for example an object that you have measured data and you know the mathematical formula for that object. Use the measured data with this algorithm and find the states for the model.
 
 ```matlab
-[S, xhat] = sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L);
+[S, xhat] = mi.sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L);
 ```
 
 ### Square Root Uncented Kalman Filter for state estimation example
 ```matlab
+clc; clear; close all;
+
+
 % Initial parameters
 L = 3;                  % How many states we have
 r = 1.5;                % Tuning factor for noise
@@ -1460,7 +1478,7 @@ for i = 1:samples
   X(i, :) = x';
   
   % SR-UKF
-  [S, xhat] = sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L);
+  [S, xhat] = mi.sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L);
 
   % Save the estimated parameter 
   XHAT(i, :) = xhat';
@@ -1493,11 +1511,13 @@ A particle filter is another estimation filter such as Square Root Uncented Kalm
 The particle filter is using Kernel Density Estimation algorithm to create the internal probability model, hence the user only need to specify one parameter with the following example. If you don't have a model that describes the dynamical behaviour, this filter is the right choice for you then.
 
 ```matlab
-[xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+[xhat, horizon, k, noise] = mi.pf(x, xhatp, k, horizon, noise);
 ```
 
 ### Particle Filter example 1
 ```matlab
+clc; clear; close all;
+
 % Create inputs
 N = 200;
 u = linspace(1, 1, N);
@@ -1507,10 +1527,10 @@ u = [5*u 10*u -4*u 3*u 5*u 0*u -5*u 0*u];
 t = linspace(0, 100, length(u));
 
 % Create second order model
-G = tf(1, [1 0.8 3]);
+G = mc.tf(1, [1 0.8 3]);
 
 % Simulate outputs
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close
 
 % Add noise
@@ -1531,7 +1551,7 @@ noise = rand(m, p);                % Random noise, not normal distributed
 % Particle filter - Simulation
 for i = 1:n
   x = y(:, i);                     % Get the state
-  [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+  [xhat, horizon, k, noise] = mi.pf(x, xhatp, k, horizon, noise);
   yf(:, i) = xhat;                 % Estimated state
   xhatp = xhat;                    % This is the past estimated state
 end
@@ -1545,7 +1565,10 @@ grid on
 
 ### Particle Filter example 2
 ```matlab
-X = dlmread('ParticleFilterDataRaw.csv');
+clc; clear; close all;
+
+file = fullfile('..','data','ParticleFilterDataRaw.csv');
+X = dlmread(file,';',1,0);
 t = X(:, 1)';
 y = X(:, 2)';
 
@@ -1563,7 +1586,7 @@ noise = rand(m, p);                % Random noise, not normal distributed
 % Particle filter - Simulation
 for i = 1:n
   x = y(:, i);                     % Get the state
-  [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+  [xhat, horizon, k, noise] = mi.pf(x, xhatp, k, horizon, noise);
   yf(:, i) = xhat;                 % Estimated state
   xhatp = xhat;                    % This is the past estimated state
 end
@@ -1583,7 +1606,7 @@ This is the standard way to create a support vector machine. Even if it's only r
 Notice that the Linear Support Vector Machine can only do two-class prediction only. But you can use multiple classes with the Linear Support Vector Machine by using multiple linear support vector machines. It's called One-VS-All method.
 
 ```matlab
-[w, b, accuracy, solution] = lsvm(x, y, C, lambda)
+[w, b, accuracy, solution] = mi.lsvm(x, y, C, lambda)
 ```
 
 ### Linear Support Vector Machine 2D example 
@@ -1600,7 +1623,7 @@ X = [5 3;
      18 13;
      16 20;
      19, 15];
-     
+
 % Labels of the data for each class
 y = [1;
      1;
@@ -1618,13 +1641,13 @@ hold on
 scatter(X(y == 1,1), X(y == 1,2), 'g');
 grid on
 legend('Class A', 'Class B', 'location', 'northwest')
-
+     
 % Tuning parameters
 C = 1; % For upper boundary limit
 lambda = 1; % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy, solution] = lsvm(X, y, C, lambda);
+[w, b, accuracy, solution] = mi.lsvm(X, y, C, lambda);
 
 % How long the line should be
 min_value_column_1 = min(X(:,1));
@@ -1686,13 +1709,12 @@ scatter3(X(y == 1,1), X(y == 1,2), X(y == 1,3), 'g');
 grid on
 legend('Class A', 'Class B', 'location', 'northwest')
 
-
 % Tuning parameters
 C = 1;              % For upper boundary limit
 lambda = 1;         % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy, solution] = lsvm(X, y, C, lambda);
+[w, b, accuracy, solution] = mi.lsvm(X, y, C, lambda);
 
 % Definiera området för 3D-plot
 x1Range = linspace(min(X(:,1))-1, max(X(:,1))+1, 50);
@@ -1727,12 +1749,14 @@ The `nlsvm.m` file will plot your data and then when you have placed out your su
 If you have let's say more than two variables, e.g `Z` matrix or even more. Then you can create multiple models as well by just using diffrent data as arguments for the `svm` function below. The C code generation is very fast and it's very easy to build a model. 
 
 ```matlab
-[X_point, Y_point, amount_of_supports_for_class] = nlsvm(X, Y)
+[X_point, Y_point, amount_of_supports_for_class] = mi.nlsvm(X, Y)
 ```
 
 ### Nonlinear Support Vector Machine with C code generation example
 
 ```matlab
+clc; clear; close all;
+
 % How much data should we generate 
 N = 50;
 
@@ -1756,9 +1780,9 @@ for i = 1:c
   Y(i, 1:N) = Y_average(i) + Y_variance(i)*randn(1, N);
 end
   
-% Create SVM model - X_point and Y_point is coordinates for the SVM points.
+% Create SVM model - X_point and Y_point is coordinates for the Nonlinear SVM points.
 % amount_of_supports_for_class is how many points there are in each row
-[X_point, Y_point, amount_of_supports_for_class] = nlsvm(X, Y);
+[X_point, Y_point, amount_of_supports_for_class] = mi.nlsvm(X, Y);
   
 % Do a quick re-sampling of random data again
 for i = 1:c

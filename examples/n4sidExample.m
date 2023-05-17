@@ -19,7 +19,7 @@ k = 10;
 sampleTime = t(2) - t(1);
 ktune = 0.01; % Kalman filter tuning
 % This won't result well with MOESP and system order = 2
-[sysd, K] = Mid.n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
+[sysd, K] = mi.n4sid(u, y, k, sampleTime, ktune); % Delay argment is default 0. Select model order = 2 when n4sid ask you
 
 % Create the observer
 observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);

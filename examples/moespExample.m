@@ -9,7 +9,7 @@ sampleTime = t(2) - t(1);
 systemorder = 3;
 delay = 0;
 ktune = 0.01;
-[sysd, K] = Mid.moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
+[sysd, K] = mi.moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
 
 % Create the observer
 observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);

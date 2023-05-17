@@ -28,7 +28,7 @@ ktune = 0.5;
 delay = 0;
 systemorder_sysd = 2;
 systemorder_sysh = 2;
-[sysd, K1, sysh, K2] = Mid.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+[sysd, K1, sysh, K2] = mi.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
 
 % Plot sysd
 [sysd_y, sysd_t] = mc.lsim(sysd, u, t);

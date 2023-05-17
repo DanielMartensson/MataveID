@@ -24,7 +24,7 @@ k = 50;
 sampleTime = t(2) - t(1);
 delay = 0;
 systemorder = 2;
-Ghat = Mid.cca(u, y, k, sampleTime, delay, systemorder);
+Ghat = mi.cca(u, y, k, sampleTime, delay, systemorder);
 
 % Find the disturbance d = H*e
 Ad = Ghat.A;
@@ -41,7 +41,7 @@ d = y - yhat;
 % Identify the disturbance model
 systemorder = 2;
 ktune = 0.5;
-[Hhat] = Mid.sra(d, k, sampleTime, ktune, delay, systemorder);
+[Hhat] = mi.sra(d, k, sampleTime, ktune, delay, systemorder);
 
 % Simulate the disturbance model
 [dy, dt] = mc.lsim(Hhat, e, t);

@@ -19,7 +19,7 @@ close all
 y = y + 0.0001*randn(1, length(y));
 
 %% Identify bode diagram
-Mid.idbode(u, y, fs);
+mi.idbode(u, y, fs);
 
 %% Check
 mc.bode(G);

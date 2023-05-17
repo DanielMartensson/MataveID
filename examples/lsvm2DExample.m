@@ -33,7 +33,7 @@ C = 1; % For upper boundary limit
 lambda = 1; % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy, solution] = Mid.lsvm(X, y, C, lambda);
+[w, b, accuracy, solution] = mi.lsvm(X, y, C, lambda);
 
 % How long the line should be
 min_value_column_1 = min(X(:,1));

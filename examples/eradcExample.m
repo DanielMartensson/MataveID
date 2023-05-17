@@ -45,7 +45,7 @@ systemorder = 10;
 ktune = 0.09;
 sampleTime = t(2) - t(1);
 delay = 0;
-[sysd, K] = Mid.eradc(g, sampleTime, ktune, delay, systemorder);
+[sysd, K] = mi.eradc(g, sampleTime, ktune, delay, systemorder);
 
 % Create the observer
 observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);

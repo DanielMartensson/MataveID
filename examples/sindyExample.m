@@ -10,7 +10,7 @@ y = X(:, 3);
 sampleTime = 0.02;
 
 % Do filtering of y
-y = Mid.filtfilt(y', t', 0.1)';
+y = mi.filtfilt(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
 activations = [1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
@@ -18,8 +18,8 @@ lambda = 0.05;
 l = length(u);
 h = floor(l/2);
 s = ceil(l/2);
-fx_up = Mid.sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
-fx_down = Mid.sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
+fx_up = mi.sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
+fx_down = mi.sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
 
 % Simulation up
 x0 = y(1);

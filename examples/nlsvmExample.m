@@ -25,7 +25,7 @@ end
   
 % Create SVM model - X_point and Y_point is coordinates for the Nonlinear SVM points.
 % amount_of_supports_for_class is how many points there are in each row
-[X_point, Y_point, amount_of_supports_for_class] = Mid.nlsvm(X, Y);
+[X_point, Y_point, amount_of_supports_for_class] = mi.nlsvm(X, Y);
   
 % Do a quick re-sampling of random data again
 for i = 1:c

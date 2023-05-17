@@ -20,7 +20,7 @@ sampleTime = t(2) - t(1);
 delay = 0;
 systemOrder = 2;
 k = 30;
-[sysd, K] = Mid.cca(u, yn, k, sampleTime, delay, systemOrder);
+[sysd, K] = mi.cca(u, yn, k, sampleTime, delay, systemOrder);
 
 % Create an observer
 delay = sysd.delay;

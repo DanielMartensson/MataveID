@@ -24,7 +24,7 @@ end
 
 %% Filter away the noise
 lowpass = 0.2;
-[yf] = Mid.filtfilt(y, t, lowpass);
+[yf] = mi.filtfilt(y, t, lowpass);
 
 %% Check
 plot(t, yf, t, y);
