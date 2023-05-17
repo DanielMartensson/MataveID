@@ -1,5 +1,5 @@
-# Mataveid V16.0
-Mataveid is a basic system identification toolbox for both GNU Octave and MATLAB®. Mataveid is based on the power of linear algebra and the library is easy to use. Mataveid using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
+# MataveID V16.0
+MataveID is a basic system identification toolbox for both GNU Octave and MATLAB®. MataveID is based on the power of linear algebra and the library is easy to use. MataveID using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
 
@@ -38,10 +38,6 @@ I'm building this library because I feel that the commercial libraries are just 
 | `dnn.m` | Not created yet | Planning to include a basic deep neural network for modeling nonlinear dynamics or other types of classifications |
 
 
-# Caution
-
-Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Identification Toolbox will cause problems with MataveID & MataveControl because they are using the same function names.
-
 # Functions and its purpose
 - ERA-DC for mechanical damped systems in the time plane
 - SINDY for multivariable abritary nonlinear systems
@@ -68,7 +64,7 @@ Installing GNU Octave's Control-Toolbox or MATLAB's Control-Toolbox/System Ident
 - KMEANS for identify clusters
 
 # Papers:
-Mataveid contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
+MataveID contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
 
 # Literature:
 I have been using these books for creating the `.m` files. All these books have different audience. Some techniques are meant for researchers and some are meant for practical engineering.
@@ -88,7 +84,7 @@ Disadvantages:
  - MATLAB files from this book is export controlled from NASA = Difficult to download
  - This book is not produced anymore. I have the PDF.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/AppliedSystemIdentification.jpeg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/AppliedSystemIdentification.jpeg)
 
 ### System Modeling & Identification
 This book covering techniques for all types of systems, linear and nonlinear, but it's more a general book for system identfication. `Professor Rolf Johansson` book contains lots of practice, but also theory as well. More theory and less practice compared to `Applied System Identification` from `Jer-Nan Juang`. This book uses both the realization theory methods and subspace methods for identify dynamical systems from data. Also this book includes filters as well such as Uncented Kalman Filter. Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/ 
@@ -103,7 +99,7 @@ Disadvantages:
  - Do not include closed loop identification
  - Some methods are difficult to understand how to apply with MATLAB-code. Typical univerity literature for students
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RolfJohanssonsBok.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/RolfJohanssonsBok.jpg)
 
 ### Subspace Methods For System Identification
 This book include techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it include modern system identification techniques. The disadvantages about this book is that it contains only theory and no practice, but `Professor Tohru Katayama`, have made a great work for collecting all these subspace methods. Use this book if you want to have knowledge about the best subspace identification methods.
@@ -119,7 +115,7 @@ Disadvantages:
  - Does not include impulse, frequency and nonlinear identification
  - Does not include filtering, statistics and other types of modeling techniques
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/subspace_methods_for_system_identification.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/subspace_methods_for_system_identification.jpg)
 
 ### Adaptive Control
 This book is only for adaptive control. But there is one algorithm that are very useful - Recursive Least Squares. This is a very pratical book for applied adaptive control. It's uses the legacy SISO adaptive techniques such as pole placement, Self Tuning Regulator(STR) and Model Reference Adaptive Systems(MRAS) combined with Recursive Least Squares(RLS). If you wonder why only SISO and not MIMO, it's because adaptive control is very difficult to apply in practice and create a reliable controller for all types of systems. The more difficult problem is to solve, the more simplier technique need to be used.
@@ -134,7 +130,7 @@ Disadvantages:
  - Only SISO model are applied
  - This book is made for adaptive control and have only one chapter that contains system identification
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Adaptive_control.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/Adaptive_control.png)
 
 ### MOESP - Multivariable Output-Error State Space
 MOESP is an algorithm that identify a linear state space model. It was invented in 1992. It can both identify SISO and MISO models.
@@ -171,7 +167,7 @@ plot(tf, yf, t, y)
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/MOESP_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/MOESP_Result.png)
 
 ### N4SID - Numerical algorithm for Subspace State Space System IDentification.
 N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
@@ -184,9 +180,9 @@ N4SID is an algoritm that identify a linear state space model. Use this if you g
 
 Here I programmed a Beijer PLC that controls the multivariable cylinder system. It's a nonlinear system, but N4SID can handle it because it's not so nonlinear as a hydraulic motor. Cylinder 0 and Cylinder 1 affecting each other when the propotional control valves opens.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PLC%20system.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PLC%20system.jpg)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_System.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OKID_System.jpg)
 
 
 ```matlab
@@ -235,7 +231,7 @@ grid on
 legend('Identified', 'Measured');
 ylim([0 12]);
 ```
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OKID_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OKID_Result.png)
 
 ### CCA - Canonical Correlation Analysis
 If N4SID won't work for you due to high noise measurement, then CCA is an alternative method to use. CCA returns a state space model and a kalman gain matrix K.
@@ -285,12 +281,12 @@ close
 plot(t, yn, '-r', tobs, yobs, '-b');
 grid on
 ```
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/CCA_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/CCA_Result.png)
 
 ### SRA - Stochastic Realization Algorithm
 This is an algorithm that can identify a stochastic model from error measurement data.
  
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Stochastic_model.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/Stochastic_model.png)
  
 ```matlab
 [sysd, K] = sra(e, k, sampleTime, ktune, delay, systemorder);
@@ -353,7 +349,7 @@ grid on
 
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result1.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SRA_Result1.png)
 
 ### Example SRA 2
 
@@ -395,7 +391,7 @@ y = y + 2*randn(1, length(y));
 lsim(H, y, t);
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SRA_Result2.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SRA_Result2.png)
 
 ## BJ - Box-Jenkins
 Box-Jenkins is a special case when a system model `sysd` and a disturbance model `sysh` need to be found. The disturbance is difficult to know and with this Box-Jenkins algorithm, then the user can identify the disturbance model and create an observer of it by using the kalman gain matrices `K1, K2`. Notice that this Box-Jenkins algorithm using subspace methods, instead of classical polynomial methods.
@@ -462,7 +458,7 @@ grid on
 title('Disturbance model', 'FontSize', 20)
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/BJ_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/BJ_Result.png)
 
 ### RLS - Recursive Least Squares
 RLS is an algorithm that creates a SISO model from data. Here you can select if you want to estimate an ARX, OE model or an ARMAX model, depending on the number of zeros in the polynomal "nze". Select number of error-zeros-polynomal "nze" to 1, and you will get a ARX model or select "nze" equal to model poles "np", you will get an ARMAX model that also includes a kalman gain matrix K. I recommending that. This algorithm can handle data with noise. This algorithm was invented 1821 by Carl Friedrich Gauss, but it was until 1950 when it got its attention in adaptive control.
@@ -488,7 +484,7 @@ Notice that there are sevral functions that simplify the use of `rls.m`
 
 This is a hanging load of a hydraulic system. This system is a linear system due to the hydraulic cylinder that lift the load. Here I create two linear first order models. One for up lifting up and one for lowering down the weight. I'm also but a small orifice between the outlet and inlet of the hydraulic cylinder. That's create a more smooth behavior. Notice that this RLS algorithm also computes a Kalman gain matrix.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_System.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/RLS_System.jpg)
 
 ```matlab
 % Load data
@@ -554,7 +550,7 @@ ylabel('Noise');
 
 Here we can se that the first model follows the measured position perfect. The "down-curve" should be measured a little bit longer to get a perfect linear model.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RLS_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/RLS_Result.png)
 
 ### ERA/DC - Eigensystem Realization Algorithm Data Correlations
 ERA/DC was invented 1987 and is a successor from ERA, that was invented 1985 at NASA. The difference between ERA/DC and ERA is that ERA/DC can handle noise much better than ERA. But both algorihtm works as the same. ERA/DC want an impulse response. e.g called markov parameters. You will get a state space model from this algorithm. This algorithm can handle both SISO and MISO data.
@@ -566,7 +562,7 @@ Use this algorithm if you got impulse data from e.g structural mechanics.
 ```
 ### Example ERA/DC for MIMO systems
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ERADC_System.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ERADC_System.png)
 
 ```matlab
 clc; clear; close all
@@ -632,7 +628,7 @@ legend('Data 1', 'Data 2', 'Identified 1', 'Identified 2', 'location', 'northwes
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ERADC_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ERADC_Result.png)
 
 
 ### OCID - Observer Controller Identification
@@ -646,7 +642,7 @@ This OCID algorithm have a particle filter that estimates the markov parameters.
 [sysd, K, L] = ocid(r, uf, y, sampleTime, alpha, regularization, systemorder);
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_System.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OCID_System.png)
 
 ### OCID Example
 
@@ -710,12 +706,12 @@ legend("Identified 1", "Identified 2", "Data 1", "Data 2", 'location', 'northwes
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/OCID_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OCID_Result.png)
 
 ### Orthogonal Decomposition of Joint Input-Output Process
 This algorithm identify the closed loop system, plant and controller. The difference between OCID and Orthogonal Decomposition of Joint Input-Output Process (ORTJIOP) is that OCID identifies the plant model, LQR control law and kalman gain matrix. The ORTJIOP identifies the closed loop system, plant model and controller. But not LQR controller. Instead, ORTJIOP returns the controller as it was a dynamical model. ORTJIOP can have disturbance onto the input system of the plant as well.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ORTJIOP_Process.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ORTJIOP_Process.png)
 
 ```matlab
 [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
@@ -736,7 +732,7 @@ This is very usefull if you have heavy nonlinear systems such as a hydraulic ori
 
 This example is a real world example with noise and nonlinearities. Here I set up a hydraulic motor in a test bench and measure it's output and the current to the valve that gives the motor oil. The motor have two nonlinearities - Hysteresis and the input signal is not propotional to the output signal. By using two nonlinear models, we can avoid the hysteresis. 
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FestoBench.jpg)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/FestoBench.jpg)
 
 ```matlab
 % Load CSV data
@@ -781,7 +777,7 @@ xlabel('Time')
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SINDY_Result.png)
 
 Here is a multivariable example with SINDy. It use the same data as the OKID scenario.
 
@@ -830,7 +826,7 @@ title('Cylinder 1')
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SINDY_Result_multivariable.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SINDY_Result_multivariable.png)
 
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
@@ -841,7 +837,7 @@ idbode(u, y, w);
 
 ### IDBode Example
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/IDBODE_System.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/IDBODE_System.png)
 
 ```matlab
 %% Model of a mass spring damper system
@@ -868,7 +864,7 @@ idbode(u, y, fs);
 bode(G);
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/IDBODE_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/IDBODE_Result.png)
 
 ### K-means clustering
 K-means clustering is a tool that can identify the center of clusters. All you need to do is to specify how many cluster IDs you think there exist in your data. 
@@ -908,7 +904,7 @@ ylabel('y', 'FontSize', 20);
 zlabel('z', 'FontSize', 20);
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/Kmeans_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/Kmeans_Result.png)
 
 
 ### SPA - Spectral Analysis
@@ -938,7 +934,7 @@ u = u + 5*randn(1, 30000);
 spa(u, t);
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SPA_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SPA_Result.png)
 
 ### Filtfilt - Zero Phase Filter
 This filter away noise with a good old low pass filter that are being runned twice. Filtfilt is equal to the famous function filtfilt in MATLAB, but this is a regular .m file and not a C/C++ subroutine. Easy to use and recommended. 
@@ -984,7 +980,7 @@ lowpass = 0.2;
 plot(t, yf, t, y);
 legend("Filtered", "Noisy");
 ```
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/FILTFILT_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/FILTFILT_Result.png)
 
 ## Linear Discriminant Analysis
 Linear Discriminant Analysis can be used for dimension reduction and projection on maximum distance between classes.
@@ -1067,11 +1063,11 @@ title('Dimension reduction 1D data', 'FontSize', 20)
 legend('Class 1', 'Class 2', 'Class 3')
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LDA_Result_3D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/LDA_Result_3D.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LDA_Result_2D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/LDA_Result_2D.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LDA_Result_1D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/LDA_Result_1D.png)
 
 ## Principal Component Analysis
 Principal Component Analysis can be used for dimension reduction and projection on maximum variance between classes.
@@ -1144,13 +1140,13 @@ scatter(P(:, 1), 0*P(:, 1), 50,cmap);
 grid on
 title('Dimension reduction to 1D', 'FontSize', 20)
 ```
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Original_Data.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PCA_Original_Data.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_3D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PCA_Result_3D.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_2D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PCA_Result_2D.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PCA_Result_1D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PCA_Result_1D.png)
 
 
 ### Robust Principal Component Analysis
@@ -1176,7 +1172,7 @@ imshow(uint8(L))       % After RPCA
 title('After RPCA - Bob')
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/RPCA_Result.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/RPCA_Result.png)
 
 ### Independent Component Analysis
 Independent component analysis(ICA) is a tool if you want to separate independent signals from each other. This is not a filter algorithm, but instead of removing noise, it separate the disturbances from the signals. The disturbances are created from other signals. Assume that you have an engine and you are measuring vibration in X, Y and Z-axis. These axis will affect each other and therefore the signals will act like they are mixed. ICA separate the mixed signals into clean and independent signals.
@@ -1331,15 +1327,15 @@ toc
 
 These signals are what we want to find
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ICA_Before.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ICA_Before.png)
 
 This is how the signals look when we are measuring them
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ICA_Mixed_Signals.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ICA_Mixed_Signals.png)
 
 This is how the signals are reconstructed as they were independent
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/ICA_After.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/ICA_After.png)
 
 ### Square Root Uncented Kalman Filter for parameter estimation
 This is Uncented Kalman Filter that using cholesky update method (more stable), instead of cholesky decomposition. This algorithm can estimate parameters to very a complex function if data is available. This method is reqursive and there is a C code version in CControl as well. Use this when you need to estimate parameters to a function if you have data that are generated from that function. It can be for example an object that you have measured data and you know the mathematical formula for that object. Use the measured data with this algorithm and find the parameters for the formula.
@@ -1411,7 +1407,7 @@ for k = 1:N
 end
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SR_UKF_parameter_estimation.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SR_UKF_parameter_estimation.png)
 
 ### Square Root Uncented Kalman Filter for state estimation
 This is Uncented Kalman Filter that using cholesky update method (more stable), instead of cholesky decomposition. This algorithm can estimate states from a very complex model. This method is reqursive and there is a C code version in CControl as well. Use this when you need to estimate state to a model if you have data that are generated from that function. It can be for example an object that you have measured data and you know the mathematical formula for that object. Use the measured data with this algorithm and find the states for the model.
@@ -1489,7 +1485,7 @@ for k = 1:N
 end
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/SR_UKF_state_estimation.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SR_UKF_state_estimation.png)
 
 ### Particle Filter - Nonlinear filter
 A particle filter is another estimation filter such as Square Root Uncented Kalman Filter (SR-UKF), but SR-UKF assume that the noise is gaussian (normally distributed) and SR-UKF requries a dynamical model. The particle filter does not require the user to specify a dynamical model and the particle filter assume that the noise can be non-gaussian or gaussian, nonlinear in other words.
@@ -1545,7 +1541,7 @@ plot(t, y, t, yf, '-r')
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result1.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PF_Result1.png)
 
 ### Particle Filter example 2
 ```matlab
@@ -1579,7 +1575,7 @@ plot(t, yf, '-r')
 grid on
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/PF_Result2.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/PF_Result2.png)
 
 ### Linear Support Vector Machine
 This is the standard way to create a support vector machine. Even if it's only returning back a linear model, it's still very powerful and suits systems that need extreamly fast predictions such as embedded systems. 
@@ -1654,7 +1650,7 @@ else
 end
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LSVM_Result_2D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/LSVM_Result_2D.png)
 
 ### Linear Support Vector Machine 3D example 
 
@@ -1719,7 +1715,7 @@ else
 end
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/LSVM_Result_3D.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/LSVM_Result_3D.png)
 
 
 ### Nonlinear Support Vector Machine with C code generation
@@ -1791,48 +1787,46 @@ xlabel('Class index');
 ylabel('Points');
 ```
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_plot.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_plot.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_results.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_results.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_c_source.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_c_source.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_c_header.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_c_header.png)
 
 Here is an application with SVM for a hydraulical system. This little box explains whats happening inside the hydraulical system if something happen e.g 
 a motor or a valve is active. It can identify the state of the system.
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_Box.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_Result_Box.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_System.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_Result_System.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_Inside.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_Result_Inside.png)
 
-![a](https://raw.githubusercontent.com/DanielMartensson/Mataveid/master/pictures/NLSVM_Result_Classes.png)
+![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/NLSVM_Result_Classes.png)
 
 # Install
-To install Mataveid, download the folder "sourcecode" and place it where you want it. Then the following code need to be written in the terminal of your MATLAB® or GNU Octave program.
+To install MataveID, download the folder "matave" and place it where you want it. Then the following code need to be written inside of the terminal of your MATLAB® or GNU Octave program. 
 
 ```matlab
-path('path/to/the/sourcecode/folder/where/all/matave/files/are/mataveid', path)
+path('path/to/the/folder/matave', path)
+savepath
+```
+Example of a typical path.
+
+```matlab
+path('C:\Users\dmn\Documents\Octave\matave\', path)
 savepath
 ```
 
-Example:
-```matlab
-path('/home/hp/Dokument/Reglerteknik/mataveid', path)
-savepath
-```
+Package requriments: 
 
-Important! All the .m files need to be inside the folder mataveid if you want the update function to work.
+ - ![MataveControl](https://github.com/DanielMartensson/matavecontrol) package.
 
 # Update
-Write this inside the terminal. Then Mataveid is going to download new .m files to mataveid from GitHub
+Write this inside the terminal. Then MataveID is going to download new .m files to MataveID from GitHub
 
 ```matlab
-updatemataveid
+mi.updatemataveid
 ```
-
-# Requirements 
-* Installation of Matavecontrol package https://github.com/DanielMartensson/matavecontrol
-
