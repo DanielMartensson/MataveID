@@ -1,11 +1,11 @@
 % Box-Jenkins
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, ktune(kalman tuning, optimal), delay(optional), systemorder_sysd(optional), systemorder_sysh(optional)
 % Output: sysd(Discrete state space model), K1(Kalman Gain matrix for discreate state space model), sysh(Disturbance model), K2(Kalman Gain matrix for disturbance state space model)
-% Example 1: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime);
-% Example 2: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune);
-% Example 3: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay);
-% Example 4: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd);
-% Example 5: [sysd, K1, sysh, K2] = bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+% Example 1: [sysd, K1, sysh, K2] = Mid.bj(u, y, k, sampleTime);
+% Example 2: [sysd, K1, sysh, K2] = Mid.bj(u, y, k, sampleTime, ktune);
+% Example 3: [sysd, K1, sysh, K2] = Mid.bj(u, y, k, sampleTime, ktune, delay);
+% Example 4: [sysd, K1, sysh, K2] = Mid.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd);
+% Example 5: [sysd, K1, sysh, K2] = Mid.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
 % Author: Daniel Mårtensson, Januari 2023
 
 function [sysd, K1, sysh, K2] = bj(varargin)
@@ -82,7 +82,7 @@ function [sysd, K1, sysh, K2] = bj(varargin)
   end
 
   % Get system model
-  [sysd, K1] = cca(u, y, k, sampleTime, delay, systemorder_sysd);
+  [sysd, K1] = Mid.cca(u, y, k, sampleTime, delay, systemorder_sysd);
 
   % Find the disturbance d = H*e
   Ad = sysd.A;
@@ -97,6 +97,6 @@ function [sysd, K1, sysh, K2] = bj(varargin)
   d = y - yhat;
 
   % Get the disturbance model
-  [sysh, K2] = sra(d, k, sampleTime, ktune, delay, systemorder_sysh);
+  [sysh, K2] = Mid.sra(d, k, sampleTime, ktune, delay, systemorder_sysh);
 
 end

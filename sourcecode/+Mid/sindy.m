@@ -1,7 +1,7 @@
 % Sparse Identification of Nonlinear Dynamics
 % Activations for e.g u and y e.g: 1, u, y, u^2, y^2, u^3, y^3, u*y, sin(u), sin(y), cos(u), cos(y), tan(u), tan(y), sqrt(u), sqrt(y)
 % Input: inputs, output, derivatives, activations, lambda
-% Example: [dx] = sindy(inputs, outputs, activations, lambda, sampleTime);
+% Example: [dx] = Mid.sindy(inputs, outputs, activations, lambda, sampleTime);
 % Author: Daniel Mårtensson, May 2, 2020
 % Update: Added more error handling and now display which activation function that being used, June 25, 2020
 

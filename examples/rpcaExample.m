@@ -1,9 +1,10 @@
 clc; clear; close all;
 
-X = imread('..\pictures\bob.png'); % Load Mr Bob
+file = fullfile('..','pictures','bob.png');
+X = imread(file); % Load Mr Bob
 X = rgb2gray(X);       % Grayscale 8 bit
 X = double(X);         % Must be double 40 => 40.0
-[L, S] = rpca(X);      % Start RPCA. Our goal is to get L matrix
+[L, S] = Mid.rpca(X);      % Start RPCA. Our goal is to get L matrix
 figure(1)
 imshow(uint8(X))       % Before RPCA
 title('Before RPCA - Bob')

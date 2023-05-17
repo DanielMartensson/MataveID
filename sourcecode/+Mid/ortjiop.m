@@ -1,9 +1,9 @@
 % Orthogonal Decomposition of Joint Input-Output Process
 % Input: u(input signal), y(output signal), r(reference), d(input disturbance), k(Hankel row length), sampleTime, delay(optional), systemorder(optional)
 % Output: sysd(closed loop model), P(plant model), C(controller model)
-% Example 1: [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime);
-% Example 2: [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay);
-% Example 3: [sysd, P, C] = ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
+% Example 1: [sysd, P, C] = Mid.ortjiop(u, y, r, d, k, sampleTime);
+% Example 2: [sysd, P, C] = Mid.ortjiop(u, y, r, d, k, sampleTime, delay);
+% Example 3: [sysd, P, C] = Mid.ortjiop(u, y, r, d, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, Oktober 26:e 2022. Following page 314 from Subspace Methods for System Identification, ISBN-10: 1852339810
 % Closed loop:
 % x(k+1) = Ax(k) + B[r(k); d(k)]

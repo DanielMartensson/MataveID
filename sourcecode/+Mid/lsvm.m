@@ -1,7 +1,7 @@
 % Linear Support Vector Machine
 % Input: x(Data matrix), y(Labels), C(Upper bondary), lambda(Regularization)
 % Output: w(Model weights), b(Model bias), accuracy(Of the model), solution(If the solution was found)
-% Example: [w, b, accuracy, solution] = lsvm(x, y, C, lambda);
+% Example: [w, b, accuracy, solution] = Mid.lsvm(x, y, C, lambda);
 % Author: Daniel Mårtensson, May 06, 2023
 % To verify the model, just use:
 % class_ID = sign(w*x + b), where x is an unknown measurement vector

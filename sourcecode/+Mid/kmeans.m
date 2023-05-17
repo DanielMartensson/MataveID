@@ -1,7 +1,7 @@
 % K-means clustering
 % Input: X(data), k(amount of clusters)
 % Output: idx(row index of class ID), C(coordinates of the centers of the cluster coordinates)
-% Example 1: [idx, C] = kmeans(X, k)
+% Example 1: [idx, C] = Mid.kmeans(X, k)
 % Author: Daniel Mårtensson, April 2023
 
 function [idx, C] = kmeans(X, k)

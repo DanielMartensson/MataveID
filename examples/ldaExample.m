@@ -39,7 +39,7 @@ title('Original 3D data', 'FontSize', 20)
 legend('Class 1', 'Class 2', 'Class 3')
 
 % Do LDA for 2D
-[P, W] = lda(X, y, c);
+[P, W] = Mid.lda(X, y, c);
 
 % Plot 2D were P is a c x l matrix
 figure
@@ -56,7 +56,7 @@ legend('Class 1', 'Class 2', 'Class 3')
 c = 1;
 
 % Do LDA for 1D
-[P, W] = lda(X, y, c);
+[P, W] = Mid.lda(X, y, c);
 
 % Plot 1D were P is a c x l matrix
 figure

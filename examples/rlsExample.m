@@ -1,5 +1,6 @@
 % Load data
-X = csvread('..\data\HangingLoad.csv');
+file = fullfile('..','data','HangingLoad.csv');
+X = csvread(file);
 t = X(:, 1)'; % Time
 r = X(:, 2)'; % Reference
 y = X(:, 3)'; % Output position
@@ -18,7 +19,7 @@ nze = 1; % Number of zeros of C(q)
 u_up = r(1:l/2);
 e_up = randn(1, length(u_up)); % Noise
 y_up = y(1:l/2) + e_up;
-[sysd, K] = rls(u_up, y_up, np, nz, nze, sampleTime);
+[sysd, K] = Mid.rls(u_up, y_up, np, nz, nze, sampleTime);
 
 % Observer
 sysd_up = mc.ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);
@@ -28,7 +29,7 @@ sysd_up.sampleTime = sysd.sampleTime;
 u_down = r(l/2+1:end);
 e_down = randn(1, length(u_down)); % Noise
 y_down = y(l/2+1:end) + e_down;
-[sysd, K] = rls(u_down, y_down, np, nz, nze, sampleTime);
+[sysd, K] = Mid.rls(u_down, y_down, np, nz, nze, sampleTime);
 
 % Observer
 sysd_down = mc.ss(0, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D 0]);

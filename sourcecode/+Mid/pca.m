@@ -1,7 +1,7 @@
 % Principal Component Analysis with cluster filtering
 % Input: X(Data), c(Amount of components)
 % Output: Projected matrix P, Project matrix W
-% Example 1: [P, W] = pca(X, c);
+% Example 1: [P, W] = Mid.pca(X, c);
 % Author: Daniel Mårtensson, 2023 April
 
 function [P, W] = pca(varargin)
@@ -25,7 +25,7 @@ function [P, W] = pca(varargin)
   end
 
   % Filter the data
-  Y = rpca(X); %cluster_filter(X);
+  Y = Mid.rpca(X); %cluster_filter(X);
 
   % Average
   mu = mean(Y);

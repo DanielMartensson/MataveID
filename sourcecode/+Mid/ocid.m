@@ -1,8 +1,8 @@
 % Observer Controller Identification
 % Input: r(reference signal), uf(feedback signal), y(output signal), sampleTime, alpha(filtering integer parameter), regularization(optional), systemorder(optional)
 % Output: sysd(Discrete state space model), K(Kalman gain matrix)
-% Example 1: [sysd, K, L] = ocid(r, uf, y, sampleTime, alpha, regularization, systemorder);
-% Example 2: [sysd, K, L] = ocid(r, uf, y, sampleTime, alpha);
+% Example 1: [sysd, K, L] = Mid.ocid(r, uf, y, sampleTime, alpha, regularization, systemorder);
+% Example 2: [sysd, K, L] = Mid.ocid(r, uf, y, sampleTime, alpha);
 % Author: Daniel Mårtensson, 24 April 2020. Follows NASA document ID 19920072673
 % Update 2022-10-24: Adding particle filter for better estimation of markov parameters
 
@@ -154,22 +154,22 @@ function [sysd, K, L] = ocid(varargin)
     for i = 1:2:2*p
       % Particle filtering for Y11
       a = Y11(index);
-      [ahat, ahorizon, ak, anoise] = pf(a, ahatp, ak, ahorizon, anoise);
+      [ahat, ahorizon, ak, anoise] = Mid.pf(a, ahatp, ak, ahorizon, anoise);
       ahatp = ahat;
 
       % Particle filtering for Y12
       b = Y12(index);
-      [bhat, bhorizon, bk, bnoise] = pf(b, bhatp, bk, bhorizon, bnoise);
+      [bhat, bhorizon, bk, bnoise] = Mid.pf(b, bhatp, bk, bhorizon, bnoise);
       bhatp = bhat;
 
       % Particle filtering for Y21
       c = Y21(index);
-      [chat, chorizon, ck, cnoise] = pf(c, chatp, ck, chorizon, cnoise);
+      [chat, chorizon, ck, cnoise] = Mid.pf(c, chatp, ck, chorizon, cnoise);
       chatp = chat;
 
       % Particle filtering for Y22
       d = Y22(index);
-      [dhat, dhorizon, dk, dnoise] = pf(d, dhatp, dk, dhorizon, dnoise);
+      [dhat, dhorizon, dk, dnoise] = Mid.pf(d, dhatp, dk, dhorizon, dnoise);
       dhatp = dhat;
 
       Y(Yrow:Yrow+1, i:i+1) = [ahat bhat; chat dhat];

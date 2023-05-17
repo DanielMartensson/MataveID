@@ -43,7 +43,7 @@ for i = 1:samples
   X(i, :) = x';
   
   % SR-UKF
-  [S, xhat] = sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L);
+  [S, xhat] = Mid.sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L);
 
   % Save the estimated parameter 
   XHAT(i, :) = xhat';

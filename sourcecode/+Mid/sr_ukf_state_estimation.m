@@ -1,7 +1,7 @@
 % Square Root Unscented Kalman Filter For State Estimation (A better version than regular UKF)
 % Input: Se list below
 % Output: S(Parameter estimate error covariance), xhat(Estimated state vector)
-% Example 1: [S, xhat] = sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L)  
+% Example 1: [S, xhat] = Mid.sr_ukf_state_estimation(y, xhat, Rn, Rv, u, F, S, alpha, beta, L)  
 % Author: Daniel Mårtensson, December 2021
 
 % L = Number of states, or sensors in practice.

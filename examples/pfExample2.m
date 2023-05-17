@@ -1,6 +1,7 @@
 clc; clear; close all;
 
-X = dlmread('..\data\ParticleFilterDataRaw.csv',';',1,0);
+file = fullfile('..','data','ParticleFilterDataRaw.csv');
+X = dlmread(file,';',1,0);
 t = X(:, 1)';
 y = X(:, 2)';
 
@@ -18,7 +19,7 @@ noise = rand(m, p);                % Random noise, not normal distributed
 % Particle filter - Simulation
 for i = 1:n
   x = y(:, i);                     % Get the state
-  [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+  [xhat, horizon, k, noise] = Mid.pf(x, xhatp, k, horizon, noise);
   yf(:, i) = xhat;                 % Estimated state
   xhatp = xhat;                    % This is the past estimated state
 end

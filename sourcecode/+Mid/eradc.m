@@ -1,10 +1,10 @@
 % Eigensystem Realization Algorithm with Data Correlation
 % Input: g(markov parameters/impulse response), sampleTime, ktune(kalman tuning, optimal), delay(optional), systemorder(optional)
 % Output: sysd(Discrete state space model), K(Kalman Gain matrix)
-% Example 1: [sysd, K] = eradc(g, sampleTime);
-% Example 2: [sysd, K] = eradc(g, sampleTime, ktune);
-% Example 3: [sysd, K] = eradc(g, sampleTime, ktune, delay);
-% Example 4: [sysd, K] = eradc(g, sampleTime, ktune, delay, systemorder);
+% Example 1: [sysd, K] = Mid.eradc(g, sampleTime);
+% Example 2: [sysd, K] = Mid.eradc(g, sampleTime, ktune);
+% Example 3: [sysd, K] = Mid.eradc(g, sampleTime, ktune, delay);
+% Example 4: [sysd, K] = Mid.eradc(g, sampleTime, ktune, delay, systemorder);
 % Author: Daniel Mårtensson, November 2017
 % Update: 20 April 2020 - For MIMO hankel. Follows the NASA document ID 19870035963
 % Update: Added kalman filter, Januari 2023

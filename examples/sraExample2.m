@@ -18,7 +18,7 @@ sampleTime = t(2) - t(1);
 ktune = 0.01;
 delay = 0;
 systemorder = 2;
-[H, K] = sra(y, k, sampleTime, ktune, delay, systemorder);
+[H, K] = Mid.sra(y, k, sampleTime, ktune, delay, systemorder);
 
 % Observer
 H.A = H.A - K*H.C;

@@ -1,7 +1,7 @@
 % Particle Filter
 % Input: x(state input, e.g measurement), xhatp(past estimated state input), k(counter), horizon(matrix), noise(matrix)
 % Output: xhat(estimated state), horizon(matrix), k(counter), noise(matrix)
-% Example 1: [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+% Example 1: [xhat, horizon, k, noise] = Mid.pf(x, xhatp, k, horizon, noise);
 % Author: Daniel Mårtensson, Oktober 23:e 2022
 
 function [xhat, horizon, k, noise] = pf(varargin)

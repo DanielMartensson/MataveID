@@ -1,9 +1,9 @@
 % Canoncial Correlation Analysis
 % Input: u(input signal), y(output signal), k(Hankel row length), sampleTime, delay(optional)
 % Output: sysd(Discrete state space model), K(Kalman Gain matrix)
-% Example 1: [sysd, K] = cca(u, y, k, sampleTime);
-% Example 2: [sysd, K] = cca(u, y, k, sampleTime, delay);
-% Example 3: [sysd, K] = cca(u, y, k, sampleTime, delay, systemorder);
+% Example 1: [sysd, K] = Mid.cca(u, y, k, sampleTime);
+% Example 2: [sysd, K] = Mid.cca(u, y, k, sampleTime, delay);
+% Example 3: [sysd, K] = Mid.cca(u, y, k, sampleTime, delay, systemorder);
 % Author: Daniel Mårtensson, September 2022. Following page 292 from Subspace Methods for System Identification, ISBN-10: 1852339810
 
 function [sysd, K] = cca(varargin)

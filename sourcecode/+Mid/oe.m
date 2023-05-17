@@ -1,9 +1,9 @@
 % Output-error
 % Input: u(input signal), y(output signal), np(number of poles of A(q)), nz(number of zeros of B(q)), sampleTime, delay(optional), forgetting(optional)
 % Output: sysd(Discrete state space model with noise), K(Kalman gain matrix)
-% Example 1: [sysd, K] = oe(u, y, np, nz, sampleTime);
-% Example 2: [sysd, K] = oe(u, y, np, nz, sampleTime, delay);
-% Example 3: [sysd, K] = oe(u, y, np, nz, sampleTime, delay, forgetting);
+% Example 1: [sysd, K] = Mid.oe(u, y, np, nz, sampleTime);
+% Example 2: [sysd, K] = Mid.oe(u, y, np, nz, sampleTime, delay);
+% Example 3: [sysd, K] = Mid.oe(u, y, np, nz, sampleTime, delay, forgetting);
 % A(q)*y(t) = B(q)*u(t) + A(q)*e(t)
 % Author: Daniel Mårtensson, Januari 2023
 
@@ -72,5 +72,5 @@ function [sysd, K] = oe(varargin)
   end
 
   % Identify
-  [sysd, K] = rls(u, y, np, nz, np, sampleTime, delay, forgetting);
+  [sysd, K] = Mid.rls(u, y, np, nz, np, sampleTime, delay, forgetting);
 end

@@ -36,7 +36,7 @@ title('Original 3D data', 'FontSize', 20)
 
 % Do PCA for 3D
 c = 3;
-[P, W] = pca(X, c);
+[P, W] = Mid.pca(X, c);
 figure
 scatter3(P(:, 1), P(:, 2), P(:, 3), 50,cmap);
 grid on
@@ -44,7 +44,7 @@ title('Dimension transformation to 3D', 'FontSize', 20)
 
 % Do PCA for 2D
 c = 2;
-[P, W] = pca(X, c);
+[P, W] = Mid.pca(X, c);
 figure
 scatter(P(:, 1), P(:, 2), 20,cmap);
 grid on
@@ -52,7 +52,7 @@ title('Dimension reduction to 2D', 'FontSize', 20)
 
 % Do PCA for 1D
 c = 1;
-[P, W] = pca(X, c);
+[P, W] = Mid.pca(X, c);
 figure
 scatter(P(:, 1), 0*P(:, 1), 50,cmap);
 grid on

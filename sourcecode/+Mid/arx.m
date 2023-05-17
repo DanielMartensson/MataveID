@@ -1,10 +1,10 @@
 % Autoregressive Exogenous
 % Input: u(input signal), y(output signal), np(number of poles of A(q)), nz(number of zeros of B(q)), sampleTime, ktune(optional), delay(optional), forgetting(optional)
 % Output: sysd(Discrete state space model with noise), K(Kalman gain matrix)
-% Example 1: [sysd, K] = arx(u, y, np, nz, sampleTime);
-% Example 2: [sysd, K] = arx(u, y, np, nz, sampleTime, ktune);
-% Example 3: [sysd, K] = arx(u, y, np, nz, sampleTime, ktune, delay);
-% Example 4: [sysd, K] = arx(u, y, np, nz, sampleTime, ktune, delay, forgetting);
+% Example 1: [sysd, K] = Mid.arx(u, y, np, nz, sampleTime);
+% Example 2: [sysd, K] = Mid.arx(u, y, np, nz, sampleTime, ktune);
+% Example 3: [sysd, K] = Mid.arx(u, y, np, nz, sampleTime, ktune, delay);
+% Example 4: [sysd, K] = Mid.arx(u, y, np, nz, sampleTime, ktune, delay, forgetting);
 % A(q)*y(t) = B(q)*u(t) + e(t)
 % Author: Daniel Mårtensson, Januari 2023
 
@@ -80,7 +80,7 @@ function [sysd, K] = arx(varargin)
   end
 
   % Identify
-  [sysd, K] = rls(u, y, np, nz, 1, sampleTime, delay, forgetting);
+  [sysd, K] = Mid.rls(u, y, np, nz, 1, sampleTime, delay, forgetting);
 
   % Find the matrices
   Ad = sysd.A;

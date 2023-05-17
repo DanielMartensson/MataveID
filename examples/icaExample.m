@@ -95,7 +95,7 @@ ylabel('Signal Amplitude')
 legend('Observed Mixture 1', 'Observed Mixture 2', 'Observed Mixture 3', 'Observed Mixture 4', 'Observed Mixture 5', 'Observed Mixture 6')
 
 % Use ICA to find S from X
-S = ica(X);
+S = Mid.ica(X);
 
 figure
 plot(timeVector, S(1,:))

@@ -1,9 +1,9 @@
 % Stochastic Realization Algorithm
 % Input: e(Gaussian noise/disturbance), k(Hankel row length), sampleTime, ktune(kalman tuning, optimal), delay(optional), systemorder(optional)
 % Output: sysd(Disturbance model), K(Kalman gain matrix)
-% Example 1: [sysd, K] = sra(e, k, sampleTime, ktune);
-% Example 2: [sysd, K] = sra(e, k, sampleTime, ktune, delay);
-% Example 3: [sysd, K] = sra(e, k, sampleTime, ktune, delay, systemorder);
+% Example 1: [sysd, K] = Mid.sra(e, k, sampleTime, ktune);
+% Example 2: [sysd, K] = Mid.sra(e, k, sampleTime, ktune, delay);
+% Example 3: [sysd, K] = Mid.sra(e, k, sampleTime, ktune, delay, systemorder);
 % Author: Daniel Mårtensson, Oktober 2022
 
 function [sysd, K] = sra(varargin)
