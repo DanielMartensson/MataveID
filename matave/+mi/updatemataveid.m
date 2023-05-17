@@ -2,7 +2,7 @@
 % Author: Daniel Mårtensson, Februari 2018
 % Update 2023-05-17 for MATLAB Control System Toolbox portability
 
-function [retval] = updatemataveid(varargin)
+function updatemataveid()
   % Get the current working dictionary
   currentFolder = pwd;
 
