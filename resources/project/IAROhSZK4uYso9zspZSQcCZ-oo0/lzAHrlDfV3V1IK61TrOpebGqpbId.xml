@@ -1,0 +1,1232 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Info>
+    <Files>
+        <File path=".gitattributes" value="4799a6c5"/>
+        <File path=".gitignore" value="8e95ca96"/>
+        <File path="LICENSE" value="a304953e"/>
+        <File path="Linear Quadratic Regulators.pdf" value="831409ce"/>
+        <File path="Matavecontrol.prj" value="fe84b66d"/>
+        <File path="README.md" value="f077ec15"/>
+        <File path="Table of functions.odt" value="677716f1"/>
+        <File path="Table of functions.pdf" value="3b60c4e8"/>
+        <File path="examples/bodeExample.m" value="bea7f455"/>
+        <File path="examples/bodeExampleMATLAB.png" value="f8106b83"/>
+        <File path="examples/bodeExampleOctave.png" value="a2cdaf7f"/>
+        <File path="examples/c2dExample.m" value="41c91505"/>
+        <File path="examples/c2dExampleMATLAB.png" value="3e6b5ce0"/>
+        <File path="examples/c2dExampleOctave.png" value="1cbe9956"/>
+        <File path="examples/examples.md" value="454920a0"/>
+        <File path="examples/mpcExample.m" value="dd8e4933"/>
+        <File path="examples/mpcExampleMATLAB.png" value="5cc33ff4"/>
+        <File path="examples/nyquistExample.m" value="18a225eb"/>
+        <File path="examples/nyquistExampleMATLAB.png" value="f9234736"/>
+        <File path="examples/nyquistExampleOctave.png" value="5fdf08e9"/>
+        <File path="examples/stateSpaceExample.m" value="690c5c6b"/>
+        <File path="examples/stateSpaceExampleMATLAB.png" value="7304e433"/>
+        <File path="examples/stateSpaceExampleOctave.png" value="f3f2455c"/>
+        <File path="examples/stepExample.m" value="a436aa36"/>
+        <File path="examples/stepExampleMATLAB.png" value="ede9c12a"/>
+        <File path="examples/stepExampleOctave.png" value="4cb05815"/>
+        <File path="examples/transferFunctionExmaple.m" value="3aa6c316"/>
+        <File path="examples/transferFunctionExmapleMATLAB.png" value="40c02dee"/>
+        <File path="examples/transferFunctionExmapleOctave.png" value="6ccb4a82"/>
+        <File path="examples" value="-1"/>
+        <File path="listOfFunctions" value="ce207b96"/>
+        <File path="resources/project/CelT-G1JbbY3z4W3vSR-9MZqwtM" value="-1"/>
+        <File path="resources/project/EEtUlUb-dLAdf0KpMVivaUlztwA/M3SSBWmAQLqU6cmm8Z5WKK-5-Qkd.xml" value="269d930c"/>
+        <File path="resources/project/EEtUlUb-dLAdf0KpMVivaUlztwA/M3SSBWmAQLqU6cmm8Z5WKK-5-Qkp.xml" value="b1ccad53"/>
+        <File path="resources/project/EEtUlUb-dLAdf0KpMVivaUlztwA" value="-1"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/2kj09UetkV_lru3gvSPXnY6-nM4d.xml" value="c0e6e366"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/2kj09UetkV_lru3gvSPXnY6-nM4p.xml" value="534446ef"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/KKyDJtbdIBOlaeHmIZd5VX6vqx8d.xml" value="f3979924"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/KKyDJtbdIBOlaeHmIZd5VX6vqx8p.xml" value="45d3ae04"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/QWNDYJD5mGW1bWYvPx9DtKnxzw4d.xml" value="fc3af763"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/QWNDYJD5mGW1bWYvPx9DtKnxzw4p.xml" value="4d8527b6"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/R1RggVhA72agIvELiuhWPRS8F0Id.xml" value="d2066049"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/R1RggVhA72agIvELiuhWPRS8F0Ip.xml" value="d47d974d"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/aEHSZBIY-yve10yGis12Zr5DLZod.xml" value="ab74a7dd"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/aEHSZBIY-yve10yGis12Zr5DLZop.xml" value="65aaca22"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/j4xwF_j8iFTVayUMfxLgMnTbencd.xml" value="2d0f697d"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/j4xwF_j8iFTVayUMfxLgMnTbencp.xml" value="b498b702"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/r8LR4nLmg9ai3oHrW1r_-KocQzkd.xml" value="d79d8544"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs/r8LR4nLmg9ai3oHrW1r_-KocQzkp.xml" value="ea7019f1"/>
+        <File path="resources/project/NjSPEMsIuLUyIpr2u1Js5bVPsOs" value="-1"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/0svTqDZyxKsHr8tr9l_5tqIMcqwd.xml" value="b62b63f9"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/0svTqDZyxKsHr8tr9l_5tqIMcqwp.xml" value="60a23a3a"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/0tLh2TRaHNLS2qzQDqexHEHLXVMd.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/0tLh2TRaHNLS2qzQDqexHEHLXVMp.xml" value="4dab6c65"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/96SFBJ-bIQLnHvDLQUTQfLO8XDod.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/96SFBJ-bIQLnHvDLQUTQfLO8XDop.xml" value="363e4465"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/_MRJWxV8DfREsKhDtvTq3Jjm_RQd.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/_MRJWxV8DfREsKhDtvTq3Jjm_RQp.xml" value="269f43a1"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/icQfkkI3t1PC4Ek0YY0fHihS5Yod.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/icQfkkI3t1PC4Ek0YY0fHihS5Yop.xml" value="fed0c64f"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/oSQ_nBKlxRWiL15nEg7_Rn5-agId.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/oSQ_nBKlxRWiL15nEg7_Rn5-agIp.xml" value="e28a63b8"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/qzR9VwkbUp-oa5a1uN0CPiHvfNId.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/qzR9VwkbUp-oa5a1uN0CPiHvfNIp.xml" value="47841808"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/ySuCV85gsbuVjl71P1huo8omBFQd.xml" value="ea65cf7"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c/ySuCV85gsbuVjl71P1huo8omBFQp.xml" value="f186a4b5"/>
+        <File path="resources/project/OfxnnyUcu5GSELEDRUyOXcMZW0c" value="-1"/>
+        <File path="resources/project/Project.xml" value="2d66388c"/>
+        <File path="resources/project/Ymax6UvVU-jIdl_GZCppGHEYAz0/gRtajLS8dlnfa85IYtlbJTKAfvcd.xml" value="fbf03ea7"/>
+        <File path="resources/project/Ymax6UvVU-jIdl_GZCppGHEYAz0/gRtajLS8dlnfa85IYtlbJTKAfvcp.xml" value="8b18cdd7"/>
+        <File path="resources/project/Ymax6UvVU-jIdl_GZCppGHEYAz0/vrQbpgrjtQhT0MVbd_YNa03yGkgd.xml" value="fbf03ea7"/>
+        <File path="resources/project/Ymax6UvVU-jIdl_GZCppGHEYAz0/vrQbpgrjtQhT0MVbd_YNa03yGkgp.xml" value="9bd9d47f"/>
+        <File path="resources/project/Ymax6UvVU-jIdl_GZCppGHEYAz0" value="-1"/>
+        <File path="resources/project/fjRQtWiSIy7hIlj-Kmk87M7s21k/NjSPEMsIuLUyIpr2u1Js5bVPsOsd.xml" value="33acc003"/>
+        <File path="resources/project/fjRQtWiSIy7hIlj-Kmk87M7s21k/NjSPEMsIuLUyIpr2u1Js5bVPsOsp.xml" value="c5d9fdd6"/>
+        <File path="resources/project/fjRQtWiSIy7hIlj-Kmk87M7s21k" value="-1"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-AP3c6xxe0Kt0-6oSWCsqo9ugq4d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-AP3c6xxe0Kt0-6oSWCsqo9ugq4p.xml" value="715a34a0"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-MWky4gq1tdchyKEedT5H2hYhVgd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-MWky4gq1tdchyKEedT5H2hYhVgp.xml" value="2bb8542"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-TyfDjb1sKGM4NVfPZBjZcSn0QId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-TyfDjb1sKGM4NVfPZBjZcSn0QIp.xml" value="3c6805f1"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-XuNAnws_6AVddfN-NdVRrNP0sId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-XuNAnws_6AVddfN-NdVRrNP0sIp.xml" value="13dbc483"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-tdv8x7lcWigrzemGyDtggLDJYAd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/-tdv8x7lcWigrzemGyDtggLDJYAp.xml" value="9bd6fc6"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/0dw6xXv_KfVRoSrJSMtTNN4qCYQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/0dw6xXv_KfVRoSrJSMtTNN4qCYQp.xml" value="b1a8c2d0"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/1WMUSsLcSt8IVIv-PfV2p5pP6Bod.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/1WMUSsLcSt8IVIv-PfV2p5pP6Bop.xml" value="8927b94d"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/3TCEDP_veml46bxFWOqt6ADeYtQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/3TCEDP_veml46bxFWOqt6ADeYtQp.xml" value="38a3879e"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/3gk3Itbfcvi7W1X-tezu95LCZwkd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/3gk3Itbfcvi7W1X-tezu95LCZwkp.xml" value="c81863d8"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/58xG32IpBY1P5WtUV_F0TfWLFWsd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/58xG32IpBY1P5WtUV_F0TfWLFWsp.xml" value="a3c78c87"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/5oRvtUIeQONX682rAU1Jsgf_3xUd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/5oRvtUIeQONX682rAU1Jsgf_3xUp.xml" value="319d8d55"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/5pHBIssgTVyxgEw1pBtvLtCshpQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/5pHBIssgTVyxgEw1pBtvLtCshpQp.xml" value="ce8b1792"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/6xoMx4srrzca_Pdn8kqzBeJ7Y9sd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/6xoMx4srrzca_Pdn8kqzBeJ7Y9sp.xml" value="24cefd33"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/7Kx2hgYUpc7DxiKEsgcT6ACWKRId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/7Kx2hgYUpc7DxiKEsgcT6ACWKRIp.xml" value="3c024257"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/7VOMQBVmZntDl2jm_59lZV5UaYId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/7VOMQBVmZntDl2jm_59lZV5UaYIp.xml" value="79f91812"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/7sCxO0XRkq_unVUkhh3L2Wbvo3Ud.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/7sCxO0XRkq_unVUkhh3L2Wbvo3Up.xml" value="c082c1b"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/9jhLPCdLg7PN9XL4bUiSsFWPWFYd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/9jhLPCdLg7PN9XL4bUiSsFWPWFYp.xml" value="9ae7af89"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/9zP9uTUS9inLjWA1dSoVHjdE6Fsd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/9zP9uTUS9inLjWA1dSoVHjdE6Fsp.xml" value="95c5f05a"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/AuoYvAKl9u03doquk5De2SKmBVEd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/AuoYvAKl9u03doquk5De2SKmBVEp.xml" value="46d6aabe"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/BA18dDmfnOhZgXUIbbFr1hoRBf4d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/BA18dDmfnOhZgXUIbbFr1hoRBf4p.xml" value="e9ef071f"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/BL6UYfy0WodZbu_yFyppEuD9ffMd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/BL6UYfy0WodZbu_yFyppEuD9ffMp.xml" value="b63246ab"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/BTbLZWRSQfHL63A_4EM2gBio1AYd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/BTbLZWRSQfHL63A_4EM2gBio1AYp.xml" value="644b2f2f"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/DMs1vXtuk19zkMUnKV0iq7aZrAId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/DMs1vXtuk19zkMUnKV0iq7aZrAIp.xml" value="459df464"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/DeHR0XmiefGRY-vwMinnd4bTRjkd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/DeHR0XmiefGRY-vwMinnd4bTRjkp.xml" value="1d216805"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/ES8waqU3QEYqgn-FwbSMogaCg6kd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/ES8waqU3QEYqgn-FwbSMogaCg6kp.xml" value="e82ad8a6"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/FJa3xT6IHOM8QXbjXxoh18t4rCYd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/FJa3xT6IHOM8QXbjXxoh18t4rCYp.xml" value="2ae0b07f"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/J7Rg8Qsx8_YbUDehghUDtuxA8uAd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/J7Rg8Qsx8_YbUDehghUDtuxA8uAp.xml" value="b318bbd3"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/JTIItVgxguf0_5mBh5M8W13mbfsd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/JTIItVgxguf0_5mBh5M8W13mbfsp.xml" value="55770d6e"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/KgAGeAB9w6kCgsA50b1jY1bWWncd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/KgAGeAB9w6kCgsA50b1jY1bWWncp.xml" value="19321ff2"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/KluJVIRaS-3OwSsWMMw5TmtW-0wd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/KluJVIRaS-3OwSsWMMw5TmtW-0wp.xml" value="afe1c2d9"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/NV4meCtsFpQ69z6TFzm5p0Ay2qQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/NV4meCtsFpQ69z6TFzm5p0Ay2qQp.xml" value="cd90e8a0"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/TAjZVg61SjNuKp7vXngSyatwkW0d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/TAjZVg61SjNuKp7vXngSyatwkW0p.xml" value="40893b14"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/TULFmUf3Vja3qAszJHfpq50MVaYd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/TULFmUf3Vja3qAszJHfpq50MVaYp.xml" value="c4200f38"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/TenmHtzodvgz6GirY3YEuT9F7zQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/TenmHtzodvgz6GirY3YEuT9F7zQp.xml" value="db0fcdba"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/U2i4-Q7PxqsHxb_TKTY2FsahQrAd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/U2i4-Q7PxqsHxb_TKTY2FsahQrAp.xml" value="cee1bb65"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/UB_Tp81pc7KF8x-pbYXPOf3PCPsd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/UB_Tp81pc7KF8x-pbYXPOf3PCPsp.xml" value="4cb6c41f"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/UNX-0RN4TdjBeijsBqYNsFz7Opwd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/UNX-0RN4TdjBeijsBqYNsFz7Opwp.xml" value="6113ec52"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/VV9gKnV3hWn4NiiXLO_t4ObNEnwd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/VV9gKnV3hWn4NiiXLO_t4ObNEnwp.xml" value="a3a236d0"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/Xos1f2B8aW8Z4Hcjo-OqlYrZBIsd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/Xos1f2B8aW8Z4Hcjo-OqlYrZBIsp.xml" value="997eefaf"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/Ympt4j3U7bLDAd-X-i0zKg_WksId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/Ympt4j3U7bLDAd-X-i0zKg_WksIp.xml" value="2fcfb101"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/Z9Aw-5O_DVlBSH4R1fkc2aKGTrQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/Z9Aw-5O_DVlBSH4R1fkc2aKGTrQp.xml" value="ea21c785"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/a9Feug6PFZzdy6Pmylk6r4s5qz8d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/a9Feug6PFZzdy6Pmylk6r4s5qz8p.xml" value="60ca6921"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/bsjXIcTqowrD5y8Xbp_C1FWc_5od.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/bsjXIcTqowrD5y8Xbp_C1FWc_5op.xml" value="d24f465d"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/btRFiKIQcusL-UwSiPDWN6373eAd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/btRFiKIQcusL-UwSiPDWN6373eAp.xml" value="7559bd73"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/cAmYqs7QqjRa7BbcXRoXFFOjhPkd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/cAmYqs7QqjRa7BbcXRoXFFOjhPkp.xml" value="166a8334"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/cQszKIIyTLaoX_Ce5J1Pp5dKU2Yd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/cQszKIIyTLaoX_Ce5J1Pp5dKU2Yp.xml" value="6565fc24"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/ca83BxXX3WEMgQeRBbQbFxTiOEAd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/ca83BxXX3WEMgQeRBbQbFxTiOEAp.xml" value="dd9feec1"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/dK0mvvbyg6MANIVUUnqkUVQIsmQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/dK0mvvbyg6MANIVUUnqkUVQIsmQp.xml" value="b5d806fa"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/fChJk_bc4ECQVBx7ofjx2RZgeqod.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/fChJk_bc4ECQVBx7ofjx2RZgeqop.xml" value="9acc61d6"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/glx9AVoqf0ECK2PWtWyrxT3Lxksd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/glx9AVoqf0ECK2PWtWyrxT3Lxksp.xml" value="1f7b5f6a"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/guUvkIX1r5h2sC_KTfkax_pbYwkd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/guUvkIX1r5h2sC_KTfkax_pbYwkp.xml" value="ffba45f6"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/h3sTR2hAlkEEPGPhh99Ii7gOFLAd.xml" value="fbf03ea7"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/h3sTR2hAlkEEPGPhh99Ii7gOFLAp.xml" value="7d31128a"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/hbML1SGawpMevPaE2B-R0-jsCPUd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/hbML1SGawpMevPaE2B-R0-jsCPUp.xml" value="bc26587e"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iEl6G0F8P1zfIqB2AC31QZv0-L8d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iEl6G0F8P1zfIqB2AC31QZv0-L8p.xml" value="b25648a1"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iRRKJGW6dBk3kA70CBQ2mXJivC4d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iRRKJGW6dBk3kA70CBQ2mXJivC4p.xml" value="3fffe1bb"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iotAV84qAq2FRcAD8ZKr4Z6ebTAd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iotAV84qAq2FRcAD8ZKr4Z6ebTAp.xml" value="fcf7e858"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iwftgK7kbxfY4_aj1iN93sBcJXwd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/iwftgK7kbxfY4_aj1iN93sBcJXwp.xml" value="dab2eaaa"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/jAComZsmq-SdpySHViccDedbh-Md.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/jAComZsmq-SdpySHViccDedbh-Mp.xml" value="f90c2532"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/kLw6aXuP9zfy65FBDijEOb9Yv34d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/kLw6aXuP9zfy65FBDijEOb9Yv34p.xml" value="de2745ec"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/l9ufX0gRxGrSEb5_mT1i_Awac6Id.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/l9ufX0gRxGrSEb5_mT1i_Awac6Ip.xml" value="d2a811ea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/mfYCif4avxDc_xn2tcFIbMZgaTId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/mfYCif4avxDc_xn2tcFIbMZgaTIp.xml" value="1be448c0"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/n7CLs7iiQQEjTDjpmC_SMH4xCrQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/n7CLs7iiQQEjTDjpmC_SMH4xCrQp.xml" value="2e16a14a"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/q9r_YFyoYBk2hOhhQOjqFpqCLnId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/q9r_YFyoYBk2hOhhQOjqFpqCLnIp.xml" value="8c9e4bd8"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/qG3JkFly4NEcqactf7xidVCnDQod.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/qG3JkFly4NEcqactf7xidVCnDQop.xml" value="8e5d5fbf"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/rQcFcM7U_XboOTdalAPoz03XvhQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/rQcFcM7U_XboOTdalAPoz03XvhQp.xml" value="4035e9c2"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/uYj-fn8JOasTyoXlgSscDiYXAcQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/uYj-fn8JOasTyoXlgSscDiYXAcQp.xml" value="7c95edaf"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/v1Z8skqKKYHxABy14T_-i9FjIZId.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/v1Z8skqKKYHxABy14T_-i9FjIZIp.xml" value="10340a3"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/vVE-GrEdCNLCWz8y66qK8ntP37sd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/vVE-GrEdCNLCWz8y66qK8ntP37sp.xml" value="184eff6"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/wEcM191NF0e68JRjBt4sg7ST8aQd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/wEcM191NF0e68JRjBt4sg7ST8aQp.xml" value="23c58064"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/x9iZajGktZ6dErrJkZylE2M0WS0d.xml" value="fbf03ea7"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/x9iZajGktZ6dErrJkZylE2M0WS0p.xml" value="9bd9d47f"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/xGqy3hxW9oUqDeLJ4hdT_C1fMC8d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/xGqy3hxW9oUqDeLJ4hdT_C1fMC8p.xml" value="9fad13d2"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/xHHZBw6wSk8SOpI6EEE63bfbitMd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/xHHZBw6wSk8SOpI6EEE63bfbitMp.xml" value="a61f3bd7"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/xx6s9hhUCesHMZEYp3OTU_WGJ_Ad.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/xx6s9hhUCesHMZEYp3OTU_WGJ_Ap.xml" value="1e12c897"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/z0jxMpWEC84u_3hoUchY0F9UlC8d.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/z0jxMpWEC84u_3hoUchY0F9UlC8p.xml" value="c79d840b"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/zrTMoXza6yADXAToUyG7mhoyoRUd.xml" value="317cfbea"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc/zrTMoXza6yADXAToUyG7mhoyoRUp.xml" value="7c066bbe"/>
+        <File path="resources/project/gRtajLS8dlnfa85IYtlbJTKAfvc" value="-1"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/OfxnnyUcu5GSELEDRUyOXcMZW0cd.xml" value="b62b63f9"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/OfxnnyUcu5GSELEDRUyOXcMZW0cp.xml" value="689bb60e"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/TMK4UzWHdRLhy_w-CHt9y11Q8XAd.xml" value="fbf03ea7"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/TMK4UzWHdRLhy_w-CHt9y11Q8XAp.xml" value="389ac601"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/Ymax6UvVU-jIdl_GZCppGHEYAz0d.xml" value="fbf03ea7"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/Ymax6UvVU-jIdl_GZCppGHEYAz0p.xml" value="8440f1de"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/qD-kr16wmwlzR-nIg1IG_vvRrWkd.xml" value="fbf03ea7"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ/qD-kr16wmwlzR-nIg1IG_vvRrWkp.xml" value="93cbf1"/>
+        <File path="resources/project/qaw0eS1zuuY1ar9TdPn1GMfrjbQ" value="-1"/>
+        <File path="resources/project/root/6x1BhZX_fLnKpcwqra0qFwv1jIgp.xml" value="55a0df9f"/>
+        <File path="resources/project/root/EEtUlUb-dLAdf0KpMVivaUlztwAp.xml" value="44d17b27"/>
+        <File path="resources/project/root/GiiBklLgTxteCEmomM8RCvWT0nQd.xml" value="77259fc3"/>
+        <File path="resources/project/root/GiiBklLgTxteCEmomM8RCvWT0nQp.xml" value="c3800a56"/>
+        <File path="resources/project/root/KAXfQgCar2Yb8zOxgvf9hdmLP1Ep.xml" value="a18868bd"/>
+        <File path="resources/project/root/NmGqIpAwUJcXFyLjFAGnU9uyN5Yp.xml" value="aa488c70"/>
+        <File path="resources/project/root/fjRQtWiSIy7hIlj-Kmk87M7s21kp.xml" value="27135f28"/>
+        <File path="resources/project/root/qaw0eS1zuuY1ar9TdPn1GMfrjbQp.xml" value="128bc141"/>
+        <File path="resources/project/rootp.xml" value="fbf03ea7"/>
+        <File path="resources/project/root" value="-1"/>
+        <File path="resources/project/uuid-f651a9a5-b7b9-4361-b11c-7c91771b35e7.xml" value="fbf03ea7"/>
+        <File path="resources/project/xF5uHF4UNuIOok33w2rXUdO8QaY" value="-1"/>
+        <File path="resources/project" value="-1"/>
+        <File path="resources" value="-1"/>
+        <File path="sourcecode/+mc/acker.m" value="86f30285"/>
+        <File path="sourcecode/+mc/allmargin.m" value="76c12212"/>
+        <File path="sourcecode/+mc/append.m" value="1a1024bd"/>
+        <File path="sourcecode/+mc/are.m" value="25beea91"/>
+        <File path="sourcecode/+mc/arma.m" value="b7697ba9"/>
+        <File path="sourcecode/+mc/balreal.m" value="aeab68f6"/>
+        <File path="sourcecode/+mc/bode.m" value="ceccbcd5"/>
+        <File path="sourcecode/+mc/bodemag.m" value="d42f9d1f"/>
+        <File path="sourcecode/+mc/c2d.m" value="ad6ef10a"/>
+        <File path="sourcecode/+mc/c2dt.m" value="e0dee925"/>
+        <File path="sourcecode/+mc/chirp.m" value="5af25e1b"/>
+        <File path="sourcecode/+mc/covar.m" value="dae1371"/>
+        <File path="sourcecode/+mc/ctrb.m" value="ab1b38d0"/>
+        <File path="sourcecode/+mc/d2c.m" value="ce93b144"/>
+        <File path="sourcecode/+mc/d2d.m" value="b374a705"/>
+        <File path="sourcecode/+mc/damp.m" value="442fee34"/>
+        <File path="sourcecode/+mc/db2mag.m" value="9ef47915"/>
+        <File path="sourcecode/+mc/dbdrop.m" value="a806e9d8"/>
+        <File path="sourcecode/+mc/dcgain.m" value="3a1d5ce7"/>
+        <File path="sourcecode/+mc/evalfr.m" value="273cf0dd"/>
+        <File path="sourcecode/+mc/feedback.m" value="778dae00"/>
+        <File path="sourcecode/+mc/findmaxgain.m" value="73d566b"/>
+        <File path="sourcecode/+mc/freqresp.m" value="ba20c2cf"/>
+        <File path="sourcecode/+mc/gensig.m" value="9d66c119"/>
+        <File path="sourcecode/+mc/gram.m" value="c6ab163e"/>
+        <File path="sourcecode/+mc/hsvd.m" value="5c4ac16e"/>
+        <File path="sourcecode/+mc/imc.m" value="c1202271"/>
+        <File path="sourcecode/+mc/impulse.m" value="32d43ecf"/>
+        <File path="sourcecode/+mc/initial.m" value="8413d6b1"/>
+        <File path="sourcecode/+mc/linprog.m" value="9db3fb69"/>
+        <File path="sourcecode/+mc/listOfFunctions" value="6733a6a3"/>
+        <File path="sourcecode/+mc/lmpc.m" value="dbc5c77f"/>
+        <File path="sourcecode/+mc/loop.m" value="7ad914be"/>
+        <File path="sourcecode/+mc/lqe.m" value="a91b605a"/>
+        <File path="sourcecode/+mc/lqgreg.m" value="6ec10e96"/>
+        <File path="sourcecode/+mc/lqi.m" value="4025113"/>
+        <File path="sourcecode/+mc/lqr.m" value="ffe2e9a9"/>
+        <File path="sourcecode/+mc/lsim.m" value="865f1c5f"/>
+        <File path="sourcecode/+mc/lyap.m" value="66ab678"/>
+        <File path="sourcecode/+mc/mag2db.m" value="f4b63507"/>
+        <File path="sourcecode/+mc/margin.m" value="6319ae92"/>
+        <File path="sourcecode/+mc/minreal.m" value="84ab163d"/>
+        <File path="sourcecode/+mc/modred.m" value="216333d7"/>
+        <File path="sourcecode/+mc/nlsim.m" value="6aa66be1"/>
+        <File path="sourcecode/+mc/nyquist.m" value="c4e94f23"/>
+        <File path="sourcecode/+mc/obsv.m" value="9823ed5a"/>
+        <File path="sourcecode/+mc/pade.m" value="71ce079d"/>
+        <File path="sourcecode/+mc/parallel.m" value="60728c6"/>
+        <File path="sourcecode/+mc/pid.m" value="cc65998b"/>
+        <File path="sourcecode/+mc/pipd.m" value="d6b267d"/>
+        <File path="sourcecode/+mc/pole.m" value="9cd5e65e"/>
+        <File path="sourcecode/+mc/pzmap.m" value="3ff84bb"/>
+        <File path="sourcecode/+mc/qmpc.m" value="dc872a76"/>
+        <File path="sourcecode/+mc/quadprog.m" value="79e6f4fa"/>
+        <File path="sourcecode/+mc/ramp.m" value="cf304aba"/>
+        <File path="sourcecode/+mc/referencegain.m" value="28eff38c"/>
+        <File path="sourcecode/+mc/reg.m" value="c23a99b8"/>
+        <File path="sourcecode/+mc/rlocfind.m" value="d9414743"/>
+        <File path="sourcecode/+mc/rlocus.m" value="d7e83e6"/>
+        <File path="sourcecode/+mc/satlsim.m" value="5ca60ac8"/>
+        <File path="sourcecode/+mc/sensitivity.m" value="77550acd"/>
+        <File path="sourcecode/+mc/series.m" value="f16bd7a3"/>
+        <File path="sourcecode/+mc/sgrid.m" value="32119832"/>
+        <File path="sourcecode/+mc/sigma.m" value="696da0bc"/>
+        <File path="sourcecode/+mc/smithpredict.m" value="3a47b996"/>
+        <File path="sourcecode/+mc/ss.m" value="bee99119"/>
+        <File path="sourcecode/+mc/ss2tf.m" value="9a673a7d"/>
+        <File path="sourcecode/+mc/step.m" value="50b0bfc1"/>
+        <File path="sourcecode/+mc/tf.m" value="308923d5"/>
+        <File path="sourcecode/+mc/tf2ss.m" value="9ff98837"/>
+        <File path="sourcecode/+mc/tzero.m" value="7a713175"/>
+        <File path="sourcecode/+mc/updatematavecontrol.m" value="abbcd217"/>
+        <File path="sourcecode/+mc/zero.m" value="d5022512"/>
+        <File path="sourcecode/+mc/zpk.m" value="b976c63"/>
+        <File path="sourcecode/+mc" value="-1"/>
+        <File path="sourcecode/README.md" value="523cff43"/>
+        <File path="sourcecode" value="-1"/>
+    </Files>
+    <MetadataNode>
+        <path value="ProjectData:type:Info">
+            <node name="Info">
+                <entry value="Matavecontrol" key="Name"/>
+            </node>
+        </path>
+        <path value="Root:type:Categories">
+            <path value="FileClassCategory:type:Category">
+                <node name="Info">
+                    <entry value="None" key="DataType"/>
+                    <entry value="Classification" key="Name"/>
+                    <entry value="1" key="ReadOnly"/>
+                    <entry value="1" key="SingleValued"/>
+                </node>
+                <path value="artifact:type:Label">
+                    <node name="Info">
+                        <entry value="Artifact" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+                <path value="convenience:type:Label">
+                    <node name="Info">
+                        <entry value="Convenience" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+                <path value="derived:type:Label">
+                    <node name="Info">
+                        <entry value="Derived" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+                <path value="design:type:Label">
+                    <node name="Info">
+                        <entry value="Design" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+                <path value="none:type:Label">
+                    <node name="Info">
+                        <entry value="None" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+                <path value="other:type:Label">
+                    <node name="Info">
+                        <entry value="Other" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+                <path value="test:type:Label">
+                    <node name="Info">
+                        <entry value="Test" key="Name"/>
+                        <entry value="READ_ONLY" key="ReadOnly"/>
+                    </node>
+                </path>
+            </path>
+        </path>
+        <path value="Root:type:EntryPoints"/>
+        <path value="Root:type:Extensions"/>
+        <path value="Root:type:Files">
+            <path value=".gitattributes:type:File">
+                <node name="Info"/>
+            </path>
+            <path value=".gitignore:type:File">
+                <node name="Info"/>
+            </path>
+            <path value="examples:type:File">
+                <node name="Info"/>
+                <path value="1:type:DIR_SIGNIFIER">
+                    <node name="Info"/>
+                </path>
+                <path value="bodeExample.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+                <path value="c2dExample.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+                <path value="mpcExample.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+                <path value="nyquistExample.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+                <path value="stateSpaceExample.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+                <path value="stepExample.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+                <path value="transferFunctionExmaple.m:type:File">
+                    <node name="Info">
+                        <node name="Category">
+                            <entry value="FileClassCategory" key="UUID"/>
+                            <node name="Label">
+                                <entry value="design" key="UUID"/>
+                            </node>
+                        </node>
+                    </node>
+                </path>
+            </path>
+            <path value="sourcecode:type:File">
+                <node name="Info"/>
+                <path value="+mc:type:File">
+                    <node name="Info"/>
+                    <path value="1:type:DIR_SIGNIFIER">
+                        <node name="Info"/>
+                    </path>
+                    <path value="acker.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="allmargin.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="append.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="are.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="arma.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="balreal.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="bode.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="bodemag.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="c2d.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="c2dt.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="chirp.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="covar.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="ctrb.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="d2c.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="d2d.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="damp.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="db2mag.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="dbdrop.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="dcgain.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="evalfr.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="feedback.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="findmaxgain.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="freqresp.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="gensig.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="gram.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="hsvd.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="imc.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="impulse.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="initial.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="linprog.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="listOfFunctions:type:File">
+                        <node name="Info"/>
+                    </path>
+                    <path value="lmpc.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="loop.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="lqe.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="lqgreg.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="lqi.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="lqr.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="lsim.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="lyap.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="mag2db.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="margin.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="minreal.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="modred.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="nlsim.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="nyquist.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="obsv.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="pade.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="parallel.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="pid.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="pipd.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="pole.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="pzmap.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="qmpc.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="quadprog.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="ramp.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="referencegain.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="reg.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="rlocfind.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="rlocus.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="satlsim.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="sensitivity.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="series.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="sgrid.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="sigma.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="smithpredict.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="ss.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="ss2tf.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="step.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="tf.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="tf2ss.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="tzero.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="updatematavecontrol.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="zero.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                    <path value="zpk.m:type:File">
+                        <node name="Info">
+                            <node name="Category">
+                                <entry value="FileClassCategory" key="UUID"/>
+                                <node name="Label">
+                                    <entry value="design" key="UUID"/>
+                                </node>
+                            </node>
+                        </node>
+                    </path>
+                </path>
+                <path value="1:type:DIR_SIGNIFIER">
+                    <node name="Info"/>
+                </path>
+            </path>
+        </path>
+        <path value="Root:type:ProjectData"/>
+        <path value="Root:type:ProjectPath">
+            <path value="9f6c8efa-fbfc-4d21-9fd7-4b930f50e31d:type:Reference">
+                <node name="Info">
+                    <entry value="sourcecode" key="Ref"/>
+                    <entry value="Relative" key="Type"/>
+                </node>
+            </path>
+        </path>
+    </MetadataNode>
+    <Date value="May 16, 2023 8:42:35 AM"/>
+</Info>

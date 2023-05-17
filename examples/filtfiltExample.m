@@ -4,14 +4,14 @@ clc; clear; close all;
 M = 1; % Kg
 K = 500; % Nm/m
 b = 3; % Nm/s^2
-G = tf([1], [M b K]);
+G = mc.tf([1], [M b K]);
 
 %% Input signal
 t = linspace(0.0, 100, 3000);
 u = 10*sin(t);
 
 %% Simulation
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close
 
 %% Add 10% noise
@@ -24,7 +24,7 @@ end
 
 %% Filter away the noise
 lowpass = 0.2;
-[yf] = filtfilt(y, t, lowpass);
+[yf] = Mid.filtfilt(y, t, lowpass);
 
 %% Check
 plot(t, yf, t, y);

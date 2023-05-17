@@ -37,7 +37,7 @@ for i = 1:samples
   d(3) = x(3);
   
   % SR-UKF
-  [Sw, what] = sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
+  [Sw, what] = Mid.sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
   
   % Save the estimated parameter 
   WHAT(i, :) = what';

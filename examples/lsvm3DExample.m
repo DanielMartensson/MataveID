@@ -34,7 +34,7 @@ C = 1;              % For upper boundary limit
 lambda = 1;         % Regularization (Makes it faster to solve the quadratic programming)
 
 % Compute weigths, bias and find accuracy
-[w, b, accuracy, solution] = lsvm(X, y, C, lambda);
+[w, b, accuracy, solution] = Mid.lsvm(X, y, C, lambda);
 
 % Definiera området för 3D-plot
 x1Range = linspace(min(X(:,1))-1, max(X(:,1))+1, 50);

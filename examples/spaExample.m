@@ -12,4 +12,4 @@ u = u1 + u2 + u3 + u4;
 u = u + 5*randn(1, 30000);
 
 %% Identify what frequencies and amplitudes we had!
-spa(u, t);
+Mid.spa(u, t);

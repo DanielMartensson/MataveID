@@ -9,10 +9,10 @@ u = [5*u 10*u -4*u 3*u 5*u 0*u -5*u 0*u];
 t = linspace(0, 100, length(u));
 
 % Create second order model
-G = tf(1, [1 0.8 3]);
+G = mc.tf(1, [1 0.8 3]);
 
 % Simulate outputs
-y = lsim(G, u, t);
+y = mc.lsim(G, u, t);
 close
 
 % Add noise
@@ -33,7 +33,7 @@ noise = rand(m, p);                % Random noise, not normal distributed
 % Particle filter - Simulation
 for i = 1:n
   x = y(:, i);                     % Get the state
-  [xhat, horizon, k, noise] = pf(x, xhatp, k, horizon, noise);
+  [xhat, horizon, k, noise] = Mid.pf(x, xhatp, k, horizon, noise);
   yf(:, i) = xhat;                 % Estimated state
   xhatp = xhat;                    % This is the past estimated state
 end
