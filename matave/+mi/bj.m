@@ -82,7 +82,7 @@ function [sysd, K1, sysh, K2] = bj(varargin)
   end
 
   % Get system model
-  [sysd, K1] = Mid.cca(u, y, k, sampleTime, delay, systemorder_sysd);
+  [sysd, K1] = mi.cca(u, y, k, sampleTime, delay, systemorder_sysd);
 
   % Find the disturbance d = H*e
   Ad = sysd.A;
@@ -97,6 +97,6 @@ function [sysd, K1, sysh, K2] = bj(varargin)
   d = y - yhat;
 
   % Get the disturbance model
-  [sysh, K2] = Mid.sra(d, k, sampleTime, ktune, delay, systemorder_sysh);
+  [sysh, K2] = mi.sra(d, k, sampleTime, ktune, delay, systemorder_sysh);
 
 end
