@@ -33,7 +33,7 @@ function updatemataveid()
   for i = 1:m
     % Downloading
     nameOfFile = fileList{i, 1};
-    URL = strcat('https://raw.githubusercontent.com/DanielMartensson/mataveid/master/matave/+mi', nameOfFile)
+    URL = strcat('https://raw.githubusercontent.com/DanielMartensson/mataveid/master/matave/+mi/', nameOfFile)
     [saveplace, Success] = urlwrite(URL, nameOfFile);
     saveplace
     Success
