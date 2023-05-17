@@ -116,10 +116,10 @@ function [sysd, K] = arx(varargin)
   S = covariance(1:nx, nx+1:nx+l);
 
   % Create a temporary state space model
-  riccati = ss(0, Ad', Cd', Bd', Dd');
+  riccati = mc.ss(0, Ad', Cd', Bd', Dd');
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
-  [~, K] = are(riccati, Q, R, S);
+  [~, K] = mc.are(riccati, Q, R, S);
   K = K';
 end

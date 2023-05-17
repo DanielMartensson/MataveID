@@ -161,7 +161,7 @@ function [sysd, P, C] = ortjiop(varargin)
   B = DB(p+m+1:size(DB,1),:);
 
   % Create the closed loop
-  sysd = ss(delay, A, B, C, D);
+  sysd = mc.ss(delay, A, B, C, D);
   sysd.sampleTime = sampleTime;
 
   % Split up B, C, D
@@ -179,7 +179,7 @@ function [sysd, P, C] = ortjiop(varargin)
   Bd = B2*inv(D22);
   Cd = C1;
   Dd = zeros(p, m);
-  P = ss(delay, Ad, Bd, Cd, Dd);
+  P = mc.ss(delay, Ad, Bd, Cd, Dd);
   P.sampleTime = sampleTime;
 
   % Create controller model
@@ -187,7 +187,7 @@ function [sysd, P, C] = ortjiop(varargin)
   Bd = B1 - B2*inv(D22)*D21;
   Cd = inv(D22)*C2;
   Dd = inv(D22)*D21;
-  C = ss(delay, Ad, Bd, Cd, Dd);
+  C = mc.ss(delay, Ad, Bd, Cd, Dd);
   C.sampleTime = sampleTime;
 end
 

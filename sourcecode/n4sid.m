@@ -160,7 +160,7 @@ function [sysd, K] = n4sid(varargin)
   Bd = CTRB(:, 1:m);
 
   % Create the state space model
-  sysd = ss(delay, Ad, Bd, Cd, Dd);
+  sysd = mc.ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 
   % Create kalman filter
@@ -189,11 +189,11 @@ function [sysd, K] = n4sid(varargin)
   S = covariance(1:nx, nx+1:nx+l);
 
   % Create a temporary state space model
-  riccati = ss(0, Ad', Cd', Bd', Dd');
+  riccati = mc.ss(0, Ad', Cd', Bd', Dd');
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
-  [~, K] = are(riccati, Q, R, S);
+  [~, K] = mc.are(riccati, Q, R, S);
   K = K';
 
 end

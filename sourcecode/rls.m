@@ -130,12 +130,12 @@ function [sysd, K] = rls(varargin)
   end
 
   % Create the discrete transfer function and convert it to state space
-  Gd = tf([Theta(np+1:np+nz)'],[1 Theta(1:np)']);
+  Gd = mc.tf([Theta(np+1:np+nz)'],[1 Theta(1:np)']);
   Gd.sampleTime = sampleTime;
   Gd.delay = delay;
 
   % Convert to Observable Canonical Form
-  sysd = tf2ss(Gd, 'OCF');
+  sysd = mc.tf2ss(Gd, 'OCF');
 
   % Check if we could include a kalman gain matrix into the system
   if(np == nze)

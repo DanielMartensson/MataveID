@@ -272,7 +272,7 @@ function [sysd, K, L] = eradcocid(D, g, sampleTime, delay, systemorder)
   Dd = D;
 
   % Create state space model now
-  sysd = ss(delay, Ad, Bd, Cd, Dd);
+  sysd = mc.ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 
 end

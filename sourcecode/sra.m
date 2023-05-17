@@ -126,11 +126,11 @@ function [sysd, K] = sra(varargin)
   S = covariance(1:n, n+1:n+p);
 
   % Create a temporary state space model
-  riccati = ss(0, Ad', Cd', Bd', Dd');
+  riccati = mc.ss(0, Ad', Cd', Bd', Dd');
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
-  [~, K] = are(riccati, Q, R, S);
+  [~, K] = mc.are(riccati, Q, R, S);
   K = K';
 
   % Create R matrix and then kalman gain K matrix
@@ -138,7 +138,7 @@ function [sysd, K] = sra(varargin)
   %K = (Bd' - Ad*S*Cd')/R;
 
   % Create the model
-  sysd = ss(delay, Ad, K, Cd, Dd);
+  sysd = mc.ss(delay, Ad, K, Cd, Dd);
   sysd.sampleTime = sampleTime;
 
   % Change the reference gain

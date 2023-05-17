@@ -99,7 +99,7 @@ function [sysd, K] = eradc(varargin)
   Dd = g(1:ny, 1:nu);
 
   % Create state space model now
-  sysd = ss(delay, Ad, Bd, Cd, Dd);
+  sysd = mc.ss(delay, Ad, Bd, Cd, Dd);
   sysd.sampleTime = sampleTime;
 
   % Create kalman filter
@@ -130,11 +130,11 @@ function [sysd, K] = eradc(varargin)
   S = covariance(1:nx, nx+1:nx+ny);
 
   % Create a temporary state space model
-  riccati = ss(0, Ad', Cd', Bd', Dd');
+  riccati = mc.ss(0, Ad', Cd', Bd', Dd');
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
-  [~, K] = are(riccati, Q, R, S);
+  [~, K] = mc.are(riccati, Q, R, S);
   K = K';
 end
 

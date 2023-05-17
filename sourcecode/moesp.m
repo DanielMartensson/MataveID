@@ -127,7 +127,7 @@ function [sysd, K] = moesp(varargin)
   D = DB(1:ny,:);
 
   % Create the model
-  sysd = ss(0, A, B, C, D);
+  sysd = mc.ss(0, A, B, C, D);
   sysd.sampleTime = sampleTime;
 
   % Create kalman filter
@@ -156,11 +156,11 @@ function [sysd, K] = moesp(varargin)
   S = covariance(1:n, n+1:n+ny);
 
   % Create a temporary state space model
-  riccati = ss(0, A', C', B', D');
+  riccati = mc.ss(0, A', C', B', D');
   riccati.sampleTime = sampleTime;
 
   % Find kalman filter gain matrix K
-  [~, K] = are(riccati, Q, R, S);
+  [~, K] = mc.are(riccati, Q, R, S);
   K = K';
 end
 

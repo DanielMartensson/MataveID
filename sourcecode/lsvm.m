@@ -56,7 +56,7 @@ function [w, b, accuracy, solution] = lsvm(varargin)
   ub = C*ones(size(y));
   G = [eye(size(Q)); -eye(size(Q)); Aeq; -Aeq];
   h = [ub; -lb; beq; -beq];
-  [alpha, solution] = quadprog(Q, c, G, h);
+  [alpha, solution] = mc.quadprog(Q, c, G, h);
 
   % Support vectors have non zero lagrange multipliers
   tol = 1e-5;
