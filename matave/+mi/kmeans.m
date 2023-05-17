@@ -30,7 +30,6 @@ function [idx, C] = kmeans(X, k)
       new_value = sum(C(:));
       difference = abs(old_value - new_value);
       if(difference < 0.001)
-        i
         break;
       end
       old_value = new_value;
