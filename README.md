@@ -26,7 +26,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `ica.m` | Almost complete | Need to find a practical example |
 | `sra.m` | Almost complete | Upload measurement sensor system |
 | `bj.m` | Almost complete | Find a pratical example |
-| `sindy.m` | Ongoing | Easier to use, return jacobian model for linearization |
+| `sindy.m` | Complete | Nothing to do here |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
 | `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
 | `sr_ukf_state_estimation.m` | Ongoing | Use with `sindy.m` and a pratical example |
