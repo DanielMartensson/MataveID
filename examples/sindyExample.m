@@ -1,6 +1,5 @@
 clc; clear; close all;
 
-
 % Load CSV data
 file = fullfile('..','data','MotorRotation.csv');
 X = csvread(file); % Can be found in the folder "data"
@@ -13,13 +12,13 @@ sampleTime = 0.02;
 y = mi.filtfilt(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
-activations = [1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
+degree = 5;
 lambda = 0.05;
 l = length(u);
 h = floor(l/2);
 s = ceil(l/2);
-fx_up = mi.sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
-fx_down = mi.sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
+fx_up = mi.sindy(u(1:h), y(1:h), degree, lambda, sampleTime); % We go up
+fx_down = mi.sindy(u(s:end), y(s:end), degree, lambda, sampleTime); % We go down
 
 % Simulation up
 x0 = y(1);
@@ -28,17 +27,17 @@ u_up = u_up(1:100:end)';
 stepTime = 1.2;
 [x_up, t] = mc.nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
 
-% Simulation down 
+% Simulation down
 x0 = y(s);
-u_down = u(s:end)
+u_down = u(s:end);
 u_down = u_down(1:100:end)';
 stepTime = 1.2;
 [x_down, t] = mc.nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
 
-% Compare 
+% Compare
 figure
 plot([x_up x_down])
-hold on 
+hold on
 plot(y(1:100:end));
 legend('Simulation', 'Measurement')
 ylabel('Rotation')

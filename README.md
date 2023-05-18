@@ -741,7 +741,6 @@ This example is a real world example with noise and nonlinearities. Here I set u
 ```matlab
 clc; clear; close all;
 
-
 % Load CSV data
 file = fullfile('..','data','MotorRotation.csv');
 X = csvread(file); % Can be found in the folder "data"
@@ -754,13 +753,13 @@ sampleTime = 0.02;
 y = mi.filtfilt(y', t', 0.1)';
 
 % Sindy - Sparce identification Dynamics
-activations = [1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; % Enable or disable the candidate functions such as sin(u), x^2, sqrt(y) etc...
+degree = 5;
 lambda = 0.05;
 l = length(u);
 h = floor(l/2);
 s = ceil(l/2);
-fx_up = mi.sindy(u(1:h), y(1:h), activations, lambda, sampleTime); % We go up
-fx_down = mi.sindy(u(s:end), y(s:end), activations, lambda, sampleTime); % We go down
+fx_up = mi.sindy(u(1:h), y(1:h), degree, lambda, sampleTime); % We go up
+fx_down = mi.sindy(u(s:end), y(s:end), degree, lambda, sampleTime); % We go down
 
 % Simulation up
 x0 = y(1);
@@ -769,17 +768,17 @@ u_up = u_up(1:100:end)';
 stepTime = 1.2;
 [x_up, t] = mc.nlsim(fx_up, u_up, x0, stepTime, 'ode15s');
 
-% Simulation down 
+% Simulation down
 x0 = y(s);
-u_down = u(s:end)
+u_down = u(s:end);
 u_down = u_down(1:100:end)';
 stepTime = 1.2;
 [x_down, t] = mc.nlsim(fx_down, u_down, x0, stepTime, 'ode15s');
 
-% Compare 
+% Compare
 figure
 plot([x_up x_down])
-hold on 
+hold on
 plot(y(1:100:end));
 legend('Simulation', 'Measurement')
 ylabel('Rotation')
@@ -788,55 +787,6 @@ grid on
 ```
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SINDY_Result.png)
-
-Here is a multivariable example with SINDy. It use the same data as the OKID scenario.
-
-```matlab
-% Data
-X = csvread('MultivariableCylinders.csv');
-t = X(:, 1);
-r0 = X(:, 2); % Reference 0
-r1 = X(:, 3); % Reference 1
-y0 = X(:, 4); % Output 0
-y1 = X(:, 5); % Output 1
-sampleTime = 0.1;
-
-% Identification
-inputs = [r0 r1];
-outputs = [y0 y1];
-activations = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
-lambda = 0.2;
-model = mi.sindy(inputs, outputs, activations, lambda, sampleTime);
-
-% Simulation
-u = inputs';
-x0 = outputs'(:, 1);
-stepTime = 1.0;
-[x, t] = mi.nlsim(model, u, x0, stepTime, 'ode15s');
-
-% Compare
-close all 
-plot(x(1, :))
-hold on 
-plot(y0)
-legend('Simulation', 'Measurement')
-ylabel('Position')
-xlabel('Time')
-title('Cylinder 0')
-grid on
-
-figure
-plot(x(2, :))
-hold on 
-plot(y1)
-legend('Simulation', 'Measurement')
-ylabel('Position')
-xlabel('Time')
-title('Cylinder 1')
-grid on
-```
-
-![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/SINDY_Result_multivariable.png)
 
 ### IDBode - Identification Bode
 This plots a bode diagram from measurement data. It can be very interesting to see how the amplitudes between input and output behaves over frequencies. This can be used to confirm if your estimated model is good or bad by using the `bode` command from Matavecontrol and compare it with idebode.
