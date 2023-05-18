@@ -732,6 +732,10 @@ This is a new identification technique made by [Eurika Kaiser](https://github.co
 
 This is very usefull if you have heavy nonlinear systems such as a hydraulic orifice or a hanging load. 
 
+```matlab
+[dx] = mi.sindy(inputs, outputs, degree, lambda, sampleTime);
+```
+
 ### SINDy Example
 
 This example is a real world example with noise and nonlinearities. Here I set up a hydraulic motor in a test bench and measure it's output and the current to the valve that gives the motor oil. The motor have two nonlinearities - Hysteresis and the input signal is not propotional to the output signal. By using two nonlinear models, we can avoid the hysteresis. 
