@@ -9,5 +9,9 @@ The disturbance model can be used for:
 [sysd, K1, sysh, K2] = mi.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
 ```
 
-
+## Example
 https://github.com/DanielMartensson/MataveID/blob/328f7f5cb3a0ad32619968d9babb3126772c4ca3/examples/bjExample.m#L1-L50
+
+
+## Results
+![Box Jenkins Results](../pictures/BJ_Result.png)
