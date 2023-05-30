@@ -132,7 +132,7 @@ Disadvantages:
 
 ![Adaptive control](pictures/Adaptive_control.png)
 
-Examples
+# Examples
 All the examples are contained in the example folder. For each example, there is at least a Markdown file (.md) and a m-file (.m).
 
 [Examples](examples/)
