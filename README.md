@@ -84,7 +84,7 @@ Disadvantages:
  - MATLAB files from this book is export controlled from NASA = Difficult to download
  - This book is not produced anymore. I have the PDF.
 
-![Applied System Identification](../pictures/AppliedSystemIdentification.jpeg)
+![Applied System Identification](pictures/AppliedSystemIdentification.jpeg)
 
 ### System Modeling & Identification
 This book covering techniques for all types of systems, linear and nonlinear, but it's more a general book for system identfication. `Professor Rolf Johansson` book contains lots of practice, but also theory as well. More theory and less practice compared to `Applied System Identification` from `Jer-Nan Juang`. This book uses both the realization theory methods and subspace methods for identify dynamical systems from data. Also this book includes filters as well such as Uncented Kalman Filter. Can be purchased from https://kfsab.se/sortiment/system-modeling-and-identification/ 
@@ -99,7 +99,7 @@ Disadvantages:
  - Do not include closed loop identification
  - Some methods are difficult to understand how to apply with MATLAB-code. Typical univerity literature for students
 
-![Rolf Johanssons Book](../pictures/RolfJohanssonsBok.jpg)
+![Rolf Johanssons Book](pictures/RolfJohanssonsBok.jpg)
 
 ### Subspace Methods For System Identification
 This book include techniques for all types of linear systems. It's a general book of linear system identification. The advantages of this book is that it include modern system identification techniques. The disadvantages about this book is that it contains only theory and no practice, but `Professor Tohru Katayama`, have made a great work for collecting all these subspace methods. Use this book if you want to have knowledge about the best subspace identification methods.
@@ -115,7 +115,7 @@ Disadvantages:
  - Does not include impulse, frequency and nonlinear identification
  - Does not include filtering, statistics and other types of modeling techniques
 
-![subspace methods for system identification](../pictures/subspace_methods_for_system_identification.jpg)
+![subspace methods for system identification](pictures/subspace_methods_for_system_identification.jpg)
 
 ### Adaptive Control
 This book is only for adaptive control. But there is one algorithm that are very useful - Recursive Least Squares. This is a very pratical book for applied adaptive control. It's uses the legacy SISO adaptive techniques such as pole placement, Self Tuning Regulator(STR) and Model Reference Adaptive Systems(MRAS) combined with Recursive Least Squares(RLS). If you wonder why only SISO and not MIMO, it's because adaptive control is very difficult to apply in practice and create a reliable controller for all types of systems. The more difficult problem is to solve, the more simplier technique need to be used.
@@ -130,7 +130,7 @@ Disadvantages:
  - Only SISO model are applied
  - This book is made for adaptive control and have only one chapter that contains system identification
 
-![Adaptive control](../pictures/Adaptive_control.png)
+![Adaptive control](pictures/Adaptive_control.png)
 
 Examples
 All the examples are contained in the example folder. For each example, there is at least a Markdown file (.md) and a m-file (.m).
