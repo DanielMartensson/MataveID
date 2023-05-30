@@ -132,43 +132,6 @@ Disadvantages:
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/Adaptive_control.png)
 
-### MOESP - Multivariable Output-Error State Space
-MOESP is an algorithm that identify a linear state space model. It was invented in 1992. It can both identify SISO and MISO models.
-Try MOESP or N4SID. They give the same result, but sometimes MOESP can be better than N4SID. It all depends on the data.
-
-```matlab
-[sysd] = mi.moesp(u, y, k, sampleTime, delay, systemorder); % k = Integer tuning parameter such as 10, 20, 25, 32, 47 etc.
-```
-
-### Example MOESP
-
-```matlab
-clc; clear close all;
-[u, t] = mc.gensig('square', 10, 10, 100);
-G = mc.tf(1, [1 0.8 3]); % Model
-y = mc.lsim(G, u, t); % Simulation
-y = y + 0.4*rand(1, length(t));
-close
-k = 30;
-sampleTime = t(2) - t(1);
-systemorder = 3;
-delay = 0;
-ktune = 0.01;
-[sysd, K] = mi.moesp(u, y, k, sampleTime, ktune, delay, systemorder); % This example works better with MOESP, rather than N4SID
-
-% Create the observer
-observer = mc.ss(sysd.delay, sysd.A - K*sysd.C, [sysd.B K], sysd.C, [sysd.D sysd.D*0]);
-observer.sampleTime = sysd.sampleTime;
-
-% Check observer
-[yf, tf] = mc.lsim(observer, [u; y], t);
-close
-plot(tf, yf, t, y)
-grid on
-```
-
-![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/MOESP_Result.png)
-
 ### N4SID - Numerical algorithm for Subspace State Space System IDentification.
 N4SID is an algoritm that identify a linear state space model. Use this if you got regular data from a dynamical system. This algorithm can handle both SISO and MISO. N4SID algorithm was invented 1994. If you need a nonlinear state space model, check out the SINDy algorithm. Try N4SID or MOESP. They give the same result, but sometimes N4SID can be better than MOESP. It all depends on the data.
 
