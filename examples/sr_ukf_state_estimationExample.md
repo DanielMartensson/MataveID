@@ -6,6 +6,6 @@ This is Uncented Kalman Filter that using cholesky update method (more stable), 
 ```
 
 ## Square Root Uncented Kalman Filter for state estimation example
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/sr_ukf_state_estimationExample.m#L1C1-L68
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/sr_ukf_state_estimationExample.m#L1-L68
 
 ![SR UKF state estimation](../pictures/SR_UKF_state_estimation.png)
