@@ -13,6 +13,6 @@ This example is a real world example with noise and nonlinearities. Here I set u
 
 ![Festo Bench](../pictures/FestoBench.jpg)
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/sindyExample.m#L1C1-L45
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/sindyExample.m#L1-L45
 
 ![SINDY Result](../pictures/SINDY_Result.png)

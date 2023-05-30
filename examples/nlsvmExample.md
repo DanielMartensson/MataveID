@@ -11,7 +11,7 @@ If you have let's say more than two variables, e.g `Z` matrix or even more. Then
 ```
 
 ## Nonlinear Support Vector Machine with C code generation example
-https://github.com/DanielMartensson/MataveID/blob/817443d34f783f393d8265c8b8c5cf0642ebda93/examples/nlsvmExample.m#L1C1-L54
+https://github.com/DanielMartensson/MataveID/blob/817443d34f783f393d8265c8b8c5cf0642ebda93/examples/nlsvmExample.m#L1-L54
 
 ![NLSVM Plot](../pictures/NLSVM_plot.png)
 

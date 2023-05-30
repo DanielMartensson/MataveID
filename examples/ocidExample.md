@@ -12,7 +12,7 @@ This OCID algorithm have a particle filter that estimates the markov parameters.
 ![a](https://raw.githubusercontent.com/DanielMartensson/MataveID/master/pictures/OCID_System.png)
 
 ## OCID Example
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/ocidExample.m#L1C1-L59
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/ocidExample.m#L1-L59
 
 
 ![OCID Result](../pictures/OCID_Result.png)

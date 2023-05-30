@@ -6,7 +6,7 @@ Independent component analysis(ICA) is a tool if you want to separate independen
 ```
 ## Independent Component Analysis example
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/icaExample.m#L1C1-L137
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/icaExample.m#L1-L137
 
 These signals are what we want to find
 

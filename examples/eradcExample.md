@@ -10,6 +10,6 @@ Use this algorithm if you got impulse data from e.g structural mechanics.
 
 ![ERADC System](../pictures/ERADC_System.png)
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/eradcExample.m#L1C1-L61
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/eradcExample.m#L1-L61
 
 ![ERADC Result](../pictures/ERADC_Result.png)

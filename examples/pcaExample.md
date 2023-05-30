@@ -8,7 +8,7 @@ how many points can a the data be defined as a cluster.
 ```
 ## Principal Component Analysis example
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/pcaExample.m#L1C1-L59
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/pcaExample.m#L1-L59
 
 ![PCA Original Data](../pictures/PCA_Original_Data.png)
 

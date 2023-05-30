@@ -6,6 +6,6 @@ Robust principal component analysis(RPCA) is a great tool if you want to separat
 ```
 ## Robust Principal Component Analysis example
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/rpcaExample.m#L1C1-L13
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/rpcaExample.m#L1-L13
 
 ![RPCA Result](../pictures/RPCA_Result.png)

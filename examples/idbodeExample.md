@@ -9,6 +9,6 @@ mi.idbode(u, y, w);
 
 ![IDBODE System](../pictures/IDBODE_System.png)
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/idbodeExample.m#L1C1-L25
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/idbodeExample.m#L1-L25
 
 ![IDBODE Result](../pictures/IDBODE_Result.png)

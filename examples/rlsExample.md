@@ -24,7 +24,7 @@ This is a hanging load of a hydraulic system. This system is a linear system due
 
 ![RLS System](../pictures/RLS_System.jpg)
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/rlsExample.m#L1C1-L60
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/rlsExample.m#L1-L60
 
 Here we can se that the first model follows the measured position perfect. The "down-curve" should be measured a little bit longer to get a perfect linear model.
 

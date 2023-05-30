@@ -9,7 +9,7 @@ This plots all the amplitudes from noisy data over its frequencies. Very good to
 
 Assume that we are using the previous example with different parameters.
 
-https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/spaExample.m#L1C1-L15
+https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/spaExample.m#L1-L15
 
 
 ![SPA Result](../pictures/SPA_Result.png)
