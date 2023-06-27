@@ -17,3 +17,9 @@ https://github.com/DanielMartensson/MataveID/blob/817443d34f783f393d8265c8b8c5cf
 https://github.com/DanielMartensson/MataveID/blob/817443d34f783f393d8265c8b8c5cf0642ebda93/examples/lsvm3DExample.m#L1-L57
 
 ![a](../pictures/LSVM_Result_3D.png)
+
+## Linear Support Vector Machine 9D example
+
+This example demonstrates how to use more than 3 columns in SVM. Notice that here we don't plot this 9D measurements
+
+https://github.com/DanielMartensson/MataveID/blob/b35c7ca9e7a84724e9fc9dc86a1a79583e1472ae/examples/lsvmXDExample.m#L1-L45
