@@ -12,6 +12,5 @@ It exist an equivalent C-code dbscan inside CControl repository.
 # Example Density-based spatial clustering of applications with noise
 
 https://github.com/DanielMartensson/MataveID/blob/7c83a2e5656827211748445a6a8d81e1c26e2389/examples/dbscanExample.m#L1-L110
-
 ## Results
 ![Box Jenkins Results](../pictures/DBSCAN_Result.png)
