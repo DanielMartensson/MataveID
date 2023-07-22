@@ -25,3 +25,4 @@ pca.m
 lda.m
 lsvm.m
 kmeans.m
+dbscan.m
