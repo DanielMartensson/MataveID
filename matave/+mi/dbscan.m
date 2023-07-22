@@ -1,43 +1,50 @@
-function [assignments,C] = dbscan(X,minpts,EPS)
-  C = 0;
-  assignments = zeros(size(X)(1),1);
-  clustered = zeros(size(X)(1),1);
-  for i=1: size(X)(1)
-    if(clustered(i)==1)
-      continue;
-    endif
-    clustered(i)=1;
-    isneighbour = [];
-    neighbourcount = 0;
-    for j=1: size(X)(1)
-      dist = sqrt(sum((X(i,:)-X(j,:)).^2));
-      if(dist<EPS)
-        neighbourcount++;
-        isneighbour = [isneighbour j];
-      endif
-    endfor
-    if(neighbourcount<minpts)
-      continue;
-    else
-      C++;
-      assignments(i) = C;
-      for k=isneighbour
-        if(clustered(k)==0)
-          clustered(k) = 1;
-          _isneighbour = [];
-          _neighbourcount = 0;
-          for j=1: size(X)(1)
-            dist = sqrt(sum((X(k,:)-X(j,:)).^2));
-            if(dist<EPS)
-              _neighbourcount++;
-              _isneighbour = [_isneighbour j];
-            endif
-          endfor
-          if(_neighbourcount>=minpts)
-            isneighbour = [isneighbour _isneighbour];
-          endif
-        endif
-        assignments(k) = C;
-      endfor
-    endif
-  endfor
+% Density-based spatial clustering of applications with noise
+% Input: X(data), epsilon(Radius), min_pts(Minimum points)
+% Output: idx(row index of class ID)
+% Example 1: [idx] = mi.dbscan(X, espsilon, min_pts)
+% Author: Daniel Mårtensson, Juli 2023
+
+function [idx] = dbscan(X, epsilon, min_pts)
+  A = 0;
+  n = size(X,1);
+  idx = zeros(n,1);
+  D = sqrt(distEucSq(X, X));
+  visited = false(n, 1);
+  for i=1:n
+    if ~visited(i)
+      visited(i) = true;
+      neighbors1 = find(epsilon >= D(i,:));
+      n1 = numel(neighbors1);
+      if n1 > min_pts
+        A = A + 1;
+        idx(i) = A;
+        k = 1;
+        while true
+          j = neighbors1(k);
+          if ~visited(j)
+            visited(j) = true;
+            neighbors2 = find(epsilon >= D(j,:));
+            n2 = numel(neighbors2);
+            if n2 >= min_pts
+              neighbors1 = [neighbors1 neighbors2];
+            end
+          end
+          if idx(j) == 0
+            idx(j) = A;
+          end
+          k = k + 1;
+          if k > numel(neighbors1)
+            break;
+          end
+        end
+      end
+    end
+  end
+end
+
+function D = distEucSq(X, Y)
+  Yt = Y';
+  XX = sum(X.*X,2);
+  YY = sum(Yt.*Yt,1);
+  D = XX + YY - 2*X*Yt;
+end
