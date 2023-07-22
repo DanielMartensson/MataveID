@@ -79,7 +79,7 @@ X = [-0.251521,   1.045117,  -1.281658,
 % Run dbscan clustering algorithm
 epsilon = 3;
 min_pts = 3;
-[index] = dbscan(X, epsilon, min_pts)
+[index] = mi.dbscan(X, epsilon, min_pts)
 
 % Get number of clusters
 clusters = max(index);
