@@ -28,7 +28,7 @@ function [P, W] = pca(varargin)
   mu = mean(X); %cluster_filter(X)
 
   % Center data
-  Z = Y - mu;
+  Z = X - mu;
 
   % Create the covariance
   Z = cov(Z);
