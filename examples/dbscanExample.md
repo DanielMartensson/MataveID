@@ -3,7 +3,7 @@
 This is a cluster algorithm that can identify the amount of clusters. 
 This algorithm requries two tuning parameters, `epsilon` and `min_pts`, which stands for `radius` and `minimum points`.
 This algorithm does not work if you have varying densities, else this algorithm is considered to be one of the best clustering algorithms.
-So, make sure that all your classes have the same amount of variance before you are using this algorithm.
+So, make sure that all your classes have the same amount of variance before you are using this algorithm due to its robustness against noise.
 
 It exist an equivalent C-code dbscan inside CControl repository. 
 
