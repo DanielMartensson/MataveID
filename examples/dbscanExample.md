@@ -13,5 +13,10 @@ It exist an equivalent C-code dbscan inside CControl repository.
 
 https://github.com/DanielMartensson/MataveID/blob/7e1b828a4782826489139ea46defd12bec4c7c38/examples/dbscanExample.m#L1-L110
 
+https://github.com/DanielMartensson/MataveID/blob/837fe5aa302134e3e68631e306ff2ef1ed683281/examples/dbscanNonGaussianExample.m#L1-L1035
+
 ## Results
-![Box Jenkins Results](../pictures/DBSCAN_Result.png)
+![DBSCAN Result](../pictures/DBSCAN_Result.png)
+
+![DBSCAN_Non_Gaussian_Result](../pictures/DBSCAN_Non_Gaussian_Result.png)
+
