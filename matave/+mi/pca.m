@@ -23,12 +23,9 @@ function [P, W] = pca(varargin)
   else
     error('Missing amount of components');
   end
-
-  % Filter the data
-  Y = mi.rpca(X); %cluster_filter(X);
-
+  
   % Average
-  mu = mean(Y);
+  mu = mean(X); %cluster_filter(X)
 
   % Center data
   Z = Y - mu;
