@@ -35,69 +35,69 @@ function [P,W] = lda(varargin)
   [row, column] = size(X);
 
   % Create average vector mu_X = mean(X, 2)
-	mu_X = mean(X, 2);
+  mu_X = mean(X, 2);
 
-	% Count classes
-	amount_of_classes = y(end) + 1;
+  % Count classes
+  amount_of_classes = y(end) + 1;
 
-	% Create scatter matrices Sw and Sb
-	Sw = zeros(row, row);
-	Sb = zeros(row, row);
+  % Create scatter matrices Sw and Sb
+  Sw = zeros(row, row);
+  Sb = zeros(row, row);
 
-	% How many samples of each class
-	samples_of_each_class = zeros(1, amount_of_classes);
-	for i = 1:column
-	  samples_of_each_class(y(i) + 1) = samples_of_each_class(y(i) + 1) + 1; % Remove +1 if you are using C
-	end
+  % How many samples of each class
+  samples_of_each_class = zeros(1, amount_of_classes);
+  for i = 1:column
+    samples_of_each_class(y(i) + 1) = samples_of_each_class(y(i) + 1) + 1; % Remove +1 if you are using C
+  end
 
-	% Iterate all classes
-	shift = 1;
-	for i = 1:amount_of_classes
-	  % Get samples of each class
-	  samples_of_class = samples_of_each_class(i);
+  % Iterate all classes
+  shift = 1;
+  for i = 1:amount_of_classes
+    % Get samples of each class
+    samples_of_class = samples_of_each_class(i);
 
-	  % Copy a class to Xi from X
-	  Xi = X(:, shift:shift+samples_of_class - 1);
+    % Copy a class to Xi from X
+    Xi = X(:, shift:shift+samples_of_class - 1);
 
-	  % Shift
-	  shift = shift + samples_of_class;
+    % Shift
+    shift = shift + samples_of_class;
 
-	  % Get average of Xi
-	  mu_Xi = mean(Xi, 2);
+    % Get average of Xi
+    mu_Xi = mean(Xi, 2);
 
-	  % Center Xi
-	  Xi = Xi - mu_Xi;
+    % Center Xi
+    Xi = Xi - mu_Xi;
 
-	  % Copy Xi and transpose Xi to XiT and turn XiT into transpose
-	  XiT = Xi';
+    % Copy Xi and transpose Xi to XiT and turn XiT into transpose
+    XiT = Xi';
 
-	  % Create XiXiT = Xi*Xi'
-	  XiXiT = Xi*XiT;
+    % Create XiXiT = Xi*Xi'
+    XiXiT = Xi*XiT;
 
-	  % Add to Sw scatter matrix
-	  Sw = Sw + XiXiT;
+    % Add to Sw scatter matrix
+    Sw = Sw + XiXiT;
 
-	  % Calculate difference
-	  diff = mu_Xi - mu_X;
+    % Calculate difference
+    diff = mu_Xi - mu_X;
 
-	  % Borrow this matrix and do XiXiT = diff*diff'
-	  XiXiT = diff*diff';
+    % Borrow this matrix and do XiXiT = diff*diff'
+    XiXiT = diff*diff';
 
-	  % Add to Sb scatter matrix - Important to multiply XiXiT with samples of class
-	  Sb = Sb + XiXiT*samples_of_class;
-	end
+    % Add to Sb scatter matrix - Important to multiply XiXiT with samples of class
+    Sb = Sb + XiXiT*samples_of_class;
+  end
 
-	% Find the eigenvectors - by solving the generalized eigenvalue problem: Sb*v = Sw*v*lambda
-  	L = chol(Sw, 'lower');
-	Y = linsolve(L, Sb);
-	Z = Y*inv(L');
-	[V, D] = eig(Z);
+  % Find the eigenvectors - by solving the generalized eigenvalue problem: Sb*v = Sw*v*lambda
+  L = chol(Sw, 'lower');
+  Y = linsolve(L, Sb);
+  Z = Y*inv(L');
+  [V, D] = eig(Z);
 
-	% Sort eigenvectors descending by eigenvalue
-	[D, idx] = sort(diag(D), 1, 'descend');
-	V = V(:,idx);
+  % Sort eigenvectors descending by eigenvalue
+  [D, idx] = sort(diag(D), 1, 'descend');
+  V = V(:,idx);
 
-	% Get components W
-	W = V(:, 1:c);
+  % Get components W
+  W = V(:, 1:c);
   P = W'*X;
 end
