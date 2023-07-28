@@ -1,4 +1,4 @@
-% Principal Component Analysis with cluster filtering
+% Principal Component Analysis
 % Input: X(Data), c(Amount of components)
 % Output: Projected matrix P, Project matrix W, mu(Average vector of X)
 % Example 1: [P, W] = mi.pca(X, c);
