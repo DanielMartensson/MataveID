@@ -1,10 +1,11 @@
 % Principal Component Analysis with cluster filtering
 % Input: X(Data), c(Amount of components)
-% Output: Projected matrix P, Project matrix W
+% Output: Projected matrix P, Project matrix W, mu(Average vector of X)
 % Example 1: [P, W] = mi.pca(X, c);
+% Example 2: [P, W, mu] = mi.pca(X, c);
 % Author: Daniel Mårtensson, 2023 April
 
-function [P, W] = pca(varargin)
+function [P, W, mu] = pca(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -23,7 +24,7 @@ function [P, W] = pca(varargin)
   else
     error('Missing amount of components');
   end
-  
+
   % Average
   mu = mean(X); %cluster_filter(X)
 
@@ -31,14 +32,14 @@ function [P, W] = pca(varargin)
   Z = X - mu;
 
   % Create the covariance
-  Z = cov(Z);
+  Y = cov(Z);
 
   % PCA analysis
-  [~, ~, V] = svd(Z, 0);
+  [~, ~, V] = svd(Y, 0);
 
   % Projection
   W = V(:, 1:c);
-  P = X*W;
+  P = Z*W;
 end
 
 function X = cluster_filter(X)
