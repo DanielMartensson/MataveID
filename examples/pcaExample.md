@@ -2,7 +2,7 @@
 Principal Component Analysis can be used for dimension reduction and projection on maximum variance between classes.
 
 ```matlab
-[P, W] = mi.pca(X, c);
+[P, W, mu] = mi.pca(X, c);
 ```
 ## Principal Component Analysis example
 
