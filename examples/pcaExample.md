@@ -6,7 +6,7 @@ Principal Component Analysis can be used for dimension reduction and projection 
 ```
 ## Principal Component Analysis example
 
-https://github.com/DanielMartensson/MataveID/blob/6d2b1a7026cb5728f7173ebd361abd0549a01df3/examples/pcaExample.m#L1-L60
+https://github.com/DanielMartensson/MataveID/blob/48b6eaf69f061351e910877c131b6d3dde03ff31/examples/pcaExample.m#L1-L60
 
 ![PCA Original Data](../pictures/PCA_Original_Data.png)
 
