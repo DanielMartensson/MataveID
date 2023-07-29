@@ -1,6 +1,6 @@
 % Kernel Principal Component Analysis
 % Input: X(Data), c(Amount of components), kernel_type, kernel_parameters
-% Output: Projected matrix P, Project matrix W, mu(Average vector of X)
+% Output: Kernel matrix K, Projected matrix P, Project matrix W, mu(Average vector of X)
 % Example 1: [K, P, W, mu] = mi.kpca(X, c);
 % Example 2: [K, P, W, mu] = mi.kpca(X, c, kernel_type);
 % Example 3: [K, P, W, mu] = mi.kpca(X, c, kernel_type, kernel_parameters);
