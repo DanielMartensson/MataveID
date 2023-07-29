@@ -57,4 +57,4 @@ case 1
   scatter(X_reconstructed(:, 1), 0*X_reconstructed(:, 1));
 end
 grid on
-title(sprintf('Reconstruction %iD with error %i', c, reconstruction_error), 'FontSize', 20)
+title(sprintf('Reconstruction %iD with error %f', c, reconstruction_error), 'FontSize', 20)
