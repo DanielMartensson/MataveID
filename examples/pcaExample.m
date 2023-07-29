@@ -39,26 +39,22 @@ cmap = jet(length(X));
 scatter3(X(:, 1), X(:, 2), X(:, 3), 50,cmap)
 title('Original 3D data', 'FontSize', 20)
 
-% Do PCA for 3D
-c = 3;
-[P, W] = mi.pca(X, c);
-figure
-scatter3(P(:, 1), P(:, 2), P(:, 3));
-grid on
-title('Dimension transformation to 3D', 'FontSize', 20)
-
-% Do PCA for 2D
+% Do PCA
 c = 2;
 [P, W] = mi.pca(X, c);
-figure
-scatter(P(:, 1), P(:, 2));
-grid on
-title('Dimension reduction to 2D', 'FontSize', 20)
 
-% Do PCA for 1D
-c = 1;
-[P, W] = mi.pca(X, c);
+% Reconstruct
+X_reconstructed = W * P;
+reconstruction_error = norm(X - X_reconstructed, 'fro') / norm(X, 'fro');
+
 figure
-scatter(P(:, 1), 0*P(:, 1));
+switch(c)
+case 3
+  scatter3(X_reconstructed(:, 1), X_reconstructed(:, 2), X_reconstructed(:, 3));
+case 2
+  scatter(X_reconstructed(:, 1), X_reconstructed(:, 2));
+case 1
+  scatter(X_reconstructed(:, 1), 0*X_reconstructed(:, 1));
+end
 grid on
-title('Dimension reduction to 1D', 'FontSize', 20)
+title(sprintf('Reconstruction %iD with error %i', c, reconstruction_error), 'FontSize', 20)
