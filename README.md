@@ -22,6 +22,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
 | `kmeans.m` | Almost complete | Need to have a pratical example |
 | `pca.m` | Almost complete | Need to find a practical example |
+| `kpca.m` | Almost complete | Need to find a practical example |
 | `lda.m` | Almost complete | Need to find a practical example |
 | `ica.m` | Almost complete | Need to find a practical example |
 | `sra.m` | Almost complete | Upload measurement sensor system |
@@ -50,6 +51,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for reducing noise from data
 - PCA for dimension reduction on maximum variance
+- KPCA for dimension reduction on maximum variance for nonlinear data
 - LDA for dimension reduction on maximum distance
 - ICA for separating signals so they are independent from each other
 - SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
