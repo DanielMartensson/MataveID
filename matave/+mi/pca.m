@@ -29,17 +29,14 @@ function [P, W, mu] = pca(varargin)
   mu = mean(X); %cluster_filter(X)
 
   % Center data
-  Z = X - mu;
-
-  % Create the covariance
-  Y = cov(Z);
-
+  Y = X - mu;
+  
   % PCA analysis
-  [~, ~, V] = svd(Y, 0);
+  [U, ~, ~] = svd(Y, 0);
 
   % Projection
-  W = V(:, 1:c);
-  P = Z*W;
+  W = U(:, 1:c);
+  P = W'*Y;
 end
 
 function X = cluster_filter(X)
