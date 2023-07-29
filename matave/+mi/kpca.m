@@ -102,6 +102,6 @@ function K = create_kernel(X, kernel_type, kernel_parameters)
     end
 
     otherwise
-      error('Kernel type does not exist!');
+      error('Kernel type does not exist! Try with sigmoid, linear, polynomial, exponential, gaussian');
     end
 end
