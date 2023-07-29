@@ -27,7 +27,12 @@ X = [-3244 5324 1345;
     -2364 4326 3353;
     658 143 1692];
 
+% Noisy data
 X = [X; 10*randn(10, 3)];
+
+% Remove noise
+y = mi.dbscan(X, 50, 2);
+X = X(y ~= 0, :);
 
 % Plot original data
 cmap = jet(length(X));
@@ -38,7 +43,7 @@ title('Original 3D data', 'FontSize', 20)
 c = 3;
 [P, W] = mi.pca(X, c);
 figure
-scatter3(P(:, 1), P(:, 2), P(:, 3), 50,cmap);
+scatter3(P(:, 1), P(:, 2), P(:, 3));
 grid on
 title('Dimension transformation to 3D', 'FontSize', 20)
 
@@ -46,7 +51,7 @@ title('Dimension transformation to 3D', 'FontSize', 20)
 c = 2;
 [P, W] = mi.pca(X, c);
 figure
-scatter(P(:, 1), P(:, 2), 20,cmap);
+scatter(P(:, 1), P(:, 2));
 grid on
 title('Dimension reduction to 2D', 'FontSize', 20)
 
@@ -54,6 +59,6 @@ title('Dimension reduction to 2D', 'FontSize', 20)
 c = 1;
 [P, W] = mi.pca(X, c);
 figure
-scatter(P(:, 1), 0*P(:, 1), 50,cmap);
+scatter(P(:, 1), 0*P(:, 1));
 grid on
 title('Dimension reduction to 1D', 'FontSize', 20)
