@@ -1,12 +1,12 @@
 % Kernel Principal Component Analysis
 % Input: X(Data), c(Amount of components), kernel_type, kernel_parameters
-% Output: Kernel matrix K, Projected matrix P, Project matrix W, mu(Average vector of X)
-% Example 1: [K, P, W, mu] = mi.kpca(X, c);
-% Example 2: [K, P, W, mu] = mi.kpca(X, c, kernel_type);
-% Example 3: [K, P, W, mu] = mi.kpca(X, c, kernel_type, kernel_parameters);
+% Output: Projected matrix P, Project matrix W, mu(Average vector of X)
+% Example 1: [P, W, mu] = mi.kpca(X, c);
+% Example 2: [P, W, mu] = mi.kpca(X, c, kernel_type);
+% Example 3: [P, W, mu] = mi.kpca(X, c, kernel_type, kernel_parameters);
 % Author: Daniel Mårtensson, 2023 Juli
 
-function [K, P, W, mu] = kpca(varargin)
+function [P, W, mu] = kpca(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -44,12 +44,11 @@ function [K, P, W, mu] = kpca(varargin)
     end
   end
 
-  % Create kernel
+  % Create kernel of X
   K = create_kernel(X, kernel_type, kernel_parameters);
 
   % Do PCA
   [P, W, mu] = mi.pca(K, c);
-
 end
 
 function K = create_kernel(X, kernel_type, kernel_parameters)
