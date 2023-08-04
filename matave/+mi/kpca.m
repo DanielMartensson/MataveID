@@ -45,10 +45,14 @@ function [K, P, W, mu] = kpca(varargin)
   end
 
   % Create kernel of X
+  disp('Creating kernel');
   K = create_kernel(X, kernel_type, kernel_parameters);
+  disp('Done');
 
   % Do PCA
+  disp('Createing PCA of the kernel')
   [P, W, mu] = mi.pca(K, c);
+  disp('Done');
 end
 
 function K = create_kernel(X, kernel_type, kernel_parameters)
