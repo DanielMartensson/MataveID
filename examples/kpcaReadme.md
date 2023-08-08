@@ -3,7 +3,7 @@ Kernel Principal Component Analysis can be used for dimension reduction and proj
 Kernel methods make PCA suitable for nonlinear data. Kernels has proven very good results in nonlinear dimension reduction.
 
 ```matlab
-[P, W, mu] = mi.kpca(X, c, kernel_type, kernel_parameters);
+[P, W] = mi.kpca(X, c, kernel_type, kernel_parameters);
 ```
 ## Kernel Principal Component Analysis example
 
