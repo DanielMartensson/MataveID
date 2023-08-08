@@ -1,12 +1,12 @@
 % Kernel Principal Component Analysis
 % Input: X(Data), c(Amount of components), kernel_type, kernel_parameters
-% Output: Kernel Matrix K, Projected matrix P, Project matrix W, mu(Average vector of X)
-% Example 1: [K, P, W, mu] = mi.kpca(X, c);
-% Example 2: [K, P, W, mu] = mi.kpca(X, c, kernel_type);
-% Example 3: [K, P, W, mu] = mi.kpca(X, c, kernel_type, kernel_parameters);
+% Output: Projected matrix P, Project matrix W
+% Example 1: [P, W] = mi.kpca(X, c);
+% Example 2: [P, W] = mi.kpca(X, c, kernel_type);
+% Example 3: [P, W] = mi.kpca(X, c, kernel_type, kernel_parameters);
 % Author: Daniel Mårtensson, 2023 Juli
 
-function [K, P, W, mu] = kpca(varargin)
+function [P, W, mu] = kpca(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -44,49 +44,38 @@ function [K, P, W, mu] = kpca(varargin)
     end
   end
 
-  % Create kernel of X
+  % Create kernel
   disp('Creating kernel');
   K = create_kernel(X, kernel_type, kernel_parameters);
   disp('Done');
 
   % Do PCA
   disp('Createing PCA of the kernel')
-  [P, W, mu] = mi.pca(K, c);
+  [~, W] = mi.pca(K, c);
+
+  % We projecting X onto W' instead of K onto W'
+  P = W'*X;
   disp('Done');
 end
 
 function K = create_kernel(X, kernel_type, kernel_parameters)
-  % Get the rows of X
-  m = size(X, 1);
-
-  % Create empty kernel
-  K = zeros(m, m);
-
   % Select kernel type
   switch kernel_type
     case 'gaussian'
+    % Compute the euclidean distanses
+    D = sqrt(distEucSq(X, X));
     sigma = kernel_parameters(1);
-    for i = 1:m
-        for j = 1:m
-            K(i, j) = exp(-norm(X(i, :) - X(j, :))^2 / (2 * sigma^2));
-        end
-    end
+    K = exp(-D.^2 / (2 * sigma^2));
 
     case 'exponential'
+    % Compute the euclidean distanses
+    D = sqrt(distEucSq(X, X));
     sigma = kernel_parameters(1);
-    for i = 1:m
-        for j = 1:m
-             K(i, j) = exp(-norm(X(i, :) - X(j, :)) / (2 * sigma^2));
-        end
-    end
+    K = exp(-D / (2 * sigma^2));
 
     case 'polynomial'
     degree = kernel_parameters(1);
-    for i = 1:m
-        for j = 1:m
-            K(i, j) = (dot(X(i, :), X(j, :)) + 1)^degree;
-        end
-    end
+    K = (X*X').^degree;
 
     case 'linear'
     K = X * X';
@@ -94,17 +83,22 @@ function K = create_kernel(X, kernel_type, kernel_parameters)
     case 'sigmoid'
     alpha = kernel_parameters(1);
     beta = kernel_parameters(2);
-    K = tanh(alpha * X' * X + beta);
+    K = tanh(alpha * X * X' + beta);
 
     case 'rbf'
+    % Compute the euclidean distanses
+    D = sqrt(distEucSq(X, X));
     gamma = kernel_parameters(1);
-    for i = 1:m
-        for j = 1:m
-            K(i, j) = exp(-gamma * norm(X(i, :) - X(j, :))^2);
-        end
-    end
+    K = exp(-gamma*D.^2);
 
     otherwise
-      error('Kernel type does not exist! Try with sigmoid, linear, polynomial, exponential, gaussian');
+      error('Kernel type does not exist!');
     end
+end
+
+function D = distEucSq(X, Y)
+  Yt = Y';
+  XX = sum(X.*X,2);
+  YY = sum(Yt.*Yt,1);
+  D = bsxfun(@plus,XX,YY)-2*X*Yt;
 end
