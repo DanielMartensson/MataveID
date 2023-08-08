@@ -43,20 +43,20 @@ title('Original 3D data', 'FontSize', 20)
 c = 2;
 kernel_type = 'polynomial';
 kernel_parameters = [1, 2];
-[K, P, W] = mi.kpca(X, c, kernel_type, kernel_parameters);
+[P, W] = mi.kpca(X, c, kernel_type, kernel_parameters);
 
 % Reconstruct
-K_reconstructed = W * P;
-reconstruction_error = norm(K - K_reconstructed, 'fro') / norm(K, 'fro')
+X_reconstructed = W * P;
+reconstruction_error = norm(X - X_reconstructed, 'fro') / norm(X, 'fro')
 
 figure
 switch(c)
 case 3
-  scatter3(K_reconstructed(:, 1), K_reconstructed(:, 2), K_reconstructed(:, 3));
+  scatter3(X_reconstructed(:, 1), X_reconstructed(:, 2), X_reconstructed(:, 3));
 case 2
-  scatter(K_reconstructed(:, 1), K_reconstructed(:, 2));
+  scatter(X_reconstructed(:, 1), X_reconstructed(:, 2));
 case 1
-  scatter(K_reconstructed(:, 1), 0*K_reconstructed(:, 1));
+  scatter(X_reconstructed(:, 1), 0*X_reconstructed(:, 1));
 end
 grid on
 title(sprintf('Reconstruction %iD with error %f', c, reconstruction_error), 'FontSize', 20)
