@@ -38,7 +38,7 @@ function [P,W] = lda(varargin)
   mu_X = mean(X, 2);
 
   % Count classes
-  amount_of_classes = y(end) + 1;
+  amount_of_classes = max(y);
 
   % Create scatter matrices Sw and Sb
   Sw = zeros(row, row);
@@ -47,7 +47,7 @@ function [P,W] = lda(varargin)
   % How many samples of each class
   samples_of_each_class = zeros(1, amount_of_classes);
   for i = 1:column
-    samples_of_each_class(y(i) + 1) = samples_of_each_class(y(i) + 1) + 1; % Remove +1 if you are using C
+    samples_of_each_class(y(i)) = samples_of_each_class(y(i)) + 1;
   end
 
   % Iterate all classes
@@ -87,11 +87,8 @@ function [P,W] = lda(varargin)
     Sb = Sb + XiXiT*samples_of_class;
   end
 
-  % Find the eigenvectors - by solving the generalized eigenvalue problem: Sb*v = Sw*v*lambda
-  L = chol(Sw, 'lower');
-  Y = linsolve(L, Sb);
-  Z = Y*inv(L');
-  [V, D] = eig(Z);
+  % Do eigendecomposition
+  [V, D] = eig(Sb, Sw);
 
   % Sort eigenvectors descending by eigenvalue
   [D, idx] = sort(diag(D), 1, 'descend');
