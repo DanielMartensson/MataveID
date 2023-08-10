@@ -90,6 +90,9 @@ function [P,W] = lda(varargin)
   % Do eigendecomposition
   [V, D] = eig(Sb, Sw);
 
+  % Compute the rank
+  fprintf('An optimal dimension reduction parameter for KPCA is cpca -> %i\n', rank(Sw));
+
   % Sort eigenvectors descending by eigenvalue
   [D, idx] = sort(diag(D), 1, 'descend');
   V = V(:,idx);
