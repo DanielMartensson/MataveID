@@ -91,7 +91,7 @@ function [P,W] = lda(varargin)
   [V, D] = eig(Sb, Sw);
 
   % Compute the rank
-  fprintf('The maximal rank of the dimension reduction is: %i\n', rank(Sw));
+  fprintf('The maximal rank of the LDA dimension reduction is: %i\n', rank(Sw));
 
   % Sort eigenvectors descending by eigenvalue
   [D, idx] = sort(diag(D), 1, 'descend');
