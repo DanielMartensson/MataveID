@@ -91,7 +91,7 @@ function [P,W] = lda(varargin)
   [V, D] = eig(Sb, Sw);
 
   % Compute the rank
-  fprintf('An optimal dimension reduction parameter for KPCA is cpca -> %i\n', rank(Sw));
+  fprintf('If PCA/KPCA has been used before: An optimal dimension reduction parameter for KPCA is cpca -> %i\n', rank(Sw));
 
   % Sort eigenvectors descending by eigenvalue
   [D, idx] = sort(diag(D), 1, 'descend');
