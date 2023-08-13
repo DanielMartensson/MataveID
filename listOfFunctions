@@ -27,3 +27,4 @@ lsvm.m
 kmeans.m
 dbscan.m
 kpca.m
+fisherfaces.m
