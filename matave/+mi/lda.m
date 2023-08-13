@@ -92,7 +92,7 @@ function [P,W] = lda(varargin)
 
   % Sort eigenvectors descending by eigenvalue
   [D, idx] = sort(diag(D), 1, 'descend');
-  V = V(:,idx);
+  V = real(V(:,idx));
 
   % Get components W
   W = V(:, 1:c);
