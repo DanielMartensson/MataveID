@@ -11,10 +11,10 @@ y = sign(model_w*imagevector + model_b)
 Where the `model_w` and `model_b` are matrix and vector from the Support Vector Machine algorithm. The `imagevector` is your unknown data. 
 It does not necessary must be an image, is can be regular unknwon data as well.
 
-`y` is a vector that holds `1` or `-1`. The index that holds `1` is the class ID of your unknwon `imagevector` data.
+`y` is a vector that holds `1` or `-1`. The index that holds `1` is the class ID of your unknwon `imagevector` data. To run this algorithm, just type
 
 ```matlab
-mi.fisherfaces
+>> mi.fisherfaces
 ```
 
 ## Example Fisherfaces
