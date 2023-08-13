@@ -6,7 +6,7 @@ instead of regular Principal Component Analysis. Second, I'm using Support Vecto
 The goal with this algorithm is to return a model:
 
 ```matlab
-y = y = sign(model_w*imagevector + model_b)
+y = sign(model_w*imagevector + model_b)
 ```
 Where the `model_w` and `model_b` are matrix and vector from the Support Vector Machine algorithm. The `imagevector` is your unknown data. 
 It does not necessary must be an image, is can be regular unknwon data as well.
