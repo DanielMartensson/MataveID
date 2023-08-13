@@ -1,6 +1,6 @@
 # Fisherfaces
 This is a technique that can classify images or raw data from `.pgm` files in the formats `P2` and `P5`.
-Fisherfaces was invented in 1997, but this algorithm, I have made some major improvments. First, I'm using Kernel Principal Component Analysis,
+Fisherfaces was invented in 1997, but this algorithm, I have made some major improvements. First, I'm using Kernel Principal Component Analysis,
 instead of regular Principal Component Analysis. Second, I'm using Support Vector Machine instead of K-Nearest Neighbor.
 
 The goal with this algorithm is to return a model:
