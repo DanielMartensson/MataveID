@@ -15,6 +15,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `oe.m` | Complete | Nothing to do here |
 | `armax.m` | Complete | Nothing to do here |
 | `lsvm.m`  | Complete | Nothing to do here |
+| `fisherfaces.c` | Complete | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
