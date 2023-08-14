@@ -52,7 +52,7 @@ Enter choice number:
 ```
 
 ### Step 3
-After you have choosen your pooling settings, it's time to generate select the option `3. Generate PGM data from images`.
+After you have choosen your pooling settings, it's time to generate `.pgm` files. Select the option `3. Generate PGM data from images`.
 This will turn all images into `.pgm` files.
 
 ```matlab
