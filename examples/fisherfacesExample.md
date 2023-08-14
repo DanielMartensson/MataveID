@@ -111,10 +111,10 @@ For large values of C, the optimization will choose a smaller-margin hyperplane 
 Conversely, a very small value of C will cause the optimizer to look for a larger-margin separating hyperplane, even if that hyperplane misclassifies more points. 
 For very tiny values of C, you should get misclassified examples, often even if your training data is linearly separable.
 
-The `lambda` is a regularization parameter. The drawbacks with Hildreth's QP-solver is that it's slow ànd not so accurate compared to other modern QP-solvers.
+The `lambda` is a regularization parameter. The drawbacks with Hildreth's QP-solver is that it's slow(iterative algorithm) and not so accurate compared to other modern QP-solvers.
 The adventage about Hildreth's QP solver is that it can suits embedded systems and easy to use. 
 To make Hildreth's QP-solver solve the probelm very quick, just add a small number called `lambda` and it will do the same job as advanced QP-solvers.
-Don't have to large regularization `lambda`, it will cause lower accuracy.
+Don't have to large regularization parameter `lambda`, it will cause lower accuracy.
 
 ```matlab
 Enter choice number: 5
