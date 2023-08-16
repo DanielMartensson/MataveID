@@ -6,12 +6,12 @@ instead of regular Principal Component Analysis. Second, I'm using Support Vecto
 The goal with this algorithm is to return a model:
 
 ```matlab
-y = sign(model_w*imagevector + model_b)
+x = model_w*image_vector + model_b
+p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))
 ```
-Where the `model_w` and `model_b` are matrix and vector from the Support Vector Machine algorithm. The `imagevector` is your unknown data. 
-It does not necessary must be an image, is can be regular unknwon data as well.
+Where the `model_w` and `model_b` are matrix and vector from the Support Vector Machine algorithm and `A` and `B` are parameters for the logistic regression. The `image_vector` is your unknown data. It does not necessary must be an image, is can be regular unknwon data as well.
 
-`y` is a vector that holds `1` or `-1`. The index that holds `1` is the class ID of your unknwon `imagevector` data. To run this algorithm, just type
+To run this algorithm, just type
 
 ```matlab
 >> mi.fisherfaces
@@ -141,14 +141,14 @@ SVM OK: yes. Accuracy: 1.000000. Class: 14
 SVM OK: yes. Accuracy: 1.000000. Class: 15
 Done with SVM
 Multiply model_w = w * W
-y = sign(model_w*imagevector + model_b) is our model
-The image vector must be in row-major, not column-major
+x = model_w*image_vector + model_b is our model
+p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))
+The image_vector must be in row-major, not column-major
 e.g the image/data you want to classify is going to be in row-wise, not column-wise.
-The model will give us a vector y that contains -1 and 1.
-Find the index that holds the value 1, that index is the class ID.
-If you got multiple indexes who has number 1, due to low accuracy, then you need to use probability to determine th
-e right class ID
-Saving model_w and model_b inside fisherfaces_svm.mat
+The model will give us a vector x that contains scores.
+The scores x are feed into a sigmoid function that computes the propability vector p(x)
+The index of the highest propability in vector p(x) is the class ID
+Saving model_w, model_b and parameters A and B inside fisherfaces_svm.mat
 Done
 >>
 ```
