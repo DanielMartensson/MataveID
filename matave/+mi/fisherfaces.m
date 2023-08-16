@@ -408,28 +408,28 @@ end
 
 function P = pooling(image, pooling_method, p)
   % Size of A
-	[m, n] = size(image);
+  [m, n] = size(image);
 
-	% P size
-	h = floor(m / p);
-	w = floor(n / p);
-	P = zeros(h, w);
+  % P size
+  h = floor(m / p);
+  w = floor(n / p);
+  P = zeros(h, w);
 
-	% Minimal case
-	a = mean(image(:));
-	b = max(image(:));
+  % Minimal case
+  a = mean(image(:));
+  b = max(image(:));
 
-	% Process
-	for i = 1:h
-		for j = 1:w
-			% Cut
-			start_row = (i - 1) * p + 1;
-			stop_row = i * p;
-			start_column = (j - 1) * p + 1;
-			stop_column = j * p;
-			B = image(start_row:stop_row, start_column:stop_column);
+  % Process
+  for i = 1:h
+    for j = 1:w
+      % Cut
+      start_row = (i - 1) * p + 1;
+      stop_row = i * p;
+      start_column = (j - 1) * p + 1;
+      stop_column = j * p;
+      B = image(start_row:stop_row, start_column:stop_column);
 
-			% Do pooling
+      % Do pooling
       switch(pooling_method)
       case 1
         P(i, j) = max(B(:)); % Max pooling
@@ -440,6 +440,6 @@ function P = pooling(image, pooling_method, p)
       otherwise
         error('Unknown pooling method');
       end
-		end
-	end
+    end
+  end
 end
