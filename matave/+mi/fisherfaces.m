@@ -1,3 +1,19 @@
+% Fisherfaces
+% This algorithm can create a model that can classify images or regular data
+% This algorithm is using:
+% Pooling -> Kernel Principal Component Analysis -> Linear Discriminant Analysis -> Support Vector Machine -> Logistic regression
+% You will recieve a model inside fisherfaces_svm.mat file
+% It contains
+% - Weight matrix model_W [m*n]
+% - Bias vector model_b [m]
+% - Parameter vector A [m]
+% - Parameter vector B [m]
+% This Fisherfaces will give you the model and all you have to do is to multiply a vector image_vector [n] to get the class ID:
+% x = model_w*image_vector + model_b
+% p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))));
+% Where p(x) is a propability vector.
+% The index of the highest propability of vector p(x) is the class ID of image_vector [n]
+% Author: Daniel Mårtensson, Augusti 16 2023
 
 function fisherfaces()
   % Salut
@@ -33,7 +49,7 @@ function fisherfaces_train_svm_model()
 
   % Load data
   disp('Loading fisherfaces_data.mat');
-  load('fisherfaces_data.mat', 'class_id');
+  load('fisherfaces_data.mat', 'images', 'class_id');
   disp('Done');
 
   % Ask the user about C
@@ -78,17 +94,46 @@ function fisherfaces_train_svm_model()
 
   disp('Done with SVM')
   disp('Multiply model_w = w * W')
-	disp('y = sign(model_w*imagevector + model_b) is our model')
-  disp('The image vector must be in row-major, not column-major');
+	disp('x = model_w*image_vector + model_b is our model')
+  disp('p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))');
+  disp('The image_vector must be in row-major, not column-major');
   disp('e.g the image/data you want to classify is going to be in row-wise, not column-wise.')
-	disp('The model will give us a vector y that contains -1 and 1.')
-	disp('Find the index that holds the value 1, that index is the class ID.')
-	disp('If you got multiple indexes who has number 1, due to low accuracy, then you need to use probability to determine the right class ID')
+	disp('The model will give us a vector x that contains scores.')
+	disp('The scores x are feed into a sigmoid function that computes the propability vector p(x)')
+	disp('The index of the highest propability in vector p(x) is the class ID')
+
+  % Compute model
   model_w = w*W;
 
+  % Compute the scores and labels
+  X = model_w*images + model_b;
+  Y = sign(X);
+
+  % Create matrix for 2 values, A and B
+  AB = zeros(classes, 2);
+
+  % Use Platt's method as logistic regression
+  x0 = [0; 0];
+  for i = 1:classes
+    % Extract one row of the labels
+    y = Y(i, :);
+    x = X(i, :);
+
+    % Create the sigmoid with -1 to 1
+    sigmoid = @(parameters) 1./(1 + exp(-parameters(1).*x - parameters(2)));
+
+    % Create Platt's loss
+    platt_loss = @(parameters) 1/n*sum((sigmoid(parameters) - (y == 1)).^2);
+
+    % Optimize and find the parameters A and B
+    parameters = mc.fminsearch(platt_loss, x0);
+    A(i) = parameters(1);
+    B(i) = parameters(2);
+  end
+
   % Now we have our model. Compute the ID
-  disp('Saving model_w and model_b inside fisherfaces_svm.mat');
-  save('fisherfaces_svm.mat', 'model_w', 'model_b');
+  disp('Saving model_w, model_b and parameters A and B inside fisherfaces_svm.mat');
+  save('fisherfaces_svm.mat', 'model_w', 'model_b', 'A', 'B');
   disp('Done');
 end
 
