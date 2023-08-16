@@ -11,7 +11,7 @@
 % This Fisherfaces will give you the model and all you have to do is to multiply a vector image_vector [n] to get the class ID:
 % x = model_w*image_vector + model_b
 % p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))
-% Where p(x) is a propability vector.
+% Where p(x) is a propability vector
 % The index of the highest propability of vector p(x) is the class ID of image_vector [n]
 % Author: Daniel Mårtensson, Augusti 16 2023
 
