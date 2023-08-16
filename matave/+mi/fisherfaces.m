@@ -112,7 +112,7 @@ function fisherfaces_train_svm_model()
   % Create matrix for 2 values, A and B
   AB = zeros(classes, 2);
 
-  % Use Platt's method as logistic regression
+  % Use Platt scaling as logistic regression
   x0 = [0; 0];
   for i = 1:classes
     % Extract one row of the labels
@@ -122,13 +122,20 @@ function fisherfaces_train_svm_model()
     % Create the sigmoid with -1 to 1
     sigmoid = @(parameters) 1./(1 + exp(-parameters(1).*x - parameters(2)));
 
-    % Create Platt's loss
+    % Create Platt loss
     platt_loss = @(parameters) 1/n*sum((sigmoid(parameters) - (y == 1)).^2);
 
     % Optimize and find the parameters A and B
-    parameters = mc.fminsearch(platt_loss, x0);
+    [parameters, ~, flag, iterations]  = mc.fminsearch(platt_loss, x0);
     A(i) = parameters(1);
     B(i) = parameters(2);
+
+    % Print status
+    if(flag)
+      fprintf('Logistic regression output for SVM was OK for class %i. Iterations(%i)\n', i, iterations);
+    else
+      fprintf('Logistic regression output for SVM failed for class %i. Iterations(%i)\n', i, iterations);
+    end
   end
 
   % Now we have our model. Compute the ID
