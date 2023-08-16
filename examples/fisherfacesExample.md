@@ -148,6 +148,21 @@ e.g the image/data you want to classify is going to be in row-wise, not column-w
 The model will give us a vector x that contains scores.
 The scores x are feed into a sigmoid function that computes the propability vector p(x)
 The index of the highest propability in vector p(x) is the class ID
+Logistic regression output for SVM was OK for class 1. Iterations(10)
+Logistic regression output for SVM was OK for class 2. Iterations(10)
+Logistic regression output for SVM was OK for class 3. Iterations(10)
+Logistic regression output for SVM was OK for class 4. Iterations(9)
+Logistic regression output for SVM was OK for class 5. Iterations(9)
+Logistic regression output for SVM was OK for class 6. Iterations(10)
+Logistic regression output for SVM was OK for class 7. Iterations(11)
+Logistic regression output for SVM was OK for class 8. Iterations(11)
+Logistic regression output for SVM was OK for class 9. Iterations(11)
+Logistic regression output for SVM was OK for class 10. Iterations(11)
+Logistic regression output for SVM was OK for class 11. Iterations(9)
+Logistic regression output for SVM was OK for class 12. Iterations(10)
+Logistic regression output for SVM was OK for class 13. Iterations(11)
+Logistic regression output for SVM was OK for class 14. Iterations(9)
+Logistic regression output for SVM was OK for class 15. Iterations(11)
 Saving model_w, model_b and parameters A and B inside fisherfaces_svm.mat
 Done
 >>
