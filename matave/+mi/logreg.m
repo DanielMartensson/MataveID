@@ -44,10 +44,10 @@ function [a, b, flag, iterations] = logreg(varargin)
   switch(function_type)
   case 'sigmoid'
     reg_function = @(parameters) 1./(1 + exp(-parameters(1)*x - parameters(2)));
-    loss_function = @(parameters) 1/n*sum((reg_function(parameters) - (y == 1)).^2);
+    loss_function = @(parameters) 1/n*sum(abs(reg_function(parameters) - (y == 1)));
   case 'tanh'
     reg_function = @(parameters) (exp(parameters(1)*x + parameters(2)) - exp(-parameters(1)*x - parameters(2)))./(exp(parameters(1)*x + parameters(2)) + exp(-parameters(1)*x - parameters(2)));
-    loss_function = @(parameters) 1/n*sum((reg_function(parameters) - y).^2);
+    loss_function = @(parameters) 1/n*sum(abs(reg_function(parameters) - y));
   end
 
   % Optimize and find the parameters a and a
