@@ -1,19 +1,18 @@
 % Fisherfaces
-% This algorithm can create a model that can classify images or regular data
+% This algorithm can create a neural network model that can classify images or regular data
 % This algorithm is using:
 % Pooling -> Kernel Principal Component Analysis -> Linear Discriminant Analysis -> Support Vector Machine -> Logistic regression
-% You will recieve a model inside fisherfaces_svm.mat file
+% You will recieve a model inside fisherfaces_model.mat file
 % It contains
 % - Weight matrix model_W [m*n]
 % - Bias vector model_b [m]
-% - Parameter vector A [m]
-% - Parameter vector B [m]
+% - Activation function parameter vector A [m]
+% - Activation function parameter vector B [m]
 % This Fisherfaces will give you the model and all you have to do is to multiply a vector image_vector [n] to get the class ID:
-% x = model_w*image_vector + model_b
-% p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))
-% Where p(x) is a propability vector
-% The index of the highest propability of vector p(x) is the class ID of image_vector [n]
-% Author: Daniel Mårtensson, Augusti 16 2023
+% x = sigma(model_w*image_vector + model_b)
+% Where sigma is a activation function that contains A and B vectors.
+% The index of the highest number inside vector x is the class ID.
+% Author: Daniel Mårtensson, Augusti 17 2023
 
 function fisherfaces()
   % Salut
@@ -22,7 +21,7 @@ function fisherfaces()
   disp('Notice that it exist an equivalent ANSI C code for this inside CControl');
 
   % Ask the user what it want to do
-  choice = input("What do you want to do?\n1. Collect data\n2. Train projection matrix\n3. Generate PGM data from images\n4. Check pooling\n5. Train SVM model\n6. Remove outliers from collected data\nEnter choice number: ");
+  choice = input("What do you want to do?\n1. Collect data\n2. Train projection matrix\n3. Generate PGM data from images\n4. Check pooling\n5. Train neural network model\n6. Remove outliers from collected data\nEnter choice number: ");
 
   % Switch statement for the choices
   switch(choice)
@@ -35,7 +34,7 @@ function fisherfaces()
   case 4
     fisherfaces_check_pooling();
   case 5
-    fisherfaces_train_svm_model();
+    fisherfaces_train_neural_network_model();
   case 6
     fisherfaces_remove_outliers();
   otherwise
@@ -86,7 +85,7 @@ function fisherfaces_remove_outliers()
   disp('Done');
 end
 
-function fisherfaces_train_svm_model()
+function fisherfaces_train_neural_network_model()
   % Load data
   disp('Load fisherfaces_projection.mat');
   load('fisherfaces_projection.mat', 'P', 'W');
@@ -97,95 +96,22 @@ function fisherfaces_train_svm_model()
   load('fisherfaces_data.mat', 'images', 'class_id');
   disp('Done');
 
-  % Ask the user about C
+  % Ask the user about parameters
+  disp('Train a neural network with Support Vector Machine');
   C = input('What type of C value do you want for SVM: ');
-
-  % Ask the user about lambda
   lambda = input('What type of lambda(regularization) value do you want for SVM: ');
+  function_type = input('Type in what type of activation function you want to use(sigmoid, tanh, ReLU, Leaky ReLU): ', 's');
 
-  % Create the y vector
-  classes = max(class_id);
+  % Create neural network - Turn P into transpose so it will work with SVM
+  [weight, bias, A, B] = mi.nn(P', class_id, C, lambda, function_type);
 
-  % Find the size of P
-  [m, n] = size(P);
-
-  % Create model
-  w = [];
-  model_b = [];
-
-  % Create one SVM model per class
-  for i = 1:classes
-    % Create a -1 labels array
-    labels = linspace(-1, -1, n);
-
-    % Fill y with 1 for a specific class
-    index = find(i == class_id);
-    labels(index) = 1;
-
-    % Do linear SVM
-    [slope, b, accuracy, solution] = mi.lsvm(P', labels', C, lambda);
-
-    % Status
-    if(solution)
-        fprintf('SVM OK: %s. Accuracy: %f. Class: %i\n', 'yes', accuracy, i);
-    else
-        fprintf('SVM OK: %s. Accuracy: %f. Class: %i\n', 'no', accuracy, i);
-    end
-
-    % Save model
-    w = [w; slope];
-    model_b = [model_b; b];
-  end
-
-  disp('Done with SVM')
-  disp('Multiply model_w = w * W')
-	disp('x = model_w*image_vector + model_b is our model')
-  disp('p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))');
-  disp('The image_vector must be in row-major, not column-major');
-  disp('e.g the image/data you want to classify is going to be in row-wise, not column-wise.')
-	disp('The model will give us a vector x that contains scores.')
-	disp('The scores x are feed into a sigmoid function that computes the propability vector p(x)')
-	disp('The index of the highest propability in vector p(x) is the class ID')
-
-  % Compute model
-  model_w = w*W;
-
-  % Compute the scores and labels
-  X = model_w*images + model_b;
-  Y = sign(X);
-
-  % Create matrix for 2 values, A and B
-  AB = zeros(classes, 2);
-
-  % Use Platt scaling as logistic regression
-  x0 = [0; 0];
-  for i = 1:classes
-    % Extract one row of the labels
-    y = Y(i, :);
-    x = X(i, :);
-
-    % Create the sigmoid with -1 to 1
-    sigmoid = @(parameters) 1./(1 + exp(-parameters(1).*x - parameters(2)));
-
-    % Create Platt loss
-    platt_loss = @(parameters) 1/n*sum((sigmoid(parameters) - (y == 1)).^2);
-
-    % Optimize and find the parameters A and B
-    [parameters, ~, flag, iterations]  = mc.fminsearch(platt_loss, x0);
-    A(i) = parameters(1);
-    B(i) = parameters(2);
-
-    % Print status
-    if(flag)
-      fprintf('Logistic regression output for SVM was OK for class %i. Iterations(%i)\n', i, iterations);
-    else
-      fprintf('Logistic regression output for SVM failed for class %i. Iterations(%i)\n', i, iterations);
-    end
-  end
+  % Create models
+  model_w = weight*W;
+  model_b = bias;
 
   % Now we have our model. Compute the ID
-  disp('Saving model_w, model_b and parameters A and B inside fisherfaces_svm.mat');
-  save('fisherfaces_svm.mat', 'model_w', 'model_b', 'A', 'B');
+  disp('Saving model_w, model_b, activation parameter A, activation parameter B and function type inside fisherfaces_model.mat');
+  save('fisherfaces_model.mat', 'model_w', 'model_b', 'A', 'B', 'function_type');
   disp('Done');
 end
 
@@ -455,7 +381,6 @@ function fisherfaces_collect_data()
   disp('Saving fisherfaces_data.mat');
   save('fisherfaces_data.mat', 'images', 'class_id');
   disp('Done');
-
 end
 
 function P = pooling(image, pooling_method, p)
