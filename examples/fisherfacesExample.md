@@ -29,6 +29,7 @@ What do you want to do?
 3. Generate PGM data from images
 4. Check pooling
 5. Train SVM model
+6. Remove outliers from collected data
 Enter choice number:
 ```
 
@@ -60,7 +61,20 @@ Enter choice number: 3
 Enter the folder path of the sub folders: C:\Users\dmn\GitHub\CControl\src\CControl\Documents\Data\yale
 ```
 
-### Step 4
+### Step 4 (Optional)
+Sometimes it can be good to remove outliers from the data because your data is going to be analyzed with Kernel Principal Component Analysis.
+Here I'm using `DBscan` to analyze how many outliers there are. If you don't want to remove outliers or does not belive that your data contains
+outliers, then you can avoid this step.
+
+```matlab
+Enter choice number: 6
+Loading fisherfaces_data.mat
+Done
+Remove outliers with DBscan
+Give the minimum epsilon for your data:
+```
+
+### Step 5
 Not it's time to select the option `1. Collect data`.
 This option ask you the desired pooling settings.
 
@@ -76,7 +90,7 @@ Enter choice number: 2
 What pooling size do you want to use? 8
 ```
 
-### Step 5
+### Step 6
 Next step is to select the option `2. Train projection matrix`. This option will ask you about Kernel Principal Component Analysis. 
 For `Yale` data set, I like to use `KPCA` value 100. You can use a large number, but not to large so you will get garbage values.
 A good rule of thump is not use more than total images you have in your folders.
@@ -101,7 +115,7 @@ Createing PCA of the kernel
 The size of the matrix is 1200x1200. Do you want to apply PCA onto it? 1 = Yes, 0 = No: 1
 ```
 
-### Step 6
+### Step 7
 Now we are going to create the model by using Support Vector Machine. I have written the Support Vector Machine algorithm from scratch by using a Quadratic
 Programming solver and I'm using Hildreth's QP algorthm. Hildreth's QP-solver was invented in 1957. Notice that it exist also an equivalent C code for the Support Vector Machine and QP-solver in CControl.
 
