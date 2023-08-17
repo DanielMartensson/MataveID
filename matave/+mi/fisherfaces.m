@@ -22,7 +22,7 @@ function fisherfaces()
   disp('Notice that it exist an equivalent ANSI C code for this inside CControl');
 
   % Ask the user what it want to do
-  choice = input("What do you want to do?\n1. Collect data\n2. Train projection matrix\n3. Generate PGM data from images\n4. Check pooling\n5. Train SVM model\nEnter choice number: ");
+  choice = input("What do you want to do?\n1. Collect data\n2. Train projection matrix\n3. Generate PGM data from images\n4. Check pooling\n5. Train SVM model\n6. Remove outliers from collected data\nEnter choice number: ");
 
   % Switch statement for the choices
   switch(choice)
@@ -36,9 +36,54 @@ function fisherfaces()
     fisherfaces_check_pooling();
   case 5
     fisherfaces_train_svm_model();
+  case 6
+    fisherfaces_remove_outliers();
   otherwise
     disp('Unknown choice - Exit')
   end
+end
+
+function fisherfaces_remove_outliers()
+  disp('Loading fisherfaces_data.mat');
+  load('fisherfaces_data.mat', 'images', 'class_id');
+  disp('Done');
+
+  % Use DBSCAN to detect outliers
+  disp('Remove outliers with DBscan');
+  epsilon = input('Give the minimum epsilon for your data: ');
+  min_pts = input('Give the minimum points for your data: ');
+  idx = mi.dbscan(images, epsilon, min_pts);
+
+  % Tell how many outliers it was
+  choice = 2;
+  while(choice == 2)
+    amount_of_outliers = length(find(idx == 0));
+    total_clusters = max(idx);
+    choice = input(sprintf('Total outliers detected was %i. Total clusters of DBscan was %i. What do you want to do next?\n1. Remove them\n2. Change DBscan settings\nEnter choice number: ', amount_of_outliers, total_clusters));
+    switch(choice)
+      case 1
+        % Outliers are at idx
+        images_clean = images(idx ~= 0, :);
+
+        % Find the mean of images_clean
+        mu = mean(images_clean);
+
+        % Replace all the outliers with mu
+        images(idx == 0, :) = repmat(mu, amount_of_outliers, 1);
+      case 2
+        epsilon = input('Give the minimum epsilon for your data: ');
+        min_pts = input('Give the minimum points for your data: ');
+        idx = mi.dbscan(images, epsilon, min_pts);
+      otherwise
+        disp('Quit. Did not save anything new. Orginal data remains');
+        return;
+    end
+  end
+
+  % Save
+  disp('Saving fisherfaces_data.mat');
+  save('fisherfaces_data.mat', 'images', 'class_id');
+  disp('Done');
 end
 
 function fisherfaces_train_svm_model()
