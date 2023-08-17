@@ -110,7 +110,7 @@ function fisherfaces_train_neural_network_model()
   model_b = bias;
 
   % Now we have our model. Compute the ID
-  disp('Saving model_w, model_b, activation parameter A, activation parameter B and function type inside fisherfaces_model.mat');
+  disp('Saving model_w, model_b, activation parameter vectors A and B and function type inside fisherfaces_model.mat');
   save('fisherfaces_model.mat', 'model_w', 'model_b', 'A', 'B', 'function_type');
   disp('Done');
 end
