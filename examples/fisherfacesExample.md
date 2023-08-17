@@ -63,7 +63,7 @@ Enter the folder path of the sub folders: C:\Users\dmn\GitHub\CControl\src\CCont
 
 ### Step 4 (Optional)
 Sometimes it can be good to remove outliers from the data because your data is going to be analyzed with Kernel Principal Component Analysis.
-Here I'm using `DBscan` to analyze how many outliers there are. If you don't want to remove outliers or does not believe that your data contains
+Option `6. Remove outliers from collected data` is using `DBscan` to analyze how many outliers there are. If you don't want to remove outliers or does not believe that your data contains
 outliers, then you can avoid this step.
 
 ```matlab
