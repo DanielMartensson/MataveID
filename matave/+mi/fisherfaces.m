@@ -75,7 +75,7 @@ function fisherfaces_remove_outliers()
         min_pts = input('Give the minimum points for your data: ');
         idx = mi.dbscan(images, epsilon, min_pts);
       otherwise
-        disp('Quit. Did not save anything new. Orginal data remains');
+        disp('Quit. Did not save anything new. Original data remains');
         return;
     end
   end
