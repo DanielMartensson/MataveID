@@ -5,9 +5,9 @@ clc
 
 % Logistic data
 x = [-0.1, -0.2, -0.3, -0.311, -0.213, -0.133, -0.231, -0.4215, 0.13, 0.23, 0.19, 0.9, 1.2, 1.5, 0.423, 0.561];
-y = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1];
 
 % Create the parameters a and b for tanh
+y = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1];
 [a, b, flag, iterations] = mi.logreg(x, y, 'tanh');
 
 % Plot the logistic function: tanh
@@ -18,6 +18,7 @@ title('tanh function', 'FontSize', 20)
 grid on
 
 % Create the parameters a and b for sigmoid
+y = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1];
 [a, b, flag, iterations] = mi.logreg(x, y, 'sigmoid');
 
 % Plot the logistic function: sigmoid
