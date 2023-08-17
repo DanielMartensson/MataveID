@@ -1,15 +1,15 @@
 # Fisherfaces
-This is a technique that can classify images or raw data from `.pgm` files in the formats `P2` and `P5`.
+This is a technique that can classify images or raw data from `.pgm` files in the formats `P2` or `P5`.
 Fisherfaces was invented in 1997, but this algorithm, I have made some major improvements. First, I'm using Kernel Principal Component Analysis,
-instead of regular Principal Component Analysis. Second, I'm using Support Vector Machine instead of K-Nearest Neighbor.
+instead of regular Principal Component Analysis. Second, I'm building a neural network by using Support Vector Machine instead of only using K-Nearest Neighbor as classifier.
 
 The goal with this algorithm is to return a model:
 
 ```matlab
-x = model_w*image_vector + model_b
-p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))
+x = sigma(model_w*image_vector + model_b, A, B)
 ```
-Where the `model_w` and `model_b` are matrix and vector from the Support Vector Machine algorithm and `A` and `B` are parameters for the logistic regression. The `image_vector` is your unknown data. It does not necessary must be an image, is can be regular unknwon data as well.
+Where the `model_w` and `model_b` are matrix and vector for the neural network and `A` and `B` are parameter vectors for the activation function `sigma`.
+The index of the highest value of `x` is the class ID of the unknown data `image_vector`. `image_vector` does not necessary must be an image, is can be regular unknwon data as well, as long it's stored inside `.pgm` files of format `P2` or `P5`
 
 To run this algorithm, just type
 
@@ -28,7 +28,7 @@ What do you want to do?
 2. Train projection matrix
 3. Generate PGM data from images
 4. Check pooling
-5. Train SVM model
+5. Train neural network model
 6. Remove outliers from collected data
 Enter choice number:
 ```
@@ -116,19 +116,24 @@ The size of the matrix is 1200x1200. Do you want to apply PCA onto it? 1 = Yes, 
 ```
 
 ### Step 7
-Now we are going to create the model by using Support Vector Machine. I have written the Support Vector Machine algorithm from scratch by using a Quadratic
-Programming solver and I'm using Hildreth's QP algorthm. Hildreth's QP-solver was invented in 1957. Notice that it exist also an equivalent C code for the Support Vector Machine and QP-solver in CControl.
+Now we are going to create the neural netowork model by using Support Vector Machine. I have written the Support Vector Machine algorithm from scratch by using a Hildreth Quadratic Programming algorithm. Hildreth's QP-solver was invented in 1957. Notice that it exist also an equivalent ANSI C code for the Support Vector Machine and QP-solver in CControl repository.
 
-This option `5. Train SVM model` wants two parameters.
+This option `5. Train neural network model` wants three parameters.
 The `C` hyperparameter tells the SVM optimization how much you want to avoid misclassifying each training example. 
-For large values of C, the optimization will choose a smaller-margin hyperplane if that hyperplane does a better job of getting all the training points classified correctly. 
-Conversely, a very small value of C will cause the optimizer to look for a larger-margin separating hyperplane, even if that hyperplane misclassifies more points. 
-For very tiny values of C, you should get misclassified examples, often even if your training data is linearly separable.
+For large values of `C`, the optimization will choose a smaller-margin hyperplane if that hyperplane does a better job of getting all the training points classified correctly. 
+Conversely, a very small value of `C` will cause the optimizer to look for a larger-margin separating hyperplane, even if that hyperplane misclassifies more points. 
+For very tiny values of `C`, you should get misclassified examples, often even if your training data is linearly separable.
 
 The `lambda` is a regularization parameter. The drawbacks with Hildreth's QP-solver is that it's slow(iterative algorithm) and not so accurate compared to other modern QP-solvers.
 The adventage about Hildreth's QP solver is that it can suits embedded systems and easy to use. 
 To make Hildreth's QP-solver solve the probelm very quick, just add a small number called `lambda` and it will do the same job as advanced QP-solvers.
 Don't have to large regularization parameter `lambda`, it will cause lower accuracy.
+
+The `function type` specifies the activation function You can choose between these functions:
+1. Sigmoid: y = 1/(1 + e^(-a*x - b))
+2. Tanh: y = (e^(a*x + b) - e^(-a*x - b)))/(e^(a*x + b) + e^(-a*x - b)))
+3. ReLU: y = max(0, x)
+4. Leaky ReLU: y = max(0.1x, x)
 
 ```matlab
 Enter choice number: 5
@@ -136,48 +141,27 @@ Load fisherfaces_projection.mat
 Done
 Loading fisherfaces_data.mat
 Done
+Train a neural network with Support Vector Machine
 What type of C value do you want for SVM: 1
 What type of lambda(regularization) value do you want for SVM: 2.5
-SVM OK: yes. Accuracy: 1.000000. Class: 1
-SVM OK: yes. Accuracy: 1.000000. Class: 2
-SVM OK: yes. Accuracy: 1.000000. Class: 3
-SVM OK: yes. Accuracy: 1.000000. Class: 4
-SVM OK: yes. Accuracy: 1.000000. Class: 5
-SVM OK: yes. Accuracy: 1.000000. Class: 6
-SVM OK: yes. Accuracy: 1.000000. Class: 7
-SVM OK: yes. Accuracy: 1.000000. Class: 8
-SVM OK: yes. Accuracy: 1.000000. Class: 9
-SVM OK: yes. Accuracy: 1.000000. Class: 10
-SVM OK: yes. Accuracy: 1.000000. Class: 11
-SVM OK: yes. Accuracy: 1.000000. Class: 12
-SVM OK: yes. Accuracy: 1.000000. Class: 13
-SVM OK: yes. Accuracy: 1.000000. Class: 14
-SVM OK: yes. Accuracy: 1.000000. Class: 15
-Done with SVM
-Multiply model_w = w * W
-x = model_w*image_vector + model_b is our model
-p(x) = 1./(1 + exp(-(A(i)*x(i) + B(i))))
-The image_vector must be in row-major, not column-major
-e.g the image/data you want to classify is going to be in row-wise, not column-wise.
-The model will give us a vector x that contains scores.
-The scores x are feed into a sigmoid function that computes the propability vector p(x)
-The index of the highest propability in vector p(x) is the class ID
-Logistic regression output for SVM was OK for class 1. Iterations(10)
-Logistic regression output for SVM was OK for class 2. Iterations(10)
-Logistic regression output for SVM was OK for class 3. Iterations(10)
-Logistic regression output for SVM was OK for class 4. Iterations(9)
-Logistic regression output for SVM was OK for class 5. Iterations(9)
-Logistic regression output for SVM was OK for class 6. Iterations(10)
-Logistic regression output for SVM was OK for class 7. Iterations(11)
-Logistic regression output for SVM was OK for class 8. Iterations(11)
-Logistic regression output for SVM was OK for class 9. Iterations(11)
-Logistic regression output for SVM was OK for class 10. Iterations(11)
-Logistic regression output for SVM was OK for class 11. Iterations(9)
-Logistic regression output for SVM was OK for class 12. Iterations(10)
-Logistic regression output for SVM was OK for class 13. Iterations(11)
-Logistic regression output for SVM was OK for class 14. Iterations(9)
-Logistic regression output for SVM was OK for class 15. Iterations(11)
-Saving model_w, model_b and parameters A and B inside fisherfaces_svm.mat
+Type in what type of activation function you want to use(sigmoid, tanh, ReLU, Leaky ReLU): ReLU
+Neural Network success with accuracy: 1.000000 at class: 1
+Neural Network success with accuracy: 1.000000 at class: 2
+Neural Network success with accuracy: 1.000000 at class: 3
+Neural Network success with accuracy: 1.000000 at class: 4
+Neural Network success with accuracy: 1.000000 at class: 5
+Neural Network success with accuracy: 1.000000 at class: 6
+Neural Network success with accuracy: 1.000000 at class: 7
+Neural Network success with accuracy: 1.000000 at class: 8
+Neural Network success with accuracy: 1.000000 at class: 9
+Neural Network success with accuracy: 1.000000 at class: 10
+Neural Network success with accuracy: 1.000000 at class: 11
+Neural Network success with accuracy: 1.000000 at class: 12
+Neural Network success with accuracy: 1.000000 at class: 13
+Neural Network success with accuracy: 1.000000 at class: 14
+Neural Network success with accuracy: 1.000000 at class: 15
+Saving model_w, model_b, activation parameter vector A, activation parameter vector B and function type inside fisherf
+aces_model.mat
 Done
 >>
 ```
