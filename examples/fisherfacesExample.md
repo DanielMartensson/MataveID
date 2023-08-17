@@ -9,7 +9,7 @@ The goal with this algorithm is to return a model:
 x = sigma(model_w*image_vector + model_b, A, B)
 ```
 Where the `model_w` and `model_b` are matrix and vector for the neural network and `A` and `B` are parameter vectors for the activation function `sigma`.
-The index of the highest value of `x` is the class ID of the unknown data `image_vector`. `image_vector` does not necessary must be an image, is can be regular unknwon data as well, as long it's stored inside `.pgm` files of format `P2` or `P5`
+The index of the highest value of `x` is the class ID of the unknown data `image_vector`. The `image_vector` does not necessary must be an image, it can be regular unknwon data as well, as long it's stored inside `.pgm` files of format `P2` or `P5`
 
 To run this algorithm, just type
 
@@ -165,4 +165,3 @@ aces_model.mat
 Done
 >>
 ```
-
