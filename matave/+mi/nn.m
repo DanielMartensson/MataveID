@@ -45,7 +45,7 @@ function [weight, bias, A, B] = nn(varargin)
   if(length(varargin) >= 5)
     function_type = varargin{5};
   else
-    function_type = 'sigmoid';
+    function_type = 'tanh';
   end
 
   % Create the y vector
@@ -82,10 +82,6 @@ function [weight, bias, A, B] = nn(varargin)
     bias = [bias; b];
   end
 
-  % Compute the scores and labels
-  X = weight*data' + bias;
-  Y = sign(X);
-
   % Create parameter for activation function
   A = zeros(classes, 1);
   B = zeros(classes, 1);
@@ -98,6 +94,17 @@ function [weight, bias, A, B] = nn(varargin)
     A = linspace(0.1, 0.1, classes)';
     B = ones(classes, 1);
   otherwise
+    % Compute the scores
+    X = weight*data' + bias;
+
+    % Compute the labels
+    switch(function_type)
+    case 'sigmoid'
+      Y = X >= 0; % Heaviside
+    case 'tanh'
+      Y = sign(X);
+    end
+
     % Find parameters for logistic activation functions
     for i = 1:classes
       % Extract one row of the labels
