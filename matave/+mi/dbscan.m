@@ -70,7 +70,7 @@ end
 
 function D = distEucSq(X, Y)
   Yt = Y';
-  XX = sum(X.*X,2);
-  YY = sum(Yt.*Yt,1);
-  D = abs(bsxfun(@plus,XX,YY)-2*X*Yt);
+  XX = sum(X.*X, 2);
+  YY = sum(Yt.*Yt, 1);
+  D = abs(bsxfun(@plus, XX, YY) - 2*X*Yt);
 end
