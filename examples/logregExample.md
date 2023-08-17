@@ -6,6 +6,6 @@ Use this if you have a binary output (0, 1) or (-1, 1) and you want to to have a
 ```
 
 ## Example logreg
-https://github.com/DanielMartensson/MataveID/blob/8d119f00048708e4e8dfca5d15b4718d525afd43/examples/logregExample.m#L1-L29
+https://github.com/DanielMartensson/MataveID/blob/7ccb6e7a955621a5cdf7ae5923b3f9bcca4d81ac/examples/logregExample.m#L1-L29
 
 ![Logreg Result](../pictures/Logreg_Result.png)
