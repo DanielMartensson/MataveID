@@ -1,4 +1,4 @@
-# MataveID V16.2.1
+# MataveID V16.5.0
 MataveID is a basic system identification toolbox for both GNU Octave and MATLAB®. MataveID is based on the power of linear algebra and the library is easy to use. MataveID using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -15,7 +15,9 @@ I'm building this library because I feel that the commercial libraries are just 
 | `oe.m` | Complete | Nothing to do here |
 | `armax.m` | Complete | Nothing to do here |
 | `lsvm.m`  | Complete | Nothing to do here |
-| `fisherfaces.c` | Complete | Nothing to do here |
+| `fisherfaces.m` | Complete | Nothing to do here |
+| `nn.m` | Complete | Nothing to do here |
+| `logreg.m` | Complete | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
@@ -49,6 +51,9 @@ I'm building this library because I feel that the commercial libraries are just 
 - ORTJIOP for stochastic closed loop, plant and controller identification
 - FILTFILT for low pass filtering without phase delay
 - SPA for spectral analysis
+- FISHERFACES for image/regular data classfication
+- NN Neural network
+- LOGREG Logistic regression parameter finding
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for reducing noise from data
 - PCA for dimension reduction on maximum variance
