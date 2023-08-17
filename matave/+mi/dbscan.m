@@ -4,7 +4,33 @@
 % Example 1: [idx] = mi.dbscan(X, espsilon, min_pts)
 % Author: Daniel Mårtensson, Juli 2023
 
-function [idx] = dbscan(X, epsilon, min_pts)
+function [idx] = dbscan(varargin)
+  % Check if there is any input
+  if(isempty(varargin))
+    error('Missing inputs')
+  end
+
+  % Get input
+  if(length(varargin) >= 1)
+    X = varargin{1};
+  else
+    error('Missing data X')
+  end
+
+  % Get radius epsilon
+  if(length(varargin) >= 2)
+    epsilon = varargin{2};
+  else
+    error('Missing radius epsilon')
+  end
+
+  % Get minimum points
+  if(length(varargin) >= 3)
+    min_pts = varargin{3};
+  else
+    error('Missing minimum points')
+  end
+
   A = 0;
   n = size(X,1);
   idx = zeros(n,1);
