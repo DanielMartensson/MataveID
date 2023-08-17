@@ -75,7 +75,7 @@ Give the minimum epsilon for your data:
 ```
 
 ### Step 5
-Not it's time to select the option `1. Collect data`.
+Now it's time to select the option `1. Collect data`.
 This option ask you the desired pooling settings.
 
 ```matlab
