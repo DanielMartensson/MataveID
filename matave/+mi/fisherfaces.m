@@ -107,17 +107,18 @@ function fisherfaces_train_neural_network_model()
   model_b = bias;
 
   % Check accuracy
-  X = model_w*images + model_b;
+  X = weight*data_raw' + bias;
   classes = length(class_id);
-  y = zeros(1, classes);
+  score = 0;
   for i = 1:classes
-    actual_class_id = class_id(i);
-    predicted_class_id = activation_function(X(:, i));
-    y(i) = abs(predicted_class_id - actual_class_id);
+    class_id_predicted = activation_function(X(:, i));
+    if(class_id_predicted == class_id(i))
+      score = score + 1;
+    end
   end
 
   % Print status
-  fprintf('The accuracy of this model is: %i\n', (classes - sum(y))/classes*100);
+  fprintf('The accuracy of this model is: %i\n', score/classes*100);
 
   % Now we have our model. Compute the ID
   disp('Saving model_w, model_b, and activation_function inside fisherfaces_model.mat');
