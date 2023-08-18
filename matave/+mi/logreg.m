@@ -4,7 +4,7 @@
 % Function types:
 % Sigmoid: p(x) = 1/(1 + e^(-a*x - b))
 % Tanh: p(x) = (e^(a*x + b) - e^(-a*x - b))/(e^(a*x + b) + e^(-a*x - b))
-% Example 1: [a, b, flag, iterations] = mi.logreg(x, y, function_type)
+% Example 1: [a, b, flag, iterations] = mi.logreg(x, y, function_type);
 % Author: Daniel Mårtensson, Augusti 2023
 
 function [a, b, flag, iterations] = logreg(varargin)
