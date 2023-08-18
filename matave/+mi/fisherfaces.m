@@ -10,6 +10,7 @@
 % This Fisherfaces will give you the neural network model, and all you have to do is to multiply a vector image_vector [n] to get the class ID:
 % y = activation_function(model_w*image_vector + model_b)
 % Where y is the class ID of image_vector
+% Example 1: mi.fisherfaces();
 % Author: Daniel Mårtensson, Augusti 18 2023
 
 function fisherfaces()
