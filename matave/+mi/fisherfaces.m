@@ -1,18 +1,16 @@
 % Fisherfaces
 % This algorithm can create a neural network model that can classify images or regular data
 % This algorithm is using:
-% Pooling -> Kernel Principal Component Analysis -> Linear Discriminant Analysis -> Support Vector Machine -> Logistic regression
+% Pooling -> Kernel Principal Component Analysis -> Linear Discriminant Analysis -> Support Vector Machine -> Activation function
 % You will recieve a model inside fisherfaces_model.mat file
 % It contains
 % - Weight matrix model_W [m*n]
 % - Bias vector model_b [m]
-% - Activation function parameter vector A [m]
-% - Activation function parameter vector B [m]
-% This Fisherfaces will give you the model and all you have to do is to multiply a vector image_vector [n] to get the class ID:
-% x = sigma(model_w*image_vector + model_b)
-% Where sigma is a activation function that contains A and B vectors.
-% The index of the highest number inside vector x is the class ID.
-% Author: Daniel Mårtensson, Augusti 17 2023
+% - Activation function handle
+% This Fisherfaces will give you the neural network model, and all you have to do is to multiply a vector image_vector [n] to get the class ID:
+% y = activation_function(model_w*image_vector + model_b)
+% Where y is the class ID of image_vector
+% Author: Daniel Mårtensson, Augusti 18 2023
 
 function fisherfaces()
   % Salut
@@ -100,18 +98,30 @@ function fisherfaces_train_neural_network_model()
   disp('Train a neural network with Support Vector Machine');
   C = input('What type of C value do you want for SVM: ');
   lambda = input('What type of lambda(regularization) value do you want for SVM: ');
-  function_type = input('Type in what type of activation function you want to use(sigmoid, tanh, ReLU, Leaky ReLU): ', 's');
 
   % Create neural network - Turn P into transpose so it will work with SVM
-  [weight, bias, A, B] = mi.nn(P', class_id, C, lambda, function_type);
+  [weight, bias, activation_function] = mi.nn(P', class_id, C, lambda);
 
   % Create models
   model_w = weight*W;
   model_b = bias;
 
+  % Check accuracy
+  X = model_w*images + model_b;
+  classes = length(class_id);
+  y = zeros(1, classes);
+  for i = 1:classes
+    actual_class_id = class_id(i);
+    predicted_class_id = activation_function(X(:, i));
+    y(i) = abs(predicted_class_id - actual_class_id);
+  end
+
+  % Print status
+  fprintf('The accuracy of this model is: %i\n', (classes - sum(y))/classes*100);
+
   % Now we have our model. Compute the ID
-  disp('Saving model_w, model_b, activation parameter vectors A and B and function type inside fisherfaces_model.mat');
-  save('fisherfaces_model.mat', 'model_w', 'model_b', 'A', 'B', 'function_type');
+  disp('Saving model_w, model_b, and activation_function fisherfaces_model.mat');
+  save('fisherfaces_model.mat', 'model_w', 'model_b', 'activation_function');
   disp('Done');
 end
 
