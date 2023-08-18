@@ -1,13 +1,14 @@
 % Create a neural network by using Support Vector Machine
-% Input: data(Train data), class_id(Class ID vector of every row of train data), C(C-parameter for SVM), lambda(Regulariztion for SVM), function_type('sigmoid', 'tanh', 'ReLU', 'Leaky ReLU')
-% Output: weight, bias, A(Prameter vector for activation function), B(Parameter vector for activation function)
-% Example 1: [weight, bias, A, B] = mi.nn(data, class_id)
-% Example 2: [weight, bias, A, B] = mi.nn(data, class_id, C)
-% Example 3: [weight, bias, A, B] = mi.nn(data, class_id, C, lambda)
-% Example 4: [weight, bias, A, B] = mi.nn(data, class_id, C, lambda, function_type)
+% The activation function is: y = @(x) find(x == max(x)), where x is a vector
+% Input: data(Train data), class_id(Class ID vector of every row of train data), C(C-parameter for SVM), lambda(Regulariztion for SVM)
+% Output: weight, bias
+% Example 1: [weight, bias, activation_function] = mi.nn(data, class_id)
+% Example 2: [weight, bias, activation_function] = mi.nn(data, class_id, C)
+% Example 3: [weight, bias, activation_function] = mi.nn(data, class_id, C, lambda)
+% Example 4: [weight, bias, activation_function] = mi.nn(data, class_id, C, lambda)
 % Author: Daniel Mårtensson, Augusti 2023
 
-function [weight, bias, A, B] = nn(varargin)
+function [weight, bias, activation_function] = nn(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -72,9 +73,9 @@ function [weight, bias, A, B] = nn(varargin)
 
     % Status
     if(solution)
-        fprintf('Neural Network success with accuracy: %f at class: %i\n', accuracy, i);
+      fprintf('Training: Neural Network success with accuracy: %f at class: %i\n', accuracy, i);
     else
-        fprintf('Neural Network failed with accuracy: %f at class: %i\n', accuracy, i);
+      fprintf('Training: Neural Network failed with accuracy: %f at class: %i\n', accuracy, i);
     end
 
     % Save model
@@ -82,46 +83,6 @@ function [weight, bias, A, B] = nn(varargin)
     bias = [bias; b];
   end
 
-  % Create parameter for activation function
-  A = zeros(classes, 1);
-  B = zeros(classes, 1);
-
-  % Create activation function parameters
-  switch(function_type)
-  case 'ReLU'
-    B = ones(classes, 1);
-  case 'Leaky ReLU'
-    A = linspace(0.1, 0.1, classes)';
-    B = ones(classes, 1);
-  otherwise
-    % Compute the scores
-    X = weight*data' + bias;
-
-    % Compute the labels
-    switch(function_type)
-    case 'sigmoid'
-      Y = X >= 0; % Heaviside
-    case 'tanh'
-      Y = sign(X);
-    end
-
-    % Find parameters for logistic activation functions
-    for i = 1:classes
-      % Extract one row of the labels
-      y = Y(i, :);
-      x = X(i, :);
-
-      % Find parameters
-      [a, b, flag, iterations] = mi.logreg(x, y, function_type);
-
-      % Save
-      A(i) = a;
-      B(i) = b;
-
-      % Print status
-      if(~flag)
-        fprintf('Logistic regression output for neural network failed for class %i. Iterations(%i)\n', i, iterations);
-      end
-    end
-  end
+  % Create the activation function where x is a vector. This gives the row index of maximum value of x, which is the class ID
+  activation_function = @(x) find(x == max(x));
 end
