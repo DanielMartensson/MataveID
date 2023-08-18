@@ -2,10 +2,10 @@
 % The activation function is: y = @(x) find(x == max(x)), where x is a vector
 % Input: data(Train data), class_id(Class ID vector of every row of train data), C(C-parameter for SVM), lambda(Regulariztion for SVM)
 % Output: weight, bias
-% Example 1: [weight, bias, activation_function] = mi.nn(data, class_id)
-% Example 2: [weight, bias, activation_function] = mi.nn(data, class_id, C)
-% Example 3: [weight, bias, activation_function] = mi.nn(data, class_id, C, lambda)
-% Example 4: [weight, bias, activation_function] = mi.nn(data, class_id, C, lambda)
+% Example 1: [weight, bias, activation_function] = mi.nn(data, class_id);
+% Example 2: [weight, bias, activation_function] = mi.nn(data, class_id, C);
+% Example 3: [weight, bias, activation_function] = mi.nn(data, class_id, C, lambda);
+% Example 4: [weight, bias, activation_function] = mi.nn(data, class_id, C, lambda);
 % Author: Daniel Mårtensson, Augusti 2023
 
 function [weight, bias, activation_function] = nn(varargin)
