@@ -1,7 +1,7 @@
 % Density-based spatial clustering of applications with noise
 % Input: X(data), epsilon(Radius), min_pts(Minimum points)
 % Output: idx(row index of class ID)
-% Example 1: [idx] = mi.dbscan(X, espsilon, min_pts)
+% Example 1: [idx] = mi.dbscan(X, epsilon, min_pts)
 % Author: Daniel Mårtensson, Juli 2023
 
 function [idx] = dbscan(varargin)
