@@ -6,10 +6,10 @@ instead of regular Principal Component Analysis. Second, I'm building a neural n
 The goal with this algorithm is to return a model:
 
 ```matlab
-x = sigma(model_w*image_vector + model_b, A, B)
+y = activation_function(model_w*image_vector + model_b)
 ```
-Where the `model_w` and `model_b` are matrix and vector for the neural network and `A` and `B` are parameter vectors for the activation function `sigma`.
-The index of the highest value of `x` is the class ID of the unknown data `image_vector`. The `image_vector` does not necessary must be an image, it can be regular unknwon data as well, as long it's stored inside `.pgm` files of format `P2` or `P5`
+Where the weights matrix `model_w` and bias vector `model_b` are the neural network.
+The number `y` is the class ID of the unknown data `image_vector`. The `image_vector` does not necessary must be an image, it can be regular unknwon data as well, as long it's stored inside `.pgm` files of format `P2` or `P5`
 
 To run this algorithm, just type
 
@@ -129,12 +129,6 @@ The adventage about Hildreth's QP solver is that it can suits embedded systems a
 To make Hildreth's QP-solver solve the probelm very quick, just add a small number called `lambda` and it will do the same job as advanced QP-solvers.
 Don't have to large regularization parameter `lambda`, it will cause lower accuracy.
 
-The `function type` specifies the activation function You can choose between these functions:
-1. Sigmoid: y = 1/(1 + e^(-a*x - b))
-2. Tanh: y = (e^(a*x + b) - e^(-a*x - b)))/(e^(a*x + b) + e^(-a*x - b)))
-3. ReLU: y = max(0, x)
-4. Leaky ReLU: y = max(0.1x, x)
-
 ```matlab
 Enter choice number: 5
 Load fisherfaces_projection.mat
@@ -143,25 +137,24 @@ Loading fisherfaces_data.mat
 Done
 Train a neural network with Support Vector Machine
 What type of C value do you want for SVM: 1
-What type of lambda(regularization) value do you want for SVM: 2.5
-Type in what type of activation function you want to use(sigmoid, tanh, ReLU, Leaky ReLU): ReLU
-Neural Network success with accuracy: 1.000000 at class: 1
-Neural Network success with accuracy: 1.000000 at class: 2
-Neural Network success with accuracy: 1.000000 at class: 3
-Neural Network success with accuracy: 1.000000 at class: 4
-Neural Network success with accuracy: 1.000000 at class: 5
-Neural Network success with accuracy: 1.000000 at class: 6
-Neural Network success with accuracy: 1.000000 at class: 7
-Neural Network success with accuracy: 1.000000 at class: 8
-Neural Network success with accuracy: 1.000000 at class: 9
-Neural Network success with accuracy: 1.000000 at class: 10
-Neural Network success with accuracy: 1.000000 at class: 11
-Neural Network success with accuracy: 1.000000 at class: 12
-Neural Network success with accuracy: 1.000000 at class: 13
-Neural Network success with accuracy: 1.000000 at class: 14
-Neural Network success with accuracy: 1.000000 at class: 15
-Saving model_w, model_b, activation parameter vector A, activation parameter vector B and function type inside fisherf
-aces_model.mat
+What type of lambda(regularization) value do you want for SVM: 10
+Training: Neural Network success with accuracy: 1.000000 at class: 1
+Training: Neural Network success with accuracy: 1.000000 at class: 2
+Training: Neural Network success with accuracy: 1.000000 at class: 3
+Training: Neural Network success with accuracy: 1.000000 at class: 4
+Training: Neural Network success with accuracy: 1.000000 at class: 5
+Training: Neural Network success with accuracy: 1.000000 at class: 6
+Training: Neural Network success with accuracy: 1.000000 at class: 7
+Training: Neural Network success with accuracy: 1.000000 at class: 8
+Training: Neural Network success with accuracy: 1.000000 at class: 9
+Training: Neural Network success with accuracy: 1.000000 at class: 10
+Training: Neural Network success with accuracy: 1.000000 at class: 11
+Training: Neural Network success with accuracy: 1.000000 at class: 12
+Training: Neural Network success with accuracy: 1.000000 at class: 13
+Training: Neural Network success with accuracy: 1.000000 at class: 14
+Training: Neural Network success with accuracy: 1.000000 at class: 15
+The accuracy of this model is: 100
+Saving model_w, model_b, and activation_function inside fisherfaces_model.mat
 Done
 >>
 ```
