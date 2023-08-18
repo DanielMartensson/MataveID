@@ -120,7 +120,7 @@ function fisherfaces_train_neural_network_model()
   fprintf('The accuracy of this model is: %i\n', (classes - sum(y))/classes*100);
 
   % Now we have our model. Compute the ID
-  disp('Saving model_w, model_b, and activation_function fisherfaces_model.mat');
+  disp('Saving model_w, model_b, and activation_function inside fisherfaces_model.mat');
   save('fisherfaces_model.mat', 'model_w', 'model_b', 'activation_function');
   disp('Done');
 end
