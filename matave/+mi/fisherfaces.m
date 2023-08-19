@@ -108,12 +108,11 @@ function fisherfaces_train_neural_network_model()
   model_b = bias;
 
   % Check accuracy
-  X = weight*images + bias;
+  X = model_w*images + model_b;
   classes = length(class_id);
   score = 0;
   for i = 1:classes
-    class_id_predicted = activation_function(X(:, i));
-    if(class_id_predicted == class_id(i))
+    if(class_id(i) == activation_function(X(:, i)))
       score = score + 1;
     end
   end
