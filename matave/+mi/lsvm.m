@@ -59,7 +59,7 @@ function [w, b, accuracy, solution] = lsvm(varargin)
   [alpha, solution] = mc.quadprog(Q, c, G, h);
 
   % Support vectors have non zero lagrange multipliers
-  tol = 1.192092896e-07;
+  tol = 1e-05;
   sv_idx = find(alpha > tol);
 
   % Find weights and bias
