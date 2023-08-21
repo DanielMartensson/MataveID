@@ -2,7 +2,7 @@
 Reduce the pixel size of an image
 
 ```matlab
-[P] = mi.dbscan(image, pooling_method, p);
+[P] = mi.pooling(image, pooling_method, p);
 ```
 
 # Example Pooling
