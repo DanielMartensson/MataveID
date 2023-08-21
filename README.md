@@ -30,7 +30,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `lda.m` | Almost complete | Need to find a practical example |
 | `ica.m` | Almost complete | Need to find a practical example |
 | `sra.m` | Almost complete | Upload measurement sensor system |
-| `dbscan.m` | Almost complete | Upload measurement sensor system |
+| `dbscan.m` | Complete | Nothing to do here |
 | `bj.m` | Almost complete | Find a pratical example |
 | `sindy.m` | Complete | Nothing to do here |
 | `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
@@ -39,10 +39,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `ortjiop.m` | Ongoing | Find a practical example |
 | `idbode.m` | Ongoing | Find a practical example |
 | `ica.m` | Ongoing | Find a practical example |
-| `lsvm.m` | Ongoing | Find a practical example with image classification and PCA + LDA |
-| `okid.m` | Not created yet | Create the `okid.m` file and make sure it is robust against noise and also returns `K` matrix. Borrow code from the `old` folder. |
-| `dnn.m` | Not created yet | Planning to include a basic deep neural network for modeling nonlinear dynamics or other types of classifications |
-
+| `lsvm.m` | Complete | Nothing to do here |
 
 # Functions and its purpose
 - ERA-DC for mechanical damped systems in the time plane
