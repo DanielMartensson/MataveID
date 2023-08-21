@@ -5,7 +5,7 @@ end
 
 % Load image
 file = fullfile('..','Data\yale\Class 1\','centerlight.gif');
-image = imread('C:\Users\dmn\GitHub\CControl\src\CControl\Documents\Data\yale\Class 1\centerlight.gif');
+image = imread(file);
 
 % Uncomment if image is an RBG image
 %image = double(rgb2gray(image));
