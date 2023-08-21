@@ -1,7 +1,7 @@
 % Pooling - Reduce an image with different techniques
 % Input: image(A matrix), pooling_method(1 = Max pooling, 2 = Average pooling, 3 = Shape pooling), p = Pooling pixel size
 % Output: P(Pooled image a.k.a reduced in pixels)
-% Example 1: [P] = mi.pooling(image, pooling_method, p)
+% Example 1: [P] = mi.pooling(image, pooling_method, p);
 % Author: Daniel Mårtensson, Augusti 21 2023
 % Notice: There are an equivalent C code for pooling inside Control repository
 
