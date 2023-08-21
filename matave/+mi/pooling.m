@@ -32,7 +32,7 @@ function [P] = pooling(varargin)
     error('Missing pooling pixel size')
   end
 
-  % Size of A
+  % Size of image
   [m, n] = size(image);
 
   % P size
