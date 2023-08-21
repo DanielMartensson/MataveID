@@ -6,8 +6,7 @@ Reduce the pixel size of an image
 ```
 
 # Example Pooling
-
-https://github.com/DanielMartensson/MataveID/blob/21afd4ac2816d87fd91d5cd153dfed0a0833b88f/examples/poolingExample.m#L1-L21
+https://github.com/DanielMartensson/MataveID/blob/2010975a24744f6278716f2bf954bf16a6498ef7/examples/poolingExample.m#L1-L21
 
 ## Results
 ![Pooling Result](../pictures/Pooling_Result.png)
