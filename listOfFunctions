@@ -26,6 +26,7 @@ lda.m
 lsvm.m
 kmeans.m
 dbscan.m
+pooling.m
 kpca.m
 fisherfaces.m
 nn.m
