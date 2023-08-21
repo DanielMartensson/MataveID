@@ -216,7 +216,7 @@ function fisherfaces_check_pooling()
     p = input("What pooling size do you want to use? ");
 
     % Generate pooling
-    P = pooling(double(image), pooling_method, p);
+    P = mi.pooling(double(image), pooling_method, p);
 
     % Show the image
     if(fig > 0)
@@ -369,7 +369,7 @@ function fisherfaces_collect_data()
 
             % Use pooling
             if(use_pooling == 1)
-              image = pooling(image, pooling_method, p);
+              image = mi.pooling(image, pooling_method, p);
             end
 
             % Read the images in row major
@@ -392,42 +392,4 @@ function fisherfaces_collect_data()
   disp('Saving fisherfaces_data.mat');
   save('fisherfaces_data.mat', 'images', 'class_id');
   disp('Done');
-end
-
-function P = pooling(image, pooling_method, p)
-  % Size of A
-  [m, n] = size(image);
-
-  % P size
-  h = floor(m / p);
-  w = floor(n / p);
-  P = zeros(h, w);
-
-  % Minimal case
-  a = mean(image(:));
-  b = max(image(:));
-
-  % Process
-  for i = 1:h
-    for j = 1:w
-      % Cut
-      start_row = (i - 1) * p + 1;
-      stop_row = i * p;
-      start_column = (j - 1) * p + 1;
-      stop_column = j * p;
-      B = image(start_row:stop_row, start_column:stop_column);
-
-      % Do pooling
-      switch(pooling_method)
-      case 1
-        P(i, j) = max(B(:)); % Max pooling
-      case 2
-        P(i, j) = mean(B(:)); % Average pooling
-      case 3
-        P(i, j) = mean(B(:))/a*b; % Shape pooling
-      otherwise
-        error('Unknown pooling method');
-      end
-    end
-  end
 end
