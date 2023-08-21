@@ -1,5 +1,4 @@
 # Density-based spatial clustering of applications with noise
-
 This is a cluster algorithm that can identify the amount of clusters. 
 This algorithm requries two tuning parameters, `epsilon` and `min_pts`, which stands for `radius` and `minimum points`.
 This algorithm does not work if you have varying densities, else this algorithm is considered to be one of the best clustering algorithms.
