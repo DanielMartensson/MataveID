@@ -46,12 +46,13 @@ function [P] = pooling(varargin)
 
   % Process
   for i = 1:h
+    start_row = (i - 1) * p + 1;
+    stop_row = i * p;
     for j = 1:w
-      % Cut
-      start_row = (i - 1) * p + 1;
-      stop_row = i * p;
       start_column = (j - 1) * p + 1;
       stop_column = j * p;
+      
+      % Cut
       B = image(start_row:stop_row, start_column:stop_column);
 
       % Do pooling
