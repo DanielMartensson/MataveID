@@ -2,7 +2,7 @@
 close all
 
 % Read image
-image = imread('..', 'data', 'wink.gif');
+image = imread(fullfile('..', 'data', 'happy.gif'));
 
 % Turn to grey scale
 if(size(image, 3) == 3)
