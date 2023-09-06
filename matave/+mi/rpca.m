@@ -7,7 +7,7 @@
 function [L, S] = rpca(varargin)
   % Check if there is any input
   if(isempty(varargin))
-    error('Missing imput')
+    error('Missing input')
   end
   
   % Get X
