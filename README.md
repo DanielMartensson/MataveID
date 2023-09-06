@@ -52,6 +52,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - SPA for spectral analysis
 - FISHERFACES for image/regular data classfication
 - NN Neural network
+- SOBEL for finding gradients and orientations inside an image
 - LOGREG Logistic regression parameter finding
 - IDBODE for mechanical damped systems in the frequency plane
 - RPCA for reducing noise from data
