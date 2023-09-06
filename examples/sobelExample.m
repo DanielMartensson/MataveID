@@ -10,11 +10,11 @@ if(size(image, 3) == 3)
 end
 
 % Compute gradients and orientations
-[G, O] = mi.sobel(input_image);
+[G, O] = mi.sobel(image);
 
 % Show original image
 subplot(1, 2, 1);
-imshow(input_image);
+imshow(image);
 title('Original image');
 
 % Show gradient image
