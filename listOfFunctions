@@ -31,3 +31,4 @@ kpca.m
 fisherfaces.m
 nn.m
 logreg.m
+sobel.m
