@@ -1,11 +1,11 @@
 % Robust Principal Component Analysis
 % Input: data matrix(X)
-% Output: filtred data matrix(L), sparse noise matrix(S)
+% Output: L(filtred data matrix), S(sparse noise matrix)
 % Example 1: [L, S] = mi.rpca(X)
 % Author: Daniel Mårtensson, 28 April 2021
 
 function [L, S] = rpca(varargin)
- % Check if there is any input
+  % Check if there is any input
   if(isempty(varargin))
     error('Missing imput')
   end
