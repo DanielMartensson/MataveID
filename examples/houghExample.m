@@ -4,7 +4,7 @@ close all
 clc
 
 % Read image
-X = imread('test_hough.png');
+X = imread(fullfile('..', 'data', 'test_hough.png'));
 
 % If the image is color
 if(size(X, 3) > 1)
