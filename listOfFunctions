@@ -32,3 +32,4 @@ fisherfaces.m
 nn.m
 logreg.m
 sobel.m
+hough.m
