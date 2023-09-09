@@ -1,11 +1,11 @@
 % Hough transform - Line detection algorthm
 % Input: X(Data matrix of an edge image), N(Amout of sloped lines), radius(This is a way to make sure you don't select the same K and M value again)
-% Output: H(Transformed image accumulator array)
-% Example 1: [K, M] = mi.hough(X, N);
-% Example 2: [K, M] = mi.hough(X, N, radius);
+% Output: K(Slopes), M(Bias), R(Projected distance), T(Radians angle of the projected distance)
+% Example 1: [K, M, R, T] = mi.hough(X, N);
+% Example 2: [K, M, R, T] = mi.hough(X, N, radius);
 % Author: Daniel Mårtensson, 10 September 2023
 
-function [K, M] = hough(varargin)
+function [K, M, R, T] = hough(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -95,6 +95,8 @@ function [K, M] = hough(varargin)
   % Create K and M
   K = zeros(1, N);
   M = zeros(1, N);
+  R = zeros(1, N);
+  T = zeros(1, N);
 
   % Create past theta and past r
   past_theta = zeros(1, N);
@@ -134,6 +136,8 @@ function [K, M] = hough(varargin)
     v = deg2rad(theta);
     K(count) = sin(v)/-cos(v);
     M(count) = - r/-cos(v);
+    R(count) = r;
+    T(count) = theta;
 
     % Remember
     past_theta(count) = theta;
