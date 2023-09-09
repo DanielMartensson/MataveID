@@ -1,4 +1,4 @@
-# MataveID V16.5.5
+# MataveID V16.6.0
 MataveID is a basic system identification toolbox for both GNU Octave and MATLAB®. MataveID is based on the power of linear algebra and the library is easy to use. MataveID using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -20,6 +20,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `logreg.m` | Complete | Nothing to do here |
 | `pooling.m` | Complete | Nothing to do here |
 | `sobel.m` | Complete | Nothing to do here |
+| `hough.m` | Complete | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
@@ -73,6 +74,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - BJ for estimate system model and disturbance model
 - KMEANS for identify clusters
 - DBSCAN for identidy classes for clusters
+- HOUGH for line detection
 
 # Papers:
 MataveID contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
