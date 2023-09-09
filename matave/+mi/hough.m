@@ -35,8 +35,8 @@ function [K, M, R, T] = hough(varargin)
   % Get the size of X
   [m, n] = size(X);
 
-  % Choose angles between -90 and 90 in radians with 2 degrees in step
-  angles = -90:2:90;
+  % Choose angles between -90 and 90 in radians with 1 degree in step
+  angles = -90:1:90;
 
   % Compute slope Kk for every angle
   Kk = tan(deg2rad(angles));
@@ -121,7 +121,7 @@ function [K, M, R, T] = hough(varargin)
 
         % Check the difference is lower than h
         if(and(x < radius, y < radius))
-          has_been_used = true
+          has_been_used = true;
           break;
         end
       end
