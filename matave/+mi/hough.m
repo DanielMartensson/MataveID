@@ -52,7 +52,6 @@ function [K, M, R, T] = hough(varargin)
 
   % Collect the points for the most common lines
   for i = 1:m
-    % Get x0
     for j = 1:n
       % Check if the coordinate X(i, j) belongs to an edge
       if(X(i, j) <= eps)
