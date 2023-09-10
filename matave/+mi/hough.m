@@ -148,7 +148,7 @@ function [K, M, R, T] = hough(varargin)
       r_violate = abs(r - R) < radius;
 
       % Check if they both violate
-      violate = and(lenght(find(theta_violate > 0)), length(find(theta_violate > 0)));
+      violate = and(length(find(r_violate > 0)), length(find(theta_violate > 0)));
       if(violate)
         continue
       end
