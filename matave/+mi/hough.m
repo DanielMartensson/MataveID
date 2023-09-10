@@ -126,15 +126,11 @@ function [K, M, R, T] = hough(varargin)
   % Sort P as it was a vector
   [~, index] = sort(P(:), 'descend');
 
-  % Create K and M
+  % Create K, M, R and T - They are holders for the output
   K = zeros(1, N);
   M = zeros(1, N);
   R = zeros(1, N);
   T = zeros(1, N);
-
-  % Create past theta and past r
-  past_theta = zeros(1, N);
-  past_r = zeros(1, N);
 
   % Fill K and M
   count = 1;
@@ -147,24 +143,37 @@ function [K, M, R, T] = hough(varargin)
 
     % Check if it's not the same theta and r again
     if(k > 1)
-      has_been_used = false;
-      for j = 1:count
-        % Find the difference
-        x = abs(theta - past_theta(j));
-        y = abs(r - past_r(j));
+      % Check if they violate
+      theta_violate = abs(theta - T) < radius;
+      r_violate = abs(r - R) < radius;
 
-        % Check the difference is lower than h
-        if(and(x < radius, y < radius))
-          has_been_used = true;
-          break;
-        end
-      end
-
-      % Check if selected theta and r has been used before
-      if(has_been_used)
+      % Check if they both violate
+      violate = and(lenght(find(theta_violate > 0)), length(find(theta_violate > 0)));
+      if(violate)
         continue
       end
     end
+
+    % This code is not vectorized
+    %if(k > 1)
+    %  has_been_used = false;
+    %  for j = 1:count
+    %    % Find the difference
+    %    x = abs(theta - T(j));
+    %    y = abs(r - R(j));
+
+        % Check the difference is lower than h
+    %    if(and(x < radius, y < radius))
+    %      has_been_used = true;
+    %      break;
+    %    end
+    %  end
+
+      % Check if selected theta and r has been used before
+    %  if(has_been_used)
+    %    continue
+    %  end
+    %end
 
     % y = k*x + m can be expressed as x*sin(theta) + y*cos(theta) = r
     v = deg2rad(theta);
@@ -172,10 +181,6 @@ function [K, M, R, T] = hough(varargin)
     M(count) = - r/-cos(v);
     R(count) = r;
     T(count) = theta;
-
-    % Remember
-    past_theta(count) = theta;
-    past_r(count) = r;
 
     % Count
     count = count + 1;
