@@ -59,31 +59,66 @@ function [K, M, R, T] = hough(varargin)
         continue
       end
 
-      % Compute the r and theta from the pixel
-      for k = 1:Kk_length
-        % Compute Mk from straight line equation
-        Mk = j - Kk(k)*i;
+      % Compute Mk from straight line equation
+      Mk = j - Kk*i;
 
-        % Find minimal x
-        x = -Kk(k)*Mk/(1 + Kk(k)^2);
+      % Find minimal x
+      x = -Kk.*Mk./(1 + Kk.^2);
 
-        % Compute y
-        y = Kk(k)*x + Mk;
+      % Compute y
+      y = Kk.*x + Mk;
 
-        % Compute r and make it to an integer
-        r = floor(sqrt(x^2 + y^2)) + 1; % + 1 is just for indexing
+      % Compute r and make it to an integer
+      r = floor(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
 
-        % Compute theta and make sure theta is not negative
-        theta = 180 + rad2deg(atan2(y, x));
-        theta = floor(theta) + 1; % + 1 is just for indexing
+      % Compute theta and make sure theta is not negative
+      theta = 180 + rad2deg(atan2(y, x));
+      theta = floor(theta) + 1; % + 1 is just for indexing
 
-        % Sometimes r kan be larger than R
-        if(r <= R)
-          P(theta, r) = P(theta, r) + 1;
-        end
-      end
+      % Sometimes r kan be larger than R
+      theta(r > R) = [];
+      r(r > R) = [];
+
+      % Add + 1
+      indices = sub2ind(size(P), theta, r);
+      P(indices) = P(indices) + 1;
     end
   end
+
+  % This is the non vectorized code
+  %for i = 1:m
+  %  for j = 1:n
+      % Check if the coordinate X(i, j) belongs to an edge
+  %    if(X(i, j) <= eps)
+        % No edge here
+  %      continue
+  %    end
+
+      % Compute the r and theta from the pixel
+  %    for k = 1:Kk_length
+        % Compute Mk from straight line equation
+  %      Mk = j - Kk(k)*i;
+
+        % Find minimal x
+  %      x = -Kk(k)*Mk/(1 + Kk(k)^2);
+
+        % Compute y
+  %      y = Kk(k)*x + Mk;
+
+        % Compute r and make it to an integer
+  %      r = floor(sqrt(x^2 + y^2)) + 1; % + 1 is just for indexing
+
+        % Compute theta and make sure theta is not negative
+  %      theta = 180 + rad2deg(atan2(y, x));
+  %      theta = floor(theta) + 1; % + 1 is just for indexing
+
+        % Sometimes r kan be larger than R
+  %      if(r <= R)
+  %        P(theta, r) = P(theta, r) + 1;
+  %      end
+  %    end
+  %  end
+  %end
 
   % Update size for P
   [m, n] = size(P);
