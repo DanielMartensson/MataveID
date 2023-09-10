@@ -32,6 +32,14 @@ function [K, M, R, T] = hough(varargin)
     radius = 10;
   end
 
+  % Compute scores for the lines
+  P = compute_scores(X);
+
+  % Compute lines
+  [K, M, R, T] = compute_lines(P, N, radius);
+end
+
+function P = compute_scores(X)
   % Get the size of X
   [m, n] = size(X);
 
@@ -119,7 +127,9 @@ function [K, M, R, T] = hough(varargin)
   %    end
   %  end
   %end
+end
 
+function [K, M, R, T] = compute_lines(P, N, radius)
   % Update size for P
   [m, n] = size(P);
 
@@ -143,37 +153,10 @@ function [K, M, R, T] = hough(varargin)
 
     % Check if it's not the same theta and r again
     if(k > 1)
-      % Check if they violate
-      theta_violate = abs(theta - T) < radius;
-      r_violate = abs(r - R) < radius;
-
-      % Check if they both violate
-      violate = and(length(find(r_violate > 0)), length(find(theta_violate > 0)));
-      if(violate)
+      if(compute_violate(theta, r, T, R, radius))
         continue
       end
     end
-
-    % This code is not vectorized
-    %if(k > 1)
-    %  has_been_used = false;
-    %  for j = 1:count
-    %    % Find the difference
-    %    x = abs(theta - T(j));
-    %    y = abs(r - R(j));
-
-        % Check the difference is lower than h
-    %    if(and(x < radius, y < radius))
-    %      has_been_used = true;
-    %      break;
-    %    end
-    %  end
-
-      % Check if selected theta and r has been used before
-    %  if(has_been_used)
-    %    continue
-    %  end
-    %end
 
     % y = k*x + m can be expressed as x*sin(theta) + y*cos(theta) = r
     v = deg2rad(theta);
@@ -188,4 +171,26 @@ function [K, M, R, T] = hough(varargin)
       break;
     end
   end
+end
+
+function violate = compute_violate(theta, r, T, R, radius)
+  % Check if they violate
+  theta_violate = abs(theta - T) < radius;
+  r_violate = abs(r - R) < radius;
+
+  % Check if they both violate
+  violate = and(length(find(r_violate > 0)), length(find(theta_violate > 0)));
+
+  %  violate = false;
+  %  for j = 1:count
+  %    % Find the difference
+  %    x = abs(theta - T(j));
+  %    y = abs(r - R(j));
+
+       % Check the difference is lower than radius
+  %    if(and(x < radius, y < radius))
+  %      violate = true;
+  %      break;
+  %    end
+  %  end
 end
