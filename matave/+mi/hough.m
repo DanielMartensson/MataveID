@@ -1,8 +1,8 @@
 % Hough transform - Line detection algorthm
-% Input: X(Data matrix of an edge image), N(Amout of sloped lines), radius(This is a way to make sure you don't select the same K and M value again)
+% Input: X(Data matrix of an edge image), N(Amout of sloped lines), p(Line length threshold in precent)
 % Output: K(Slopes), M(Bias), R(Projected distance), T(Radians angle of the projected distance)
 % Example 1: [K, M, R, T] = mi.hough(X, N);
-% Example 2: [K, M, R, T] = mi.hough(X, N, radius);
+% Example 2: [K, M, R, T] = mi.hough(X, N, p);
 % Author: Daniel Mårtensson, 10 September 2023
 
 function [K, M, R, T] = hough(varargin)
@@ -27,19 +27,30 @@ function [K, M, R, T] = hough(varargin)
 
   % Get amount of sloped lines
   if(length(varargin) >= 3)
-    radius = varargin{3};
+    p = varargin{3};
+    if(p > 1)
+      p = 1;
+    end
   else
-    radius = 10;
+    p = 0;
   end
 
   % Compute scores for the lines
-  P = compute_scores(X);
+  P = compute_scores(X, p);
+
+  % Turn P into vectors
+  [x, y, z] = matrix_into_vectors(P);
 
   % Compute lines
+  radius = 10;
   [K, M, R, T] = compute_lines(P, N, radius);
 end
 
-function P = compute_scores(X)
+function [x, y, z] = matrix_into_vectors(P)
+  [x, y, z] = find(P);
+end
+
+function P = compute_scores(X, p)
   % Get the size of X
   [m, n] = size(X);
 
@@ -80,7 +91,13 @@ function P = compute_scores(X)
       r = floor(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
 
       % Compute theta and make sure theta is not negative
-      theta = floor(90 + rad2deg(atan2(y, x)));
+      v = rad2deg(atan2(y, x));
+      theta = floor(90 + v);
+
+      % If theta is deliberately, purposefully and exactly 180
+      % then the slope is going to be infinity large
+      % Make sure it's either 179 or 181 by random choice
+      theta(theta == 180) = 180 + sign(rand(1));
 
       % Avoid values that are larger than r_max
       theta(r > r_max) = [];
@@ -116,7 +133,15 @@ function P = compute_scores(X)
   %     r = floor(sqrt(x^2 + y^2)) + 1; % + 1 is just for indexing
 
         % Compute theta and make sure theta is not negative
-  %     theta = floor(90 + rad2deg(atan2(y, x)));
+  %     v = rad2deg(atan2(y, x));
+  %     theta = floor(90 + v);
+
+        % If theta is deliberately, purposefully and exactly 180
+        % then the slope is going to be infinity large
+        % Make sure it's either 179 or 181 by random choice
+        %if(theta == 180)
+        %  theta = 180 + sign(rand(1));
+        %end
 
         % Sometimes r kan be larger than R
   %     if(r <= r_max)
@@ -125,6 +150,10 @@ function P = compute_scores(X)
   %    end
   %  end
   %end
+
+  % p is precent variable that describes the threshold for a line definition - Small lines avoid
+  longest_top = max(P(:));
+  P(P < longest_top*p) = 0;
 end
 
 function [K, M, R, T] = compute_lines(P, N, radius)
