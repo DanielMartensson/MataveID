@@ -46,17 +46,17 @@ function P = compute_scores(X)
   % Choose angles between -90 and 90 in radians with 1 degree in step
   angles = -90:1:90;
 
-  % Compute slope Kk for every angle
-  Kk = tan(deg2rad(angles));
+  % Compute slope K for every angle
+  K = tan(deg2rad(angles));
 
-  % Get length of Kk
-  Kk_length = length(Kk);
+  % Get length of K
+  K_length = length(K);
 
-  % Create the longest distance inside the edge image X
-  R = ceil(sqrt(m^2 + n^2)) + 1;
+  % Maximum r value
+  r_max = floor(sqrt(m^2 + n^2));
 
   % Create points holder P
-  P = zeros(361, R);
+  P = zeros(270, r_max);
 
   % Collect the points for the most common lines
   for i = 1:m
@@ -67,25 +67,25 @@ function P = compute_scores(X)
         continue
       end
 
-      % Compute Mk from straight line equation
-      Mk = j - Kk*i;
+      % Compute M from straight line equation
+      M = j - K*i;
 
-      % Find minimal x
-      x = -Kk.*Mk./(1 + Kk.^2);
+      % Find x that finds a minimal r
+      x = -K.*M./(1 + K.^2);
 
       % Compute y
-      y = Kk.*x + Mk;
+      y = K.*x + M;
 
       % Compute r and make it to an integer
       r = floor(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
 
       % Compute theta and make sure theta is not negative
-      theta = 180 + rad2deg(atan2(y, x));
+      theta = 90 + rad2deg(atan2(y, x));
       theta = floor(theta) + 1; % + 1 is just for indexing
 
-      % Sometimes r kan be larger than R
-      theta(r > R) = [];
-      r(r > R) = [];
+      % Avoid values that are larger than r_max
+      theta(r > r_max) = [];
+      r(r > r_max) = [];
 
       % Add + 1
       indices = sub2ind(size(P), theta, r);
@@ -103,25 +103,25 @@ function P = compute_scores(X)
   %    end
 
       % Compute the r and theta from the pixel
-  %    for k = 1:Kk_length
-        % Compute Mk from straight line equation
-  %      Mk = j - Kk(k)*i;
+  %    for k = 1:K_length
+        % Compute M from straight line equation
+  %      M = j - K(k)*i;
 
-        % Find minimal x
+        % Find x that finds a minimal r
   %      x = -Kk(k)*Mk/(1 + Kk(k)^2);
 
         % Compute y
-  %      y = Kk(k)*x + Mk;
+  %      y = K(k)*x + M;
 
         % Compute r and make it to an integer
   %      r = floor(sqrt(x^2 + y^2)) + 1; % + 1 is just for indexing
 
         % Compute theta and make sure theta is not negative
-  %      theta = 180 + rad2deg(atan2(y, x));
+  %      theta = 90 + rad2deg(atan2(y, x));
   %      theta = floor(theta) + 1; % + 1 is just for indexing
 
         % Sometimes r kan be larger than R
-  %      if(r <= R)
+  %      if(r <= r_max)
   %        P(theta, r) = P(theta, r) + 1;
   %      end
   %    end
@@ -148,8 +148,8 @@ function [K, M, R, T] = compute_lines(P, N, radius)
     % Find the theta and r for the N largest value
     [theta, r] = ind2sub([m, n], index(k));
 
-    % Take minus 180 because we did + 180 above
-    theta = theta - 180;
+    % Take minus 90 because we did + 90 above
+    theta = theta - 90;
 
     % Check if it's not the same theta and r again
     if(k > 1)
