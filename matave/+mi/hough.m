@@ -80,8 +80,7 @@ function P = compute_scores(X)
       r = floor(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
 
       % Compute theta and make sure theta is not negative
-      theta = 90 + rad2deg(atan2(y, x));
-      theta = floor(theta) + 1; % + 1 is just for indexing
+      theta = floor(90 + rad2deg(atan2(y, x)));
 
       % Avoid values that are larger than r_max
       theta(r > r_max) = [];
@@ -98,30 +97,29 @@ function P = compute_scores(X)
   %  for j = 1:n
       % Check if the coordinate X(i, j) belongs to an edge
   %    if(X(i, j) <= eps)
-        % No edge here
+       % No edge here
   %      continue
   %    end
 
       % Compute the r and theta from the pixel
   %    for k = 1:K_length
         % Compute M from straight line equation
-  %      M = j - K(k)*i;
+  %     M = j - K(k)*i;
 
         % Find x that finds a minimal r
-  %      x = -Kk(k)*Mk/(1 + Kk(k)^2);
+  %     x = -Kk(k)*Mk/(1 + Kk(k)^2);
 
         % Compute y
-  %      y = K(k)*x + M;
+  %     y = K(k)*x + M;
 
         % Compute r and make it to an integer
-  %      r = floor(sqrt(x^2 + y^2)) + 1; % + 1 is just for indexing
+  %     r = floor(sqrt(x^2 + y^2)) + 1; % + 1 is just for indexing
 
         % Compute theta and make sure theta is not negative
-  %      theta = 90 + rad2deg(atan2(y, x));
-  %      theta = floor(theta) + 1; % + 1 is just for indexing
+  %     theta = floor(90 + rad2deg(atan2(y, x)));
 
         % Sometimes r kan be larger than R
-  %      if(r <= r_max)
+  %     if(r <= r_max)
   %        P(theta, r) = P(theta, r) + 1;
   %      end
   %    end
