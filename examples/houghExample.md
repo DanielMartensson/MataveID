@@ -7,6 +7,8 @@ Use this algorithm if you want to find lines inside an edge image. Important tha
 
 ## Hough Transform example
 
-https://github.com/DanielMartensson/MataveID/blob/6852df845e62f6a46dd99c732e086759e5fd21f7/examples/houghExample.m#L1-L29
+Assume that we have road that we want to track by writing two parallell lines that follows the road and we want to avoid everything else.
+
+https://github.com/DanielMartensson/MataveID/blob/0152b6ba7be0c80007987bb68f0c88b9e7e8b499/examples/houghExample.m#L1-L29
 
 ![Hough Result](../pictures/Hough_Result.png)
