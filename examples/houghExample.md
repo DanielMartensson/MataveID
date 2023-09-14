@@ -2,7 +2,7 @@
 Use this algorithm if you want to find lines inside an edge image. Important that the image needs to be an edge image. 
 
 ```matlab
-[K, M, R, T] = mi.hough(X, N, radius);
+[N, K, M, R, T] = mi.hough(X, p, epsilon, min_pts);
 ```
 
 ## Hough Transform example
