@@ -159,7 +159,7 @@ function [K, M, R, T] = hough_lines(A, N, index)
     % Find the maximum value at third column, which is the z-axis column
     [~, max_index] = max(B(:, 3));
 
-    % Get the theta and r, which is the x-axis and y-axis column
+    % Get the angles and r, which is the x-axis and y-axis column
     b = B(max_index, 1:2);
     angles = b(1);
     r = b(2);
