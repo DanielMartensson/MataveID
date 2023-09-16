@@ -54,7 +54,7 @@ function [N, K, M, R, T] = hough(varargin)
 end
 
 function [A, N, index] = hough_cluster(P, epsilon, min_pts)
-  % Turn matrix P into 2 vectors
+  % Turn matrix P into 3 vectors
   [x, y, z] = find(P);
 
   % Do dbscan - All idx values that are 0, are noise
