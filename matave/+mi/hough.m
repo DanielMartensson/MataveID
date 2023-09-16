@@ -112,8 +112,8 @@ function P = hough_scores(X, p)
       % Compute y
       y = K.*x + M;
 
-      % Compute r and make it to an integer
-      r = round(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
+      % Compute r and make it to an integer and add +1 because of the indexing
+      r = round(sqrt(x.^2 + y.^2)) + 1;
 
       % Compute the angles
       angles = atan2(y, x);
@@ -121,7 +121,7 @@ function P = hough_scores(X, p)
       % Make sure that the angles are not negative
       angles(angles < 0) = angles(angles < 0) + pi;
 
-      % Turn them into degrees
+      % Turn them into degrees and add +1 because of the indexing
       angles = round(rad2deg(angles)) + 1;
 
       % Avoid values that are larger than r_max
@@ -154,14 +154,14 @@ function [K, M, R, T] = hough_lines(A, N, index)
     % Find the maximum value at third column, which is the z-axis column
     [~, max_index] = max(B(:, 3));
 
-    % Get the angles and r, which is the x-axis and y-axis column
+    % Get the angles and r, which is the x-axis and y-axis column and take -1 because we did +1 above
     b = B(max_index, 1:2);
-    angle = b(1);
-    r = b(2);
+    angle = b(1) - 1;
+    r = b(2) - 1;
 
-    % Make sure that the angle is not deliberately, purposefully and exactly pi/2
-    if(abs(pi/2 - angle) <= 0.00001)
-      angle = angle + 0.00001 * randn(1);
+    % Make sure that the angle is not deliberately, purposefully and exactly 90
+    if(abs(90 - angle) <= 1e-05)
+      angle = angle + 1e-05;
     end
 
     % y = k*x + m can be expressed as x*sin(angle) + y*cos(angle) = r
