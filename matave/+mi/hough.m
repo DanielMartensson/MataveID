@@ -113,7 +113,7 @@ function P = hough_scores(X, p)
       y = K.*x + M;
 
       % Compute r and make it to an integer
-      r = floor(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
+      r = round(sqrt(x.^2 + y.^2)) + 1; % + 1 is just for indexing
 
       % Compute the angles
       angles = atan2(y, x);
@@ -122,7 +122,7 @@ function P = hough_scores(X, p)
       angles(angles < 0) = angles(angles < 0) + pi;
 
       % Turn them into degrees
-      angles = floor(rad2deg(angles)) + 1;
+      angles = round(rad2deg(angles)) + 1;
 
       % Avoid values that are larger than r_max
       angles(r > r_max) = [];
@@ -166,7 +166,7 @@ function [K, M, R, T] = hough_lines(A, N, index)
 
     % y = k*x + m can be expressed as x*sin(angle) + y*cos(angle) = r
     angle = deg2rad(angle);
-    K(i) = sin(angle)/-cos(angle)
+    K(i) = sin(angle)/-cos(angle);
     M(i) = - r/-cos(angle);
     R(i) = r;
     T(i) = angle;
