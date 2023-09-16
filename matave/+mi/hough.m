@@ -135,8 +135,8 @@ function P = hough_scores(X, p)
   end
 
   % p is precent variable that describes the threshold for a line definition - Small lines avoid
-  longest_top = max(P(:));
-  P(P < longest_top*p) = 0;
+  threshold = max(P(:)) * p;
+  P(P < threshold) = 0;
 end
 
 function [K, M, R, T] = hough_lines(A, N, index)
