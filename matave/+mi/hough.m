@@ -124,11 +124,6 @@ function P = hough_scores(X, p)
       % Turn them into degrees
       angles = floor(rad2deg(angles)) + 1;
 
-      % If angles is deliberately, purposefully and exactly 90
-      % then the slope is going to be infinity large
-      % Make sure theta is either 89 or 91 by random choice
-      angles(angles == 90) = 90 + sign(rand(1));
-
       % Avoid values that are larger than r_max
       angles(r > r_max) = [];
       r(r > r_max) = [];
@@ -161,14 +156,19 @@ function [K, M, R, T] = hough_lines(A, N, index)
 
     % Get the angles and r, which is the x-axis and y-axis column
     b = B(max_index, 1:2);
-    angles = b(1);
+    angle = b(1);
     r = b(2);
 
-    % y = k*x + m can be expressed as x*sin(angles) + y*cos(angles) = r
-    v = deg2rad(angles);
-    K(i) = sin(v)/-cos(v);
-    M(i) = - r/-cos(v);
+    % Make sure that the angle is not deliberately, purposefully and exactly pi/2
+    if(abs(pi/2 - angle) <= 0.00001)
+      angle = angle + 0.00001 * randn(1);
+    end
+
+    % y = k*x + m can be expressed as x*sin(angle) + y*cos(angle) = r
+    angle = deg2rad(angle);
+    K(i) = sin(angle)/-cos(angle)
+    M(i) = - r/-cos(angle);
     R(i) = r;
-    T(i) = angles;
+    T(i) = angle;
   end
 end
