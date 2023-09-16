@@ -58,8 +58,8 @@ function [A, N, index] = hough_cluster(P, epsilon, min_pts)
   [x, y, z] = find(P);
 
   % Do dbscan - All idx values that are 0, are noise
-  A = [x y];
-  index = mi.dbscan(A, epsilon, min_pts);
+  C = [x y];
+  index = mi.dbscan(C, epsilon, min_pts);
 
   % Add the z axis as well
   A = [x y z];
