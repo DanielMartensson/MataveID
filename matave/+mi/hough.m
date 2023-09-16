@@ -126,7 +126,7 @@ function P = hough_scores(X, p)
 
       % If angles is deliberately, purposefully and exactly 90
       % then the slope is going to be infinity large
-      % Make sure theta is either 179 or 181 by random choice
+      % Make sure theta is either 89 or 91 by random choice
       angles(angles == 90) = 90 + sign(rand(1));
 
       % Avoid values that are larger than r_max
