@@ -1,10 +1,10 @@
 % Hough transform - Line detection algorthm by using hough transform and DBscan
 % Input: X(Data matrix of an edge image), p(Line length threshold in precent), epsilon(Minimum radius for hough cluster), min_pts(Minimum points for hough cluster)
-% Output: N(Number of lines), K(Slopes), M(Bias), R(Projected distance), T(Radians angle of the projected distance)
-% Example 1: [N, K, M, R, T] = mi.hough(X, p, epsilon, min_pts);
+% Output: N(Number of lines), K(Slopes for the lines), M(Bias for the lines), R(Shortest distance to line from origin), A(Angle in radians)
+% Example 1: [N, K, M, R, A] = mi.hough(X, p, epsilon, min_pts);
 % Author: Daniel Mårtensson, 14 September 2023
 
-function [N, K, M, R, T] = hough(varargin)
+function [N, K, M, R, A] = hough(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -47,29 +47,26 @@ function [N, K, M, R, T] = hough(varargin)
   P = hough_scores(X, p);
 
   % Turn the scores matrix into a hough cluster
-  [A, N, index] = hough_cluster(P, epsilon, min_pts);
+  [x, y, z, N, index] = hough_cluster(P, epsilon, min_pts);
 
   % Compute lines
-  [K, M, R, T] = hough_lines(A, N, index);
+  [K, M, R, A] = hough_lines(x, y, z, N, index);
 end
 
-function [A, N, index] = hough_cluster(P, epsilon, min_pts)
+function [x, y, z, N, index] = hough_cluster(P, epsilon, min_pts)
   % Turn matrix P into 3 vectors
   [x, y, z] = find(P);
 
-  % Do dbscan - All idx values that are 0, are noise
+  % Do dbscatn - All idx values that are 0, are noise
   C = cat(2, x, y);
   index = mi.dbscan(C, epsilon, min_pts);
 
-  % Add the z axis as well
-  A = [x y z];
-
-  % find the amount of clusters
+  % Find the amount of clusters
   N = max(index);
 
   % Uncomment for test
   %for i = 0:N
-  %  scatter3(A(index == i, 1), A(index == i, 2), A(index == i, 3));
+  %  scatter3(x(index == i), y(index == i), z(index == i));
   %  hold on
   %end
   %figure
@@ -83,6 +80,8 @@ function P = hough_scores(X, p)
   angles = -90:1:90;
 
   % Compute slope K for every angle
+  angles(1) = -90 - 1e5;
+  angles(181) = 90 + 1e5;
   K = tan(deg2rad(angles));
 
   % Get length of K
@@ -112,8 +111,8 @@ function P = hough_scores(X, p)
       % Compute y
       y = K.*x + M;
 
-      % Compute r and make it to an integer and add +1 because of the indexing
-      r = round(sqrt(x.^2 + y.^2)) + 1;
+      % Compute r and make it to an integer
+      r = round(sqrt(x.^2 + y.^2));
 
       % Compute the angles
       angles = atan2(y, x);
@@ -128,9 +127,11 @@ function P = hough_scores(X, p)
       angles(r > r_max) = [];
       r(r > r_max) = [];
 
-      % Add + 1
-      indices = sub2ind(size(P), angles, r);
-      P(indices) = P(indices) + 1;
+      % Save the indexes in column major
+      indexes = r*180 + angles;
+
+      % Check if there are duplicates
+      P(indexes) = P(indexes) + 1;
     end
   end
 
@@ -139,25 +140,23 @@ function P = hough_scores(X, p)
   P(P < threshold) = 0;
 end
 
-function [K, M, R, T] = hough_lines(A, N, index)
-  % Create K, M, R and T - They are holders for the output
+function [K, M, R, A] = hough_lines(x, y, z, N, index)
+  % Create K, M, R and A - They are holders for the output
   K = zeros(1, N);
   M = zeros(1, N);
   R = zeros(1, N);
-  T = zeros(1, N);
+  A = zeros(1, N);
 
   % Fill
   for i = 1:N
-    % Get the columns for class ID number i
-    B = A(index == i, :);
+    % Find the maximum value at z-axis of a specific class ID
+    [~, max_index] = max(z(index == i));
 
-    % Find the maximum value at third column, which is the z-axis column
-    [~, max_index] = max(B(:, 3));
+    % Get the angles and take -1 because we did +1 above
+    angle = x(index == i)(max_index) - 1;
 
-    % Get the angles and r, which is the x-axis and y-axis column and take -1 because we did +1 above
-    b = B(max_index, 1:2);
-    angle = b(1) - 1;
-    r = b(2) - 1;
+    % Important to take -1 because indexes = sub2ind(size(P), angles, r) (a function that been used before) cannot accept r = 0, but indexes = r*180 + angles; can that
+    r = y(index == i)(max_index) - 1;
 
     % Make sure that the angle is not deliberately, purposefully and exactly 90
     if(abs(90 - angle) <= 1e-05)
@@ -169,6 +168,6 @@ function [K, M, R, T] = hough_lines(A, N, index)
     K(i) = sin(angle)/-cos(angle);
     M(i) = - r/-cos(angle);
     R(i) = r;
-    T(i) = angle;
+    A(i) = angle;
   end
 end
