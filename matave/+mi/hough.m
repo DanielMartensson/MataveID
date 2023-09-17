@@ -93,6 +93,9 @@ function P = hough_scores(X, p)
   % Create points holder P
   P = zeros(180, r_max);
 
+  % Create max index
+  max_index = 180*r_max;
+
   % Collect the points for the most common lines
   for i = 1:m
     for j = 1:n
@@ -123,12 +126,11 @@ function P = hough_scores(X, p)
       % Turn them into degrees and add +1 because of the indexing
       angles = round(rad2deg(angles)) + 1;
 
-      % Avoid values that are larger than r_max
-      angles(r > r_max) = [];
-      r(r > r_max) = [];
-
       % Save the indexes in column major
       indexes = r*180 + angles;
+
+      % Avoid indexes that are larger than max index
+      indexes(indexes > max_index) = [];
 
       % Check if there are duplicates
       P(indexes) = P(indexes) + 1;
