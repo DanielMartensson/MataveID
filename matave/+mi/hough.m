@@ -57,6 +57,13 @@ function [x, y, z, N, index] = hough_cluster(P, epsilon, min_pts)
   % Turn matrix P into 3 vectors
   [x, y, z] = find(P);
 
+  % Sort so the longest line comes first
+  [z, sorted_indexes] = sort(z, 'descend');
+
+  % Sort the rest
+  x = x(sorted_indexes);
+  y = y(sorted_indexes);
+
   % Do dbscatn - All idx values that are 0, are noise
   C = cat(2, x, y);
   index = mi.dbscan(C, epsilon, min_pts);
