@@ -44,13 +44,13 @@ function [N, K, M] = hough(varargin)
   end
 
   % Compute scores for the lines
-  P = hough_scores(X, p);
+  [P, r_half] = hough_scores(X, p);
 
   % Turn the scores matrix into a hough cluster
   [x, y, z, N, index] = hough_cluster(P, epsilon, min_pts);
 
   % Compute lines
-  [K, M] = hough_lines(x, y, z, N, index);
+  [K, M] = hough_lines(x, y, z, N, index, r_half);
 end
 
 function [x, y, z, N, index] = hough_cluster(P, epsilon, min_pts)
@@ -79,7 +79,7 @@ function [x, y, z, N, index] = hough_cluster(P, epsilon, min_pts)
   %figure
 end
 
-function P = hough_scores(X, p)
+function [P, r_half] = hough_scores(X, p)
   % Get the size of X
   [m, n] = size(X);
 
@@ -94,8 +94,11 @@ function P = hough_scores(X, p)
   % Get length of K
   K_length = length(K);
 
+  % Compute the r_half
+  r_half = floor(sqrt(m^2 + n^2));
+
   % Maximum r value
-  r_max = floor(sqrt(m^2 + n^2));
+  r_max = 2*r_half;
 
   % Create points holder P
   P = zeros(180, r_max);
@@ -124,6 +127,10 @@ function P = hough_scores(X, p)
       % Compute r and make it to an integer
       r = round(sqrt(x.^2 + y.^2));
 
+      % This is a special case when we want to track the direction of r
+      r = r + r_half;
+      r(y < 0) = r(y < 0) - r_half;
+
       % Compute the angles
       angles = atan2(y, x);
 
@@ -149,7 +156,7 @@ function P = hough_scores(X, p)
   P(P < threshold) = 0;
 end
 
-function [K, M] = hough_lines(x, y, z, N, index)
+function [K, M] = hough_lines(x, y, z, N, index, r_half)
   % Create K and M - They are holders for the output
   K = zeros(1, N);
   M = zeros(1, N);
@@ -164,6 +171,13 @@ function [K, M] = hough_lines(x, y, z, N, index)
 
     % Important to take -1 because indexes = sub2ind(size(P), angles, r) (a function that been used before) cannot accept r = 0, but indexes = r*180 + angles; can that
     r = y(index == i)(max_index) - 1;
+
+    % This is the trick to make sure r pointing at the right direction
+    if(r > r_half)
+      r = r - r_half;
+    else
+      r = -r;
+    end
 
     % Make sure that the angle is not deliberately, purposefully and exactly 90
     if(abs(90 - angle) <= 1e-05)
