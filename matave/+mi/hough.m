@@ -128,8 +128,7 @@ function [P, r_half] = hough_scores(X, p)
       r = round(sqrt(x.^2 + y.^2));
 
       % This is a special case when we want to track the direction of r
-      r = r + r_half;
-      r(y < 0) = r(y < 0) - r_half;
+      r(y > 0) = r(y > 0) + r_half;
 
       % Compute the angles
       angles = atan2(y, x);
