@@ -16,6 +16,7 @@ function [N, K, M] = hough(varargin)
   else
     error('Missing data X')
   end
+  
   % Get amount of sloped lines
   if(length(varargin) >= 2)
     p = varargin{2};
