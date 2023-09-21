@@ -31,8 +31,10 @@ end
 
 function G = conv2_fft(X, K)
   % Create kernel
-  kernel = zeros(size(X));
-  kernel(1:3, 1:3) = K;
+  [m, n] = size(X);
+  kernel = zeros(m, n);
+  [m, n] = size(K);
+  kernel(1:m, 1:n) = K;
 
   % Do FFT2 on X and kernel
   A = fft2(X);
