@@ -33,3 +33,4 @@ nn.m
 logreg.m
 sobel.m
 hough.m
+canny.m
