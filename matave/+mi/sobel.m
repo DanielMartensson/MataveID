@@ -40,7 +40,4 @@ function G = conv2_fft(X, K)
 
   % Compute the convolutional matrix - abs to remove zero imaginary numbers
   G = abs(ifft2(A.*B));
-
-  % Normalize G
-  G = G/max(G(:));
 end
