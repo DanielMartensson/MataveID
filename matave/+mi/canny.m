@@ -1,7 +1,7 @@
 % Canny filter
 % Input: data matrix(X)
 % Output: E(Edge matrix)
-% Example 1: [E] = mi.canny(X)
+% Example 1: [E] = mi.canny(X);
 % Author: Daniel Mårtensson, 21 September 2023
 
 function E = canny(varargin)
