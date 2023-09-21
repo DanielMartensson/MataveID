@@ -16,7 +16,7 @@ Notice that Canny is quite slow, but gives very thin edges, which is good. But i
 Then sobel is the right solution for you
 
 ```matlab
-G = mi.sobel(imread('way.jpg'));
+>> G = mi.sobel(imread('way.jpg'));
 >> G(G < 255) = 0;
 >> imshow(uint8(G));
 ```
