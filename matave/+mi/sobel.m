@@ -13,6 +13,13 @@ function [G, O] = sobel(varargin)
   % Get X
   X = varargin{1};
 
+  % Gray scaled image
+  if(size(X, 3) > 1)
+    gray_input_img = rgb2gray(X);
+  else
+    gray_input_img = X;
+  end
+
   % Create kernels for X-direction and Y-direction
   K_x = [-1 0 1; -2 0 2; -1 0 1];
   K_y = [-1 -2 -1; 0 0 0; 1 2 1];
