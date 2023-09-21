@@ -5,11 +5,16 @@
 % Author: Daniel Mårtensson, November 2021
 
 function [S] = ica(varargin)
- % Check if there is some input arguments
+  % Check if there is some input arguments
   if(isempty (varargin))
-    error ('Missing signal matrix X')
-  else
+    error ('Missing input')
+  end
+
+  % Get data matrix X
+  if(length(varargin) >= 1)
     X = varargin{1};
+  else
+    error('Missing data X')
   end
   
   % Center the data - This will return X transpose
