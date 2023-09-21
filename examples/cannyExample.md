@@ -13,11 +13,11 @@ https://github.com/DanielMartensson/MataveID/blob/210c93d528a0ebe7f6f59df54904a7
 ![Canny Result](../pictures/Canny_Result.png)
 
 Notice that Canny is quite slow, but gives very thin edges, which is good. But if you only want to have the edges and you don't care how thick they are.
-Then sobel is the right solution for you
+Then Sobel is the right solution for you because Sobel is much faster than Canny.
 
 ```matlab
 >> G = mi.sobel(imread('way.jpg'));
->> G(G < 255) = 0;
+>> G(G < 255) = 0; % Every pixel that are not white is going to be black
 >> imshow(uint8(G));
 ```
 ## Result
