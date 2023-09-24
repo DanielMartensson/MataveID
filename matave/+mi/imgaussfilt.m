@@ -1,5 +1,5 @@
 % Gaussian 2D filter
-% Input: data matrix(X)
+% Input: Data matrix(X)
 % Output: Y(Filtered data matrix)
 % Example 1: [Y] = mi.imgaussfilt(X);
 % Example 2: [Y] = mi.imgaussfilt(X, sigma);
