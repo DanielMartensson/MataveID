@@ -11,7 +11,7 @@ function [Y] = imgaussfilt(varargin)
     error('Missing input')
   end
 
-  % Get state input
+  % Get data matrix X
   if(length(varargin) >= 1)
     X = varargin{1};
   else
@@ -40,32 +40,8 @@ function [Y] = imgaussfilt(varargin)
   K_g = 1/(2*pi*sigma^2)*exp(-(x.^2 + y.^2)/(2*sigma^2));
 
   % Do conv2 with FFT
-  Y = conv2_fft(X, K_g);
+  Y = mc.conv2fft(X, K_g);
 
   % Give the same brightness
   Y = Y*sum(X(:))/sum(Y(:));
-end
-
-function G = conv2_fft(X, K)
-  % Create kernel
-  [m, n] = size(X);
-  kernel = zeros(m, n);
-  [m, n] = size(K);
-
-  % Compute the sizes
-  m_middle = ceil(m/2);
-  n_middle = ceil(n/2);
-
-  % Insert kernel
-  kernel(1:m_middle, 1:n_middle) = K(m_middle:end, n_middle:end);
-  kernel(end, 1:n_middle) = K(1, n_middle:end);
-  kernel(1:m_middle, end) = K(m_middle:end, 1);
-  kernel(end, end) = K(1,1);
-
-  % Do FFT2 on X and kernel
-  A = fft2(X);
-  B = fft2(kernel);
-
-  % Compute the convolutional matrix - abs to remove zero imaginary numbers
-  G = abs(ifft2(A.*B));
 end
