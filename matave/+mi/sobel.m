@@ -1,5 +1,5 @@
 % Sobel filter
-% Input: Data matrix(X)
+% Input: X(Data matrix)
 % Output: G(Gradients), O(Orientations)
 % Example 1: [G, O] = mi.sobel(X);
 % Author: Daniel Mårtensson, 6 September 2023
