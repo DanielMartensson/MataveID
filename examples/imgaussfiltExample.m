@@ -10,7 +10,7 @@ if(size(image, 3) == 3)
 end
 
 % Select sigma
-sigma = 2;
+sigma = 3;
 
 % Compute gradients and orientations
 Y = mi.imgaussfilt(image, sigma);
