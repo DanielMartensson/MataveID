@@ -1,5 +1,5 @@
 % Robust Principal Component Analysis
-% Input: data matrix(X)
+% Input: X(Data matrix)
 % Output: L(filtred data matrix), S(sparse noise matrix)
 % Example 1: [L, S] = mi.rpca(X)
 % Author: Daniel Mårtensson, 28 April 2021
