@@ -1,5 +1,5 @@
 % Gaussian 2D filter
-% Input: Data matrix(X)
+% Input: X(Data matrix), sigma(Standard deviation)
 % Output: Y(Filtered data matrix)
 % Example 1: [Y] = mi.imgaussfilt(X);
 % Example 2: [Y] = mi.imgaussfilt(X, sigma);
