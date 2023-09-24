@@ -34,3 +34,4 @@ logreg.m
 sobel.m
 hough.m
 canny.m
+imgaussfilt.m
