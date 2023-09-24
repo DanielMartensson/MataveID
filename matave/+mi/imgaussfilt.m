@@ -1,8 +1,7 @@
 % Gaussian 2D filter
-% Input: Data matrix(X)
+% Input: data matrix(X)
 % Output: Y(Filtered data matrix)
-% Example 1: [Y] = mi.imgaussfilt(X);
-% Example 2: [Y] = mi.imgaussfilt(X, sigma);
+% Example 1: [Y] = mi.imgaussfilt(X, sigma)
 % Author: Daniel Mårtensson, 24 September 2023
 
 function [Y] = imgaussfilt(varargin)
@@ -34,10 +33,13 @@ function [Y] = imgaussfilt(varargin)
   kernel_size = round(6 * sigma);
 
   % Create mesh grid
-  [x, y] = meshgrid(-kernel_size:kernel_size, -kernel_size:kernel_size);
+  [x, y] = meshgrid(1:kernel_size, 1:kernel_size);
 
   % Create gaussian 2D kernel
   K_g = 1/(2*pi*sigma^2)*exp(-(x.^2 + y.^2)/(2*sigma^2));
+
+  % Normalization
+  K_g = K_g / sum(K_g(:));
 
   % Do conv2 with FFT
   Y = conv2_fft(X, K_g);
