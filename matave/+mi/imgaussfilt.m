@@ -1,7 +1,8 @@
 % Gaussian 2D filter
 % Input: data matrix(X)
 % Output: Y(Filtered data matrix)
-% Example 1: [Y] = mi.imgaussfilt(X, sigma)
+% Example 1: [Y] = mi.imgaussfilt(X);
+% Example 2: [Y] = mi.imgaussfilt(X, sigma);
 % Author: Daniel Mårtensson, 24 September 2023
 
 function [Y] = imgaussfilt(varargin)
