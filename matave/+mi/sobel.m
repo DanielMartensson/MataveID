@@ -40,10 +40,14 @@ function G = conv2_fft(X, K)
   kernel = zeros(m, n);
   [m, n] = size(K);
 
+  % Compute the sizes
+  m_middle = ceil(m/2);
+  n_middle = ceil(n/2);
+
   % Insert kernel
-  kernel(1:m-1, 1:n-1) = K(2:3, 2:3);
-  kernel(end, 1:n-1) = K(1, 2:3);
-  kernel(1:m-1, end) = K(2:3, 1);
+  kernel(1:m_middle, 1:n_middle) = K(m_middle:end, n_middle:end);
+  kernel(end, 1:n_middle) = K(1, n_middle:end);
+  kernel(1:m_middle, end) = K(m_middle:end, 1);
   kernel(end, end) = K(1,1);
 
   % Do FFT2 on X and kernel
