@@ -1,5 +1,5 @@
 % Canny filter
-% Input: data matrix(X)
+% Input: X(Data matrix)
 % Output: E(Edge matrix)
 % Example 1: [E] = mi.canny(X);
 % Author: Daniel Mårtensson, 21 September 2023
@@ -26,7 +26,7 @@ function E = canny(varargin)
 
   % Apply gaussian blurring
   K_g = 1/159*[2 4 5 4 2; 4 9 12 9 4; 5 12 15 12 5; 4 9 12 9 4; 2 4 5 4 2];
-  blur_img = conv2_fft(gray_input_img, K_g);
+  blur_img = conv2fft(gray_input_img, K_g);
 
   % Use sobel
   [grad_mag, grad_dir] = mi.sobel(blur_img);
@@ -38,22 +38,6 @@ function E = canny(varargin)
   % Hysteresis Thresholding
   E = hysteresis_thresholding(thinned_output);
 end
-
-function G = conv2_fft(X, K)
-  % Create kernel
-  [m, n] = size(X);
-  kernel = zeros(m, n);
-  [m, n] = size(K);
-  kernel(1:m, 1:n) = K;
-
-  % Do FFT2 on X and kernel
-  A = fft2(X);
-  B = fft2(kernel);
-
-  % Compute the convolutional matrix - abs to remove zero imaginary numbers
-  G = abs(ifft2(A.*B));
-end
-
 function closest_dir_arr = closest_dir_function(grad_dir)
   [m, n] = size(grad_dir);
   closest_dir_arr = zeros(m, n);
