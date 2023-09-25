@@ -26,7 +26,7 @@ function E = canny(varargin)
 
   % Apply gaussian blurring
   K_g = 1/159*[2 4 5 4 2; 4 9 12 9 4; 5 12 15 12 5; 4 9 12 9 4; 2 4 5 4 2];
-  blur_img = conv2fft(gray_input_img, K_g);
+  blur_img = mc.conv2fft(gray_input_img, K_g);
 
   % Use sobel
   [grad_mag, grad_dir] = mi.sobel(blur_img);
