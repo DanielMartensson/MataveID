@@ -1,11 +1,14 @@
-% Load image
-X = imread('lab.pgm');
+% Close all
+close all
+
+% Read image
+X = imread(fullfile('..', 'data', 'lab.pgm'));
 
 % Make image greyscale
 if size(X, 3) > 1
-	X =  rgb2gray(X);
+  X =  rgb2gray(X);
 else
-	X = double(X);
+  X = double(X);
 end
 
 % Compute Local Binary Pattern
