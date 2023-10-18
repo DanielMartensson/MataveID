@@ -36,3 +36,4 @@ hough.m
 canny.m
 imgaussfilt.m
 fast.m
+lbp.m
