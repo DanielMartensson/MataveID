@@ -35,3 +35,4 @@ sobel.m
 hough.m
 canny.m
 imgaussfilt.m
+fast.m
