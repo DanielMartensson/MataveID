@@ -1,16 +1,16 @@
 # Local Binary Pattern
-Use LBP if you want to find a binary pattern inside the centrum of a matrix, or centrum of an image `X`.
+Use LBP if you want to find a binary pattern inside of a matrix, or an image `X`.
 
 ```matlab
-[descriptor] = mi.lbp(X, radius, init_angle, lbp_bit);
+[descriptor] = mi.lbp(X, x, y, radius, init_angle, lbp_bit);
 ```
 
 ## Example
 
-https://github.com/DanielMartensson/MataveID/blob/c8d092780691a1b578316e4af90d8eb32a0a529a/examples/lbpExample.m#L1-L19
+https://github.com/DanielMartensson/MataveID/blob/2e81144d45dd2e77096cdd2846457709038cd429/examples/lbpExample.m#L1-L21
 
 ## Result
 
 ```matlab
-166731680 = 0b1001111100000001111110100000
+288882440 = 0b10001001101111111111100001000
 ```
