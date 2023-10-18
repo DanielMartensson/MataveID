@@ -1,4 +1,4 @@
-% Local Binary Pattern of the centrum of an image
+% Local Binary Pattern of an image
 % Input: X(image), x(column coordinate of center pixel), y(row coordinate of center pixel), radius, init_angle(where to begin with counting), lbp_bit(enter: 8, 16, 24, 32)
 % Output: descriptor(binary value)
 % Example 1: [descriptor] = mi.lbp(X, x, y, radius, init_angle, lbp_bit);
