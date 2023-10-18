@@ -7,7 +7,7 @@ Use FAST if you want to find corners inside an image
 
 ## Example
 
-https://github.com/DanielMartensson/MataveID/blob/e08f505f9c92bf7b9d92ccb4811e3bc9aab8eb33/examples/fastExample.m#L1-L22
+https://github.com/DanielMartensson/MataveID/blob/af13657898163b9bd6554e7befa9880b683e8813/examples/fastExample.m#L1-L22
 
 ## Result
 ![FAST Result](../pictures/FAST_Result.png)
