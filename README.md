@@ -24,6 +24,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `canny.m` | Complete | Nothing to do here |
 | `imgaussfilt.m` | Complete  | Nothing to do here |
 | `fast.m` | Complete | Nothing to do here |
+| `lbp.m` | Complete  | Nothing to do here |
 | `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
 | `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
 | `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
@@ -81,6 +82,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - CANNY for edge image
 - IMGAUSSFILT for 2D blurring
 - FAST for corner detection
+- LBP for finding binary pattern in a matrix
 
 # Papers:
 MataveID contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
