@@ -7,7 +7,10 @@ Use LBP if you want to find a binary pattern inside a matrix, or a part `X` of a
 
 ## Example
 
-https://github.com/DanielMartensson/MataveID/blob/af13657898163b9bd6554e7befa9880b683e8813/examples/fastExample.m#L1-L22
+https://github.com/DanielMartensson/MataveID/blob/c8d092780691a1b578316e4af90d8eb32a0a529a/examples/lbpExample.m#L1-L19
 
 ## Result
 
+```matlab
+166731680 = 0b1001111100000001111110100000
+```
