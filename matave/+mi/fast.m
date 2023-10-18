@@ -40,6 +40,8 @@ function [corners, scores] = fast(varargin)
       [corners, scores] = fast11(image, threshold, 1);
     case 12
       [corners, scores] = fast12(image, threshold, 1);
+    otherwise
+      error('Wrong fast method number');
   end
 end
 
