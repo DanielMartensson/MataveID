@@ -12,7 +12,7 @@ else
 end
 
 % Compute fast
-threshold = 100;
+threshold = 30;
 fast_method = 12;
 coordintes = mi.fast(X, threshold, fast_method);
 
