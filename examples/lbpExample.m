@@ -15,5 +15,7 @@ end
 radius = 100;
 init_angle = 0;
 lbp_bit = 32;
-descriptor = mi.lbp(X, radius, deg2rad(init_angle), lbp_bit);
+x = 110;
+y = 110;
+descriptor = mi.lbp(X, x, y, radius, deg2rad(init_angle), lbp_bit);
 fprintf('%i = 0b%s\n', descriptor, dec2bin(descriptor))
