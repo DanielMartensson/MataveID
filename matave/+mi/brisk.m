@@ -99,12 +99,12 @@ function [histogram, X1, X2, G, corners, scores] = brisk(varargin)
         % Then find the principal orientation, a.k.a the mean value of O_part
         init_angle = mean(O_part(:));
 
-	      % Find the rotated descriptor index with different radius
-	      % If lgb_bit is 8-bit, then descriptor_index will be from 1 to 256
-	      % If lgb_bit is 16-bit, then descriptor_index will be from 257 to 512
-	      % If lgb_bit is 24-bit, then descriptor_index will be from 513 to 768
-	      % If lgb_bit is 32-bit, then descriptor_index will be from 769 to 1024
-	      descriptor_index = mi.lbp(X2, x, y, radius(j), init_angle, lbp_bit(j)) + 1;
+        % Find the rotated descriptor index with different radius
+        % If lgb_bit is 8-bit, then descriptor_index will be from 1 to 256
+        % If lgb_bit is 16-bit, then descriptor_index will be from 257 to 512
+        % If lgb_bit is 24-bit, then descriptor_index will be from 513 to 768
+        % If lgb_bit is 32-bit, then descriptor_index will be from 769 to 1024
+        descriptor_index = mi.lbp(X2, x, y, radius(j), init_angle, lbp_bit(j)) + 1;
 
         % Scale descriptor index to 8 bit
         switch(j)
