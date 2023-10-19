@@ -4,11 +4,11 @@ clear all
 clc
 
 % Load image
-X = imread('hus.png');
+X = imread(fullfile('..', 'data', 'hus.jpg'));
 
 % Make image greyscale
 if size(X, 3) > 1
-	X =  rgb2gray(X);
+  X =  rgb2gray(X);
 end
 
 % Compute BRISK
