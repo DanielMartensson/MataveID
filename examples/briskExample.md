@@ -14,7 +14,7 @@ https://github.com/DanielMartensson/MataveID/blob/c2fc1672220b18a453bd1a3d773251
 
 ![BRISK_Result_Corner_Detection](../pictures/BRISK_Result_Corner_Detection.png)
 
-![BRISK_Result_Background](../pictures/BRISK_Result_Background)
+![BRISK_Result_Background](../pictures/BRISK_Result_Background.png)
 
 ![BRISK_Result_Descriptor_Filtering](../pictures/BRISK_Result_Descriptor_Filtering.png)
 
