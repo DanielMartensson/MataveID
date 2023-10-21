@@ -79,7 +79,7 @@ function [histogram, X1, X2, G, corners, scores] = brisk(varargin)
   lbp_bit = [8, 16, 24, 32];
   histogram = zeros(1, 1024);
   for i = 1:length(corners)
-    % Get coordinates for the interest points
+    % Get coordinates for the interest points - x is column and y is row
     x = corners(i, 1);
     y = corners(i, 2);
 
