@@ -29,7 +29,7 @@ function [idx, C] = kmeans(X, k)
       % Check if we are going to break the iteration
       new_value = sum(C(:));
       difference = abs(old_value - new_value);
-      if(difference < 0.001)
+      if(difference < 1e-11)
         break;
       end
       old_value = new_value;
