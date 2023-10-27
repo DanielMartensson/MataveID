@@ -75,7 +75,7 @@ function [data, X1, X2, G, corners, scores] = brisk(varargin)
   end
 
   % Compute the descriptors
-  data = [];
+  data0 = [];
   for i = 1:length(corners)
     % Get coordinates for the interest points
     x = corners(i, 1);
@@ -107,9 +107,18 @@ function [data, X1, X2, G, corners, scores] = brisk(varargin)
       d = [bitshift(d1, -8), bitand(d1, 0xFF), bitshift(d2, -8), bitand(d2, 0xFF), bitshift(d3, -8), bitand(d3, 0xFF), bitshift(d4, -8), bitand(d4, 0xFF), bitshift(d5, -8), bitand(d5, 0xFF), d6];
 
       % Save
-      data = [data; d];
+      data0 = [data0; d];
     end
   end
+
+  % Data binary
+  data = [];
+  for i = 1:size(data0, 1)
+    binary_strings = dec2bin(data0(i, :), 8);
+    binary_vector = (binary_strings'(:))' - '0';
+    data = [data; binary_vector];
+  end
+  
 end
 
 function avg = circleaverage(X)
