@@ -7,7 +7,7 @@ Use this algorithm if you want to convert keypoints into one large histogram for
 
 ## Example
 
-https://github.com/DanielMartensson/MataveID/blob/51ae1655a16b34222a5da7ef7a78b30958985363/examples/briskExample.m#L1-L23
+https://github.com/DanielMartensson/MataveID/blob/8344dcad56a89355b9ff469c56c6258db5f66973/examples/briskExample.m#L1-L37
 
 ## Result
 ![BRISK Result_Histogram](../pictures/BRISK_Result_Histogram.png)
