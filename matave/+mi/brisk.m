@@ -1,10 +1,10 @@
 % Binary Robust Invariant Scalable Keypoints
 % Input: X(image), sigma1(background filtering), sigma2(descriptor filtering), threshold_sobel(corner filtering), threshold_fast(corner threshold), fast_method(enter: 9, 10, 11, 12)
-% Output: histogram(classification data), X1(filtered background), X2(filtered data for descriptors), G(gradients for the corners), corners, scores(corner scores)
-% Example 1: [histogram, X1, X2, G, corners, scores] = mi.brisk(X, sigma1, sigma2, threshold_sobel, threshold_fast, fast_method);
-% Author: Daniel Mårtensson, Oktober 19:e 2023
+% Output: data(classification data), X1(filtered background), X2(filtered data for descriptors), G(gradients for the corners), corners, scores(corner scores)
+% Example 1: [data, X1, X2, G, corners, scores] = mi.brisk(X, sigma1, sigma2, threshold_sobel, threshold_fast, fast_method);
+% Author: Daniel Mårtensson, Oktober 27, 2023
 
-function [histogram, X1, X2, G, corners, scores] = brisk(varargin)
+function [data, X1, X2, G, corners, scores] = brisk(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
@@ -75,54 +75,69 @@ function [histogram, X1, X2, G, corners, scores] = brisk(varargin)
   end
 
   % Compute the descriptors
-  radius = [4, 8, 12, 16];
-  lbp_bit = [8, 16, 24, 32];
-  histogram = zeros(1, 1024);
+  data = [];
   for i = 1:length(corners)
-    % Get coordinates for the interest points - x is column and y is row
+    % Get coordinates for the interest points
     x = corners(i, 1);
     y = corners(i, 2);
 
-    % Find the descriptors
-    for j = 1:4
-      % Compute the squre area limits
-      x_min = x - radius(j);
-      x_max = x + radius(j);
-      y_min = y - radius(j);
-      y_max = y + radius(j);
+    % Compute the squre area limits
+    x_min = x - 16;
+    x_max = x + 16;
+    y_min = y - 16;
+    y_max = y + 16;
 
-      % Check if the O_part is not at the edge of the image
-      if(and(x_min >= 1, y_min >= 1, x_max <= n, y_max <= m))
-        % Cut one part from the orientation matrix O
-        O_part = O(y_min:y_max, x_min:x_max);
+    % Check if the O_part is not at the edge of the image
+    if(and(x_min >= 1, y_min >= 1, x_max <= n, y_max <= m))
+      % Cut one part from the orientation matrix O
+      O_part = O(y_min:y_max, x_min:x_max);
 
-        % Then find the principal orientation, a.k.a the mean value of O_part
-        init_angle = mean(O_part(:));
+      % Then find the principal orientation, a.k.a the mean value of O_part
+      init_angle = circleaverage(O_part);
 
-        % Find the rotated descriptor index with different radius
-        % If lgb_bit is 8-bit, then descriptor_index will be from 1 to 256
-        % If lgb_bit is 16-bit, then descriptor_index will be from 257 to 512
-        % If lgb_bit is 24-bit, then descriptor_index will be from 513 to 768
-        % If lgb_bit is 32-bit, then descriptor_index will be from 769 to 1024
-        descriptor_index = mi.lbp(X2, x, y, radius(j), init_angle, lbp_bit(j)) + 1;
+      % Get data
+      d1 = mi.lbp(X2, x, y, 8, init_angle, 16);
+      d2 = mi.lbp(X2, x, y, 7, init_angle, 16);
+      d3 = mi.lbp(X2, x, y, 5.6, init_angle, 16);
+      d4 = mi.lbp(X2, x, y, 4.6, init_angle, 16);
+      d5 = mi.lbp(X2, x, y, 3.51, init_angle, 16);
+      d6 = mi.lbp(X2, x, y, 2, init_angle, 8); % This is 8-bit, not 16-bit
 
-        % Scale descriptor index to 8 bit
-        switch(j)
-          % case 1 is just 8-bit
-        case 2
-          % 16-bit
-          descriptor_index = descriptor_index / 0x100 + 256; % Index from 257 to 512
-        case 3
-          % 24-bit
-          descriptor_index = descriptor_index / 0x10000 + 512; % Index from 513 to 768
-        case 4
-          % 32-bit
-          descriptor_index = descriptor_index / 0x1000000 + 768; % Index from 769 to 1024
-        end
+      % Create binary array of 8-bit
+      d = [bitshift(d1, -8), bitand(d1, 0xFF), bitshift(d2, -8), bitand(d2, 0xFF), bitshift(d3, -8), bitand(d3, 0xFF), bitshift(d4, -8), bitand(d4, 0xFF), bitshift(d5, -8), bitand(d5, 0xFF), d6];
 
-        % Add to histogram
-        histogram(descriptor_index) = histogram(descriptor_index) + 1;
+      % Save
+      data = [data; d];
+    end
+  end
+end
+
+function avg = circleaverage(X)
+  % Compute row
+  [m, n] = size(X);
+
+  % Compute the radius
+  radius = m / 2;
+
+  % Total iterations
+  counter = 0;
+  s = 0.0;
+  coordinate = zeros(1, 2);
+  for i = 1:m
+    for j = 1:n
+      % Compute the distance by giving the row and column coordinates for L2-norm
+      coordinate(1) = radius - i + 1;
+      coordinate(2) = radius - j + 1;
+      distance = norm(coordinate, 2);
+
+      % Check if distance is equal or less
+      if distance <= radius
+        s = s + X(i, j);
+        counter = counter + 1;
       end
     end
   end
+
+  % Compute the average
+  avg = s / counter;
 end
