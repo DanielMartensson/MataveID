@@ -2,12 +2,12 @@
 Use this algorithm if you want to convert keypoints into one large histogram for image classification and detection.
 
 ```matlab
-[histogram, X1, X2, G, corners, scores] = mi.brisk(X, sigma1, sigma2, threshold_sobel, threshold_fast, fast_method);
+[data, X1, X2, G, corners, scores] = mi.brisk(X, sigma1, sigma2, threshold_sobel, threshold_fast, fast_method);
 ```
 
 ## Example
 
-https://github.com/DanielMartensson/MataveID/blob/c2fc1672220b18a453bd1a3d773251e2d74ab68c/examples/briskExample.m#L1-L40
+https://github.com/DanielMartensson/MataveID/blob/51ae1655a16b34222a5da7ef7a78b30958985363/examples/briskExample.m#L1-L23
 
 ## Result
 ![BRISK Result_Histogram](../pictures/BRISK_Result_Histogram.png)
