@@ -7,7 +7,7 @@ Use this algorithm if you want to convert keypoints into one large binary matrix
 
 ## Example
 
-https://github.com/DanielMartensson/MataveID/blob/a300c9e3507cb9806b9b5ff59770ca02eee9a0bb/examples/briskExample.m#L1-L37
+https://github.com/DanielMartensson/MataveID/blob/a300c9e3507cb9806b9b5ff59770ca02eee9a0bb/examples/orpExample.m#L1-L37
 
 ## Results
 
