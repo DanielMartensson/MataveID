@@ -1,10 +1,10 @@
-% Binary Robust Invariant Scalable Keypoints
+% Oriented FAST Rotated Pattern
 % Input: X(image), sigma1(background filtering), sigma2(descriptor filtering), threshold_sobel(corner filtering), threshold_fast(corner threshold), fast_method(enter: 9, 10, 11, 12)
 % Output: data(classification data), X1(filtered background), X2(filtered data for descriptors), G(gradients for the corners), corners, scores(corner scores)
 % Example 1: [data, X1, X2, G, corners, scores] = mi.brisk(X, sigma1, sigma2, threshold_sobel, threshold_fast, fast_method);
 % Author: Daniel Mårtensson, Oktober 27, 2023
 
-function [data, X1, X2, G, corners, scores] = brisk(varargin)
+function [data, X1, X2, G, corners, scores] = orp(varargin)
   % Check if there is any input
   if(isempty(varargin))
     error('Missing inputs')
