@@ -13,7 +13,14 @@ data = [40 + 10*randn(200,3);
 K = 3;
 
 % K-means clustering
-[idx, C] = mi.kmeans(data, K);
+[idx, C, success] = mi.kmeans(data, K);
+
+% Check
+if(success)
+  disp('K-means clustering success!');
+else
+  disp('You need to try with another K-value');
+end
 
 % Plot cluster
 figure;
