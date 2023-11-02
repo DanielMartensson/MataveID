@@ -1,10 +1,10 @@
 % K-means clustering
 % Input: X(data), k(amount of clusters)
-% Output: idx(row index of class ID), C(coordinates of the centers of the cluster coordinates)
-% Example 1: [idx, C] = mi.kmeans(X, k)
+% Output: idx(row index of class ID), C(coordinates of the centers of the cluster coordinates), success
+% Example 1: [idx, C, success] = mi.kmeans(X, k)
 % Author: Daniel Mårtensson, April 2023
 
-function [idx, C] = kmeans(X, k)
+function [idx, C, success] = kmeans(X, k)
   % Get size of X
   [m, n] = size(X);
 
@@ -33,6 +33,16 @@ function [idx, C] = kmeans(X, k)
         break;
       end
       old_value = new_value;
+  end
+
+  % Check if the random initial start was succeeded
+  success = true;
+  for i = 1:k
+    % Does the idx array missing an index?
+    if(length(find(idx == i)) == 0)
+      success = false; % Yes, it does
+      break;
+    end
   end
 end
 
