@@ -23,7 +23,7 @@ C = [z1 z2 z3];
 X = [A; B; C];
 
 % Create class ID, indexing from zero
-y = [0*ones(1, l), 1*ones(1, l), 2*ones(1, l)];
+y = [1*ones(1, l), 2*ones(1, l), 3*ones(1, l)];
 
 % How many dimensions
 c = 2;
