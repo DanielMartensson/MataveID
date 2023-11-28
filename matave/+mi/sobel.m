@@ -23,8 +23,8 @@ function [G, O] = sobel(varargin)
   K_y = [-1 -2 -1; 0 0 0; 1 2 1];
 
   % Do conv2 with FFT
-  Gx = mc.conv2fft(X, K_x);
-  Gy = mc.conv2fft(X, K_y);
+  Gx = conv2(X, K_x, 'same');
+  Gy = conv2(X, K_y, 'same');
 
   % Compute the gradients
   G = sqrt(Gx.^2 + Gy.^2);
