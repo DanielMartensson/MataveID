@@ -40,7 +40,7 @@ function [Y] = imgaussfilt(varargin)
   K_g = 1/(2*pi*sigma^2)*exp(-(x.^2 + y.^2)/(2*sigma^2));
 
   % Do conv2 with FFT
-  Y = mc.conv2fft(X, K_g);
+  Y = conv2(X, K_g, 'same');
 
   % Give the same brightness
   Y = Y*sum(X(:))/sum(Y(:));
