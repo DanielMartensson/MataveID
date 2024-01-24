@@ -1,4 +1,4 @@
-# MataveID V16.9.0
+# MataveID V17.0.0
 MataveID is a basic system identification toolbox for both GNU Octave and MATLAB®. MataveID is based on the power of linear algebra and the library is easy to use. MataveID using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -47,6 +47,7 @@ I'm building this library because I feel that the commercial libraries are just 
 | `idbode.m` | Ongoing | Find a practical example |
 | `ica.m` | Ongoing | Find a practical example |
 | `lsvm.m` | Complete | Nothing to do here |
+| `adaboost.m` | Complete | Nothing to do here |
 
 # Functions and its purpose
 - ERA-DC for mechanical damped systems in the time plane
@@ -85,6 +86,7 @@ I'm building this library because I feel that the commercial libraries are just 
 - FAST for corner detection
 - LBP for finding binary pattern in a matrix
 - ORP for describing an image with interest points, as a histogram
+- ADABOOST for classification of nonlinear data
 
 # Papers:
 MataveID contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
