@@ -69,7 +69,7 @@ function models = train(X, y, N)
   for i = 1:N
     % Create the model with initial parameters
     model.polarity = 0;
-    model.feature_idx = 0;
+    model.feature_index = 0;
     model.threshold = 0;
     model.alpha = 0;
 
