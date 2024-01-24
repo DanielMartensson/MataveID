@@ -8,7 +8,7 @@ to do prediction with because they are not requried to need linear algebra for m
 ```
 
 ## Example
-https://github.com/DanielMartensson/MataveID/blob/4ace2f8ce81bdb7cf6176503992c68f1591beff7/examples/adaboostExample.m#L1-L74
+https://github.com/DanielMartensson/MataveID/blob/d488c532b29b5739b39f613f4fad4346cdf1b51c/examples/adaboostExample.m#L1-L74
 
 ## Results
 ![Box Jenkins Results](../pictures/AdaBoost_Result.png)
