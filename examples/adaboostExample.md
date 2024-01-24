@@ -1,16 +1,14 @@
-# BJ - Box-Jenkins
-Box-Jenkins is a special case when a system model `sysd` and a disturbance model `sysh` need to be found. The disturbance is difficult to know and with this Box-Jenkins algorithm, then the user can identify the disturbance model and create an observer of it by using the kalman gain matrices `K1, K2`. Notice that this Box-Jenkins algorithm using subspace methods, instead of classical polynomial methods.
-
-The disturbance model can be used for:
-* Create a disturbance simulation with feedback control 
-* Create filtering for sensors
+# AdaBoost
+AdaBoost is a simple algorithm for doing nonlinear binary classification with weak learners. The weak lerners in this AdaBoost algorithm is Decision Stumps.
+AdaBoost is not always more accurate compared to neural netorks or support vector machines, but AdaBoost with Decision Stumps are one of the fastest algorithms
+to do prediction with because they are not requried to need linear algebra for matrix multiplications.
 
 ```matlab
-[sysd, K1, sysh, K2] = mi.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+[models, accuracy, activation_function] = mi.adaboost(X_train, X_test, y_train, y_test, N);
 ```
 
 ## Example
-https://github.com/DanielMartensson/MataveID/blob/15858071adb9025d5ac059da8353eb4714d309c1/examples/bjExample.m#L1-L50
+https://github.com/DanielMartensson/MataveID/blob/4ace2f8ce81bdb7cf6176503992c68f1591beff7/examples/adaboostExample.m#L1-L74
 
 ## Results
-![Box Jenkins Results](../pictures/BJ_Result.png)
+![Box Jenkins Results](../pictures/AdaBoost_Result.png)
