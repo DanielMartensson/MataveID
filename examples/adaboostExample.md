@@ -10,8 +10,7 @@ The disturbance model can be used for:
 ```
 
 ## Example
-https://github.com/DanielMartensson/MataveID/blob/328f7f5cb3a0ad32619968d9babb3126772c4ca3/examples/bjExample.m#L1-L50
-
+https://github.com/DanielMartensson/MataveID/blob/15858071adb9025d5ac059da8353eb4714d309c1/examples/bjExample.m#L1-L50
 
 ## Results
 ![Box Jenkins Results](../pictures/BJ_Result.png)
