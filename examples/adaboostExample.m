@@ -53,7 +53,7 @@ y_test = y(101:end);
 
 % Adaboost classification with N weak classifiers
 N = 3;
-[models, accuracy, activation_function] = adaboost(X_train, X_test, y_train, y_test, N);
+[models, accuracy, activation_function] = mi.adaboost(X_train, X_test, y_train, y_test, N);
 
 % This is how the class id is found from one randomly selected row from X_test
 class_id = activation_function(models, X_test(5, :))
