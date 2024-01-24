@@ -38,3 +38,4 @@ imgaussfilt.m
 fast.m
 lbp.m
 orp.m
+adaboost.m
