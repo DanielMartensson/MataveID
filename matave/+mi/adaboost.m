@@ -89,13 +89,13 @@ function models = train(X, y, N)
         p = 1;
 
         % Set all predictions to '1' initially
-        prediction = ones(size(y));
+        predictions = ones(size(y));
 
         % Label the samples whose values are below threshold as '-1'
-        prediction(feature_column < threshold) = -1;
+        predictions(feature_column < threshold) = -1;
 
         % Error = sum of weights of misclassified samples
-        error = sum(w(y ~= prediction));
+        error = sum(w(y ~= predictions));
 
         % If the error is over 50% we flip the polarity so that samples that
         % were classified as 0 are classified as 1, and vice versa
