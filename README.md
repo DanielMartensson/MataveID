@@ -3,90 +3,6 @@ MataveID is a basic system identification toolbox for both GNU Octave and MATLAB
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
 
-# TODO
-
-| Function  | Status | Comment | 
-| ------------- | ------------- | ------------------- |
-| `rpca.m` | Complete | Nothing to do here |
-| `filtfilt.m` | Complete | Nothing to do here |
-| `pf.m` | Complete | Nothing to do here |
-| `spa.m` | Complete | Nothing to do here |
-| `arx.m` | Complete | Nothing to do here |
-| `oe.m` | Complete | Nothing to do here |
-| `armax.m` | Complete | Nothing to do here |
-| `lsvm.m`  | Complete | Nothing to do here |
-| `fisherfaces.m` | Complete | Nothing to do here |
-| `nn.m` | Complete | Nothing to do here |
-| `logreg.m` | Complete | Nothing to do here |
-| `pooling.m` | Complete | Nothing to do here |
-| `sobel.m` | Complete | Nothing to do here |
-| `hough.m` | Complete | Nothing to do here |
-| `canny.m` | Complete | Nothing to do here |
-| `imgaussfilt.m` | Complete  | Nothing to do here |
-| `fast.m` | Complete | Nothing to do here |
-| `lbp.m` | Complete  | Nothing to do here |
-| `orp.m` | Complete  | Nothing to do here |
-| `cca.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a practical example |
-| `rls.m`  | Almost complete  | Returns kalman gain matrix `K`, need to have a better practical example |
-| `eradc.m` | Almost complete | Added a kalman filter, need to have a pratical example |
-| `n4sid.m` | Almost complete | Added a kalman filter, need to have a better pratical example |
-| `moesp.m` | Almost complete | Added a kalman filter, need to have a pratical example |
-| `kmeans.m` | Almost complete | Need to have a pratical example |
-| `pca.m` | Almost complete | Need to find a practical example |
-| `kpca.m` | Almost complete | Need to find a practical example |
-| `lda.m` | Almost complete | Need to find a practical example |
-| `ica.m` | Almost complete | Need to find a practical example |
-| `sra.m` | Almost complete | Upload measurement sensor system |
-| `dbscan.m` | Complete | Nothing to do here |
-| `bj.m` | Almost complete | Find a pratical example |
-| `sindy.m` | Complete | Nothing to do here |
-| `ocid.m` | Ongoing | Find a pratical example and test it, test the observer with `ocid.m` |
-| `sr_ukf_parameter_estimation.m` | Ongoing | Find a practical example for a hydraulic orifice |
-| `sr_ukf_state_estimation.m` | Ongoing | Use with `sindy.m` and a pratical example |
-| `ortjiop.m` | Ongoing | Find a practical example |
-| `idbode.m` | Ongoing | Find a practical example |
-| `ica.m` | Ongoing | Find a practical example |
-| `lsvm.m` | Complete | Nothing to do here |
-| `adaboost.m` | Complete | Nothing to do here |
-
-# Functions and its purpose
-- ERA-DC for mechanical damped systems in the time plane
-- SINDY for multivariable abritary nonlinear systems
-- RLS for all kind of arbitary single input and single output systems
-- OCID for closed loop identification, observer identification and controller identification
-- ORTJIOP for stochastic closed loop, plant and controller identification
-- FILTFILT for low pass filtering without phase delay
-- SPA for spectral analysis
-- FISHERFACES for image/regular data classfication
-- NN Neural network
-- SOBEL for finding gradients and orientations inside an image
-- LOGREG Logistic regression parameter finding
-- IDBODE for mechanical damped systems in the frequency plane
-- RPCA for reducing noise from data
-- POOLING reducing pixel size of an image
-- PCA for dimension reduction on maximum variance
-- KPCA for dimension reduction on maximum variance for nonlinear data
-- LDA for dimension reduction on maximum distance
-- ICA for separating signals so they are independent from each other
-- SR-UKF-Parameter-Estimation for finding parameters from an very complex system of equation if data is available
-- SR-UKF-State-Estimation for filtering noise and estimate the state of a system
-- Nonlinear SVM for C-code classification of data for CControl
-- Linear SVM for generate a 1xN matrix + bias variable for prediction
-- N4SID for regular linear state space systems
-- MOESP for regular linear state space systems
-- CCA for linear stochastic state space systems
-- SRA for stochastic model identification
-- PF for particle filter for non-gaussian state estimation filtering
-- BJ for estimate system model and disturbance model
-- KMEANS for identify clusters
-- DBSCAN for identidy classes for clusters
-- HOUGH for line detection
-- CANNY for edge image
-- IMGAUSSFILT for 2D blurring
-- FAST for corner detection
-- LBP for finding binary pattern in a matrix
-- ORP for describing an image with interest points, as a histogram
-- ADABOOST for classification of nonlinear data
 
 # Papers:
 MataveID contains realization identification, polynomal algorithms and subspace algorithms. They can be quite hard to understand, so I highly recommend to read papers in the "reports" folder about the algorithms if you want to understand how they work, or read the literature.
@@ -158,9 +74,24 @@ Disadvantages:
 ![Adaptive control](pictures/Adaptive_control.png)
 
 # Examples
-All the examples are contained in the example folder. For each example, there is at least a Markdown file (.md) and a m-file (.m).
 
-[Examples](examples/)
+## BJ - Box-Jenkins
+Box-Jenkins is a special case when a system model `sysd` and a disturbance model `sysh` need to be found. The disturbance is difficult to know and with this Box-Jenkins algorithm, then the user can identify the disturbance model and create an observer of it by using the kalman gain matrices `K1, K2`. Notice that this Box-Jenkins algorithm using subspace methods, instead of classical polynomial methods.
+
+The disturbance model can be used for:
+* Create a disturbance simulation with feedback control 
+* Create filtering for sensors
+
+```matlab
+[sysd, K1, sysh, K2] = mi.bj(u, y, k, sampleTime, ktune, delay, systemorder_sysd, systemorder_sysh);
+```
+
+## Example
+https://github.com/DanielMartensson/MataveID/blob/328f7f5cb3a0ad32619968d9babb3126772c4ca3/examples/bjExample.m#L1-L50
+
+
+## Results
+![Box Jenkins Results](pictures/BJ_Result.png)
 
 
 # Install
