@@ -1,4 +1,4 @@
-# logreg - Logistic regression
+# Logistic regression
 Use this if you have a binary output (0, 1) or (-1, 1) and you want to to have a probabilistic output e.g 0 to 100%
 
 ```matlab

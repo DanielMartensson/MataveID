@@ -1,5 +1,5 @@
-# FAST
-Use FAST if you want to find corners inside an image. There is also an equivalent C-code FAST algorithm inside the CControl repository.
+# Feature from accelerated segmentation test
+Use Feature from accelerated segmentation test(FAST) if you want to find corners inside an image. There is also an equivalent C-code FAST algorithm inside the CControl repository.
 
 ```matlab
 [corners, scores] = mi.fast(image, threshold, fast_method);

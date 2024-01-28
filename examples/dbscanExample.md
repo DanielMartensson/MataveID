@@ -10,7 +10,7 @@ It exist an equivalent C-code dbscan inside CControl repository.
 [idx] = mi.dbscan(X, epsilon, min_pts);
 ```
 
-# Example Density-based spatial clustering of applications with noise
+## Example Density-based spatial clustering of applications with noise
 
 https://github.com/DanielMartensson/MataveID/blob/7e1b828a4782826489139ea46defd12bec4c7c38/examples/dbscanExample.m#L1-L110
 
