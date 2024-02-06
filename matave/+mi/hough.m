@@ -167,10 +167,12 @@ function [K, M] = hough_lines(x, y, z, N, index, r_half)
     [~, max_index] = max(z(index == i));
 
     % Get the angles and take -1 because we did +1 above
-    angle = x(index == i)(max_index) - 1;
+    xi = x(index == i);
+    angle = xi(max_index) - 1;
 
     % Important to take -1 because indexes = sub2ind(size(P), angles, r) (a function that been used before) cannot accept r = 0, but indexes = r*180 + angles; can that
-    r = y(index == i)(max_index) - 1;
+    yi = y(index == i);
+    r = yi(max_index) - 1;
 
     % This is the trick to make sure r pointing at the right direction
     if(r > r_half)
