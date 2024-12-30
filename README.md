@@ -73,6 +73,11 @@ Disadvantages:
 
 ![Adaptive control](pictures/Adaptive_control.png)
 
+# The best algorithm
+If you are looking for the best algorithm to use for system identification. An algorithm that always work no mather what type of data. Then it is the SYNDy algorithm. 
+The SINDy algorithm is a combination of grey box system identification and black box system identification. The disadvantages with SINDy is that it requries that the user 
+have at last a minor knowledge about how the model might look like e.g first order, second order etc.
+
 # Examples
 
 ## Multivariable Output-Error State Space
