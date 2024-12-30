@@ -1,4 +1,4 @@
-# MataveID V17.0.0
+# MataveID V17.1.0
 MataveID is a basic system identification toolbox for both GNU Octave and MATLAB®. MataveID is based on the power of linear algebra and the library is easy to use. MataveID using the classical realization and polynomal theories to identify state space models from data. There are lots of subspace methods in the "old" folder and the reason why I'm not using these files is because they can't handle noise quite well. 
 
 I'm building this library because I feel that the commercial libraries are just for theoretical experiments. I'm focusing on real practice and solving real world problems. 
@@ -150,6 +150,20 @@ This is Uncented Kalman Filter that using cholesky update method (more stable), 
 ```matlab
 [Sw, what] = mi.sr_ukf_parameter_estimation(d, what, Re, x, G, lambda_rls, Sw, alpha, beta, L);
 ```
+
+## Kalman Filter
+Kalman Filter is the linear verison of the Kalman Filter. It's many of them, but this one is for linear system. Use this if you find UKF or other filter unstable. 
+The linear Kalman Filter is most used for control engineering where numerical stabiblity is a high prioritoy issue.
+
+```matlab
+[xhat] = mi.kf(sys, u, y, Q, R);
+```
+
+## Example
+https://github.com/DanielMartensson/MataveID/blob/09f1480836a78593e99af14b6a9d54eaa7c89d5b/examples/kfExample.m#L1-L35
+
+## Results
+![KF_Result](../pictures/KF_Result.png)
 
 ## Square Root Uncented Kalman Filter for parameter estimation example
 https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/sr_ukf_parameter_estimationExample.m#L1-L62
@@ -641,7 +655,6 @@ Robust principal component analysis(RPCA) is a great tool if you want to separat
 https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/rpcaExample.m#L1-L13
 
 ![RPCA Result](pictures/RPCA_Result.png)
-
 
 # Install
 To install MataveID, download the folder "matave" and place it where you want it. Then the following code need to be written inside of the terminal of your MATLAB® or GNU Octave program. 
