@@ -163,7 +163,7 @@ The linear Kalman Filter is most used for control engineering where numerical st
 https://github.com/DanielMartensson/MataveID/blob/09f1480836a78593e99af14b6a9d54eaa7c89d5b/examples/kfExample.m#L1-L35
 
 ## Results
-![KF_Result](../pictures/KF_Result.png)
+![KF_Result](pictures/KF_Result.png)
 
 ## Square Root Uncented Kalman Filter for parameter estimation example
 https://github.com/DanielMartensson/MataveID/blob/2014b74a0863729b43e0ee02ecdcd4fcbc06b26b/examples/sr_ukf_parameter_estimationExample.m#L1-L62
