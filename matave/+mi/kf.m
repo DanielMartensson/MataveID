@@ -1,10 +1,13 @@
 % Kalman Filter
-% Input: sys(Model), u(Input), y(Output), Q(Covariance disturbance covariance), R(Measurement noise covariance)
-% Output: xhat(Estimated state vector)
-% Example 1: [xhat] = mi.kf(sys, u, y, Q, R);
+% Input: sys(Model), u(Input), y(Output), Q(Covariance disturbance covariance), R(Measurement noise covariance), x(Initial estimated state), P(Initial covariance)
+% Output: xhat(Estimated state vectors), x(Last estimated state), P(Last covariance)
+% Example 1: [xhat, x, P] = mi.kf(sys, u, y, Q, R);
+% Example 2: [xhat, x, P] = mi.kf(sys, u, y, Q, R, x);
+% Example 3: [xhat, x, P] = mi.kf(sys, u, y, Q, R, x, P);
 % Author: Daniel Mårtensson, December 2024
+% Update: 2025-01-05: Add initial state x and initial covariance P
 
-function [xhat] = kf(varargin)
+function [xhat, x, P] = kf(varargin)
   % Check if there is some input arguments
   if(isempty (varargin))
     error ('Missing input')
@@ -58,16 +61,24 @@ function [xhat] = kf(varargin)
   % Get state size
   L = size(A, 1);
 
-  % Initial covaraiance
-  P = eye(L);
-
   % Initial state
-  x = zeros(L, 1);
+  if(length(varargin) >= 6)
+    x = varargin{6};
+  else
+    x = zeros(L, 1);
+  end
+
+  % Initial covaraiance
+  if(length(varargin) >= 7)
+    P = varargin{7};
+  else
+    P = eye(L);
+  end
 
   % Get the length
   N = length(y);
 
-  % Create states
+  % Get initial xhat
   xhat = zeros(L, N);
 
   % Run the iteration of the kalman filter
@@ -82,7 +93,7 @@ function [xhat] = kf(varargin)
     S = C * P * C' + R;
 
     % Find kalman gain
-    K = linsolve(S, P * C');
+    K = (P * C')*inv(S);
 
     % Update state
     x = dx + K * (y(:, k) - C * dx);
