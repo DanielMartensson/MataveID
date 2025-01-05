@@ -93,7 +93,7 @@ function [xhat, x, P] = kf(varargin)
     S = C * P * C' + R;
 
     % Find kalman gain
-    K = (P * C')*inv(S);
+    K = (P * C') * inv(S);
 
     % Update state
     x = dx + K * (y(:, k) - C * dx);
